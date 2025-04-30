@@ -5,7 +5,6 @@ export default (): void => {
     if (!listing) return
 
     const show = listing.querySelector('*[data-listing-show]') as HTMLButtonElement
-
     const items = listing.querySelectorAll('*[data-listing-item]') as NodeListOf<HTMLDivElement>
 
     items.forEach((item: HTMLDivElement): void => {

@@ -35,7 +35,7 @@ export const dialog: FancyboxDialog = {
       {
         dragToClose: false,
         on: {
-          setIdle: (): void => loadMedia(),
+          done: (): void => loadMedia(),
         },
       }
     )
@@ -53,7 +53,7 @@ export const dialog: FancyboxDialog = {
         closeButton: false,
         backdropClick: false,
         on: {
-          setIdle: (): void => loadMedia(),
+          done: (): void => loadMedia(),
         },
       }
     )
@@ -69,7 +69,7 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-dialog]', {
     dragToClose: false,
     on: {
-      setIdle: (): void => loadMedia(),
+      done: (): void => loadMedia(),
     },
   })
 
@@ -86,8 +86,8 @@ export default (): void => {
       done: (): void => {
         createCalendar()
         filtering()
+        loadMedia()
       },
-      setIdle: (): void => loadMedia(),
     },
   })
 }
