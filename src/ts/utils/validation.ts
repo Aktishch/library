@@ -95,11 +95,6 @@ export const validation = (form: HTMLFormElement): boolean => {
         break
       }
 
-      case 'switch': {
-        if (input.checked === false) getError()
-        break
-      }
-
       case 'file': {
         const files = input.files as FileList
         const file = files[0] as File

@@ -1,6 +1,26 @@
 import { dialog } from './fancybox'
 import { validation } from './utils'
 
+export const getStateSubmitBtn = (): void => {
+  const forms = document.querySelectorAll('*[data-form]') as NodeListOf<HTMLFormElement>
+
+  forms.forEach((form: HTMLFormElement): void => {
+    if (!form) return
+
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
+    const toggle = form.querySelector('*[data-toggle-submit]') as HTMLInputElement
+
+    if (toggle) {
+      const toggleChecked = (): void => {
+        submitBtn.disabled = toggle.checked === true ? false : true
+      }
+
+      toggleChecked()
+      toggle.addEventListener('change', toggleChecked as EventListener)
+    }
+  })
+}
+
 const formSubmitHandler = (event: Event): void => {
   const form = event.target as HTMLFormElement
 
@@ -84,7 +104,15 @@ const formSubmitHandler = (event: Event): void => {
 }
 
 export default (): void => {
+  getStateSubmitBtn()
+
   document.addEventListener('submit', ((event: Event): void => {
     if ((event.target as HTMLFormElement).hasAttribute('data-form')) formSubmitHandler(event)
+  }) as EventListener)
+
+  document.addEventListener('keypress', ((event: KeyboardEvent): void => {
+    if ((event.target as HTMLFormElement).closest('[data-form]')) {
+      if (event.code === 'Enter') event.preventDefault()
+    }
   }) as EventListener)
 }

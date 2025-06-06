@@ -3,6 +3,7 @@ import { createCalendar } from './air-datepicker'
 import filtering from './filtering'
 import imagePreview from './image-preview'
 import loadMedia from './load-media'
+import { getStateSubmitBtn } from './submit-handler'
 
 type FancyboxDialog = {
   open: (src: string) => void
@@ -70,6 +71,16 @@ export default (): void => {
     dragToClose: false,
     on: {
       done: (): void => loadMedia(),
+    },
+  })
+
+  window.Fancybox.bind('[data-fancybox-form]', {
+    dragToClose: false,
+    on: {
+      done: (): void => {
+        loadMedia()
+        getStateSubmitBtn()
+      },
     },
   })
 

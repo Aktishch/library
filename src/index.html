@@ -345,19 +345,18 @@
           <div class="flex flex-col gap-5" data-filelist>
             <div class="relative" data-filelist-label data-label>
               <label class="btn btn-second btn-lg btn-fade" data-waved="dark">
-                <input class="hidden" data-filelist-input data-input="file" type="file" multiple name="files[]">
+                <input hidden data-filelist-input data-input="file" type="file" multiple name="files[]">
                 <span data-filelist-text>Загрузить файлы</span>
               </label>
               <%= error({text: 'Загрузите изображение'}) %>
             </div>
             <ul class="flex flex-col gap-1 text-xs empty:hidden" data-filelist-items></ul>
           </div>
-          <div class="relative flex" data-label>
+          <div class="flex">
             <label class="flex flex-row items-center cursor-pointer">
-              <input class="mr-2 switch switch-checkbox" data-input="switch" type="checkbox" checked>
+              <input class="mr-2 switch switch-checkbox" data-toggle-submit type="checkbox" checked>
               <span class="text-xl">Policy</span>
             </label>
-            <%= error({text: 'Примите соглашение'}) %>
           </div>
           <button class="btn btn-second btn-lg btn-fill" data-waved="dark" type="submit">Submit</button>
         </form>
@@ -400,7 +399,7 @@
           </h4>
           <div class="flex flex-row-reverse items-center gap-3 p-3 rounded-full w-max bg-gray/40">
             <% for (var i = 5; i > 0; i--) { %>
-            <input class="hidden peer/rating" id="rating-<%= i %>" type="radio" value="<%= i %>" name="rating">
+            <input class="peer/rating" id="rating-<%= i %>" hidden type="radio" value="<%= i %>" name="rating">
             <label class="text-2xl text-opacity-50 transition cursor-pointer text-second hover:text-opacity-100 peer/star peer-hover/star:text-opacity-100 peer-checked/rating:text-opacity-100" for="rating-<%= i %>">
               <%= icon({id: 'star', className: 'icon', data: null}) %>
             </label>

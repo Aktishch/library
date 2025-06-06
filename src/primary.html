@@ -198,9 +198,9 @@
                   Radio:
                 </h4>
                 <div class="flex items-center gap-5">
-                  <input class="switch switch-radio" type="radio" value="radio-1" name="radio">
-                  <input class="switch switch-radio" type="radio" value="radio-2" name="radio">
-                  <input class="switch switch-radio" type="radio" value="radio-3" name="radio">
+                  <input class="switch switch-radio" type="radio" value="radio-1" tabindex="-1" name="radio">
+                  <input class="switch switch-radio" type="radio" value="radio-2" tabindex="-1" name="radio">
+                  <input class="switch switch-radio" type="radio" value="radio-3" tabindex="-1" name="radio">
                 </div>
               </div>
             </div>
@@ -210,8 +210,8 @@
                   Checkbox:
                 </h4>
                 <div class="flex items-center gap-5">
-                  <input class="switch switch-checkbox" type="checkbox" value="checkbox-1" name="checkbox[]">
-                  <input class="switch switch-checkbox" type="checkbox" value="checkbox-2" name="checkbox[]">
+                  <input class="switch switch-checkbox" type="checkbox" value="checkbox-1" tabindex="-1" name="checkbox[]">
+                  <input class="switch switch-checkbox" type="checkbox" value="checkbox-2" tabindex="-1" name="checkbox[]">
                 </div>
               </div>
             </div>
@@ -222,7 +222,7 @@
                     Name
                   </h5>
                   <div class="relative">
-                    <input class="input input-gray input-lg dark:input-fade" data-input="name" type="text" placeholder="Name" name="name">
+                    <input class="input input-gray input-lg dark:input-fade" data-input="name" type="text" placeholder="Name" tabindex="-1" name="name">
                     <%= error({text: 'Введите ваше имя'}) %>
                   </div>
                 </label>
@@ -231,11 +231,11 @@
                     Telephone
                   </h5>
                   <div class="relative">
-                    <input class="input input-gray input-lg dark:input-fade" data-input="tel" type="tel" placeholder="+7 (___) ___-__-__" name="tel">
+                    <input class="input input-gray input-lg dark:input-fade" data-input="tel" type="tel" placeholder="+7 (___) ___-__-__" tabindex="-1" name="tel">
                     <%= error({text: 'Введите ваш номер'}) %>
                   </div>
                 </label>
-                <button class="w-full btn btn-primary btn-lg btn-fill" data-waved="light" type="submit">Submit</button>
+                <button class="w-full btn btn-primary btn-lg btn-fill" data-waved="light" type="submit" tabindex="-1">Submit</button>
               </div>
             </div>
           </div>
