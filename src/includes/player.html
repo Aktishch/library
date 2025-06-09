@@ -46,9 +46,9 @@
         <div class="absolute top-0 bottom-0 left-0 h-full bg-primary text-primary rounded-3xl after:cursor-ew-resize after:content-auto after:absolute after:top-0 after:bottom-0 after:-right-1 after:bg-current after:rounded-full after:size-3 after:my-auto" data-player-range></div>
       </div>
       <div class="flex items-center justify-between gap-4">
-        <button class="p-1 rounded btn btn-primary btn-fade shrink-0" data-waved="dark" data-fancybox-dialog data-src="#playlist">
+        <a class="p-1 rounded btn btn-primary btn-fade shrink-0" data-waved="dark" data-fancybox-dialog draggable="false" href="#playlist">
           <%= icon({id: 'burger', className: 'icon text-2xl', data: null}) %>
-        </button>
+        </a>
         <span class="hidden w-12 text-lg md:block shrink-0" data-player-start></span>
         <button class="rounded-full size-10 btn btn-primary btn-fade" data-player-prev data-waved="dark">
           <%= icon({id: 'arrow-prev', className: 'icon text-xl', data: null}) %>

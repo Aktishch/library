@@ -361,7 +361,7 @@
           <button class="btn btn-second btn-lg btn-fill" data-waved="dark" type="submit">Submit</button>
         </form>
         <div class="flex items-center justify-center mt-5">
-          <button class="text-lg cursor-pointer hover:underline underline-offset-4 text-second w-max" data-fancybox-dialog data-type="ajax" data-src="dialogs/dialog-politics.html">Privacy policy</button>
+          <a class="text-lg cursor-pointer hover:underline underline-offset-4 text-second w-max" data-fancybox-dialog draggable="false" href="dialogs/dialog-politics.html">Privacy policy</a>
         </div>
       </div>
       <div data-filtering-card="filtering" data-filtering-value="switches">
@@ -444,12 +444,12 @@
       <div data-filtering-card="filtering" data-filtering-value="file">
         <div class="w-full max-w-xs mx-auto" id="copy">
           <div class="flex items-center w-full gap-3 mb-5">
-            <div class="w-10 rounded-full cursor-pointer shrink-0 pack pack-xl bg-primary/40" data-fancybox-avatar data-type="ajax" data-src="dialogs/dialog-avatar.html">
+            <a class="w-10 rounded-full shrink-0 pack pack-xl bg-primary/40" data-fancybox-avatar draggable="false" href="dialogs/dialog-avatar.html">
               <div class="absolute inset-0 flex items-center justify-center">
                 <%= icon({id: 'user', className: 'icon text-white text-sm', data: null}) %>
               </div>
               <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'data-avatar'}) %>
-            </div>
+            </a>
             <h4 class="text-2xl font-bold">
               Name Surname
             </h4>
@@ -480,7 +480,7 @@
               <button class="w-full px-10 btn btn-gray btn-lg btn-fill" data-copy-button data-waved="dark">Copy</button>
               <span class="absolute left-0 right-0 invisible text-sm transition-[opacity,_visibility] opacity-0 top-full text-primary" data-copy-result>Скопировано</span>
             </div>
-            <button class="btn btn-gray btn-lg btn-fill" data-waved="dark" data-fancybox-calendar data-type="ajax" data-src="dialogs/dialog-calendar.html">Calendar</button>
+            <a class="btn btn-gray btn-lg btn-fill" data-waved="dark" data-fancybox-calendar draggable="false" href="dialogs/dialog-calendar.html">Calendar</a>
             <div class="relative" data-rendering="SL-QGLZC-KHQDJ2H">
               <canvas class="hidden" data-rendering-canvas="img/pictures/certificate.jpg" width="540" height="750"></canvas>
               <a class="btn btn-gray btn-lg btn-fill" data-rendering-download data-waved="dark" draggable="false" href="" download="certificate">Download canvas</a>

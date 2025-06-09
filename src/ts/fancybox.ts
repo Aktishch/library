@@ -69,6 +69,7 @@ export default (): void => {
 
   window.Fancybox.bind('[data-fancybox-dialog]', {
     dragToClose: false,
+    defaultType: 'ajax',
     on: {
       done: (): void => loadMedia(),
     },
@@ -76,6 +77,7 @@ export default (): void => {
 
   window.Fancybox.bind('[data-fancybox-form]', {
     dragToClose: false,
+    defaultType: 'ajax',
     on: {
       done: (): void => {
         loadMedia()
@@ -86,6 +88,7 @@ export default (): void => {
 
   window.Fancybox.bind('[data-fancybox-avatar]', {
     dragToClose: false,
+    defaultType: 'ajax',
     on: {
       done: (): void => imagePreview(),
     },
@@ -93,6 +96,7 @@ export default (): void => {
 
   window.Fancybox.bind('[data-fancybox-calendar]', {
     dragToClose: false,
+    defaultType: 'ajax',
     on: {
       done: (): void => {
         createCalendar()
