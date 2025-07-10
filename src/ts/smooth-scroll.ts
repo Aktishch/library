@@ -42,7 +42,7 @@ export default (): void => {
 
   html.classList.add('overflow-x-hidden')
   body.classList.add('overflow-hidden')
-  smoothScroll.classList.add('fixed', 'top-0', 'left-0', 'right-0', 'overflow-hidden')
+  smoothScroll.classList.add('fixed', 'top-0', 'left-0', 'right-0', 'overflow-hidden', 'will-change-transform')
   window.requestAnimationFrame(createSmoothScroll)
 
   wrappers.forEach((wrapper: HTMLElement): void => {
@@ -56,8 +56,13 @@ export default (): void => {
 
       let stickyPosition: number = 0
 
+      sticky.classList.add('will-change-transform')
+
       const createSmothSticky = (): void => {
-        if (wrapper.getBoundingClientRect().top < 0 && wrapper.getBoundingClientRect().bottom > 0) {
+        if (
+          wrapper.getBoundingClientRect().top < 0 &&
+          wrapper.getBoundingClientRect().bottom - sticky.offsetHeight > 0
+        ) {
           stickyPosition += (scrolledPage().top - wrapper.offsetTop - stickyPosition) * speed
           sticky.style.transform = `translateY(${stickyPosition}px)`
         }
@@ -74,6 +79,8 @@ export default (): void => {
       const layerSpeed: number = Number(layer.dataset.smoothSpeed) / 100 || 0.02
       const layerDepth: number = Number(layer.dataset.smoothDepth) || 1
       let layerPosition: number = 0
+
+      layer.classList.add('will-change-transform')
 
       const createSmoothLayer = (): void => {
         if (

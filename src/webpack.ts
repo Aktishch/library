@@ -90,7 +90,6 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   password()
   phoneMask()
   player()
-  preloader()
   progressLine()
   quantity()
   quiz()
@@ -114,6 +113,7 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   worldMap()
   writeText()
   yandexMap()
+  preloader()
 }) as EventListener)
 
 window.addEventListener('load', loadMedia as EventListener)

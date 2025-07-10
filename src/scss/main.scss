@@ -1,6 +1,5 @@
 @use "./ui-kit/fonts";
 @use "./ui-kit/basic";
-@use "./ui-kit/custom";
 @use "./ui-kit/waved";
 @use "./ui-kit/movement";
 @use "./ui-kit/inverted";
@@ -15,6 +14,7 @@
 @use "./ui-kit/image";
 @use "./ui-kit/icon";
 @use "./ui-kit/switch";
+@use "./ui-kit/custom";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,58 +1,56 @@
-@layer base {
-  .fancybox {
-    &-custom * {
+.fancybox {
+  &-custom * {
 
-      &,
-      &::before,
+    &,
+    &::before,
+    &::after {
+      @apply box-border;
+    }
+  }
+
+  &-custom &__content:is(&-error) {
+    @apply bg-transparent text-white p-0;
+  }
+
+  &-custom &__slide.has-iframe &__content {
+    @apply p-0;
+  }
+
+  &-custom &__content {
+    &>.f-button.is-close-btn {
+      @apply top-2 right-2 bg-white text-black rounded-full shadow-md;
+    }
+  }
+}
+
+.swiper {
+  &-pagination {
+    @apply flex items-center justify-center static gap-4;
+
+    &-bullet {
+      @apply bg-current rounded-full size-3 !m-0 transition;
+    }
+  }
+
+  &-button {
+
+    &-prev,
+    &-next {
       &::after {
-        @apply box-border;
+        @apply hidden;
       }
-    }
 
-    &-custom &__content:is(&-error) {
-      @apply bg-transparent text-white p-0;
-    }
+      svg {
+        width    : 1em;
+        min-width: 1em;
+        height   : 1em;
 
-    &-custom &__slide.has-iframe &__content {
-      @apply p-0;
-    }
-
-    &-custom &__content {
-      &>.f-button.is-close-btn {
-        @apply top-2 right-2 bg-white text-black rounded-full shadow-md;
+        @apply block object-none;
       }
     }
   }
+}
 
-  .swiper {
-    &-pagination {
-      @apply flex items-center justify-center static gap-4;
-
-      & &-bullet {
-        @apply bg-current rounded-full size-3 !m-0 transition;
-      }
-    }
-
-    &-button {
-
-      &-prev,
-      &-next {
-        &::after {
-          @apply hidden;
-        }
-
-        svg {
-          width    : 1em;
-          min-width: 1em;
-          height   : 1em;
-
-          @apply block object-none;
-        }
-      }
-    }
-  }
-
-  #air-datepicker-global-container {
-    z-index: 1100;
-  }
+#air-datepicker-global-container {
+  z-index: 1100;
 }
