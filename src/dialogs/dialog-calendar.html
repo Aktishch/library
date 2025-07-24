@@ -3,6 +3,7 @@
   var picture = _.template(require('../components/picture.html').default)
   var loader = _.template(require('../components/loader.html').default)({icon})
   var preloader = require('../components/preloader.html').default
+  var loading = _.template(require('../components/loading.html').default)({preloader})
 %>
 
 <dialog class="w-full max-w-3xl px-5 py-10 text-black bg-white dark:bg-black dark:text-white rounded-xl">
@@ -22,4 +23,5 @@
       <% }) %>
     </div>
   </div>
+  <%= loading %>
 </dialog>

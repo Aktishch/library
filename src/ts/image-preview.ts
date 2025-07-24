@@ -13,10 +13,19 @@ export default (): void => {
     const input = label.querySelector('*[data-preview-input]') as HTMLInputElement
     const error = preview.querySelector('*[data-error]') as HTMLSpanElement
     const drag = preview.querySelector('*[data-preview-drag]') as HTMLDivElement
+    const requestUrl: string = image.dataset.previewImage
     let data = new DataTransfer() as DataTransfer
 
     const uploadFilesList = (): void => {
       input.files = data.files as FileList
+    }
+
+    const defaultState = (): void => {
+      image.src = ''
+      remove.disabled = true
+      label.classList.remove('pointer-events-none', 'opacity-50')
+      data = new DataTransfer() as DataTransfer
+      input.value = ''
     }
 
     const getImagePreview = (files: FileList): void => {
@@ -56,6 +65,27 @@ export default (): void => {
       }
     }
 
+    const urlImageToObject = async (): Promise<void> => {
+      await fetch(requestUrl)
+        .then((response: Response): Promise<Blob> => {
+          return response.ok ? response.blob() : null
+        })
+        .then((blob: Blob): void => {
+          if (blob && requestUrl !== '') {
+            const parts: string[] = requestUrl.split('/')
+            const name: string = parts[parts.length - 1]
+
+            data.items.add(new File([blob], name, { type: blob.type }))
+            uploadFilesList()
+            getImagePreview(input.files)
+          } else {
+            defaultState()
+          }
+        })
+    }
+
+    urlImageToObject()
+
     if (drag) {
       const dragEvents: string[] = ['dragenter', 'dragover', 'dragleave', 'drop']
 
@@ -92,12 +122,6 @@ export default (): void => {
       getImagePreview(files)
     }) as EventListener)
 
-    remove.addEventListener('click', ((): void => {
-      image.src = ''
-      remove.disabled = true
-      label.classList.remove('pointer-events-none', 'opacity-50')
-      data = new DataTransfer() as DataTransfer
-      input.value = ''
-    }) as EventListener)
+    remove.addEventListener('click', defaultState as EventListener)
   })
 }

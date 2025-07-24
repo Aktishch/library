@@ -24,6 +24,14 @@ Fancybox.defaults.autoFocus = false
 Fancybox.defaults.placeFocusBack = false
 window.Fancybox = Fancybox
 
+const loading = (container: HTMLDivElement): void => {
+  const loading = container.querySelector('*[data-loading]') as HTMLDivElement
+
+  if (!loading) return
+
+  setTimeout((): void => loading.remove(), 200)
+}
+
 export const dialog: FancyboxDialog = {
   open: (src: string): void => {
     window.Fancybox.show(
@@ -36,7 +44,10 @@ export const dialog: FancyboxDialog = {
       {
         dragToClose: false,
         on: {
-          done: (): void => loadMedia(),
+          done: (fancybox): void => {
+            loading(fancybox.container)
+            loadMedia()
+          },
         },
       }
     )
@@ -54,7 +65,10 @@ export const dialog: FancyboxDialog = {
         closeButton: false,
         backdropClick: false,
         on: {
-          done: (): void => loadMedia(),
+          done: (fancybox): void => {
+            loading(fancybox.container)
+            loadMedia()
+          },
         },
       }
     )
@@ -71,7 +85,10 @@ export default (): void => {
     dragToClose: false,
     defaultType: 'ajax',
     on: {
-      done: (): void => loadMedia(),
+      done: (fancybox): void => {
+        loading(fancybox.container)
+        loadMedia()
+      },
     },
   })
 
@@ -79,7 +96,8 @@ export default (): void => {
     dragToClose: false,
     defaultType: 'ajax',
     on: {
-      done: (): void => {
+      done: (fancybox): void => {
+        loading(fancybox.container)
         loadMedia()
         getStateSubmitBtn()
       },
@@ -90,7 +108,11 @@ export default (): void => {
     dragToClose: false,
     defaultType: 'ajax',
     on: {
-      done: (): void => imagePreview(),
+      done: (fancybox): void => {
+        loading(fancybox.container)
+        loadMedia()
+        imagePreview()
+      },
     },
   })
 
@@ -98,10 +120,11 @@ export default (): void => {
     dragToClose: false,
     defaultType: 'ajax',
     on: {
-      done: (): void => {
+      done: (fancybox): void => {
+        loading(fancybox.container)
+        loadMedia()
         createCalendar()
         filtering()
-        loadMedia()
       },
     },
   })

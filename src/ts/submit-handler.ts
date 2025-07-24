@@ -21,7 +21,7 @@ export const getStateSubmitBtn = (): void => {
   })
 }
 
-const formSubmitHandler = (event: Event): void => {
+const formSubmitHandler = async (event: Event): Promise<void> => {
   const form = event.target as HTMLFormElement
 
   switch (form.dataset.form) {
@@ -50,7 +50,7 @@ const formSubmitHandler = (event: Event): void => {
           submitBtn.disabled = true
           dialog.notClosing('./dialogs/dialog-preloader.html')
 
-          fetch(requestUrl, {
+          await fetch(requestUrl, {
             method: 'POST',
             body: formData,
           })

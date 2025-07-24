@@ -1,3 +1,8 @@
+<%
+  var preloader = require('../components/preloader.html').default
+  var loading = _.template(require('../components/loading.html').default)({preloader})
+%>
+
 <dialog class="w-full max-w-lg p-10 text-black bg-white dark:bg-black dark:text-white rounded-xl">
   <div class="flex flex-col items-center justify-center text-center">
     <h2 class="w-full pb-3 mb-3 text-lg font-semibold border-b border-black border-solid font-alt md:text-xl dark:border-white">
@@ -12,4 +17,5 @@
       <button class="px-10 btn btn-primary btn-lg btn-fill" data-negative data-waved="light">Нет</button>
     </div>
   </div>
+  <%= loading %>
 </dialog>

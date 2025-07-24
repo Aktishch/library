@@ -1,6 +1,8 @@
 <%
   var icon = _.template(require('../components/icon.html').default)
   var error = _.template(require('../components/error.html').default)
+  var preloader = require('../components/preloader.html').default
+  var loading = _.template(require('../components/loading.html').default)({preloader})
 %>
 
 <dialog class="w-full max-w-sm px-5 py-10 text-black bg-white dark:bg-black dark:text-white rounded-xl">
@@ -30,4 +32,5 @@
     <button class="btn btn-second btn-lg btn-fill" data-waved="dark" type="submit">Enter</button>
   </form>
   <a class="mx-auto mt-5 text-lg hover:underline underline-offset-4 text-second w-max" data-fancybox-dialog draggable="false" href="dialogs/dialog-politics.html">Privacy policy</a>
+  <%= loading %>
 </dialog>

@@ -459,9 +459,9 @@
             <div class="flex flex-col" data-label>
               <div class="relative mb-5">
                 <div class="transition pack pack-xl bg-second rounded-2xl" data-preview-drag>
-                  <%= picture({src: '', format: '', className: 'image object-scale-down', data: 'data-preview-image'}) %>
+                  <%= picture({src: '', format: '', className: 'image object-scale-down', data: 'data-preview-image="http://localhost:9000/img/pictures/town.jpg"'}) %>
                 </div>
-                <button class="absolute rounded-lg btn btn-gray btn-fill size-10 top-3 right-3" data-preview-remove data-waved="dark" type="button" disabled>
+                <button class="absolute rounded-lg btn btn-gray btn-fill size-10 top-3 right-3" data-preview-remove data-waved="dark" type="button">
                   <%= icon({id: 'trash', className: 'icon text-red text-2xl', data: null}) %>
                 </button>
                 <%= error({text: 'Загрузите изображение'}) %>

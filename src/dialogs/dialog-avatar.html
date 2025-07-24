@@ -1,6 +1,8 @@
 <%
   var icon = _.template(require('../components/icon.html').default)
   var picture = _.template(require('../components/picture.html').default)
+  var preloader = require('../components/preloader.html').default
+  var loading = _.template(require('../components/loading.html').default)({preloader})
   var error = _.template(require('../components/error.html').default)
 %>
 
@@ -24,4 +26,5 @@
       <button class="grow btn btn-second btn-lg btn-fade btn-contur" data-preview-remove data-waved="light" type="button" disabled>Удалить</button>
     </div>
   </form>
+  <%= loading %>
 </dialog>
