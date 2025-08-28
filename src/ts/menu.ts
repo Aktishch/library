@@ -4,7 +4,7 @@ import { touchDevice } from './utils'
 export default (): void => {
   const menu = document.getElementById('menu') as HTMLDivElement
 
-  if (!menu && !touchDevice()) return
+  if (!menu || !touchDevice()) return
 
   const value: number = 100
   let initialX: number

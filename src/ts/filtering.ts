@@ -11,6 +11,10 @@ type FilterHandler = {
   plug: HTMLDivElement
 }
 
+const addTransition = (item: HTMLDivElement): void => {
+  item.classList.add('transition', 'ease-linear')
+}
+
 const filterCardsShowing = ({ condition, item }: FilterCardsShowing): void => {
   if (condition) {
     item.classList.add('hidden', 'translate-y-10', 'opacity-0')
@@ -21,18 +25,18 @@ const filterCardsShowing = ({ condition, item }: FilterCardsShowing): void => {
 }
 
 const filterHandler = ({ name, cards, plug }: FilterHandler): void => {
-  let hidden: number = 0
-
   cards.forEach((card: HTMLDivElement): void => {
     const absence: boolean = String(card.dataset.filteringValue).split(' ').includes(name) === false
     const showAll: boolean = name.toLowerCase() === 'all'
 
     filterCardsShowing({ condition: absence && !showAll, item: card })
-
-    if (absence && !showAll) ++hidden
   })
 
-  if (plug) filterCardsShowing({ condition: hidden !== cards.length, item: plug })
+  const allHidden: boolean = ([...cards] as HTMLDivElement[]).every((card: HTMLDivElement) =>
+    card.classList.contains('hidden')
+  )
+
+  if (plug) filterCardsShowing({ condition: !allHidden, item: plug })
 }
 
 export default (): void => {
@@ -76,8 +80,10 @@ export default (): void => {
     cards.forEach((card: HTMLDivElement): void => {
       if (!card) return
 
-      card.classList.add('transition', 'ease-linear')
+      addTransition(card)
     })
+
+    if (plug) addTransition(plug)
 
     currentCard(currentCategory())
 
