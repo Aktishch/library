@@ -65,7 +65,7 @@
         <%= picture({src: 'img/pictures/logo', format: 'png', className: 'block w-full', data: null}) %>
       </a>
       <nav class="items-center justify-between hidden w-full max-w-4xl gap-4 ml-auto lg:flex">
-        <% _.forEach((nav.pages), (item) => { %>
+        <% nav.pages.forEach((item) => { %>
         <a class="p-1 text-sm font-normal uppercase btn btn-second hover:underline underline-offset-4" data-waved="light" draggable="false" href="<%= item.link %>"><%= item.text %></a>
         <% }) %>
         <div class="relative group/accordion" data-accordion data-close-scroll>
@@ -75,7 +75,7 @@
           </button>
           <div class="absolute right-0 w-full bg-white rounded-lg shadow-md top-10" data-accordion-content>
             <div class="flex flex-col gap-4 p-4">
-              <% _.forEach((nav.blocks), (item) => { %>
+              <% nav.blocks.forEach((item) => { %>
               <a class="text-sm btn btn-gray hover:underline underline-offset-4" data-waved="dark" data-scroll draggable="false" href="<%= item.id %>"><%= item.text %></a>
               <% }) %>
             </div>
@@ -151,7 +151,7 @@
           </button>
         </div>
         <div class="flex flex-col items-start gap-4 px-4 pt-4 pb-10 text-white transition-[opacity,_visibility,_transform] duration-700 delay-500 group-[[data-sidebar=close]]/menu:invisible group-[[data-sidebar=close]]/menu:opacity-0 group-[[data-sidebar=close]]/menu:-translate-x-full">
-          <% _.forEach((nav.pages), (item) => { %>
+          <% nav.pages.forEach((item) => { %>
           <a class="text-xl hover:underline underline-offset-4" draggable="false" href="<%= item.link %>"><%= item.text %></a>
           <% }) %>
           <div class="group/accordion" data-accordion data-close-click>
@@ -161,7 +161,7 @@
             </button>
             <div data-accordion-content>
               <div class="flex flex-col items-start gap-2 pl-5 mt-2">
-                <% _.forEach((nav.blocks), (item) => { %>
+                <% nav.blocks.forEach((item) => { %>
                 <a class="text-lg hover:underline underline-offset-4" data-scroll draggable="false" href="<%= item.id %>"><%= item.text %></a>
                 <% }) %>
               </div>
@@ -171,7 +171,7 @@
         <div class="px-4 pt-4 pb-10 mt-auto transition-[opacity,_visibility,_transform] duration-500 delay-1000 group-[[data-sidebar=close]]/menu:invisible group-[[data-sidebar=close]]/menu:opacity-0 group-[[data-sidebar=close]]/menu:translate-y-1/4">
           <div class="text-white mb-7" data-pallete>
             <ul class="flex flex-col gap-4 mb-8">
-              <% _.forEach((pallete), (item) => { %>
+              <% pallete.forEach((item) => { %>
               <li class="flex items-center justify-between gap-5" data-pallete-item>
                 <span><%= item.text %></span>
                 <input class="ml-auto bg-transparent cursor-pointer size-7 shrink-0" data-pallete-input="<%= item.name %>" type="color" value="<%= item.value %>">
@@ -182,7 +182,7 @@
             <button class="w-full btn btn-second btn-lg btn-fill" data-pallete-reset data-waved="dark">Сбросить всё</button>
           </div>
           <div class="flex items-center justify-center gap-4">
-            <% _.forEach((social), (item) => { %>
+            <% social.forEach((item) => {  %>
             <a class="rounded-full btn btn-second" data-waved="dark" draggable="false" href="javascript: ;">
               <%= icon({id: item, className: 'icon text-3xl', data: null}) %>
             </a>
@@ -196,7 +196,7 @@
 
     <nav class="fixed z-20 flex flex-col items-center justify-center rounded-full pointer-events-none select-none bottom-2 -left-12 size-48 touch-none" data-social="0.7" data-draggable>
       <div class="absolute inset-0 transition duration-300 ease-in-out rounded-full pointer-events-auto bg-primary bg-opacity-30 [&:not([data-social-round=show])]:scale-0 [&:not([data-social-round=show])]:-rotate-180 [&:not([data-social-round=show])]:opacity-0" data-social-round>
-        <% _.forEach((social), (item) => { %>
+        <% social.forEach((item) => { %>
         <a class="absolute rounded-full btn btn-second" data-social-link data-waved="dark" draggable="false" href="javascript: ;">
           <%= icon({id: item, className: 'icon text-3xl', data: null}) %>
         </a>

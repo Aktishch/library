@@ -15,7 +15,7 @@
       <div class="relative" id="calendar"></div>
     </div>
     <div class="w-full md:w-1/2">
-      <% _.forEach((['date-5-4', 'date-7-4', 'date-10-5']), (item) => { %>
+      <% ['date-5-9', 'date-7-9', 'date-10-10'].forEach((item) => { %>
       <div class="w-full filtering-card pack pack-md bg-gray rounded-2xl" data-filtering-card="calendar" data-filtering-value="<%= item %>">
         <%= loader %>
         <%= picture({src: 'img/pictures/town-grey', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>

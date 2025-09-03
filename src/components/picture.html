@@ -1,6 +1,8 @@
+<% var condition = format === 'jpg' || format === 'png' %>
+
 <picture>
-  <% if (src !== '' && (format === 'jpg' || format === 'png')) { %>
+  <% if (src !== '' && condition) { %>
   <source srcset="<%= `${src}.webp` %>" type="image/webp">
   <% } %>
-  <img class="<%= className %>" <%= data %> draggable="false" loading="<%= format === 'jpg' ? 'lazy' : format === 'png' ? 'eager' : 'auto' %>" src="<%= src !== '' ? `${src}.${format}` : '' %>" alt="">
+  <img class="<%= className %>" <%= data %> draggable="false" <%= condition ? `loading="${format === 'jpg' ? 'lazy' : 'eager'}"` : null %> src="<%= src !== '' ? `${src}.${format}` : '' %>" alt="">
 </picture>

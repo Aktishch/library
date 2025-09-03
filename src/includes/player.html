@@ -19,7 +19,7 @@
       Playlist
     </h4>
     <div class="flex flex-col gap-4">
-      <% _.forEach((compositions), (item) => { %>
+      <% compositions.forEach((item) => { %>
       <div class="flex items-center gap-2">
         <button class="text-4xl rounded-full size-10 btn btn-primary btn-fade shrink-0" data-player-composition data-waved="dark">
           <%= icon({id: 'loading', className: 'icon hidden loading', data: 'data-player-loading'}) %>

@@ -31,7 +31,7 @@
     Columns and rows
   </h3>
   <div class="grid w-full grid-flow-row-dense grid-cols-2 gap-3 lg:grid-cols-3 md:gap-5 lg:gap-8">
-    <% _.forEach((['lg:row-5', 'lg:row-4', 'lg:row-5', 'lg:row-5', 'lg:row-4', 'lg:row-4']), (item) => { %>
+    <% ['lg:row-5', 'lg:row-4', 'lg:row-5', 'lg:row-5', 'lg:row-4', 'lg:row-4'].forEach((item) => { %>
     <div class="<%= item %> duration-1000 anim anim-circle" data-anim>
       <a class="h-full shadow-md pack pack-xl bg-grey dark:bg-dark rounded-xl" data-movement="light" data-fancybox="grid" draggable="false" href="img/pictures/town-grey.jpg">
         <%= loader %>
@@ -64,15 +64,13 @@
 
 <!-- Сортировка -->
 
-<% var filtering = ['all', 'primary', 'second', 'green', 'mix', 'none'] %>
-
 <section class="container flex flex-col items-center justify-center bg-white container-xs dark:bg-black">
   <h2 class="mb-5 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
     Sorting
   </h2>
   <div class="w-full max-w-xl mx-auto" data-filtering="sorting">
     <div class="relative flex flex-col gap-0 mb-5 overflow-hidden duration-500 md:items-center md:justify-between md:flex-row md:gap-4 bg-grey md:bg-opacity-0 text-second md:text-black dark:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-gray md:mb-10 md:pb-4 anim anim-up" data-anim>
-      <% _.forEach((filtering), (item, key) => { %>
+      <% ['all', 'primary', 'second', 'green', 'mix', 'none'].forEach((item, key) => { %>
       <button class="grow p-4 text-xl text-center cursor-pointer md:p-0 [&.filtering-active]:text-white [&.filtering-active]:bg-second [&.filtering-active]:pointer-events-none md:[&.filtering-active]:text-primary md:[&.filtering-active]:bg-opacity-0 <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="sorting" data-filtering-value="<%= item %>"><%= item %></button>
       <% }) %>
       <span class="absolute bottom-0 left-0 hidden h-1 transition-[left,_width] ease-linear rounded-t-lg md:block bg-primary" data-filtering-line="sorting"></span>

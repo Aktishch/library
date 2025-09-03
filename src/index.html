@@ -193,8 +193,6 @@
 
 <!-- Фильтр -->
 
-<% var filtering = ['text-style', 'form-validate', 'switches', 'file'] %>
-
 <% var numbers = [
   {
     text: 'text-4xl',
@@ -238,15 +236,15 @@
     <%= picture({src: 'img/pictures/circle-white', format: 'png', className: 'absolute z-10 -bottom-8 -right-8 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer="reverse" data-parallax-speed="4" data-parallax-depth="2"'}) %>
     <%= picture({src: 'img/pictures/circle-red', format: 'png', className: 'absolute z-10 bottom-0 -right-7 drop-shadow-md pointer-events-none w-16', data: 'data-smooth-layer="bottom" data-smooth-speed="1" data-smooth-depth="2"'}) %>
     <div class="relative flex flex-col gap-0 mb-5 overflow-hidden duration-500 md:items-center md:justify-between md:flex-row md:gap-4 bg-grey md:bg-opacity-0 text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white md:mb-10 md:pb-4 anim anim-up" data-anim>
-      <% _.forEach((filtering), (item, key) => { %>
-      <button class="grow p-4 text-xl md:p-0 [&.filtering-active]:text-white [&.filtering-active]:bg-second [&.filtering-active]:pointer-events-none md:[&.filtering-active]:text-primary md:[&.filtering-active]:bg-opacity-0 <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="filtering" data-filtering-value="<%= item %>"><%= item %></button>
+      <% ['text-style', 'form-validate', 'switches', 'file'].forEach((item, key) => { %>
+      <button class="grow p-4 text-xl md:p-0 [&.filtering-active]:text-white [&.filtering-active]:bg-second [&.filtering-active]:pointer-events-none md:[&.filtering-active]:text-primary md:[&.filtering-active]:bg-opacity-0 <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="filtering" data-filtering-value="<%= key %>"><%= item %></button>
       <% }) %>
       <span class="absolute bottom-0 left-0 hidden h-1 transition-[left,_width] ease-linear rounded-t-lg md:block bg-primary" data-filtering-line="filtering"></span>
     </div>
     <div class="text-black duration-500 bg-white shadow-md rounded-3xl p-7 md:p-10 anim anim-fade" data-anim>
-      <div data-filtering-card="filtering" data-filtering-value="text-style">
+      <div data-filtering-card="filtering" data-filtering-value="0">
         <ul class="flex flex-col gap-4 list-disc list-inside text-primary">
-          <% _.forEach((numbers), (item) => { %>
+          <% numbers.forEach((item) => { %>
           <li>
             <span class="text-second <%= item.text %>">
               --text-<span data-number="<%= item.value %>" data-number-step="1" data-number-time="2" data-number-fixed="0">0</span>
@@ -258,7 +256,7 @@
           <q class="px-3 py-1 font-semibold text-justify shadow-md text-lg/loose bg-grey box-decoration-clone rounded-2xl" data-record="Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis ex omnis, ut dolorem dolore enim expedita?" data-record-speed="50"></q>
         </p>
       </div>
-      <div data-filtering-card="filtering" data-filtering-value="form-validate">
+      <div data-filtering-card="filtering" data-filtering-value="1">
         <form class="flex flex-col w-full max-w-sm gap-5 mx-auto" data-form="submit" data-datepicker id="data-save">
           <input type="hidden" value="Главная" name="theme">
           <label data-label>
@@ -364,7 +362,7 @@
           <a class="text-lg cursor-pointer hover:underline underline-offset-4 text-second w-max" data-fancybox-dialog draggable="false" href="dialogs/dialog-politics.html">Privacy policy</a>
         </div>
       </div>
-      <div data-filtering-card="filtering" data-filtering-value="switches">
+      <div data-filtering-card="filtering" data-filtering-value="2">
         <div class="flex flex-col gap-6">
           <h4 class="text-2xl font-semibold">
             Checkbox:
@@ -441,7 +439,7 @@
           </div>
         </div>
       </div>
-      <div data-filtering-card="filtering" data-filtering-value="file">
+      <div data-filtering-card="filtering" data-filtering-value="3">
         <div class="w-full max-w-xs mx-auto" id="copy">
           <div class="flex items-center w-full gap-3 mb-5">
             <a class="w-10 rounded-full shrink-0 pack pack-xl bg-primary/40" data-fancybox-avatar draggable="false" href="dialogs/dialog-avatar.html">
@@ -497,7 +495,7 @@
 
 <!-- Параллакс -->
 
-<% var parallaxes = [
+<% var parallax = [
   {
     bg: 'https://i.ibb.co/JpJVJxq/Background',
     img: 'https://i.ibb.co/Dw3q3tZ/cutout'
@@ -517,13 +515,13 @@
     Parallax hovered
   </h2>
   <div class="flex flex-col items-center gap-5 lg:flex-row lg:justify-between md:gap-10">
-    <% _.forEach((parallaxes), (parallax) => { %>
+    <% parallax.forEach((item) => { %>
     <div class="w-72" data-parallax-hovered="600">
       <div class="transition-transform ease-linear pack pack-xxl bg-grey dark:bg-dark" data-parallax-item="10">
         <%= loader %>
-        <%= picture({src: parallax.bg, format: 'png', className: 'image', data: null}) %>
+        <%= picture({src: item.bg, format: 'png', className: 'image', data: null}) %>
         <div class="absolute transition-transform ease-linear border-8 border-solid inset-5 border-second" data-parallax-item="100"></div>
-        <%= picture({src: parallax.img, format: 'png', className: 'image transition-transform ease-linear', data: 'data-parallax-item="80"'}) %>
+        <%= picture({src: item.img, format: 'png', className: 'image transition-transform ease-linear', data: 'data-parallax-item="80"'}) %>
         <div class="absolute bottom-0 left-0 right-0 top-auto p-10 text-white transition-transform ease-linear pointer-events-none" data-parallax-item="160">
           <h2 class="mb-3 font-medium text-xl/tight">
             Hover me!
