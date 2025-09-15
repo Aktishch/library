@@ -10,7 +10,6 @@ const createAccordion = (accordion: HTMLDivElement): void => {
     const transitionDuration: number = duration ? Math.max(scrollHeight / 2, 100) : 0
 
     content.style.height = `${scrollHeight}px`
-    content.style.transitionProperty = 'height'
     content.style.transitionDuration = `${transitionDuration}ms`
 
     if (accordion.dataset.accordion === 'active') {
@@ -19,14 +18,15 @@ const createAccordion = (accordion: HTMLDivElement): void => {
         content.classList.remove('overflow-hidden')
       }, transitionDuration)
     } else {
-      content.classList.add('overflow-hidden')
       timeOut = setTimeout((): void => {
         content.style.height = '0'
+        content.classList.add('overflow-hidden')
       }, transitionDuration)
     }
   }
 
   toggle.classList.add('cursor-pointer')
+  content.style.transitionProperty = 'height'
   setAccordionHeight(false)
 
   toggle.addEventListener('click', ((): void => {
