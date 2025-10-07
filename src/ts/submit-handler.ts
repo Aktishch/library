@@ -52,9 +52,9 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
 
       switch (form.dataset.form) {
         case 'submit': {
-          requestUrl = './ajax/submit-handler.php'
+          requestUrl = '/ajax/submit-handler.php'
           submitBtn.disabled = true
-          dialog.notClosing('./dialogs/dialog-preloader.html')
+          dialog.notClosing('/dialogs/dialog-preloader.html')
 
           await fetch(requestUrl, {
             method: 'POST',
@@ -65,7 +65,7 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
             })
             .then((response): void => {
               dialog.close()
-              dialog.open(response.status ? './dialogs/dialog-success.html' : './dialogs/dialog-error.html')
+              dialog.open(response.status ? '/dialogs/dialog-success.html' : '/dialogs/dialog-error.html')
               form.reset()
               submitBtn.disabled = false
 
@@ -97,7 +97,7 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
         }
 
         case 'params': {
-          requestUrl = `./dialogs/dialog-authorization.html?${queryString}`
+          requestUrl = `/dialogs/dialog-authorization.html?${queryString}`
           dialog.close()
           dialog.open(requestUrl)
           break

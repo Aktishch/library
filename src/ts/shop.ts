@@ -50,7 +50,7 @@ export default (): void => {
     inShop.style.left = `${coordinates.left}px`
     inShop.innerHTML = `
       <svg class="icon text-second">
-        <use xlink:href="img/icons.svg#basket"></use>
+        <use xlink:href="/img/icons.svg#basket"></use>
       </svg>`
     body.appendChild(inShop)
     setTimeout((): void => inShop.remove(), 2000)

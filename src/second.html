@@ -33,9 +33,9 @@
   <div class="grid w-full grid-flow-row-dense grid-cols-2 gap-3 lg:grid-cols-3 md:gap-5 lg:gap-8">
     <% ['lg:row-5', 'lg:row-4', 'lg:row-5', 'lg:row-5', 'lg:row-4', 'lg:row-4'].forEach((item) => { %>
     <div class="<%= item %> duration-1000 anim anim-circle" data-anim>
-      <a class="h-full shadow-md pack pack-xl bg-grey dark:bg-dark rounded-xl" data-movement="light" data-fancybox="grid" draggable="false" href="img/pictures/town-grey.jpg">
+      <a class="h-full shadow-md pack pack-xl bg-grey dark:bg-dark rounded-xl" data-movement="light" data-fancybox="grid" draggable="false" href="/img/pictures/town-grey.jpg">
         <%= loader %>
-        <%= picture({src: 'img/pictures/town-grey', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>
+        <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>
       </a>
     </div>
     <% }) %>
@@ -51,9 +51,9 @@
   <div class="relative w-full overflow-hidden duration-500 bg-grey dark:bg-dark rounded-2xl anim anim-fade" data-anim data-compare>
     <%= loader %>
     <div class="absolute z-10 w-1/2 h-full pack pack-xs" data-compare-before>
-      <%= picture({src: 'img/pictures/town-grey', format: 'jpg', className: 'image', data: 'data-compare-image'}) %>
+      <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'image', data: 'data-compare-image'}) %>
     </div>
-    <%= picture({src: 'img/pictures/town', format: 'jpg', className: 'block relative rounded-inherit w-full h-full', data: null}) %>
+    <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'block relative rounded-inherit w-full h-full', data: null}) %>
     <div class="flex items-center justify-center absolute top-0 bottom-0 left-2/4 z-20 bg-white dark:bg-black -translate-x-1/2 w-1 h-[95%] my-auto" data-compare-change>
       <button class="rounded-full btn btn-primary btn-fill cursor-col-resize size-12 shrink-0">
         <%= icon({id: 'arrows', className: 'icon text-xl', data: null}) %>
@@ -145,7 +145,7 @@
     <% for (var i = 0; i < 3; i++) { %>
     <ul class="postcards-item">
       <% for (var j = 0; j < 9; j++) { %>
-      <li class="postcards-particle" data-bg="img/pictures/town.jpg"></li>
+      <li class="postcards-particle" data-bg="/img/pictures/town.jpg"></li>
       <% } %>
     </ul>
     <% } %>
@@ -161,7 +161,7 @@
   <div class="p-5 duration-500 bg-grey dark:bg-dark rounded-3xl lg:p-10 anim anim-fade" data-anim id="country">
     <%= worldMap %>
     <div class="flex items-center justify-center mt-5 md:mt-10">
-      <%= picture({src: 'img/pictures/russia', format: 'svg', className: 'block w-10 md:w-12 mr-5', data: 'data-world-flag'}) %>
+      <%= picture({src: '/img/pictures/russia', format: 'svg', className: 'block w-10 md:w-12 mr-5', data: 'data-world-flag'}) %>
       <h4 class="text-lg font-bold md:text-2xl" data-world-title>
         Россия
       </h4>

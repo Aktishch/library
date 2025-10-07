@@ -41,10 +41,10 @@ export default (): void => {
 
           if (preview.dataset.preview === 'avatar') {
             const formData = new FormData(preview) as FormData
-            const requestUrl: string = './ajax/submit-handler.php'
+            const requestUrl: string = '/ajax/submit-handler.php'
             const avatar = document.querySelector('*[data-avatar]') as HTMLImageElement
 
-            dialog.notClosing('./dialogs/dialog-preloader.html')
+            dialog.notClosing('/dialogs/dialog-preloader.html')
 
             fetch(requestUrl, {
               method: 'POST',

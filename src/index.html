@@ -19,7 +19,7 @@
 <!-- <%= data.title %> -->
 
 <section class="container flex flex-col items-center justify-center bg-white dark:bg-black min-h-[500px] xl:min-h-[600px]" id="header">
-  <%= picture({src: 'img/pictures/logo', format: 'svg', className: 'block mb-10 duration-1000 anim anim-up', data: 'data-anim'}) %>
+  <%= picture({src: '/img/pictures/logo', format: 'svg', className: 'block mb-10 duration-1000 anim anim-up', data: 'data-anim'}) %>
   <h1 class="mb-5 font-bold text-center duration-500 delay-200 text-5xl/tight font-alt lg:text-6xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
     Main block
   </h1>
@@ -52,7 +52,7 @@
       <article class="shadow-md card transition-shadow hover:shadow-xl dark:bg-black">
         <div class="pack pack-md bg-grey dark:bg-dark rounded-t-inherit" data-movement="light">
           <%= loader %>
-          <%= picture({src: 'img/pictures/town', format: 'jpg', className: 'pack-image image rounded-t-inherit', data: null}) %>
+          <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'pack-image image rounded-t-inherit', data: null}) %>
         </div>
         <div class="px-3 py-5 card-content md:px-5">
           <h4 class="mb-4 font-semibold text-2xl/tight font-alt">
@@ -73,7 +73,7 @@
           <div class="shadow-md card transition-shadow hover:shadow-xl dark:bg-black">
             <div class="pack pack-xs bg-grey dark:bg-dark rounded-t-inherit">
               <%= loader %>
-              <%= picture({src: 'img/pictures/town-grey', format: 'jpg', className: 'image rounded-t-inherit', data: null}) %>
+              <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'image rounded-t-inherit', data: null}) %>
             </div>
             <div class="px-3 py-5 card-content md:px-5">
               <h4 class="font-semibold text-2xl/tight font-alt">
@@ -224,7 +224,7 @@
   }
 ] %>
 
-<section class="container flex flex-col items-center min-h-screen overflow-hidden text-white bg-white bg-center bg-no-repeat bg-cover dark:bg-black" data-smooth-wrapper data-parallax data-section data-bg="img/pictures/town-grey.jpg" data-bg-webp="img/pictures/town-grey.webp">
+<section class="container flex flex-col items-center min-h-screen overflow-hidden text-white bg-white bg-center bg-no-repeat bg-cover dark:bg-black" data-smooth-wrapper data-parallax data-section data-bg="/img/pictures/town-grey.jpg" data-bg-webp="/img/pictures/town-grey.webp">
   <h2 class="mb-3 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight anim anim-up" data-anim data-movement="blend">
     Filter
   </h2>
@@ -232,9 +232,9 @@
     paralax, form and other...
   </h3>
   <div class="relative w-full max-w-xl mx-auto" data-filtering="filtering">
-    <%= picture({src: 'img/pictures/circle-grey', format: 'png', className: 'absolute z-10 top-20 -left-8 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer data-parallax-speed="4" data-parallax-depth="2"'}) %>
-    <%= picture({src: 'img/pictures/circle-white', format: 'png', className: 'absolute z-10 -bottom-8 -right-8 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer="reverse" data-parallax-speed="4" data-parallax-depth="2"'}) %>
-    <%= picture({src: 'img/pictures/circle-red', format: 'png', className: 'absolute z-10 bottom-0 -right-7 drop-shadow-md pointer-events-none w-16', data: 'data-smooth-layer="bottom" data-smooth-speed="1" data-smooth-depth="2"'}) %>
+    <%= picture({src: '/img/pictures/circle-grey', format: 'png', className: 'absolute z-10 top-20 -left-8 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer data-parallax-speed="4" data-parallax-depth="2"'}) %>
+    <%= picture({src: '/img/pictures/circle-white', format: 'png', className: 'absolute z-10 -bottom-8 -right-8 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer="reverse" data-parallax-speed="4" data-parallax-depth="2"'}) %>
+    <%= picture({src: '/img/pictures/circle-red', format: 'png', className: 'absolute z-10 bottom-0 -right-7 drop-shadow-md pointer-events-none w-16', data: 'data-smooth-layer="bottom" data-smooth-speed="1" data-smooth-depth="2"'}) %>
     <div class="relative flex flex-col gap-0 mb-5 overflow-hidden duration-500 md:items-center md:justify-between md:flex-row md:gap-4 bg-grey md:bg-opacity-0 text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white md:mb-10 md:pb-4 anim anim-up" data-anim>
       <% ['text-style', 'form-validate', 'switches', 'file'].forEach((item, key) => { %>
       <button class="grow p-4 text-xl md:p-0 [&.filtering-active]:text-white [&.filtering-active]:bg-second [&.filtering-active]:pointer-events-none md:[&.filtering-active]:text-primary md:[&.filtering-active]:bg-opacity-0 <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="filtering" data-filtering-value="<%= key %>"><%= item %></button>
@@ -359,7 +359,7 @@
           <button class="btn btn-second btn-lg btn-fill" data-waved="dark" type="submit">Submit</button>
         </form>
         <div class="flex items-center justify-center mt-5">
-          <a class="text-lg cursor-pointer hover:underline underline-offset-4 text-second w-max" data-fancybox-dialog draggable="false" href="dialogs/dialog-politics.html">Privacy policy</a>
+          <a class="text-lg cursor-pointer hover:underline underline-offset-4 text-second w-max" data-fancybox-dialog draggable="false" href="/dialogs/dialog-politics.html">Privacy policy</a>
         </div>
       </div>
       <div data-filtering-card="filtering" data-filtering-value="2">
@@ -442,7 +442,7 @@
       <div data-filtering-card="filtering" data-filtering-value="3">
         <div class="w-full max-w-xs mx-auto" id="copy">
           <div class="flex items-center w-full gap-3 mb-5">
-            <a class="w-10 rounded-full shrink-0 pack pack-xl bg-primary/40" data-fancybox-avatar draggable="false" href="dialogs/dialog-avatar.html">
+            <a class="w-10 rounded-full shrink-0 pack pack-xl bg-primary/40" data-fancybox-avatar draggable="false" href="/dialogs/dialog-avatar.html">
               <div class="absolute inset-0 flex items-center justify-center">
                 <%= icon({id: 'user', className: 'icon text-white text-sm', data: null}) %>
               </div>
@@ -478,9 +478,9 @@
               <button class="w-full px-10 btn btn-gray btn-lg btn-fill" data-copy-button data-waved="dark">Copy</button>
               <span class="absolute left-0 right-0 invisible text-sm transition-[opacity,_visibility] opacity-0 top-full text-primary" data-copy-result>Скопировано</span>
             </div>
-            <a class="btn btn-gray btn-lg btn-fill" data-waved="dark" data-fancybox-calendar draggable="false" href="dialogs/dialog-calendar.html">Calendar</a>
+            <a class="btn btn-gray btn-lg btn-fill" data-waved="dark" data-fancybox-calendar draggable="false" href="/dialogs/dialog-calendar.html">Calendar</a>
             <div class="relative" data-rendering="SL-QGLZC-KHQDJ2H">
-              <canvas class="hidden" data-rendering-canvas="img/pictures/certificate.jpg" width="540" height="750"></canvas>
+              <canvas class="hidden" data-rendering-canvas="/img/pictures/certificate.jpg" width="540" height="750"></canvas>
               <a class="btn btn-gray btn-lg btn-fill" data-rendering-download data-waved="dark" draggable="false" href="" download="certificate">Download canvas</a>
             </div>
             <div data-cookie="/" data-expires="7" id="cookie">

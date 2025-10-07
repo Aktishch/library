@@ -40,7 +40,7 @@ export default (): void => {
         },
         {
           iconLayout: 'default#image',
-          iconImageHref: './img/pictures/point.svg',
+          iconImageHref: '/img/pictures/point.svg',
           iconImageSize: [62, 62],
           iconImageOffset: [-31, -31],
         }

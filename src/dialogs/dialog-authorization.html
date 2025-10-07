@@ -6,7 +6,7 @@
 %>
 
 <dialog class="w-full max-w-sm px-5 py-10 text-black bg-white dark:bg-black dark:text-white rounded-xl">
-  <form class="flex flex-col gap-5" data-form action="primary.html">
+  <form class="flex flex-col gap-5" data-form action="/primary.html">
     <input type="hidden" value="Авторизация" name="theme">
     <label data-label>
       <h5 class="mb-3 font-medium text-xl/none">
@@ -24,13 +24,13 @@
       <div class="relative">
         <input class="pr-10 input input-gray input-md" data-input="password" type="password" placeholder="********" autocomplete="new-password" name="password">
         <%= error({text: 'Неверный пароль'}) %>
-        <button class="absolute top-0 bottom-0 right-0 flex items-center justify-center w-10 h-full cursor-pointer" data-password="/" type="button">
+        <button class="absolute top-0 bottom-0 right-0 flex items-center justify-center w-10 h-full cursor-pointer" data-password="" type="button">
           <%= icon({id: 'eye-visible', className: 'icon text-black text-xl', data: null}) %>
         </button>
       </div>
     </label>
     <button class="btn btn-second btn-lg btn-fill" data-waved="dark" type="submit">Enter</button>
   </form>
-  <a class="mx-auto mt-5 text-lg hover:underline underline-offset-4 text-second w-max" data-fancybox-dialog draggable="false" href="dialogs/dialog-politics.html">Privacy policy</a>
+  <a class="mx-auto mt-5 text-lg hover:underline underline-offset-4 text-second w-max" data-fancybox-dialog draggable="false" href="/dialogs/dialog-politics.html">Privacy policy</a>
   <%= loading %>
 </dialog>

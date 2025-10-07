@@ -42,7 +42,7 @@ export default (): void => {
     map.appendChild(image)
     map.appendChild(rect)
     map.appendChild(text)
-    image.setAttribute('href', 'img/pictures/flag.svg')
+    image.setAttribute('href', '/img/pictures/flag.svg')
     image.setAttribute('y', `${positionY - (image.getBoundingClientRect().height * ratio) / 1.2}`)
     image.setAttribute('x', `${positionX}`)
     text.innerHTML = String(country.dataset.worldCountry)

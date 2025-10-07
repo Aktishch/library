@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="autor" content="//STDKIT">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/img/favicon/favicon.ico" type="image/x-icon">
   <title><%= data.title %></title>
 </head>
 
@@ -62,7 +62,7 @@
 
     <header class="container fixed top-0 left-0 right-0 z-30 flex items-center justify-between gap-5 py-4 transition-transform duration-300 bg-black" data-header>
       <a class="btn btn-white w-36 shrink-0" data-waved="light" draggable="false" href="/">
-        <%= picture({src: 'img/pictures/logo', format: 'png', className: 'block w-full', data: null}) %>
+        <%= picture({src: '/img/pictures/logo', format: 'png', className: 'block w-full', data: null}) %>
       </a>
       <nav class="items-center justify-between hidden w-full max-w-4xl gap-4 ml-auto lg:flex">
         <% nav.pages.forEach((item) => { %>
@@ -143,7 +143,7 @@
       <div class="flex flex-col bg-black/70 overflow-auto backdrop-blur-sm w-full max-w-[375px] h-full transition-[opacity,_visibility,_transform] duration-300 group-[[data-sidebar=close]]/menu:invisible group-[[data-sidebar=close]]/menu:opacity-0 group-[[data-sidebar=close]]/menu:-translate-x-full">
         <div class="flex items-center justify-between gap-2 p-4 transition-transform duration-500 delay-300 bg-black group-[[data-sidebar=close]]/menu:-translate-y-full">
           <a class="btn btn-white w-36 shrink-0" data-waved="light" draggable="false" href="/">
-            <%= picture({src: 'img/pictures/logo', format: 'png', className: 'block w-full', data: null}) %>
+            <%= picture({src: '/img/pictures/logo', format: 'png', className: 'block w-full', data: null}) %>
           </a>
           <input class="switch switch-toggle" data-theme-toggle type="checkbox">
           <button class="p-1 btn btn-second" data-sidebar-close="menu" data-waved="light">
@@ -235,7 +235,7 @@
       </div>
       <div class="flex items-center mb-4">
         <div class="w-full mr-5 rounded pack pack-xl bg-grey max-w-24 shrink-0">
-          <%= picture({src: 'img/pictures/town', format: 'jpg', className: 'image rounded-inherit', data: 'data-shop-image'}) %>
+          <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'image rounded-inherit', data: 'data-shop-image'}) %>
         </div>
         <div class="flex flex-col">
           <b class="mb-3 text-lg md:text-xl" data-shop-name>Name 4</b>
