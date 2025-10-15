@@ -95,7 +95,7 @@
       <div class="flex items-center justify-between gap-4">
         <form class="grow" data-form action="primary.html">
           <div class="relative" data-label>
-            <input class="pl-11 input input-gray input-lg" data-input type="search" placeholder="Поиск..." list="search" name="search">
+            <input class="pl-11 input input-gray input-lg dark:input-fade" data-input type="search" placeholder="Поиск..." list="search" name="search">
             <%= error({text: 'Заполните это поле'}) %>
             <datalist id="search">
               <option>Milk</option>
@@ -104,7 +104,7 @@
               <option>Potatoes</option>
             </datalist>
             <button class="absolute top-0 bottom-0 left-0 flex items-center justify-center h-full cursor-pointer w-11" type="submit">
-              <%= icon({id: 'search', className: 'icon text-black/30 text-xl', data: null}) %>
+              <%= icon({id: 'search', className: 'icon text-xl opacity-30', data: null}) %>
             </button>
           </div>
         </form>

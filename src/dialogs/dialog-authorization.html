@@ -13,7 +13,7 @@
         Login
       </h5>
       <div class="relative">
-        <input class="input input-gray input-md" data-input="login" type="text" name="login">
+        <input class="input input-gray input-md dark:input-fade" data-input="login" type="text" name="login">
         <%= error({text: 'Неверный логин'}) %>
       </div>
     </label>
@@ -22,7 +22,7 @@
         Password
       </h5>
       <div class="relative">
-        <input class="pr-10 input input-gray input-md" data-input="password" type="password" placeholder="********" autocomplete="new-password" name="password">
+        <input class="pr-10 input input-gray input-md dark:input-fade" data-input="password" type="password" placeholder="********" autocomplete="new-password" name="password">
         <%= error({text: 'Неверный пароль'}) %>
         <button class="absolute top-0 bottom-0 right-0 flex items-center justify-center w-10 h-full cursor-pointer" data-password="" type="button">
           <%= icon({id: 'eye-visible', className: 'icon text-black text-xl', data: null}) %>

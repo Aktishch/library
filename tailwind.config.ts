@@ -1,9 +1,7 @@
 import type { Config } from 'tailwindcss'
 
-const createColor = (variable: string): any => {
-  return ({ opacityValue }: { opacityValue: undefined | number }): string => {
-    return `rgba(var(--color-${variable}), ${opacityValue !== undefined ? opacityValue : 1})`
-  }
+const createColor = (variable: string): string => {
+  return `rgba(var(--color-${variable}), <alpha-value>)`
 }
 
 module.exports = {
@@ -116,6 +114,6 @@ module.exports = {
     require('./plugins/input'),
     require('./plugins/button'),
     require('./plugins/animation'),
-    require('./plugins/pointer-coarse'),
+    require('./plugins/pointer'),
   ],
 } satisfies Config

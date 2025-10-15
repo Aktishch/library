@@ -1,6 +1,11 @@
-const plugin = require('tailwindcss/plugin')
+import plugin from 'tailwindcss/plugin'
+import { PluginAPI } from 'tailwindcss/types/config'
 
-module.exports = plugin(({ addComponents, matchComponents, theme }) => {
+type PackSize = {
+  '--tw-pack-size': string
+}
+
+module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
   addComponents({
     '.pack': {
       display: 'block',
@@ -25,7 +30,7 @@ module.exports = plugin(({ addComponents, matchComponents, theme }) => {
   })
   matchComponents(
     {
-      pack: (size) => {
+      pack: (size: number): PackSize => {
         return { '--tw-pack-size': `${size}%` }
       },
     },

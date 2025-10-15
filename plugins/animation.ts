@@ -1,15 +1,24 @@
-const plugin = require('tailwindcss/plugin')
+import plugin from 'tailwindcss/plugin'
+import { PluginAPI } from 'tailwindcss/types/config'
+
+type Animation = {
+  [index: string]: {
+    [value: string]: string
+  }
+}
+
+type AnimationElement = [string, string]
 
 module.exports = plugin(
-  ({ addComponents, theme }) => {
-    let anim = {
+  ({ addComponents, theme }: PluginAPI): void => {
+    let anim: Animation = {
       '.anim': {
         transitionProperty: 'transform, opacity, visibility',
         transitionDuration: '300ms',
         transitionTimingFunction: 'ease',
       },
     }
-    let clipPath = {
+    let clipPath: Animation = {
       '.clip-path': {
         transitionProperty: 'clip-path',
         transitionDuration: '300ms',
@@ -17,17 +26,17 @@ module.exports = plugin(
         clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
       },
     }
-    Object.entries(theme('anim')).map(([key, value]) => {
+    Object.entries(theme('anim')).map(([key, value]: AnimationElement): void => {
       anim = {
         ...anim,
         [`.anim-${key}:not([data-anim="show"])`]: {
           transform: `${value}`,
           visibility: 'hidden',
-          opacity: 0,
+          opacity: '0',
         },
       }
     })
-    Object.entries(theme('clipPath')).map(([key, value]) => {
+    Object.entries(theme('clipPath')).map(([key, value]: AnimationElement): void => {
       clipPath = {
         ...clipPath,
         [`.clip-path-${key}:not([data-anim="show"])`]: {

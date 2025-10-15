@@ -1,26 +1,52 @@
-const plugin = require('tailwindcss/plugin')
-const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette')
-const { parseColor, formatColor } = require('tailwindcss/lib/util/color')
+import { formatColor, parseColor } from 'tailwindcss/lib/util/color'
+import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette'
+import plugin from 'tailwindcss/plugin'
+import { PluginAPI } from 'tailwindcss/types/config'
 
-module.exports = plugin(({ addComponents, matchComponents, theme }) => {
+type Color = {
+  mode: 'rgba'
+  color: string[]
+  alpha: string
+}
+
+type OpacityValue = {
+  fade: string
+  focus: string
+}
+
+type BtnColor = {
+  '--tw-btn-color': string
+  '--tw-btn-fade': string
+  '--tw-btn-focus': string
+}
+
+type BtnSize = {
+  '--tw-btn-size': string
+  borderRadius: string
+  height: string
+  paddingInline: string
+}
+
+module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
+  const opacityValue: OpacityValue = {
+    fade: '0.3',
+    focus: '0.4',
+  }
+
+  const getAlpha = (color: string, alpha: string = '1'): string => {
+    return String(theme(color).replace('<alpha-value>', alpha))
+  }
+
   addComponents({
     '.btn': {
       '*': {
         pointerEvents: 'none',
       },
-      '--tw-btn-color': theme('colors.black.DEFAULT'),
-      '--tw-btn-fade': formatColor({
-        mode: 'rgba',
-        color: parseColor(theme('colors.black.DEFAULT')).color,
-        alpha: 0.3,
-      }),
-      '--tw-btn-focus': formatColor({
-        mode: 'rgba',
-        color: parseColor(theme('colors.black.DEFAULT')).color,
-        alpha: 0.4,
-      }),
-      '--tw-btn-accent': theme('colors.white.DEFAULT'),
-      '--tw-btn-hovered': theme('colors.black.DEFAULT'),
+      '--tw-btn-color': getAlpha('colors.black.DEFAULT'),
+      '--tw-btn-fade': getAlpha('colors.black.DEFAULT', opacityValue.fade),
+      '--tw-btn-focus': getAlpha('colors.black.DEFAULT', opacityValue.focus),
+      '--tw-btn-accent': getAlpha('colors.white.DEFAULT'),
+      '--tw-btn-hovered': getAlpha('colors.black.DEFAULT'),
       '--tw-btn-fill': 'color-mix(in srgb, var(--tw-btn-color) 80%, var(--tw-btn-hovered))',
       color: 'var(--tw-btn-color)',
       fontSize: theme('fontSize.base'),
@@ -36,16 +62,12 @@ module.exports = plugin(({ addComponents, matchComponents, theme }) => {
       transitionTimingFunction: 'ease',
       cursor: 'pointer',
       '&:active': {
-        boxShadow: `inset 0 4px 4px ${formatColor({
-          mode: 'rgba',
-          color: parseColor(theme('colors.black.DEFAULT')).color,
-          alpha: 0.3,
-        })}`,
+        boxShadow: `inset 0 4px 4px ${getAlpha('colors.black.DEFAULT', opacityValue.fade)}`,
         transform: 'translateY(0.25rem)',
       },
       '&:disabled': {
         pointerEvents: 'none',
-        opacity: 0.5,
+        opacity: '0.5',
       },
       '&:focus-visible': {
         boxShadow: '0 0 0 4px var(--tw-btn-focus)',
@@ -101,20 +123,20 @@ module.exports = plugin(({ addComponents, matchComponents, theme }) => {
         border: '1px solid var(--tw-btn-color)',
       },
       '&-light': {
-        '--tw-btn-hovered': theme('colors.white.DEFAULT'),
+        '--tw-btn-hovered': getAlpha('colors.white.DEFAULT'),
       },
       '&-swipe': {
-        zIndex: 1,
+        zIndex: '1',
         overflow: 'hidden',
         '&::before': {
           content: theme('content.auto'),
           position: 'absolute',
-          zIndex: -1,
-          top: 0,
-          right: 0,
-          bottom: 0,
+          zIndex: '-1',
+          top: '0',
+          right: '0',
+          bottom: '0',
           left: 'auto',
-          width: 0,
+          width: '0',
           transition: 'width 200ms ease-in-out',
           backgroundColor: 'var(--tw-btn-color)',
         },
@@ -123,7 +145,7 @@ module.exports = plugin(({ addComponents, matchComponents, theme }) => {
             color: 'var(--tw-btn-accent)',
             backgroundColor: theme('colors.transparent'),
             '&::before': {
-              left: 0,
+              left: '0',
               width: '100%',
             },
           },
@@ -133,24 +155,24 @@ module.exports = plugin(({ addComponents, matchComponents, theme }) => {
   })
   matchComponents(
     {
-      btn: (color) => {
-        if (typeof color !== 'function') return null
+      btn: (color: string | (({}) => string)): BtnColor => {
+        if (typeof color === 'function') {
+          const value: string = color({})
+          const parsed: Color = parseColor(value)
 
-        const value = color({})
-        const parsed = parseColor(value)
-
-        return {
-          '--tw-btn-color': value,
-          '--tw-btn-fade': formatColor({
-            mode: 'rgba',
-            color: parsed.color,
-            alpha: 0.3,
-          }),
-          '--tw-btn-focus': formatColor({
-            mode: 'rgba',
-            color: parsed.color,
-            alpha: 0.4,
-          }),
+          return {
+            '--tw-btn-color': value,
+            '--tw-btn-fade': formatColor({
+              mode: 'rgba',
+              color: parsed.color,
+              alpha: opacityValue.fade,
+            } as Color),
+            '--tw-btn-focus': formatColor({
+              mode: 'rgba',
+              color: parsed.color,
+              alpha: opacityValue.focus,
+            } as Color),
+          }
         }
       },
     },
@@ -161,10 +183,10 @@ module.exports = plugin(({ addComponents, matchComponents, theme }) => {
   )
   matchComponents(
     {
-      btn: (constant) => {
+      btn: (constant: number): BtnSize => {
         return {
           '--tw-btn-size': `${constant / 16}rem`,
-          borderRadius: theme('borderRadius.md'),
+          borderRadius: String(theme('borderRadius.md')),
           height: 'var(--tw-btn-size)',
           paddingInline: `calc(var(--tw-btn-size) / 2)`,
         }
