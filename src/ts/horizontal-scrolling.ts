@@ -7,7 +7,7 @@ const setScrollingHeight = (): void => {
     if (!scrolling) return
 
     const horizontal = scrolling.querySelector('*[data-scrolling-horizontal]') as HTMLDivElement
-    const height: number = (horizontal.scrollWidth - horizontal.clientWidth) * 1.2
+    const height: number = horizontal.scrollWidth - horizontal.clientWidth
 
     scrolling.style.setProperty('--scroll-height', `${height}px`)
   })
@@ -24,7 +24,7 @@ const setHorizontalScrolling = (): void => {
     const offsetTop: number = scrolledPage().top
     const moving: number = (horizontal.scrollLeft / (horizontal.scrollWidth - horizontal.clientWidth)) * 20
 
-    horizontal.scrollLeft = offsetTop - scrolling.offsetTop
+    horizontal.scrollLeft = offsetTop + horizontal.offsetHeight - scrolling.offsetTop
 
     images.forEach((image: HTMLImageElement): void => {
       if (!image) return
