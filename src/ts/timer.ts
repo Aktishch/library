@@ -40,10 +40,10 @@ export default (): void => {
   const statusTimer = (): void => {
     if (active) {
       active = false
-      icon.setAttribute('xlink:href', '/img/icons.svg#play')
+      icon.setAttribute('href', '/img/icons.svg#play')
     } else {
       active = true
-      icon.setAttribute('xlink:href', '/img/icons.svg#pause')
+      icon.setAttribute('href', '/img/icons.svg#pause')
       setTime()
     }
   }
@@ -55,7 +55,7 @@ export default (): void => {
     hours = 0
     steps = 0
     units.innerText = '00:00:00'
-    icon.setAttribute('xlink:href', '/img/icons.svg#play')
+    icon.setAttribute('href', '/img/icons.svg#play')
   }
 
   setInterval((): void => {

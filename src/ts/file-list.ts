@@ -34,7 +34,7 @@ export default () => {
                 <span class="truncate">${file.name}</span>
                 <button class="btn btn-gray text-sm p-1" data-filelist-remove="${file.name}" data-waved="dark" type="button">
                   <svg class="icon">
-                    <use xlink:href="/img/icons.svg#close"></use>
+                    <use href="/img/icons.svg#close"></use>
                   </svg>
                 </button>`
               items.appendChild(item)

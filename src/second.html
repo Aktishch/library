@@ -6,7 +6,7 @@
 
   var icon = _.template(require('./components/icon.html').default)
   var picture = _.template(require('./components/picture.html').default)
-  var loader = _.template(require('./components/loader.html').default)({icon})
+  var loader = _.template(require('./components/loader.html').default)({icon, className: null})
   var preloader = require('./components/preloader.html').default
   var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
   var heading = _.template(require('./includes/heading.html').default)({data})

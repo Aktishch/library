@@ -61,10 +61,6 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
       transitionDuration: '200ms',
       transitionTimingFunction: 'ease',
       cursor: 'pointer',
-      '&:active': {
-        boxShadow: `inset 0 4px 4px ${getAlpha('colors.black.DEFAULT', opacityValue.fade)}`,
-        transform: 'translateY(0.25rem)',
-      },
       '&:disabled': {
         pointerEvents: 'none',
         opacity: '0.5',
@@ -76,6 +72,10 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
       '@media (hover)': {
         '&:hover': {
           backgroundColor: 'var(--tw-btn-fade)',
+        },
+        '&:active': {
+          boxShadow: `inset 0 4px 4px ${getAlpha('colors.black.DEFAULT', opacityValue.fade)}`,
+          transform: 'translateY(0.25rem)',
         },
       },
       '&-fill': {

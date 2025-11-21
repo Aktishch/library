@@ -93,21 +93,21 @@ const setPlayer = ({ id, playlist }: Player): void => {
       const compositionIcon = compositionStatus.querySelector('use') as SVGUseElement
 
       if (audio.played)
-        compositionIcon.setAttribute('xlink:href', key === index ? '/img/icons.svg#pause' : '/img/icons.svg#play')
+        compositionIcon.setAttribute('href', key === index ? '/img/icons.svg#pause' : '/img/icons.svg#play')
 
-      if (audio.paused) compositionIcon.setAttribute('xlink:href', '/img/icons.svg#play')
+      if (audio.paused) compositionIcon.setAttribute('href', '/img/icons.svg#play')
     }
   }
 
   const statusComposition = (): void => {
     if (audio.paused) {
       audio.play()
-      icon.setAttribute('xlink:href', '/img/icons.svg#pause')
+      icon.setAttribute('href', '/img/icons.svg#pause')
       currentComposition()
       condition.status = 'play'
     } else {
       audio.pause()
-      icon.setAttribute('xlink:href', '/img/icons.svg#play')
+      icon.setAttribute('href', '/img/icons.svg#play')
       currentComposition()
       condition.status = 'pause'
     }
@@ -259,7 +259,7 @@ const setPlayer = ({ id, playlist }: Player): void => {
   }
 
   const audioPause = (): void => {
-    icon.setAttribute('xlink:href', '/img/icons.svg#play')
+    icon.setAttribute('href', '/img/icons.svg#play')
     currentComposition()
   }
 
@@ -270,12 +270,12 @@ const setPlayer = ({ id, playlist }: Player): void => {
     if (volume.dataset.playerVolume === 'off') {
       volume.dataset.playerVolume = ''
       volumeStatus.classList.remove('opacity-50')
-      volumeIcon.setAttribute('xlink:href', '/img/icons.svg#volume-on')
+      volumeIcon.setAttribute('href', '/img/icons.svg#volume-on')
       audio.muted = false
     } else {
       volume.dataset.playerVolume = 'off'
       volumeStatus.classList.add('opacity-50')
-      volumeIcon.setAttribute('xlink:href', '/img/icons.svg#volume-off')
+      volumeIcon.setAttribute('href', '/img/icons.svg#volume-off')
       audio.muted = true
     }
   }
