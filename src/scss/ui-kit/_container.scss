@@ -1,47 +1,43 @@
 @layer components {
   .container {
     --container-padding: 40px;
-    --container-content: 100vw - 32px;
+    --container-value  : 100vw - 32px;
+    --container-content: var(--container-value);
 
     padding: var(--container-padding) calc(50% - ((var(--container-content)) / 2));
 
     @screen xs {
       &-xs {
-        --container-xs     : calc(theme("screens.xs") - 32.98px);
-        --container-content: var(--container-xs);
+        --container-value: calc(theme("screens.xs") - 32.98px);
       }
     }
 
     @screen sm {
       --container-padding: 50px;
-      --container-sm     : calc(theme("screens.sm") - 35.98px);
-      --container-content: var(--container-sm);
+      --container-value  : calc(theme("screens.sm") - 35.98px);
     }
 
     @screen md {
       --container-padding: 60px;
-      --container-md     : calc(theme("screens.md") - 47.98px);
-      --container-content: var(--container-md);
+      --container-value  : calc(theme("screens.md") - 47.98px);
     }
 
     @screen lg {
       --container-padding: 70px;
-      --container-lg     : calc(theme("screens.lg") - 51.98px);
-      --container-content: var(--container-lg);
+      --container-value  : calc(theme("screens.lg") - 51.98px);
     }
 
     @screen xl {
       --container-padding: 80px;
-      --container-xl     : calc(theme("screens.xl") - 135.98px);
-      --container-content: var(--container-xl);
+      --container-value  : calc(theme("screens.xl") - 135.98px);
+    }
 
-      &-distance {
-        --container-distance: 1.25rem;
-        --container-content : calc(var(--container-xl) + (var(--container-distance) * 2));
+    &-distance {
+      --container-distance: 1.25rem;
+      --container-content : calc(var(--container-value) + (var(--container-distance) * 2));
 
-        margin       : var(--container-distance);
-        border-radius: var(--container-distance);
-      }
+      margin       : var(--container-distance);
+      border-radius: var(--container-distance);
     }
   }
 }
