@@ -1,4 +1,5 @@
-import { media, scrolledPage } from './utils'
+import { media } from '../../plugins/media'
+import { scrolledPage } from './utils'
 
 const setScrollingHeight = (): void => {
   const scrollings = document.querySelectorAll('*[data-scrolling]') as NodeListOf<HTMLElement>

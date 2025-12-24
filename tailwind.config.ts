@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import { media } from './plugins/media'
 
 const createColor = (variable: string): string => {
   return `rgba(var(--color-${variable}), <alpha-value>)`
@@ -15,18 +16,18 @@ module.exports = {
   },
   theme: {
     screens: {
-      xs: '459.98px',
-      sm: '575.98px',
-      md: '767.98px',
-      lg: '991.98px',
-      xl: '1365.98px',
-      xxl: '2499.98px',
+      xs: `${media.xs}px`,
+      sm: `${media.sm}px`,
+      md: `${media.md}px`,
+      lg: `${media.lg}px`,
+      xl: `${media.xl}px`,
+      xxl: `${media.xxl}px`,
     },
     constants: {
       xs: 28,
       sm: 36,
       md: 40,
-      lg: 45,
+      lg: 48,
       xl: 56,
       xxl: 64,
     },

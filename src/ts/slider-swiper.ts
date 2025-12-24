@@ -1,7 +1,7 @@
 import Swiper from 'swiper'
 import { Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules'
+import { media } from '../../plugins/media'
 import { checkQuizSlide } from './quiz'
-import { media } from './utils'
 
 interface QuizSwiper extends Swiper {
   visibleSlides: [HTMLDivElement]

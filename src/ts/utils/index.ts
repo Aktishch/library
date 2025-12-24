@@ -1,7 +1,6 @@
 export * from './coordinates'
 export * from './file-handler'
 export * from './is-safari'
-export * from './media'
 export * from './scrollbar'
 export * from './scrolled-page'
 export * from './time-format'
