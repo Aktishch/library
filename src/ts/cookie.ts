@@ -1,3 +1,5 @@
+import { getCookies } from './utils'
+
 export default (): void => {
   const cookies = document.querySelectorAll('*[data-cookie]') as NodeListOf<HTMLElement>
 
@@ -13,14 +15,9 @@ export default (): void => {
       const button = cookie.querySelector('*[data-cookie-button]') as HTMLButtonElement
       const expires: number = Number(cookie.dataset.expires) || 7
       const path: string = String(cookie.dataset.cookie) || '/'
-      const date: string = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth(),
-        new Date().getDate() + expires
-      ).toUTCString()
 
       button.addEventListener('click', ((): void => {
-        document.cookie = `${value}=1; path=${path}; expires=${date}`
+        getCookies({ value, path, expires })
         cookie.remove()
       }) as EventListener)
     }

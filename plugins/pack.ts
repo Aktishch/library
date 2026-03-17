@@ -36,6 +36,7 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
     },
     {
       values: {
+        none: 0,
         xs: 50,
         sm: 60,
         md: 75,

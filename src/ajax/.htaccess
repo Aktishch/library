@@ -1,1 +1,1 @@
-ErrorDocument 404 https://localhost:9000/404.php
+ErrorDocument 404 https://localhost:9000/404/

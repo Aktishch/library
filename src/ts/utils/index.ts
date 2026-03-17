@@ -1,5 +1,6 @@
 export * from './coordinates'
 export * from './file-handler'
+export * from './get-cookies'
 export * from './is-safari'
 export * from './scrollbar'
 export * from './scrolled-page'
