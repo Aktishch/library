@@ -1,5 +1,7 @@
 import { scrolledPage } from './utils'
 
+const className: string[] = ['sm:-translate-y-full']
+
 export default (): void => {
   const header = document.querySelector('*[data-header]') as HTMLElement
 
@@ -11,9 +13,7 @@ export default (): void => {
     const currentOffsetTop: number = scrolledPage().top
 
     if (header.offsetHeight < currentOffsetTop) {
-      prevOffsetTop > currentOffsetTop
-        ? header.classList.remove('sm:-translate-y-full')
-        : header.classList.add('sm:-translate-y-full')
+      prevOffsetTop > currentOffsetTop ? header.classList.remove(...className) : header.classList.add(...className)
     }
 
     prevOffsetTop = currentOffsetTop

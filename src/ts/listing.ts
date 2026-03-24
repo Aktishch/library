@@ -1,3 +1,5 @@
+const className: string[] = ['hidden']
+
 export default (): void => {
   const listings = document.querySelectorAll('*[data-listing]') as NodeListOf<HTMLElement>
 
@@ -8,9 +10,7 @@ export default (): void => {
     const items = listing.querySelectorAll('*[data-listing-item]') as NodeListOf<HTMLDivElement>
 
     items.forEach((item: HTMLDivElement): void => {
-      if (!item) return
-
-      item.classList.add('hidden')
+      if (item) item.classList.add(...className)
     })
 
     show.addEventListener('click', ((): void => {
@@ -24,7 +24,7 @@ export default (): void => {
           if (item.hasAttribute('data-anim')) item.dataset.anim = 'show'
 
           item.removeAttribute('data-listing-item')
-          item.classList.remove('hidden')
+          item.classList.remove(...className)
         }
 
         if (!item || items.length === count) show.remove()

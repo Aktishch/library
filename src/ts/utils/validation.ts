@@ -1,6 +1,10 @@
+import { errors } from './errors'
 import { fileHandler } from './file-handler'
 
 type FormLabel = HTMLLabelElement | HTMLDivElement
+
+const inputClassName: string[] = ['input-error']
+const errorClassName: string[] = ['invisible', 'opacity-0']
 
 export const validation = (form: HTMLFormElement): boolean => {
   const labels = form.querySelectorAll('*[data-label]') as NodeListOf<FormLabel>
@@ -12,27 +16,28 @@ export const validation = (form: HTMLFormElement): boolean => {
     const input = label.querySelector('*[data-input]') as HTMLInputElement
     const error = label.querySelector('*[data-error]') as HTMLSpanElement
 
-    if (!input && !error) return
+    if (!input || !error) return
 
     const getError = (): void => {
       input.focus()
-      input.classList.add('input-error')
-      error.classList.remove('invisible', 'opacity-0')
+      input.classList.add(...inputClassName)
+      error.classList.remove(...errorClassName)
       validate = false
     }
 
     const hideError = (): void => {
-      input.classList.remove('input-error')
-      error.classList.add('invisible', 'opacity-0')
+      input.classList.remove(...inputClassName)
+      error.classList.add(...errorClassName)
     }
 
     const maxLengthInputTel = (value: number): void => {
       if (input.value.length > 0 && input.value.length < value) {
-        error.innerText = 'Введите корректный номер'
+        error.innerText = errors.tel
         getError()
       }
     }
 
+    error.innerText = errors.default
     input.value.length === 0 ? getError() : hideError()
 
     switch (input.dataset.input) {
@@ -52,44 +57,51 @@ export const validation = (form: HTMLFormElement): boolean => {
             maxLengthInputTel(18)
             break
           }
-
-          default: {
-            error.innerText = 'Введите ваш номер'
-            break
-          }
         }
 
         break
       }
 
       case 'email': {
-        if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,8})+$/.test(input.value)) getError()
+        if (!/^\s*([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,8})+\s*$/.test(input.value)) {
+          error.innerText = errors.email
+          getError()
+        }
+
         break
       }
 
       case 'login': {
-        if (!/^[a-zA-Z0-9]+$/.test(input.value)) getError()
+        if (!/^[a-zA-Z0-9]+$/.test(input.value)) {
+          error.innerText = errors.login
+          getError()
+        }
 
         break
       }
 
       case 'password': {
-        if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(input.value)) getError()
+        if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(input.value)) {
+          error.innerText = errors.password
+          getError()
+        }
 
         break
       }
 
       case 'select': {
-        if (input.value === 'empty') getError()
+        if (input.value === 'empty') {
+          error.innerText = errors.select
+          getError()
+        }
+
         break
       }
 
       case 'text': {
         if (input.value.length > 0 && input.value.length < 10) {
-          error.innerText = 'Введите не менее 10 символов'
+          error.innerText = errors.text
           getError()
-        } else {
-          error.innerText = 'Заполните это поле'
         }
 
         break
@@ -102,7 +114,7 @@ export const validation = (form: HTMLFormElement): boolean => {
         if (file && !fileHandler({ error, file })) {
           getError()
         } else {
-          error.innerText = 'Загрузите файл'
+          error.innerText = errors.file.default
         }
         break
       }

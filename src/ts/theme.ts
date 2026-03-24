@@ -1,6 +1,9 @@
+import { getCookies } from './utils'
+
 export default (): void => {
   const html = document.documentElement as HTMLHtmlElement
   const toggles = html.querySelectorAll('*[data-theme-toggle]') as NodeListOf<HTMLInputElement>
+  const value: string = 'cookie_theme_active'
 
   const togglesChecked = (check: boolean): void => {
     toggles.forEach((toggle: HTMLInputElement): void => {
@@ -11,16 +14,14 @@ export default (): void => {
   const variationTheme = (): void => {
     const status: boolean = html.dataset.theme === 'dark'
 
-    html.dataset.theme = status ? 'default' : 'dark'
+    html.dataset.theme = status ? '' : 'dark'
     togglesChecked(!status)
-    localStorage.setItem('theme', html.dataset.theme)
+    getCookies({ value, path: '/', expires: !status ? 31 : -1 })
   }
 
-  if (localStorage.getItem('theme')) {
-    const theme: string = String(localStorage.getItem('theme'))
-
-    html.dataset.theme = theme
-    togglesChecked(theme === 'dark')
+  if (document.cookie.indexOf(value) !== -1) {
+    html.dataset.theme = 'dark'
+    togglesChecked(html.dataset.theme === 'dark')
   }
 
   toggles.forEach((toggle: HTMLInputElement): void => {

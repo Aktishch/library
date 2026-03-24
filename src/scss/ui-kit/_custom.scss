@@ -28,7 +28,7 @@
     @apply flex items-center justify-center static gap-4;
 
     &-bullet {
-      @apply bg-current rounded-full size-3 !m-0 transition;
+      @apply bg-current rounded-full transition size-3 !m-0;
     }
   }
 

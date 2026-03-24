@@ -1,5 +1,7 @@
 import { fileHandler, uploadFile } from './utils'
 
+const className: string[] = ['pointer-events-none', 'opacity-50']
+
 export default () => {
   const filelists = document.querySelectorAll('*[data-filelist]') as NodeListOf<HTMLDivElement>
 
@@ -43,7 +45,7 @@ export default () => {
             }
 
             if ((data.files as FileList).length === 3) {
-              label.classList.add('pointer-events-none', 'opacity-50')
+              label.classList.add(...className)
               text.textContent = 'Не больше 3 файлов'
             }
 
@@ -78,7 +80,7 @@ export default () => {
           input.value = ''
           text.textContent = 'Загрузить файлы'
         } else {
-          label.classList.remove('pointer-events-none', 'opacity-50')
+          label.classList.remove(...className)
           text.textContent = 'Загрузить ещё'
         }
       }

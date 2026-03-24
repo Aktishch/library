@@ -17,7 +17,7 @@ import formatBg from './ts/format-bg'
 import game from './ts/game'
 import horizontalScrolling from './ts/horizontal-scrolling'
 import imagePreview from './ts/image-preview'
-import inputs from './ts/inputs'
+import input from './ts/input'
 import inverted from './ts/inverted'
 import listing from './ts/listing'
 import loadMedia from './ts/load-media'
@@ -79,7 +79,7 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   game()
   horizontalScrolling()
   imagePreview()
-  inputs()
+  input()
   inverted()
   listing()
   menu()

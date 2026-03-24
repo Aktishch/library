@@ -2,13 +2,13 @@
   width : var(--bubble-size);
   height: var(--bubble-size);
 
-  @apply bg-transparent border-none opacity-0 cursor-ew-resize pointer-events-auto appearance-none;
+  @apply bg-transparent border-none opacity-0 pointer-events-auto appearance-none cursor-ew-resize;
 }
 
 @layer components {
   .range {
     &-input {
-      @apply block appearance-none rounded-inherit size-full;
+      @apply block rounded-inherit appearance-none size-full;
 
       &::-webkit-slider-thumb {
         @include range();

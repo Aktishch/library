@@ -18,7 +18,7 @@
       animation: glowing 20000ms linear infinite;
       z-index  : -1;
 
-      @apply content-auto absolute -inset-1 opacity-0 rounded-inherit blur-sm transition-opacity ease-in-out duration-300;
+      @apply content-auto absolute -inset-1 blur-sm rounded-inherit opacity-0 transition-opacity ease-in-out duration-300;
 
       background: {
         image: linear-gradient(120deg, #ff304f, #581b98, #482ff7, #fc5185, #17b978, #ea5455, #2b1de8, #dd00f3);

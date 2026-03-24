@@ -1,3 +1,5 @@
+const className: string[] = ['overflow-hidden']
+
 const createAccordion = (accordion: HTMLDivElement): void => {
   const toggle = accordion.querySelector('*[data-accordion-toggle]') as HTMLDivElement | HTMLButtonElement
   const content = accordion.querySelector('*[data-accordion-content]') as HTMLDivElement
@@ -12,17 +14,15 @@ const createAccordion = (accordion: HTMLDivElement): void => {
     content.style.height = `${scrollHeight}px`
     content.style.transitionDuration = `${transitionDuration}ms`
 
-    if (accordion.dataset.accordion === 'active') {
-      timeOut = setTimeout((): void => {
+    timeOut = setTimeout((): void => {
+      if (accordion.dataset.accordion === 'active') {
         content.style.height = ''
-        content.classList.remove('overflow-hidden')
-      }, transitionDuration)
-    } else {
-      timeOut = setTimeout((): void => {
+        content.classList.remove(...className)
+      } else {
         content.style.height = '0'
-        content.classList.add('overflow-hidden')
-      }, transitionDuration)
-    }
+        content.classList.add(...className)
+      }
+    }, transitionDuration)
   }
 
   toggle.classList.add('cursor-pointer')

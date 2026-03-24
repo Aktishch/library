@@ -4,10 +4,10 @@
   var loading = _.template(require('../components/loading.html').default)({preloader})
 %>
 
-<dialog class="w-full max-w-xs px-5 py-10 text-black bg-white dark:bg-black dark:text-white rounded-xl">
+<dialog class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-full max-w-xs px-5 py-10">
   <div class="flex flex-col items-center justify-center">
-    <%= icon({id: 'success', className: 'icon mb-5 text-green text-9xl', data: null}) %>
-    <h2 class="font-semibold text-center text-2xl/tight font-alt">
+    <%= icon({id: 'success', className: 'icon text-green text-9xl mb-5', data: null}) %>
+    <h2 class="font-alt font-semibold text-center text-2xl/tight">
       Ваша заявка успешно отправлена!
     </h2>
   </div>

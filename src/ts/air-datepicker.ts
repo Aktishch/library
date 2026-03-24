@@ -28,6 +28,8 @@ declare global {
 window.AirDatepicker = AirDatepicker
 window.excludeDates = excludeDates
 
+const className: string[] = ['opacity-20', 'pointer-events-none']
+
 export const createCalendar = (): void => {
   const calendar = document.getElementById('calendar') as HTMLDivElement
 
@@ -50,10 +52,10 @@ export const createCalendar = (): void => {
   new window.AirDatepicker(calendar, {
     locale: localeRu,
     onChangeViewDate: (): void => {
-      calendar.classList.add('opacity-20', 'pointer-events-none')
+      calendar.classList.add(...className)
       setTimeout((): void => {
         filtering()
-        calendar.classList.remove('opacity-20', 'pointer-events-none')
+        calendar.classList.remove(...className)
       }, 500)
     },
     onRenderCell: renderCellHandler,

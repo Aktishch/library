@@ -11,6 +11,8 @@ type FilterHandler = {
   plug: HTMLDivElement
 }
 
+const className: string = 'filtering-active'
+
 const addTransition = (item: HTMLDivElement): void => {
   item.classList.add('transition', 'ease-linear')
 }
@@ -56,7 +58,7 @@ export default (): void => {
       let active = categories[0] as HTMLElement
 
       categories.forEach((category: HTMLElement): void => {
-        if (category.classList.contains('filtering-active')) active = category
+        if (category.classList.contains(className)) active = category
       })
 
       return active
@@ -66,8 +68,8 @@ export default (): void => {
       const active = currentCategory() as HTMLElement
       const name: string = String(category.dataset.filteringValue)
 
-      active.classList.remove('filtering-active')
-      category.classList.add('filtering-active')
+      active.classList.remove(className)
+      category.classList.add(className)
 
       if (line) {
         line.style.width = `${category.offsetWidth}px`
@@ -78,9 +80,7 @@ export default (): void => {
     }
 
     cards.forEach((card: HTMLDivElement): void => {
-      if (!card) return
-
-      addTransition(card)
+      if (card) addTransition(card)
     })
 
     if (plug) addTransition(plug)
@@ -101,7 +101,6 @@ export default (): void => {
           const category = categories[index] as HTMLElement
 
           currentCard(category)
-
           setTimeout((): void => scrollToElement(filter), 100)
         }
       }

@@ -1,3 +1,5 @@
+const className: string[] = ['hidden']
+
 export default (): void => {
   const smartMenu = document.querySelector('*[data-smart]') as HTMLDivElement
 
@@ -31,8 +33,8 @@ export default (): void => {
 
     const items = list.querySelectorAll('li') as NodeListOf<HTMLLIElement>
 
-    items.length === 0 ? nav.classList.add('hidden') : nav.classList.remove('hidden')
-    lengthWidth === 0 ? title.classList.remove('hidden') : title.classList.add('hidden')
+    items.length === 0 ? nav.classList.add(...className) : nav.classList.remove(...className)
+    lengthWidth === 0 ? title.classList.remove(...className) : title.classList.add(...className)
   }
 
   updateSmartMenu()

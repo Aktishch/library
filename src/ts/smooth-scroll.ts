@@ -1,10 +1,12 @@
 import { setAnimation } from './animation'
-import { isSafari, scrolledPage, touchDevice } from './utils'
+import { safari, scrolledPage, touchDevice } from './utils'
+
+const className: string[] = ['will-change-transform']
 
 export default (): void => {
   const smoothScroll = document.querySelector('#smooth-scroll') as HTMLDivElement
 
-  if (!smoothScroll || isSafari() || touchDevice()) return
+  if (!smoothScroll || safari || touchDevice()) return
 
   const html = document.documentElement as HTMLHtmlElement
   const body = document.body as HTMLBodyElement
@@ -56,7 +58,7 @@ export default (): void => {
 
       let stickyPosition: number = 0
 
-      sticky.classList.add('will-change-transform')
+      sticky.classList.add(...className)
 
       const createSmothSticky = (): void => {
         if (
@@ -80,7 +82,7 @@ export default (): void => {
       const layerDepth: number = Number(layer.dataset.smoothDepth) || 1
       let layerPosition: number = 0
 
-      layer.classList.add('will-change-transform')
+      layer.classList.add(...className)
 
       const createSmoothLayer = (): void => {
         if (

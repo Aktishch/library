@@ -1,6 +1,9 @@
 import { dialog } from './fancybox'
 import { fileHandler, uploadFile } from './utils'
 
+const dragClassName: string[] = ['bg-opacity-50']
+const labelClassName: string[] = ['pointer-events-none', 'opacity-50']
+
 export default (): void => {
   const previews = document.querySelectorAll('*[data-preview]') as NodeListOf<HTMLFormElement>
 
@@ -23,7 +26,7 @@ export default (): void => {
     const defaultState = (): void => {
       image.src = ''
       remove.disabled = true
-      label.classList.remove('pointer-events-none', 'opacity-50')
+      label.classList.remove(...labelClassName)
       data = new DataTransfer() as DataTransfer
       input.value = ''
     }
@@ -35,7 +38,7 @@ export default (): void => {
 
           image.src = url
           remove.disabled = false
-          label.classList.add('pointer-events-none', 'opacity-50')
+          label.classList.add(...labelClassName)
           data.items.add(file)
           uploadFilesList()
 
@@ -95,19 +98,19 @@ export default (): void => {
 
           switch (event.type) {
             case 'dragenter': {
-              drag.classList.add('bg-opacity-50')
+              drag.classList.add(...dragClassName)
               break
             }
 
             case 'dragleave': {
-              drag.classList.remove('bg-opacity-50')
+              drag.classList.remove(...dragClassName)
               break
             }
 
             case 'drop': {
               const files = (event.dataTransfer as DataTransfer).files as FileList
 
-              drag.classList.remove('bg-opacity-50')
+              drag.classList.remove(...dragClassName)
               getImagePreview(files)
               break
             }

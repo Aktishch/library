@@ -1,6 +1,8 @@
 import { dialog } from './fancybox'
 import { validation } from './utils'
 
+const className: string[] = ['pointer-events-none', 'opacity-50']
+
 export const getStateSubmitBtn = (): void => {
   const forms = document.querySelectorAll('*[data-form]') as NodeListOf<HTMLFormElement>
 
@@ -76,7 +78,7 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
 
                 image.src = ''
                 remove.disabled = true
-                label.classList.remove('pointer-events-none', 'opacity-50')
+                label.classList.remove(...className)
               }
 
               const filelist = document.querySelector('*[data-filelist]') as HTMLDivElement
@@ -86,7 +88,7 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
                 const text = label.querySelector('*[data-filelist-text]') as HTMLSpanElement
                 const items = filelist.querySelector('*[data-filelist-items]') as HTMLUListElement
 
-                label.classList.remove('pointer-events-none', 'opacity-50')
+                label.classList.remove(...className)
                 text.textContent = 'Загрузить файлы'
                 items.innerHTML = ''
               }

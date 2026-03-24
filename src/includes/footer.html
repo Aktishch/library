@@ -1,20 +1,20 @@
 <!-- Карта -->
 
-<section class="container relative overflow-hidden xl:container-distance bg-grey dark:bg-dark h-96">
+<section class="container xl:container-distance relative bg-grey dark:bg-dark overflow-hidden h-96">
   <%= loader %>
-  <div class="absolute inset-0 overflow-hidden" data-yandex-map="45.03191007458623,38.921171499999936"></div>
+  <div class="absolute inset-0" data-yandex-map="45.03191007458623,38.921171499999936"></div>
 </section>
 
 <!-- Подвал -->
 
-<footer class="container flex flex-col flex-wrap items-center justify-between gap-4 pt-4 pb-10 mt-auto bg-black md:flex-row text-second md:pb-4" id="footer">
+<footer class="container flex flex-wrap flex-col md:flex-row items-center justify-between gap-4 bg-black text-second pt-4 pb-10 md:pb-4 mt-auto" id="footer">
   <a class="btn btn-white w-36" data-waved="light" draggable="false" href="/">
     <%= picture({src: '/img/pictures/logo', format: 'png', className: 'w-full', data: null}) %>
   </a>
   <address class="text-center">
     ​Рождественская набережная, <br> 45/1​5 офис; 3 этаж
   </address>
-  <a class="p-1 text-lg btn btn-second w-max" data-waved="light" data-fancybox-dialog draggable="false" href="/dialogs/dialog-politics.html">Privacy policy</a>
+  <a class="btn btn-second text-lg w-max p-1" data-waved="light" data-fancybox-dialog draggable="false" href="/dialogs/dialog-politics.html">Privacy policy</a>
   <div>
     © <span id="year"></span>
   </div>
@@ -24,8 +24,6 @@
 </footer>
 
 </div>
-
-</main>
 
 </body>
 

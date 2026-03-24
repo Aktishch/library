@@ -218,7 +218,7 @@
       &::after {
         animation: preloader-pulse 1000ms ease-out infinite;
 
-        @apply content-auto absolute inset-0 border-4 border-solid border-current rounded-full size-full;
+        @apply content-auto absolute inset-0 rounded-full border-4 border-solid border-current size-full;
       }
 
       &::after {

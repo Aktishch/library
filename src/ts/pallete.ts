@@ -16,7 +16,6 @@ export default (): void => {
   if (!pallete) return
 
   const colors: PalleteColors = JSON.parse(localStorage.getItem('pallete') || '{}')
-
   const items = pallete.querySelectorAll('*[data-pallete-item]') as NodeListOf<HTMLLIElement>
   const reset = pallete.querySelector('*[data-pallete-reset]') as HTMLButtonElement
 
@@ -55,11 +54,7 @@ export default (): void => {
     input.addEventListener('input', ((): void => {
       const hex: string = input.value
       const rgb: string = hexToRgb(hex)
-
-      colors[name] = {
-        hex: hex,
-        rgb: rgb,
-      }
+      colors[name] = { hex, rgb }
 
       html.style.setProperty(`--color-${name}`, rgb)
       localStorage.setItem('pallete', JSON.stringify(colors))

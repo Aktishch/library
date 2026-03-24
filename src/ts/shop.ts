@@ -13,7 +13,7 @@ export default (): void => {
   const oldPrice = shop.querySelector('*[data-shop-oldprice]') as HTMLSpanElement
   const price = shop.querySelector('*[data-shop-price]') as HTMLSpanElement
   const products = document.querySelectorAll('*[data-product]') as NodeListOf<HTMLDivElement>
-  const classes: string[] = [
+  const className: string[] = [
     'in-shop',
     'flex',
     'items-center',
@@ -45,7 +45,7 @@ export default (): void => {
       left: event.clientX,
     }
 
-    inShop.classList.add(...classes)
+    inShop.classList.add(...className)
     inShop.style.top = `${coordinates.top}px`
     inShop.style.left = `${coordinates.left}px`
     inShop.innerHTML = `

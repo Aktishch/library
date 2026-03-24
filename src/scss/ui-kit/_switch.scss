@@ -20,7 +20,7 @@
         @apply content-auto block bg-white rounded-inherit opacity-0 size-full;
       }
 
-      @apply size-6 min-w-6 rounded-sm;
+      @apply rounded-sm size-6 min-w-6;
 
       &:checked {
         &::after {
@@ -76,7 +76,7 @@
       &::before {
         transition: opacity 300ms linear, transform 400ms linear;
 
-        @apply content-auto absolute top-1/2 left-1/2 bg-current -translate-x-1/2 -translate-y-1/2 scale-0 invisible rounded-inherit pointer-events-none size-full;
+        @apply content-auto absolute top-1/2 left-1/2 bg-current rounded-inherit -translate-x-1/2 -translate-y-1/2 scale-0 invisible pointer-events-none size-full;
       }
 
       &:checked {

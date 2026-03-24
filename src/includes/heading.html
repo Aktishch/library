@@ -1,11 +1,11 @@
-<section class="container flex flex-col items-center justify-center py-0 xl:container-distance bg-grey dark:bg-dark min-h-64" id="header">
-  <div class="relative flex flex-col items-center justify-center w-full h-full py-5 grow">
-    <div class="absolute left-0 flex items-center gap-1 text-sm top-5">
-      <a class="hover:underline underline-offset-4" draggable="false" href="/">Main</a>
+<section class="container xl:container-distance flex flex-col items-center justify-center bg-grey dark:bg-dark min-h-64 py-0" id="header">
+  <div class="flex flex-col items-center justify-center relative grow size-full py-5">
+    <div class="flex items-center gap-1 absolute top-5 left-0 text-sm">
+      <a class="underline-offset-4 hover:underline" draggable="false" href="/">Main</a>
       >
-      <span class="pointer-events-none opacity-60"><%= data.title %></span>
+      <span class="opacity-60 pointer-events-none"><%= data.title %></span>
     </div>
-    <h1 class="mb-5 font-bold text-center duration-500 text-3xl/tight font-alt lg:text-5xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend"><%= data.title %></h1>
-    <a class="w-full mx-auto btn btn-primary btn-lg btn-fill btn-glow max-w-48" data-waved="light" data-scroll draggable="false" href="#content">Show more</a>
+    <h1 class="font-alt font-bold text-center text-3xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend"><%= data.title %></h1>
+    <a class="btn btn-primary btn-fill btn-lg btn-glow w-full max-w-48 mx-auto" data-waved="light" data-scroll draggable="false" href="#content">Show more</a>
   </div>
 </section>

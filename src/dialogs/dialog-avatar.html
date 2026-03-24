@@ -3,27 +3,27 @@
   var picture = _.template(require('../components/picture.html').default)
   var preloader = require('../components/preloader.html').default
   var loading = _.template(require('../components/loading.html').default)({preloader})
-  var error = _.template(require('../components/error.html').default)
+  var error = require('../components/error.html').default
 %>
 
-<dialog class="w-full max-w-xs px-5 py-10 text-black bg-white dark:bg-black dark:text-white rounded-xl">
+<dialog class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-full max-w-xs px-5 py-10">
   <form data-preview="avatar">
     <input type="hidden" value="Аватарка" name="theme">
     <div class="relative mb-5">
-      <div class="w-1/2 mx-auto rounded-full pack pack-xl bg-primary">
-        <div class="absolute inset-0 flex items-center justify-center">
+      <div class="pack pack-xl bg-primary rounded-full w-1/2 mx-auto">
+        <div class="flex items-center justify-center absolute inset-0 rounded-inherit">
           <%= icon({id: 'user', className: 'icon text-white dark:text-black text-6xl', data: null}) %>
         </div>
         <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'data-preview-image'}) %>
       </div>
-      <%= error({text: 'Загрузите изображение'}) %>
+      <%= error %>
     </div>
-    <div class="flex flex-wrap items-center justify-between w-full gap-4">
-      <label class="grow btn btn-second btn-lg btn-fill" data-preview-label data-waved="dark">
+    <div class="flex flex-wrap items-center justify-between gap-4 w-full">
+      <label class="btn btn-second btn-fill btn-lg grow" data-preview-label data-waved="dark">
         <input class="hidden" data-preview-input type="file" name="file[]">
         Загрузить
       </label>
-      <button class="grow btn btn-second btn-lg btn-fade btn-contur" data-preview-remove data-waved="light" type="button" disabled>Удалить</button>
+      <button class="btn btn-second btn-fade btn-contur btn-lg grow" data-preview-remove data-waved="light" type="button" disabled>Удалить</button>
     </div>
   </form>
   <%= loading %>

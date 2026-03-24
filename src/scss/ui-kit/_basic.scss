@@ -30,7 +30,7 @@ $colors: ("primary": #af1a4c,
   * {
     -webkit-tap-highlight-color: theme("colors.transparent");
 
-    @apply m-0 p-0;
+    @apply p-0 m-0;
 
     scrollbar: {
       width: thin;
@@ -43,15 +43,11 @@ $colors: ("primary": #af1a4c,
   }
 
   body {
-    @apply bg-white font-normal font-base text-black text-base;
-  }
-
-  main {
-    @apply flex flex-col min-h-screen;
+    @apply flex flex-col min-h-screen bg-white font-normal font-base text-black text-base;
   }
 
   ::selection {
-    @apply text-white bg-primary;
+    @apply bg-primary text-white;
   }
 
   h1,
@@ -103,7 +99,11 @@ $colors: ("primary": #af1a4c,
   input,
   textarea,
   select {
-    @apply outline-0;
+    outline: none;
+
+    &:focus-visible {
+      outline: none;
+    }
   }
 
   textarea {

@@ -8,7 +8,7 @@
   var picture = _.template(require('./components/picture.html').default)
   var loader = _.template(require('./components/loader.html').default)({icon, className: null})
   var preloader = require('./components/preloader.html').default
-  var error = _.template(require('./components/error.html').default)
+  var error = require('./components/error.html').default
   var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
   var player = _.template(require('./includes/player.html').default)({icon, picture, loader})
   var footer = _.template(require('./includes/footer.html').default)({picture, loader})
@@ -20,11 +20,11 @@
 
 <section class="container flex flex-col items-center justify-center bg-white dark:bg-black min-h-[500px] xl:min-h-[600px]" id="header">
   <%= picture({src: '/img/pictures/logo', format: 'svg', className: 'block mb-10 duration-1000 anim anim-up', data: 'data-anim'}) %>
-  <h1 class="mb-5 font-bold text-center duration-500 delay-200 text-5xl/tight font-alt lg:text-6xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+  <h1 class="font-alt font-bold text-center text-5xl/tight lg:text-6xl/tight mb-5 md:mb-10 duration-500 delay-200 anim anim-up" data-anim data-movement="blend">
     Main block
   </h1>
   <div class="w-full duration-500 delay-300 anim anim-up" data-anim>
-    <a class="w-full mx-auto btn btn-primary btn-lg btn-fill btn-glow max-w-48" data-waved="light" data-scroll draggable="false" href="#content">Show more</a>
+    <a class="btn btn-primary btn-fill btn-lg btn-glow w-full max-w-48 mx-auto" data-waved="light" data-scroll draggable="false" href="#content">Show more</a>
   </div>
 </section>
 
@@ -39,57 +39,57 @@
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam repudiandae maxime quia culpa, est voluptatum hic at ipsa error officiis magni dolores molestiae inventore ipsum perferendis reiciendis sunt nesciunt possimus? Lorem ipsum dolor sit amet consectetur adipisicing elit.'
 ] %>
 
-<section class="container flex flex-col items-center justify-center container-xs xl:container-distance bg-grey dark:bg-dark" data-listing="1" id="content">
-  <h2 class="mb-3 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight anim anim-up" data-anim data-movement="blend">
+<section class="container container-xs xl:container-distance flex flex-col items-center justify-center bg-grey dark:bg-dark" data-listing="1" id="content">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-3 duration-500 anim anim-up" data-anim data-movement="blend">
     Cards
   </h2>
-  <h3 class="mb-5 font-semibold duration-500 text-base/tight md:text-lg/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+  <h3 class="font-semibold text-base/tight md:text-lg/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Construction and effect
   </h3>
-  <div class="grid w-full gap-5 mb-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8 md:md-10">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full mb-5 md:md-10">
     <% for (var i = 0; i < 3; i++) { %>
     <div class="duration-500 anim anim-up" data-anim>
-      <article class="shadow-md card transition-shadow hover:shadow-xl dark:bg-black">
+      <article class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
         <div class="pack pack-md bg-grey dark:bg-dark rounded-t-inherit" data-movement="light">
           <%= loader %>
           <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'pack-image image rounded-t-inherit', data: null}) %>
         </div>
-        <div class="px-3 py-5 card-content md:px-5">
-          <h4 class="mb-4 font-semibold text-2xl/tight font-alt">
+        <div class="card-content py-5 px-3 md:px-5">
+          <h4 class="font-alt font-semibold text-2xl/tight mb-4">
             Article <%= i %>
           </h4>
-          <p class="mb-5 text-justify text-sm/normal md:text-base/normal"><%= articles[i] %></p>
-          <button class="mt-auto btn btn-primary btn-lg btn-fill" data-waved="light">Button</button>
+          <p class="text-justify text-sm/normal md:text-base/normal mb-5"><%= articles[i] %></p>
+          <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved="light">Button</button>
         </div>
       </article>
     </div>
     <% } %>
   </div>
-  <div class="grid w-full gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full">
     <% for (var i = 3; i < articles.length; i++) { %>
-    <div class="duration-500 sm:block anim anim-up" data-anim data-listing-item>
-      <article class="h-full inverted">
+    <div class="sm:block duration-500 anim anim-up" data-anim data-listing-item>
+      <article class="inverted h-full">
         <div class="inverted-before">
-          <div class="shadow-md card transition-shadow hover:shadow-xl dark:bg-black">
+          <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
             <div class="pack pack-xs bg-grey dark:bg-dark rounded-t-inherit">
               <%= loader %>
               <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'image rounded-t-inherit', data: null}) %>
             </div>
-            <div class="px-3 py-5 card-content md:px-5">
-              <h4 class="font-semibold text-2xl/tight font-alt">
+            <div class="card-content py-5 px-3 md:px-5">
+              <h4 class="font-alt font-semibold text-2xl/tight">
                 Article <%= i %>
               </h4>
             </div>
           </div>
         </div>
         <div class="inverted-after">
-          <div class="shadow-md card transition-shadow hover:shadow-xl dark:bg-black">
-            <div class="px-3 py-5 card-content md:px-5">
-              <h4 class="mb-4 font-semibold text-2xl/tight font-alt">
+          <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
+            <div class="card-content py-5 px-3 md:px-5">
+              <h4 class="font-alt font-semibold text-2xl/tight mb-4">
                 Article <%= i %>
               </h4>
-              <p class="mb-5 text-justify text-sm/normal md:text-base/normal"><%= articles[i] %></p>
-              <button class="mt-auto btn btn-primary btn-lg btn-fill" data-waved="light">Button</button>
+              <p class="text-justify text-sm/normal md:text-base/normal mb-5"><%= articles[i] %></p>
+              <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved="light">Button</button>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@
     <% } %>
   </div>
   <div class="w-full duration-500 anim anim-up" data-anim>
-    <button class="w-full mx-auto mt-5 btn btn-second btn-lg btn-fade sm:hidden max-w-48" data-listing-show data-waved="dark">Show more</button>
+    <button class="btn btn-second btn-fade btn-lg sm:hidden max-w-48 w-full mt-5 mx-auto" data-listing-show data-waved="dark">Show more</button>
   </div>
 </section>
 
@@ -106,46 +106,46 @@
 
 <% var buttons = ['', 'btn-contur', 'btn-fade', 'btn-contur btn-fade', 'btn-fill', 'btn-text', 'btn-contur btn-swipe', 'btn-xxl', 'btn-xl', 'btn-lg', 'btn-md', 'btn-sm', 'btn-xs', 'btn-fill btn-glow', 'data-waved="light"', 'data-waved="dark"', 'btn-bubbles', 'btn-rect', 'btn-frame', 'btn-lines'] %>
 
-<section class="container flex flex-col items-center justify-center bg-white container-xs dark:bg-black">
-  <h2 class="mb-3 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight anim anim-up" data-anim data-movement="blend">
+<section class="container container-xs flex flex-col items-center justify-center bg-white dark:bg-black">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-3 duration-500 anim anim-up" data-anim data-movement="blend">
     Buttons
   </h2>
-  <h3 class="mb-5 font-semibold duration-500 text-bas/tighte md:text-lg/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+  <h3 class="font-semibold text-base/tight md:text-lg/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Buttons standard
   </h3>
-  <div class="grid w-full gap-5 mb-5 md:grid-cols-2 lg:grid-cols-3 md:mb-10">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 md:mb-10">
     <% for (var i = 0; i < 7; i++) { %>
     <button class="btn btn-primary btn-lg <%= buttons[i] %>">btn <%= buttons[i] %></button>
     <% } %>
   </div>
-  <h3 class="mb-5 font-semibold text-lg/tight md:mb-10" data-movement="blend">
+  <h3 class="font-semibold text-lg/tight mb-5 md:mb-10" data-movement="blend">
     Buttons size
   </h3>
-  <div class="grid w-full gap-5 mb-5 md:grid-cols-2 lg:grid-cols-3 md:mb-10">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 md:mb-10">
     <% for (var i = 7; i < 13; i++) { %>
-    <button class="btn btn-primary <%= buttons[i] %> btn-fill btn-light">btn-light <%= buttons[i] %></button>
+    <button class="btn btn-primary btn-fill btn-light <%= buttons[i] %>">btn-light <%= buttons[i] %></button>
     <% } %>
   </div>
-  <h3 class="mb-5 font-semibold text-lg/tight md:mb-10" data-movement="blend">
+  <h3 class="font-semibold text-lg/tight mb-5 md:mb-10" data-movement="blend">
     Buttons effects
   </h3>
-  <div class="grid w-full gap-5 mb-5 md:grid-cols-2 lg:grid-cols-3 md:mb-10">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 md:mb-10">
     <% for (var i = 13; i < 14; i++) { %>
     <button class="btn btn-primary btn-lg <%= buttons[i] %>"><%= buttons[i] %></button>
     <% } %>
   </div>
-  <h3 class="mb-5 font-semibold text-lg/tight md:mb-10" data-movement="blend">
+  <h3 class="font-semibold text-lg/tight mb-5 md:mb-10" data-movement="blend">
     Buttons waved
   </h3>
-  <div class="grid w-full gap-5 mb-5 md:grid-cols-2 lg:grid-cols-3 md:mb-10">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 md:mb-10">
     <% for (var i = 14; i < 16; i++) { %>
-    <button class="btn btn-primary btn-lg btn-fill" <%= buttons[i] %> data-waved-reverse><%= buttons[i] %></button>
+    <button class="btn btn-primary btn-fill btn-lg" <%= buttons[i] %> data-waved-reverse><%= buttons[i] %></button>
     <% } %>
   </div>
-  <h3 class="mb-5 font-semibold text-lg/tight md:mb-10" data-movement="blend">
+  <h3 class="font-semibold text-lg/tight mb-5 md:mb-10" data-movement="blend">
     Buttons click
   </h3>
-  <div class="grid w-full gap-5 md:grid-cols-2 lg:grid-cols-3">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
     <% for (var i = 16; i < buttons.length; i++) { %>
     <button class="btn btn-primary btn-lg <%= buttons[i] %>"><%= buttons[i] %></button>
     <% } %>
@@ -154,29 +154,29 @@
 
 <!-- Документы -->
 
-<section class="container flex flex-col items-center justify-center xl:container-distance bg-grey dark:bg-dark">
-  <h2 class="mb-3 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight anim anim-up" data-anim data-movement="blend">
+<section class="container xl:container-distance flex flex-col items-center justify-center bg-grey dark:bg-dark">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-3 duration-500 anim anim-up" data-anim data-movement="blend">
     Accordion
   </h2>
-  <h3 class="mb-5 font-semibold duration-500 text-base/tight md:text-lg/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+  <h3 class="font-semibold text-base/tight md:text-lg/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Drop-down list
   </h3>
-  <div class="flex flex-col w-full gap-5">
+  <div class="flex flex-col gap-5 w-full">
     <% for (var i = 0; i < 3; i++) { %>
-    <div class="relative px-4 py-4 overflow-hidden duration-500 shadow-md bg-second/10 rounded-2xl md:py-6 anim anim-up group/accordion" data-anim data-accordion="<%= i === 0 ? 'active' : null %>" data-close-click>
+    <div class="group/accordion relative bg-second/10 rounded-2xl overflow-hidden shadow-md py-4 px-4 md:py-6 duration-500 anim anim-up" data-anim data-accordion="<%= i === 0 ? 'active' : null %>" data-close-click>
       <div class="flex items-center justify-between gap-4">
-        <h4 class="font-semibold font-alt text-xl/tight">
+        <h4 class="font-alt font-semibold text-xl/tight">
           Documents - <%= i + 1 %>
         </h4>
-        <button class="rounded-full btn btn-primary btn-fill size-9 shrink-0" data-accordion-toggle data-waved="light">
+        <button class="btn btn-primary btn-fill rounded-full shrink-0 size-9" data-accordion-toggle data-waved="light">
           <%= icon({id: 'arrow-right', className: 'icon text-sm transition-transform group-[[data-accordion=active]]/accordion:rotate-90', data: null}) %>
         </button>
       </div>
       <div data-accordion-content>
         <div class="flex flex-col gap-3 pt-4">
           <% for (var j = 0; j < 4; j++) { %>
-          <a class="relative flex items-center gap-4 p-3 bg-white rounded-lg hover:underline underline-offset-4 dark:bg-black" data-waved="dark" draggable="false" href="javascript: ;">
-            <div class="flex items-center justify-center rounded-lg size-12 bg-primary/10 shrink-0">
+          <a class="flex items-center gap-4 relative bg-white dark:bg-black rounded-lg underline-offset-4 hover:underline p-3" data-waved="dark" draggable="false" href="javascript: ;">
+            <div class="flex items-center justify-center bg-primary/10 rounded-lg shrink-0 size-12">
               <%= icon({id: 'file', className: 'icon text-primary text-2xl', data: null}) %>
             </div>
             <p class="text-sm/normal md:text-base/normal">
@@ -224,24 +224,24 @@
   }
 ] %>
 
-<section class="container flex flex-col items-center min-h-screen overflow-hidden text-white bg-white bg-center bg-no-repeat bg-cover dark:bg-black" data-smooth-wrapper data-parallax data-section data-bg="/img/pictures/town-grey.jpg" data-bg-webp="/img/pictures/town-grey.webp">
-  <h2 class="mb-3 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight anim anim-up" data-anim data-movement="blend">
+<section class="container flex flex-col items-center bg-white dark:bg-black bg-center bg-no-repeat bg-cover text-white overflow-hidden min-h-screen" data-smooth-wrapper data-parallax data-section data-bg="/img/pictures/town-grey.jpg" data-bg-webp="/img/pictures/town-grey.webp">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-3 duration-500 anim anim-up" data-anim data-movement="blend">
     Filter
   </h2>
-  <h3 class="mb-5 font-semibold duration-500 text-base/tight md:text-lg/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+  <h3 class="font-semibold text-base/tight md:text-lg/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     paralax, form and other...
   </h3>
   <div class="relative w-full max-w-xl mx-auto" data-filtering="filtering">
-    <%= picture({src: '/img/pictures/circle-grey', format: 'png', className: 'absolute z-10 top-20 -left-8 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer data-parallax-speed="4" data-parallax-depth="2"'}) %>
-    <%= picture({src: '/img/pictures/circle-white', format: 'png', className: 'absolute z-10 -bottom-8 -right-8 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer="reverse" data-parallax-speed="4" data-parallax-depth="2"'}) %>
-    <%= picture({src: '/img/pictures/circle-red', format: 'png', className: 'absolute z-10 bottom-0 -right-7 drop-shadow-md pointer-events-none w-16', data: 'data-smooth-layer="bottom" data-smooth-speed="1" data-smooth-depth="2"'}) %>
-    <div class="relative flex flex-col gap-0 mb-5 overflow-hidden duration-500 md:items-center md:justify-between md:flex-row md:gap-4 bg-grey md:bg-opacity-0 text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white md:mb-10 md:pb-4 anim anim-up" data-anim>
+    <%= picture({src: '/img/pictures/circle-grey', format: 'png', className: 'absolute top-20 -left-8 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer data-parallax-speed="4" data-parallax-depth="2"'}) %>
+    <%= picture({src: '/img/pictures/circle-white', format: 'png', className: 'absolute -bottom-8 -right-8 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer="reverse" data-parallax-speed="4" data-parallax-depth="2"'}) %>
+    <%= picture({src: '/img/pictures/circle-red', format: 'png', className: 'absolute bottom-0 -right-7 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-smooth-layer="bottom" data-smooth-speed="1" data-smooth-depth="2"'}) %>
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-4 relative bg-grey md:bg-opacity-0 text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white overflow-hidden md:pb-4 mb-5 md:mb-10 duration-500 anim anim-up" data-anim>
       <% ['text-style', 'form-validate', 'switches', 'file'].forEach((item, key) => { %>
-      <button class="grow p-4 text-xl md:p-0 [&.filtering-active]:text-white [&.filtering-active]:bg-second [&.filtering-active]:pointer-events-none md:[&.filtering-active]:text-primary md:[&.filtering-active]:bg-opacity-0 <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="filtering" data-filtering-value="<%= key %>"><%= item %></button>
+      <button class="text-xl grow p-4 md:p-0 [&.filtering-active]:bg-second md:[&.filtering-active]:bg-opacity-0 [&.filtering-active]:text-white md:[&.filtering-active]:text-primary [&.filtering-active]:pointer-events-none <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="filtering" data-filtering-value="<%= key %>"><%= item %></button>
       <% }) %>
-      <span class="absolute bottom-0 left-0 hidden h-1 transition-[left,_width] ease-linear rounded-t-lg md:block bg-primary" data-filtering-line="filtering"></span>
+      <span class="hidden md:block absolute bottom-0 left-0 bg-primary rounded-t-lg transition-[left,_width] ease-linear h-1" data-filtering-line="filtering"></span>
     </div>
-    <div class="text-black duration-500 bg-white shadow-md rounded-3xl p-7 md:p-10 anim anim-fade" data-anim>
+    <div class="bg-white text-black rounded-3xl shadow-md p-7 md:p-10 duration-500 anim anim-fade" data-anim>
       <div data-filtering-card="filtering" data-filtering-value="0">
         <ul class="flex flex-col gap-4 list-disc list-inside text-primary">
           <% numbers.forEach((item) => { %>
@@ -252,69 +252,69 @@
           </li>
           <% }) %>
         </ul>
-        <p class="mt-5 text-primary">
-          <q class="px-3 py-1 font-semibold text-justify shadow-md text-lg/loose bg-grey box-decoration-clone rounded-2xl" data-record="Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis ex omnis, ut dolorem dolore enim expedita?" data-record-speed="50"></q>
+        <p class="text-primary mt-5">
+          <q class="bg-grey font-semibold text-justify text-lg/loose rounded-2xl shadow-md box-decoration-clone px-3 py-1" data-record="Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis ex omnis, ut dolorem dolore enim expedita?" data-record-speed="50"></q>
         </p>
       </div>
       <div data-filtering-card="filtering" data-filtering-value="1">
-        <form class="flex flex-col w-full max-w-sm gap-5 mx-auto" data-form="submit" data-datepicker id="data-save">
+        <form class="flex flex-col gap-5 w-full max-w-sm mx-auto" data-form="submit" data-datepicker id="data-save">
           <input type="hidden" value="Главная" name="theme">
           <label data-label>
-            <h5 class="mb-3 font-medium text-xl/none">
+            <h5 class="font-medium text-xl/none mb-3">
               Name
             </h5>
             <div class="relative">
               <input class="input input-gray input-lg" data-input="name" type="text" placeholder="Name" name="name">
-              <%= error({text: 'Введите ваше имя'}) %>
+              <%= error %>
             </div>
           </label>
           <label data-label>
-            <h5 class="mb-3 font-medium text-xl/none">
+            <h5 class="font-medium text-xl/none mb-3">
               Telephone
             </h5>
             <div class="relative">
               <input class="input input-gray input-lg" data-input="tel" type="tel" placeholder="+7 (___) ___-__-__" name="tel">
-              <%= error({text: 'Введите ваш номер'}) %>
+              <%= error %>
             </div>
           </label>
           <label data-label>
-            <h5 class="mb-3 font-medium text-xl/none">
+            <h5 class="font-medium text-xl/none mb-3">
               Email
             </h5>
             <div class="relative">
               <input class="input input-gray input-lg" data-input="email" type="text" placeholder="_@_._" name="email">
-              <%= error({text: 'Введите корректный адрес'}) %>
+              <%= error %>
             </div>
           </label>
           <div>
-            <h5 class="mb-3 font-medium text-xl/none">
+            <h5 class="font-medium text-xl/none mb-3">
               Date
             </h5>
             <div class="flex items-center justify-between">
               <div class="relative grow" data-label>
-                <input class="rounded-r-none input input-gray input-lg" data-input data-datepicker-min data-position="top left" type="text" readonly name="check-in">
-                <%= error({text: 'Укажите дату'}) %>
+                <input class="input input-gray input-lg rounded-r-none" data-input data-datepicker-min data-position="top left" type="text" readonly name="check-in">
+                <%= error %>
               </div>
               <div class="relative grow" data-label>
-                <input class="rounded-l-none input input-gray input-lg" data-input data-datepicker-max type="text" readonly name="check-out">
-                <div class="absolute top-0 bottom-0 right-0 flex items-center justify-center h-full pointer-events-none w-12">
+                <input class="input input-gray input-lg rounded-l-none" data-input data-datepicker-max type="text" readonly name="check-out">
+                <div class="flex items-center justify-center absolute top-0 bottom-0 right-0 pointer-events-none w-12 h-full">
                   <%= icon({id: 'calendar', className: 'icon text-xl', data: null}) %>
                 </div>
-                <%= error({text: 'Укажите дату'}) %>
+                <%= error %>
               </div>
             </div>
           </div>
           <label data-label>
-            <h5 class="mb-3 font-medium text-xl/none">
+            <h5 class="font-medium text-xl/none mb-3">
               Number
             </h5>
             <div class="relative">
               <input class="input input-gray input-lg" data-input="float" type="text" placeholder="12345" name="number">
-              <%= error({text: 'Введите число'}) %>
+              <%= error %>
             </div>
           </label>
           <label data-label>
-            <h5 class="mb-3 font-medium text-xl/none">
+            <h5 class="font-medium text-xl/none mb-3">
               Select
             </h5>
             <div class="relative">
@@ -325,46 +325,46 @@
                 <option value="3">3</option>
                 <option value="4">4</option>
               </select>
-              <div class="absolute top-0 bottom-0 right-0 flex items-center justify-center h-full pointer-events-none w-12">
+              <div class="flex items-center justify-center absolute top-0 bottom-0 right-0 pointer-events-none w-12 h-full">
                 <%= icon({id: 'arrow-bottom', className: 'icon text-xs', data: null}) %>
               </div>
-              <%= error({text: 'Выберите вариант'}) %>
+              <%= error %>
             </div>
           </label>
           <label data-label>
-            <h5 class="mb-3 font-medium text-xl/none">
+            <h5 class="font-medium text-xl/none mb-3">
               Reviews
             </h5>
             <div class="relative">
-              <textarea class="h-48 input input-gray input-lg" data-input="text" type="text" placeholder="Reviews" name="text"></textarea>
-              <%= error({text: 'Заполните это поле'}) %>
+              <textarea class="input input-gray input-lg h-48" data-input="text" type="text" placeholder="Reviews" name="text"></textarea>
+              <%= error %>
             </div>
           </label>
           <div class="flex flex-col gap-5" data-filelist>
             <div class="relative" data-filelist-label data-label>
-              <label class="btn btn-second btn-lg btn-fade" data-waved="dark">
+              <label class="btn btn-second btn-fade btn-lg" data-waved="dark">
                 <input hidden data-filelist-input data-input="file" type="file" multiple name="files[]">
                 <span data-filelist-text>Загрузить файлы</span>
               </label>
-              <%= error({text: 'Загрузите изображение'}) %>
+              <%= error %>
             </div>
             <ul class="flex flex-col gap-1 text-xs empty:hidden" data-filelist-items></ul>
           </div>
           <div class="flex">
             <label class="flex flex-row items-center cursor-pointer">
-              <input class="mr-2 switch switch-checkbox" data-toggle-submit type="checkbox" checked>
+              <input class="switch switch-checkbox mr-2" data-toggle-submit type="checkbox" checked>
               <span class="text-xl">Policy</span>
             </label>
           </div>
-          <button class="btn btn-second btn-lg btn-fill" data-waved="dark" type="submit">Submit</button>
+          <button class="btn btn-second btn-fill btn-lg" data-waved="dark" type="submit">Submit</button>
         </form>
         <div class="flex items-center justify-center mt-5">
-          <a class="text-lg cursor-pointer hover:underline underline-offset-4 text-second w-max" data-fancybox-dialog draggable="false" href="/dialogs/dialog-politics.html">Privacy policy</a>
+          <a class="text-second text-lg underline-offset-4 hover:underline cursor-pointer w-max" data-fancybox-dialog draggable="false" href="/dialogs/dialog-politics.html">Privacy policy</a>
         </div>
       </div>
       <div data-filtering-card="filtering" data-filtering-value="2">
         <div class="flex flex-col gap-6">
-          <h4 class="text-2xl font-semibold">
+          <h4 class="font-semibold text-2xl">
             Checkbox:
           </h4>
           <div class="flex items-center gap-5">
@@ -372,7 +372,7 @@
             <input class="switch switch-checkbox text-second" type="checkbox">
             <input class="switch switch-checkbox" type="checkbox" disabled>
           </div>
-          <h4 class="text-2xl font-semibold">
+          <h4 class="font-semibold text-2xl">
             Radio:
           </h4>
           <div class="flex items-center gap-5">
@@ -380,57 +380,57 @@
             <input class="switch switch-radio text-second" type="radio" name="radio">
             <input class="switch switch-radio" type="radio" name="radio" disabled>
           </div>
-          <h4 class="text-2xl font-semibold">
+          <h4 class="font-semibold text-2xl">
             Toggle:
           </h4>
           <input class="switch switch-toggle" type="checkbox">
-          <h4 class="text-2xl font-semibold">
+          <h4 class="font-semibold text-2xl">
             Quantity:
           </h4>
-          <div class="flex items-center justify-between p-1 border border-solid rounded-full border-gray w-max" data-quantity>
-            <button class="rounded-full size-8 shrink-0 btn btn-gray btn-fill active:translate-y-0" data-quantity-decrease data-waved="light">-</button>
-            <input class="w-10 h-auto text-center bg-transparent shrink-0" data-input="number" type="text" value="1" maxlength="3" name="quantity">
-            <button class="rounded-full size-8 shrink-0 btn btn-gray btn-fill active:translate-y-0" data-quantity-increase data-waved="light">+</button>
+          <div class="flex items-center justify-between rounded-full border border-solid border-gray w-max p-1" data-quantity>
+            <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-decrease data-waved="light">-</button>
+            <input class="bg-transparent text-center shrink-0 w-10 h-auto" data-input="number" type="text" value="1" maxlength="3" name="quantity">
+            <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-increase data-waved="light">+</button>
           </div>
-          <h4 class="text-2xl font-semibold">
+          <h4 class="font-semibold text-2xl">
             Rating:
           </h4>
-          <div class="flex flex-row-reverse items-center gap-3 p-3 rounded-full w-max bg-gray/40">
+          <div class="flex flex-row-reverse items-center gap-3 bg-gray/40 rounded-full w-max p-3">
             <% for (var i = 5; i > 0; i--) { %>
             <input class="peer/rating" id="rating-<%= i %>" hidden type="radio" value="<%= i %>" name="rating">
-            <label class="text-2xl text-opacity-50 transition cursor-pointer text-second hover:text-opacity-100 peer/star peer-hover/star:text-opacity-100 peer-checked/rating:text-opacity-100" for="rating-<%= i %>">
+            <label class="peer/star text-second text-2xl text-opacity-50 cursor-pointer transition hover:text-opacity-100 peer-hover/star:text-opacity-100 peer-checked/rating:text-opacity-100" for="rating-<%= i %>">
               <%= icon({id: 'star', className: 'icon', data: null}) %>
             </label>
             <% } %>
           </div>
-          <h4 class="text-2xl font-semibold">
+          <h4 class="font-semibold text-2xl">
             Range:
           </h4>
-          <div class="w-full max-w-xs range" data-range="28">
+          <div class="range w-full max-w-xs" data-range="28">
             <div class="flex items-center justify-between mb-4">
               <span>Value</span>
               <output class="opacity-60" data-range-output></output>
             </div>
             <div class="relative text-white pointer-events-none">
-              <div class="relative h-2 rounded" data-range-wrapper>
+              <div class="relative rounded h-2" data-range-wrapper>
                 <input class="range-input bg-gray" data-range-input type="range" step="1" max="10" value="5">
                 <div class="range-progress bg-green" data-range-progress></div>
                 <output class="range-bubble bg-green shadow-green" data-range-bubble></output>
               </div>
             </div>
           </div>
-          <div class="w-full max-w-xs range" data-range>
+          <div class="range w-full max-w-xs" data-range>
             <div class="flex items-center justify-between mb-4">
-              <input class="w-16 text-center input input-gray input-lg" data-range-output data-input="number" type="text" maxlength="3">
-              <input class="w-16 text-center input input-gray input-lg" data-range-output data-input="number" type="text" maxlength="3">
+              <input class="input input-gray input-lg text-center w-16" data-range-output data-input="number" type="text" maxlength="3">
+              <input class="input input-gray input-lg text-center w-16" data-range-output data-input="number" type="text" maxlength="3">
             </div>
             <div class="relative text-white pointer-events-none">
-              <div class="relative h-2 rounded last:-mt-2" data-range-wrapper>
+              <div class="relative rounded h-2 last:-mt-2" data-range-wrapper>
                 <input class="range-input bg-green" data-range-input type="range" step="1" max="100" value="30">
                 <div class="range-progress bg-gray" data-range-progress></div>
                 <output class="range-bubble bg-green shadow-green" data-range-bubble></output>
               </div>
-              <div class="relative h-2 rounded last:-mt-2" data-range-wrapper>
+              <div class="relative rounded h-2 last:-mt-2" data-range-wrapper>
                 <input class="range-input bg-green" data-range-input type="range" step="1" max="100" value="70">
                 <div class="range-progress bg-gray" data-range-progress></div>
                 <output class="range-bubble bg-green shadow-green" data-range-bubble></output>
@@ -441,14 +441,14 @@
       </div>
       <div data-filtering-card="filtering" data-filtering-value="3">
         <div class="w-full max-w-xs mx-auto" id="copy">
-          <div class="flex items-center w-full gap-3 mb-5">
-            <a class="w-10 rounded-full shrink-0 pack pack-xl bg-primary/40" data-fancybox-avatar draggable="false" href="/dialogs/dialog-avatar.html">
-              <div class="absolute inset-0 flex items-center justify-center">
+          <div class="flex items-center gap-3 w-full mb-5">
+            <a class="pack pack-xl bg-primary/40 rounded-full shrink-0 w-10" data-fancybox-avatar draggable="false" href="/dialogs/dialog-avatar.html">
+              <div class="flex items-center justify-center absolute inset-0">
                 <%= icon({id: 'user', className: 'icon text-white text-sm', data: null}) %>
               </div>
               <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'data-avatar'}) %>
             </a>
-            <h4 class="text-2xl font-bold">
+            <h4 class="font-bold text-2xl">
               Name Surname
             </h4>
           </div>
@@ -456,35 +456,35 @@
             <input type="hidden" value="Изображение" name="theme">
             <div class="flex flex-col" data-label>
               <div class="relative mb-5">
-                <div class="transition pack pack-xl bg-second rounded-2xl" data-preview-drag>
+                <div class="pack pack-xl bg-second rounded-2xl transition" data-preview-drag>
                   <%= picture({src: '', format: '', className: 'image object-scale-down', data: 'data-preview-image="http://localhost:9000/img/pictures/town.jpg"'}) %>
                 </div>
-                <button class="absolute rounded-lg btn btn-gray btn-fill size-10 top-3 right-3" data-preview-remove data-waved="dark" type="button">
+                <button class="btn btn-gray btn-fill absolute top-3 right-3 rounded-lg size-10" data-preview-remove data-waved="dark" type="button">
                   <%= icon({id: 'trash', className: 'icon text-red text-2xl', data: null}) %>
                 </button>
-                <%= error({text: 'Загрузите изображение'}) %>
+                <%= error %>
               </div>
               <div class="flex flex-wrap items-center justify-between gap-4">
-                <label class="grow btn btn-primary btn-lg btn-fill" data-preview-label data-waved="light">
-                  <input class="hidden" data-preview-input data-input="file" type="file" name="files[]">
+                <label class="btn btn-primary btn-fill btn-lg grow" data-preview-label data-waved="light">
+                  <input hidden data-preview-input data-input="file" type="file" name="files[]">
                   Загрузить
                 </label>
-                <button class="grow btn btn-primary btn-lg btn-contur" data-waved="dark" type="submit">Отправить</button>
+                <button class="btn btn-primary btn-contur btn-lg grow" data-waved="dark" type="submit">Отправить</button>
               </div>
             </div>
           </form>
-          <div class="flex flex-col w-full gap-5">
+          <div class="flex flex-col gap-5 w-full">
             <div class="relative" data-copy="http://localhost:9000/index.html#copy">
-              <button class="w-full px-10 btn btn-gray btn-lg btn-fill" data-copy-button data-waved="dark">Copy</button>
-              <span class="absolute left-0 right-0 invisible text-sm transition-[opacity,_visibility] opacity-0 top-full text-primary" data-copy-result>Скопировано</span>
+              <button class="btn btn-gray btn-fill btn-lg w-full px-10" data-copy-button data-waved="dark">Copy</button>
+              <span class="absolute top-full left-0 right-0 text-primary text-sm opacity-0 invisible transition-[opacity,_visibility]" data-copy-result>Скопировано</span>
             </div>
-            <a class="btn btn-gray btn-lg btn-fill" data-waved="dark" data-fancybox-calendar draggable="false" href="/dialogs/dialog-calendar.html">Calendar</a>
+            <a class="btn btn-gray btn-fill btn-lg" data-waved="dark" data-fancybox-calendar draggable="false" href="/dialogs/dialog-calendar.html">Calendar</a>
             <div class="relative" data-rendering="SL-QGLZC-KHQDJ2H">
-              <canvas class="hidden" data-rendering-canvas="/img/pictures/certificate.jpg" width="540" height="750"></canvas>
-              <a class="btn btn-gray btn-lg btn-fill" data-rendering-download data-waved="dark" draggable="false" href="" download="certificate">Download canvas</a>
+              <canvas hidden data-rendering-canvas="/img/pictures/certificate.jpg" width="540" height="750"></canvas>
+              <a class="btn btn-gray btn-fill btn-lg" data-rendering-download data-waved="dark" draggable="false" href="" download="certificate">Download canvas</a>
             </div>
             <div data-cookie="/" data-expires="7" id="cookie">
-              <button class="w-full btn btn-gray btn-lg btn-fill" data-cookie-button data-waved="dark">Cookie</button>
+              <button class="btn btn-gray btn-fill btn-lg w-full" data-cookie-button data-waved="dark">Cookie</button>
             </div>
           </div>
         </div>
@@ -510,20 +510,20 @@
   }
 ] %>
 
-<section class="container flex flex-col items-center justify-center overflow-hidden bg-white dark:bg-black" data-parallax>
-  <h2 class="mb-8 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight anim anim-up" data-anim data-movement="blend">
+<section class="container flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden" data-parallax>
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-8 duration-500 anim anim-up" data-anim data-movement="blend">
     Parallax hovered
   </h2>
-  <div class="flex flex-col items-center gap-5 lg:flex-row lg:justify-between md:gap-10">
+  <div class="flex flex-col lg:flex-row items-center lg:justify-between gap-5 md:gap-10">
     <% parallax.forEach((item) => { %>
     <div class="w-72" data-parallax-hovered="600">
-      <div class="transition-transform ease-linear pack pack-xxl bg-grey dark:bg-dark" data-parallax-item="10">
+      <div class="pack pack-xxl bg-grey dark:bg-dark transition-transform ease-linear" data-parallax-item="10">
         <%= loader %>
         <%= picture({src: item.bg, format: 'png', className: 'image', data: null}) %>
-        <div class="absolute transition-transform ease-linear border-8 border-solid inset-5 border-second" data-parallax-item="100"></div>
+        <div class="absolute inset-5 border-8 border-solid border-second transition-transform ease-linear" data-parallax-item="100"></div>
         <%= picture({src: item.img, format: 'png', className: 'image transition-transform ease-linear', data: 'data-parallax-item="80"'}) %>
-        <div class="absolute bottom-0 left-0 right-0 top-auto p-10 text-white transition-transform ease-linear pointer-events-none" data-parallax-item="160">
-          <h2 class="mb-3 font-medium text-xl/tight">
+        <div class="absolute top-auto bottom-0 left-0 right-0 text-white transition-transform ease-linear pointer-events-none p-10" data-parallax-item="160">
+          <h2 class="font-medium text-xl/tight mb-3">
             Hover me!
           </h2>
           <p>
@@ -539,10 +539,10 @@
 <!-- Игра -->
 
 <section class="container flex flex-col items-center justify-center bg-grey dark:bg-dark">
-  <h2 class="mb-8 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight anim anim-up" data-anim data-movement="blend">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-8 duration-500 anim anim-up" data-anim data-movement="blend">
     Game
   </h2>
-  <div class="grid w-full max-w-md grid-cols-3 mx-auto border border-black border-solid" data-game></div>
+  <div class="grid grid-cols-3 border border-solid border-black w-full max-w-md mx-auto" data-game></div>
 </section>
 
 <!-- Плеер -->

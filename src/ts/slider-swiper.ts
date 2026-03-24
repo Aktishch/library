@@ -17,6 +17,8 @@ Swiper.use([Navigation, Pagination, Scrollbar, Autoplay, Grid, Thumbs, EffectCov
 Swiper.defaults.touchStartPreventDefault = false
 window.Swiper = Swiper
 
+const { sm, md, lg, xl } = media
+
 const createGallerySlider = (): void => {
   const slider = document.querySelector('*[data-slider="gallery"]') as HTMLDivElement
 
@@ -45,10 +47,10 @@ const createGallerySlider = (): void => {
     loop: true,
     freeMode: true,
     breakpoints: {
-      [media.sm]: {
+      [sm]: {
         slidesPerView: 2,
       },
-      [media.lg]: {
+      [lg]: {
         slidesPerView: 3,
       },
     },
@@ -86,13 +88,13 @@ const createProductsSlider = (): void => {
     grabCursor: true,
     watchSlidesProgress: true,
     breakpoints: {
-      [media.sm]: {
+      [sm]: {
         slidesPerView: 2,
       },
-      [media.lg]: {
+      [lg]: {
         slidesPerView: 3,
       },
-      [media.xl]: {
+      [xl]: {
         slidesPerView: 4,
       },
     },
@@ -171,7 +173,7 @@ const createDescriptionSlider = (): void => {
     speed: 1000,
     grabCursor: true,
     breakpoints: {
-      [media.md]: {
+      [md]: {
         slidesPerView: 4,
       },
     },

@@ -1,3 +1,5 @@
+const className: string[] = ['invisible', 'opacity-0']
+
 export default (): void => {
   const world = document.querySelector('*[data-world]') as HTMLElement
 
@@ -22,13 +24,13 @@ export default (): void => {
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text') as SVGTextElement
 
     const elementsShow = (): void => {
-      rect.classList.remove('invisible', 'opacity-0')
-      text.classList.remove('invisible', 'opacity-0')
+      rect.classList.remove(...className)
+      text.classList.remove(...className)
     }
 
     const elementsHidden = (): void => {
-      rect.classList.add('invisible', 'opacity-0')
-      text.classList.add('invisible', 'opacity-0')
+      rect.classList.add(...className)
+      text.classList.add(...className)
     }
 
     const currentCountry = (): void => {

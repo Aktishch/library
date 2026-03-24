@@ -1,3 +1,5 @@
+const className: string[] = ['invisible', 'opacity-0']
+
 const copyText = (event: Event): void => {
   const button = event.target as HTMLButtonElement
   const copy = button.closest('[data-copy]') as HTMLDivElement
@@ -5,10 +7,10 @@ const copyText = (event: Event): void => {
 
   button.disabled = true
   window.navigator.clipboard.writeText(String(copy.dataset.copy))
-  result.classList.remove('invisible', 'opacity-0')
+  result.classList.remove(...className)
   setTimeout((): void => {
     button.disabled = false
-    result.classList.add('invisible', 'opacity-0')
+    result.classList.add(...className)
   }, 1000)
 }
 

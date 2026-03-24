@@ -3,7 +3,7 @@ const getPhoneValue = (input: HTMLInputElement): string => {
 }
 
 const formatterValue = (value: string): string => {
-  if (value[0] === '9') value = '7' + value
+  if (!['7', '8'].includes(value[0])) value = '7' + value
 
   const firstVal: string = value[0] === '8' ? '8' : '+7'
   let formatted: string
@@ -46,19 +46,8 @@ const onKeyDown = (event: KeyboardEvent): void => {
   if (event.code === 'Backspace' && value.length === 1) input.value = ''
 }
 
-const onPaste = (event: ClipboardEvent): void => {
-  const input = event.target as HTMLInputElement
-  const value: string = getPhoneValue(input)
-  const pasted: DataTransfer | null = event.clipboardData
-
-  if (pasted && /\D/g.test(pasted.getData('Text'))) {
-    input.value = value
-    return
-  }
-}
-
 export default (): void => {
-  const phoneEvents: string[] = ['input', 'keyup', 'keydown', 'paste']
+  const phoneEvents: string[] = ['input', 'keyup', 'keydown']
 
   phoneEvents.forEach((phoneEvent: string): void => {
     document.addEventListener(phoneEvent, ((event: Event): void => {
@@ -76,11 +65,6 @@ export default (): void => {
 
           case 'keydown': {
             onKeyDown(event as KeyboardEvent)
-            break
-          }
-
-          case 'paste': {
-            onPaste(event as ClipboardEvent)
             break
           }
         }
