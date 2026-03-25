@@ -57,7 +57,6 @@ export default (): void => {
     }
 
     setSizeImage()
-
     window.addEventListener('resize', setSizeImage as EventListener)
     compare.addEventListener('mousedown', compareStart as EventListener)
     compare.addEventListener('mouseup', compareEnd as EventListener)

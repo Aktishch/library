@@ -74,5 +74,5 @@ export default (): void => {
         alert(hintContent)
       }) as EventListener)
     })
-    .catch((error: string) => console.log('Failed to load Yandex Maps', error))
+    .catch((error: string) => console.log(error))
 }

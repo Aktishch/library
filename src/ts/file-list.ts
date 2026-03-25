@@ -1,6 +1,17 @@
-import { fileHandler, uploadFile } from './utils'
+import { en, fileHandler, uploadFile } from './utils'
+
+type Content = {
+  default: string
+  more: string
+  limit: string
+}
 
 const className: string[] = ['pointer-events-none', 'opacity-50']
+const content: Content = {
+  default: en ? 'Upload files' : 'Загрузить файлы',
+  more: en ? 'Upload more' : 'Загрузить ещё',
+  limit: en ? 'No more than 3 files' : 'Не больше 3 файлов',
+}
 
 export default () => {
   const filelists = document.querySelectorAll('*[data-filelist]') as NodeListOf<HTMLDivElement>
@@ -18,6 +29,8 @@ export default () => {
     const uploadFilesList = (): void => {
       input.files = data.files as FileList
     }
+
+    text.textContent = content.default
 
     input.addEventListener('change', ((): void => {
       const files = input.files as FileList
@@ -40,13 +53,13 @@ export default () => {
                   </svg>
                 </button>`
               items.appendChild(item)
-              text.textContent = 'Загрузить ещё'
+              text.textContent = content.more
               data.items.add(file)
             }
 
             if ((data.files as FileList).length === 3) {
               label.classList.add(...className)
-              text.textContent = 'Не больше 3 файлов'
+              text.textContent = content.limit
             }
 
             uploadFilesList()
@@ -78,10 +91,10 @@ export default () => {
 
         if ((data.files as FileList).length === 0) {
           input.value = ''
-          text.textContent = 'Загрузить файлы'
+          text.textContent = content.default
         } else {
           label.classList.remove(...className)
-          text.textContent = 'Загрузить ещё'
+          text.textContent = content.more
         }
       }
     }) as EventListener)

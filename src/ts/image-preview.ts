@@ -60,7 +60,7 @@ export default (): void => {
                 avatar.src = url
                 dialog.close()
               })
-              .catch((error: string): void => console.log('The form has not been sent', error))
+              .catch((error: string): void => console.log(error))
           }
         })
       } else {
@@ -85,6 +85,7 @@ export default (): void => {
             defaultState()
           }
         })
+        .catch((error: string): void => console.log(error))
     }
 
     urlImageToObject()

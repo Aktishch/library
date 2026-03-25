@@ -1,3 +1,5 @@
+import { en } from './utils'
+
 export default (): void => {
   const title = document.querySelector('title') as HTMLTitleElement
 
@@ -9,7 +11,7 @@ export default (): void => {
   if (text !== null) {
     window.addEventListener('blur', ((): void => {
       timer = setTimeout((): void => {
-        title.innerText = 'Вы покинули страницу'
+        title.innerText = en ? 'You have left the page' : 'Вы покинули страницу'
       }, 5000)
     }) as EventListener)
 

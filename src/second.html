@@ -23,17 +23,17 @@
 
 <!-- Сетка -->
 
-<section class="container flex flex-col items-center justify-center overflow-hidden bg-white dark:bg-black" id="content">
-  <h2 class="mb-3 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight anim anim-up" data-anim data-movement="blend">
+<section class="container flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden" id="content">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-3 duration-500 anim anim-up" data-anim data-movement="blend">
     GridBox
   </h2>
-  <h3 class="mb-5 font-semibold duration-500 text-base/tight md:text-lg/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+  <h3 class="font-semibold text-base/tight md:text-lg/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Columns and rows
   </h3>
-  <div class="grid w-full grid-flow-row-dense grid-cols-2 gap-3 lg:grid-cols-3 md:gap-5 lg:gap-8">
+  <div class="grid grid-cols-2 lg:grid-cols-3 grid-flow-row-dense gap-3 md:gap-5 lg:gap-8 w-full">
     <% ['lg:row-5', 'lg:row-4', 'lg:row-5', 'lg:row-5', 'lg:row-4', 'lg:row-4'].forEach((item) => { %>
     <div class="<%= item %> duration-1000 anim anim-circle" data-anim>
-      <a class="h-full shadow-md pack pack-xl bg-grey dark:bg-dark rounded-xl" data-movement="light" data-fancybox="grid" draggable="false" href="/img/pictures/town-grey.jpg">
+      <a class="pack pack-xl bg-grey dark:bg-dark rounded-xl shadow-md h-full" data-movement="light" data-fancybox="grid" draggable="false" href="/img/pictures/town-grey.jpg">
         <%= loader %>
         <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>
       </a>
@@ -44,18 +44,18 @@
 
 <!-- Сравнение -->
 
-<section class="container flex flex-col items-center justify-between xl:container-distance bg-grey dark:bg-dark">
-  <h2 class="mb-5 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+<section class="container xl:container-distance flex flex-col items-center justify-between bg-grey dark:bg-dark">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Comparison
   </h2>
-  <div class="relative w-full overflow-hidden duration-500 bg-grey dark:bg-dark rounded-2xl anim anim-fade" data-anim data-compare>
+  <div class="relative bg-grey dark:bg-dark rounded-2xl overflow-hidden w-full duration-500 anim anim-fade" data-anim data-compare>
     <%= loader %>
-    <div class="absolute z-10 w-1/2 h-full pack pack-xs" data-compare-before>
+    <div class="pack pack-xs absolute z-10 w-1/2 h-full" data-compare-before>
       <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'image', data: 'data-compare-image'}) %>
     </div>
-    <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'block relative rounded-inherit w-full h-full', data: null}) %>
+    <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'block relative rounded-inherit size-full', data: null}) %>
     <div class="flex items-center justify-center absolute top-0 bottom-0 left-2/4 z-20 bg-white dark:bg-black -translate-x-1/2 w-1 h-[95%] my-auto" data-compare-change>
-      <button class="rounded-full btn btn-primary btn-fill cursor-col-resize size-12 shrink-0">
+      <button class="btn btn-primary btn-fill rounded-full shrink-0 cursor-col-resize size-12">
         <%= icon({id: 'arrows', className: 'icon text-xl', data: null}) %>
       </button>
     </div>
@@ -64,53 +64,53 @@
 
 <!-- Сортировка -->
 
-<section class="container flex flex-col items-center justify-center bg-white container-xs dark:bg-black">
-  <h2 class="mb-5 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+<section class="container container-xs flex flex-col items-center justify-center bg-white dark:bg-black">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Sorting
   </h2>
   <div class="w-full max-w-xl mx-auto" data-filtering="sorting">
-    <div class="relative flex flex-col gap-0 mb-5 overflow-hidden duration-500 md:items-center md:justify-between md:flex-row md:gap-4 bg-grey md:bg-opacity-0 text-second md:text-black dark:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-gray md:mb-10 md:pb-4 anim anim-up" data-anim>
+    <div class="flex flex-col md:flex-row gap-0 md:items-center md:justify-between md:gap-4 relative bg-grey md:bg-opacity-0 text-second md:text-black dark:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-gray overflow-hidden mb-5 md:mb-10 md:pb-4 duration-500 anim anim-up" data-anim>
       <% ['all', 'primary', 'second', 'green', 'mix', 'none'].forEach((item, key) => { %>
-      <button class="grow p-4 text-xl text-center cursor-pointer md:p-0 [&.filtering-active]:text-white [&.filtering-active]:bg-second [&.filtering-active]:pointer-events-none md:[&.filtering-active]:text-primary md:[&.filtering-active]:bg-opacity-0 <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="sorting" data-filtering-value="<%= item %>"><%= item %></button>
+      <button class="text-center text-xl grow cursor-pointer p-4 md:p-0 [&.filtering-active]:bg-second md:[&.filtering-active]:bg-opacity-0 [&.filtering-active]:text-white md:[&.filtering-active]:text-primary [&.filtering-active]:pointer-events-none <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="sorting" data-filtering-value="<%= item %>"><%= item %></button>
       <% }) %>
-      <span class="absolute bottom-0 left-0 hidden h-1 transition-[left,_width] ease-linear rounded-t-lg md:block bg-primary" data-filtering-line="sorting"></span>
+      <span class="hidden absolute bottom-0 left-0 md:block bg-primary rounded-t-lg transition-[left,_width] ease-linear h-1" data-filtering-line="sorting"></span>
     </div>
-    <div class="grid grid-cols-2 gap-5 md:grid-cols-3 md:gap-10">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-10">
       <% for (var i = 0; i < 3; i++) { %>
-      <div class="py-10 bg-primary" data-filtering-card="sorting" data-filtering-value="primary mix"></div>
-      <div class="py-10 bg-second" data-filtering-card="sorting" data-filtering-value="second"></div>
-      <div class="py-10 bg-green" data-filtering-card="sorting" data-filtering-value="green mix"></div>
+      <div class="bg-primary py-10" data-filtering-card="sorting" data-filtering-value="primary mix"></div>
+      <div class="bg-second py-10" data-filtering-card="sorting" data-filtering-value="second"></div>
+      <div class="bg-green py-10" data-filtering-card="sorting" data-filtering-value="green mix"></div>
       <% } %>
     </div>
-    <div class="uppercase text-lg/none font-alt" data-filtering-plug="sorting">Empty</div>
+    <div class="font-alt uppercase text-lg/none" data-filtering-plug="sorting">Empty</div>
   </div>
 </section>
 
 <!-- Счетчик -->
 
-<section class="container flex flex-col items-center justify-center container-xs xl:container-distance bg-grey dark:bg-dark">
-  <h2 class="mb-5 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+<section class="container container-xs xl:container-distance flex flex-col items-center justify-center bg-grey dark:bg-dark">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Counter of time
   </h2>
-  <div class="flex items-center justify-center w-full px-4 duration-500 bg-white shadow-md dark:bg-black text-primary rounded-3xl py-7 md:py-10 md:px-10 anim anim-up" data-anim data-counter data-year="2025" data-month="1" data-day="1">
-    <h3 class="hidden w-full font-semibold text-center text-xl/tight font-alt md:text-3xl/tight" data-counter-subtitle>
+  <div class="flex items-center justify-center bg-white dark:bg-black text-primary rounded-3xl shadow-md w-full py-7 md:py-10 px-4 md:px-10 duration-500 anim anim-up" data-anim data-counter data-year="2027" data-month="1" data-day="1">
+    <h3 class="hidden font-alt font-semibold text-center text-xl/tight md:text-3xl/tight w-full" data-counter-subtitle>
       Times up
     </h3>
-    <div class="flex justify-between w-full gap-4 text-center" data-counter-timer>
+    <div class="flex justify-between gap-4 text-center w-full" data-counter-timer>
       <time class="flex flex-col items-center justify-center">
-        <span class="text-2xl font-semibold md:text-3xl" data-counter-unit>0</span>
+        <span class="font-semibold text-2xl md:text-3xl" data-counter-unit>0</span>
         <span class="text-base md:text-2xl">Days</span>
       </time>
       <time class="flex flex-col items-center justify-center">
-        <span class="text-2xl font-semibold md:text-3xl" data-counter-unit>0</span>
+        <span class="font-semibold text-2xl md:text-3xl" data-counter-unit>0</span>
         <span class="text-base md:text-2xl">Hours</span>
       </time>
       <time class="flex flex-col items-center justify-center">
-        <span class="text-2xl font-semibold md:text-3xl" data-counter-unit>0</span>
+        <span class="font-semibold text-2xl md:text-3xl" data-counter-unit>0</span>
         <span class="text-base md:text-2xl">Minutes</span>
       </time>
       <time class="flex flex-col items-center justify-center">
-        <span class="text-2xl font-semibold md:text-3xl" data-counter-unit>0</span>
+        <span class="font-semibold text-2xl md:text-3xl" data-counter-unit>0</span>
         <span class="text-base md:text-2xl">Seconds</span>
       </time>
     </div>
@@ -119,29 +119,29 @@
 
 <!-- Время -->
 
-<section class="container flex flex-col items-center justify-center bg-white container-xs dark:bg-black">
-  <h2 class="mb-5 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+<section class="container container-xs flex flex-col items-center justify-center bg-white dark:bg-black">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Timer
   </h2>
-  <div class="relative flex flex-col items-center justify-center mx-auto rounded-full bg-primary size-72" data-timer>
-    <div class="flex flex-col items-center absolute top-0 left-0 right-0 text-second origin-bottom pointer-events-none w-0.5 h-1/2 mx-auto transition-transform duration-100 ease-linear after:content-auto after:block after:relative after:-top-2 after:bg-current after:rounded-full after:size-4" data-timer-stopwatch></div>
-    <time class="mb-5 text-2xl font-semibold text-center text-white" data-timer-units></time>
+  <div class="flex flex-col items-center justify-center relative bg-primary rounded-full size-72 mx-auto" data-timer>
+    <div class="flex flex-col items-center absolute top-0 left-0 right-0 text-second transition-transform origin-bottom duration-100 ease-linear pointer-events-none w-0.5 h-1/2 mx-auto after:content-auto after:block after:relative after:-top-2 after:bg-current after:rounded-full after:size-4" data-timer-stopwatch></div>
+    <time class="font-semibold text-white text-center text-2xl mb-5" data-timer-units></time>
     <div class="flex items-center justify-center gap-4">
-      <button class="rounded-full size-10 btn btn-second btn-fade shrink-0" data-timer-turn data-waved="dark">
+      <button class="btn btn-second btn-fade rounded-full shrink-0 size-10" data-timer-turn data-waved="dark">
         <%= icon({id: 'play', className: 'icon text-4xl', data: null}) %>
       </button>
-      <button class="btn btn-second btn-sm btn-text" data-timer-reset data-waved="dark">Reset</button>
+      <button class="btn btn-second btn-text btn-sm" data-timer-reset data-waved="dark">Reset</button>
     </div>
   </div>
 </section>
 
 <!-- Открытка -->
 
-<section class="container flex flex-col items-center justify-center overflow-hidden xl:container-distance bg-grey dark:bg-dark">
-  <h2 class="mb-5 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+<section class="container xl:container-distance flex flex-col items-center justify-center bg-grey dark:bg-dark overflow-hidden">
+  <h2 class="font-bold font-alt text-center text-4xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Postcards
   </h2>
-  <div class="flex flex-wrap items-center justify-center w-full gap-10 postcards">
+  <div class="postcards flex flex-wrap items-center justify-center gap-10 w-full">
     <% for (var i = 0; i < 3; i++) { %>
     <ul class="postcards-item">
       <% for (var j = 0; j < 9; j++) { %>
@@ -155,14 +155,14 @@
 <!-- Мир -->
 
 <section class="container bg-white dark:bg-black" data-world>
-  <h2 class="mb-5 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     World map
   </h2>
-  <div class="p-5 duration-500 bg-grey dark:bg-dark rounded-3xl lg:p-10 anim anim-fade" data-anim id="country">
+  <div class="bg-grey dark:bg-dark rounded-3xl p-5 lg:p-10 duration-500 anim anim-fade" data-anim id="country">
     <%= worldMap %>
     <div class="flex items-center justify-center mt-5 md:mt-10">
       <%= picture({src: '/img/pictures/russia', format: 'svg', className: 'block w-10 md:w-12 mr-5', data: 'data-world-flag'}) %>
-      <h4 class="text-lg font-bold md:text-2xl" data-world-title>
+      <h4 class="font-bold text-lg md:text-2xl" data-world-title>
         Россия
       </h4>
     </div>
@@ -171,11 +171,11 @@
 
 <!-- Загрузка -->
 
-<section class="container flex flex-col items-center justify-center xl:container-distance bg-grey dark:bg-dark">
-  <h2 class="mb-5 font-bold text-center duration-500 text-4xl/tight font-alt lg:text-5xl/tight md:mb-10 anim anim-up" data-anim data-movement="blend">
+<section class="container xl:container-distance flex flex-col items-center justify-center bg-grey dark:bg-dark">
+  <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Preloaders
   </h2>
-  <div class="flex flex-wrap items-center justify-between w-full gap-5">
+  <div class="flex flex-wrap items-center justify-between gap-5 w-full">
     <div class="preloader preloader--circles">
       <div class="preloader-circle"></div>
     </div>

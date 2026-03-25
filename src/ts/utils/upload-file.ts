@@ -1,3 +1,5 @@
+import { en } from './en'
+
 type UploadFile = {
   file: File
   url: string
@@ -8,7 +10,7 @@ export const uploadFile = (file: File): Promise<UploadFile> => {
     const reader = new FileReader() as FileReader
 
     const createReject = (): void => {
-      reject('File upload error')
+      reject(en ? 'File upload error' : 'Ошибка при загрузке файла')
     }
 
     reader.readAsDataURL(file)
