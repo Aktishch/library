@@ -309,7 +309,7 @@
     ".gitignore": true,
     "node_modules": true,
     "package-lock.json": true,
-    "prettier.config.js": true,
+    "prettier.config.ts": true,
     "eslint.config.ts": true,
     ".stylelintrc": true,
     "postcss.config.ts": true,
