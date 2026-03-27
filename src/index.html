@@ -6,7 +6,7 @@
 
   var icon = _.template(require('./components/icon.html').default)
   var picture = _.template(require('./components/picture.html').default)
-  var loader = _.template(require('./components/loader.html').default)({icon, className: null})
+  var loader = _.template(require('./components/loader.html').default)({className: null, icon})
   var preloader = require('./components/preloader.html').default
   var error = require('./components/error.html').default
   var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
@@ -359,7 +359,7 @@
           <button class="btn btn-second btn-fill btn-lg" data-waved="dark" type="submit">Submit</button>
         </form>
         <div class="flex items-center justify-center mt-5">
-          <a class="text-second text-lg underline-offset-4 hover:underline cursor-pointer w-max" data-fancybox-dialog draggable="false" href="/dialogs/dialog-politics.html">Privacy policy</a>
+          <a class="text-second text-lg underline-offset-4 hover:underline cursor-pointer w-max" data-fancybox-dialog data-type="ajax" draggable="false" href="/dialogs/dialog-politics.html">Privacy policy</a>
         </div>
       </div>
       <div data-filtering-card="filtering" data-filtering-value="2">
@@ -442,7 +442,7 @@
       <div data-filtering-card="filtering" data-filtering-value="3">
         <div class="w-full max-w-xs mx-auto" id="copy">
           <div class="flex items-center gap-3 w-full mb-5">
-            <a class="pack pack-xl bg-primary/40 rounded-full shrink-0 w-10" data-fancybox-avatar draggable="false" href="/dialogs/dialog-avatar.html">
+            <a class="pack pack-xl bg-primary/40 rounded-full shrink-0 w-10" data-fancybox-avatar data-type="ajax" draggable="false" href="/dialogs/dialog-avatar.html">
               <div class="flex items-center justify-center absolute inset-0">
                 <%= icon({id: 'user', className: 'icon text-white text-sm', data: null}) %>
               </div>
@@ -478,7 +478,7 @@
               <button class="btn btn-gray btn-fill btn-lg w-full px-10" data-copy-button data-waved="dark">Copy</button>
               <span class="absolute top-full left-0 right-0 text-primary text-sm opacity-0 invisible transition-[opacity,_visibility]" data-copy-result>Скопировано</span>
             </div>
-            <a class="btn btn-gray btn-fill btn-lg" data-waved="dark" data-fancybox-calendar draggable="false" href="/dialogs/dialog-calendar.html">Calendar</a>
+            <a class="btn btn-gray btn-fill btn-lg" data-waved="dark" data-fancybox-calendar data-type="ajax" draggable="false" href="/dialogs/dialog-calendar.html">Calendar</a>
             <div class="relative" data-rendering="SL-QGLZC-KHQDJ2H">
               <canvas hidden data-rendering-canvas="/img/pictures/certificate.jpg" width="540" height="750"></canvas>
               <a class="btn btn-gray btn-fill btn-lg" data-rendering-download data-waved="dark" draggable="false" href="" download="certificate">Download canvas</a>

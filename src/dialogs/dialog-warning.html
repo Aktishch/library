@@ -1,9 +1,4 @@
-<%
-  var preloader = require('../components/preloader.html').default
-  var loading = _.template(require('../components/loading.html').default)({preloader})
-%>
-
-<dialog class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-full max-w-lg p-10">
+<div class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-[500px] max-w-full p-10">
   <div class="flex flex-col items-center justify-center text-center">
     <h2 class="font-alt font-semibold text-lg md:text-xl border-b border-solid border-black dark:border-white w-full pb-3 mb-3">
       Вам уже исполнилось 18 лет?
@@ -17,5 +12,4 @@
       <button class="btn btn-primary btn-fill btn-lg px-10" data-negative data-waved="light">Нет</button>
     </div>
   </div>
-  <%= loading %>
-</dialog>
+</div>

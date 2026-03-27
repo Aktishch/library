@@ -1,24 +1,25 @@
 .fancybox {
-  &-custom * {
+  &__dialog &__slide {
 
-    &,
-    &::before,
-    &::after {
-      @apply box-border;
+    .f-html {
+      @apply bg-transparent p-0 max-w-full;
     }
-  }
 
-  &-custom &__content:is(&-error) {
-    @apply bg-transparent text-white p-0;
-  }
-
-  &-custom &__slide.has-iframe &__content {
-    @apply p-0;
-  }
-
-  &-custom &__content {
-    &>.f-button.is-close-btn {
+    .f-button.is-close-button {
       @apply top-2 right-2 bg-white text-black rounded-full shadow-md;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    input[hidden] {
+      &:empty {
+        @apply hidden;
+      }
     }
   }
 }

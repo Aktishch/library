@@ -75,10 +75,14 @@ $colors: ("primary": #af1a4c,
   }
 
   img {
+    &[src=""] {
+      display: none !important;
+    }
+
     @apply select-none;
 
-    &:is([src=""], [src="/"]) {
-      @apply hidden;
+    [src="/"] {
+      @apply opacity-0 invisible;
     }
   }
 

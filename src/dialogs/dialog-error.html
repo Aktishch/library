@@ -1,15 +1,10 @@
-<%
-  var icon = _.template(require('../components/icon.html').default)
-  var preloader = require('../components/preloader.html').default
-  var loading = _.template(require('../components/loading.html').default)({preloader})
-%>
+<% var icon = _.template(require('../components/icon.html').default) %>
 
-<dialog class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-full max-w-xs px-5 py-10">
+<div class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-80 max-w-full px-5 py-10">
   <div class="flex flex-col items-center justify-center">
     <%= icon({id: 'close', className: 'icon text-red text-9xl mb-5', data: null}) %>
     <h2 class="font-alt font-semibold text-center text-2xl/tight">
       Ошибка!
     </h2>
   </div>
-  <%= loading %>
-</dialog>
+</div>

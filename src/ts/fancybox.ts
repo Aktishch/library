@@ -1,4 +1,4 @@
-import { Fancybox } from '@fancyapps/ui'
+import { Fancybox } from '@fancyapps/ui/dist/fancybox/'
 import { createCalendar } from './air-datepicker'
 import filtering from './filtering'
 import imagePreview from './image-preview'
@@ -18,19 +18,8 @@ declare global {
   }
 }
 
-Fancybox.defaults.mainClass = 'fancybox-custom'
-Fancybox.defaults.trapFocus = false
-Fancybox.defaults.autoFocus = false
-Fancybox.defaults.placeFocusBack = false
+Fancybox.getDefaults().placeFocusBack = false
 window.Fancybox = Fancybox
-
-const loading = (container: HTMLDivElement): void => {
-  const loading = container.querySelector('*[data-loading]') as HTMLDivElement
-
-  if (!loading) return
-
-  setTimeout((): void => loading.remove(), 200)
-}
 
 export const dialog: FancyboxDialog = {
   open: (src: string): void => {
@@ -44,10 +33,7 @@ export const dialog: FancyboxDialog = {
       {
         dragToClose: false,
         on: {
-          done: (fancybox): void => {
-            loading(fancybox.container)
-            loadMedia()
-          },
+          'Carousel.contentReady': (): void => loadMedia(),
         },
       }
     )
@@ -65,10 +51,7 @@ export const dialog: FancyboxDialog = {
         closeButton: false,
         backdropClick: false,
         on: {
-          done: (fancybox): void => {
-            loading(fancybox.container)
-            loadMedia()
-          },
+          'Carousel.contentReady': (): void => loadMedia(),
         },
       }
     )
@@ -83,21 +66,15 @@ export default (): void => {
 
   window.Fancybox.bind('[data-fancybox-dialog]', {
     dragToClose: false,
-    defaultType: 'ajax',
     on: {
-      done: (fancybox): void => {
-        loading(fancybox.container)
-        loadMedia()
-      },
+      'Carousel.contentReady': (): void => loadMedia(),
     },
   })
 
   window.Fancybox.bind('[data-fancybox-form]', {
     dragToClose: false,
-    defaultType: 'ajax',
     on: {
-      done: (fancybox): void => {
-        loading(fancybox.container)
+      'Carousel.contentReady': (): void => {
         loadMedia()
         getStateSubmitBtn()
       },
@@ -106,10 +83,8 @@ export default (): void => {
 
   window.Fancybox.bind('[data-fancybox-avatar]', {
     dragToClose: false,
-    defaultType: 'ajax',
     on: {
-      done: (fancybox): void => {
-        loading(fancybox.container)
+      'Carousel.contentReady': (): void => {
         loadMedia()
         imagePreview()
       },
@@ -118,10 +93,8 @@ export default (): void => {
 
   window.Fancybox.bind('[data-fancybox-calendar]', {
     dragToClose: false,
-    defaultType: 'ajax',
     on: {
-      done: (fancybox): void => {
-        loading(fancybox.container)
+      'Carousel.contentReady': (): void => {
         loadMedia()
         createCalendar()
         filtering()

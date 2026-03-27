@@ -1,12 +1,11 @@
 <%
   var icon = _.template(require('../components/icon.html').default)
   var picture = _.template(require('../components/picture.html').default)
-  var loader = _.template(require('../components/loader.html').default)({icon, className: null})
+  var loader = _.template(require('../components/loader.html').default)({className: null, icon})
   var preloader = require('../components/preloader.html').default
-  var loading = _.template(require('../components/loading.html').default)({preloader})
 %>
 
-<dialog class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-full max-w-3xl px-5 py-10">
+<div class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-[760px] max-w-full px-5 py-10">
   <div class="flex flex-wrap items-center justify-between gap-5" data-filtering="calendar">
     <div class="relative">
       <div class="flex items-center justify-center absolute inset-0 overflow-hidden">
@@ -15,7 +14,7 @@
       <div class="relative" id="calendar"></div>
     </div>
     <div class="w-full md:w-1/2">
-      <% ['date-5-9', 'date-7-9', 'date-10-10'].forEach((item) => { %>
+      <% ['date-5-2', 'date-7-2', 'date-10-3'].forEach((item) => { %>
       <div class="filtering-card pack pack-md bg-gray rounded-2xl w-full" data-filtering-card="calendar" data-filtering-value="<%= item %>">
         <%= loader %>
         <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>
@@ -23,5 +22,4 @@
       <% }) %>
     </div>
   </div>
-  <%= loading %>
-</dialog>
+</div>

@@ -1,12 +1,10 @@
 <%
   var icon = _.template(require('../components/icon.html').default)
   var picture = _.template(require('../components/picture.html').default)
-  var preloader = require('../components/preloader.html').default
-  var loading = _.template(require('../components/loading.html').default)({preloader})
   var error = require('../components/error.html').default
 %>
 
-<dialog class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-full max-w-xs px-5 py-10">
+<div class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-80 max-w-full px-5 py-10">
   <form data-preview="avatar">
     <input type="hidden" value="Аватарка" name="theme">
     <div class="relative mb-5">
@@ -20,11 +18,10 @@
     </div>
     <div class="flex flex-wrap items-center justify-between gap-4 w-full">
       <label class="btn btn-second btn-fill btn-lg grow" data-preview-label data-waved="dark">
-        <input class="hidden" data-preview-input type="file" name="file[]">
+        <input hidden data-preview-input type="file" name="file[]">
         Загрузить
       </label>
       <button class="btn btn-second btn-fade btn-contur btn-lg grow" data-preview-remove data-waved="light" type="button" disabled>Удалить</button>
     </div>
   </form>
-  <%= loading %>
-</dialog>
+</div>
