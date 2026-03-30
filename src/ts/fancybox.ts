@@ -2,7 +2,7 @@ import { Fancybox } from '@fancyapps/ui/dist/fancybox/'
 import { createCalendar } from './air-datepicker'
 import filtering from './filtering'
 import imagePreview from './image-preview'
-import loadMedia from './load-media'
+import lazyLoad from './lazy-load'
 import { getStateSubmitBtn } from './submit-handler'
 
 type FancyboxDialog = {
@@ -21,6 +21,8 @@ declare global {
 Fancybox.getDefaults().placeFocusBack = false
 window.Fancybox = Fancybox
 
+const loadUpdate = (): void => lazyLoad().update()
+
 export const dialog: FancyboxDialog = {
   open: (src: string): void => {
     window.Fancybox.show(
@@ -33,7 +35,7 @@ export const dialog: FancyboxDialog = {
       {
         dragToClose: false,
         on: {
-          'Carousel.contentReady': (): void => loadMedia(),
+          'Carousel.contentReady': (): void => loadUpdate(),
         },
       }
     )
@@ -51,7 +53,7 @@ export const dialog: FancyboxDialog = {
         closeButton: false,
         backdropClick: false,
         on: {
-          'Carousel.contentReady': (): void => loadMedia(),
+          'Carousel.contentReady': (): void => loadUpdate(),
         },
       }
     )
@@ -67,7 +69,7 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-dialog]', {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (): void => loadMedia(),
+      'Carousel.contentReady': (): void => loadUpdate(),
     },
   })
 
@@ -75,7 +77,7 @@ export default (): void => {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (): void => {
-        loadMedia()
+        loadUpdate()
         getStateSubmitBtn()
       },
     },
@@ -85,7 +87,7 @@ export default (): void => {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (): void => {
-        loadMedia()
+        loadUpdate()
         imagePreview()
       },
     },
@@ -95,7 +97,7 @@ export default (): void => {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (): void => {
-        loadMedia()
+        loadUpdate()
         createCalendar()
         filtering()
       },

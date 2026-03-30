@@ -19,8 +19,8 @@ import horizontalScrolling from './ts/horizontal-scrolling'
 import imagePreview from './ts/image-preview'
 import input from './ts/input'
 import inverted from './ts/inverted'
+import lazyLoad from './ts/lazy-load'
 import listing from './ts/listing'
-import loadMedia from './ts/load-media'
 import menu from './ts/menu'
 import movement from './ts/movement'
 import outNumber from './ts/out-number'
@@ -81,6 +81,7 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   imagePreview()
   input()
   inverted()
+  lazyLoad()
   listing()
   menu()
   movement()
@@ -115,5 +116,3 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   yandexMap()
   preloader()
 }) as EventListener)
-
-window.addEventListener('load', loadMedia as EventListener)

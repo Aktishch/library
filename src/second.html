@@ -6,13 +6,13 @@
 
   var icon = _.template(require('./components/icon.html').default)
   var picture = _.template(require('./components/picture.html').default)
-  var loader = _.template(require('./components/loader.html').default)({className: null, icon})
+  var loader = _.template(require('./components/loader.html').default)
   var preloader = require('./components/preloader.html').default
   var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
   var heading = _.template(require('./includes/heading.html').default)({data})
   var worldMap = require('./includes/world-map.html').default
-  var player = _.template(require('./includes/player.html').default)({icon, picture, loader})
-  var footer = _.template(require('./includes/footer.html').default)({picture, loader})
+  var player = _.template(require('./includes/player.html').default)({icon, picture})
+  var footer = _.template(require('./includes/footer.html').default)({icon, picture, loader})
 %>
 
 <%= header %>
@@ -33,9 +33,9 @@
   <div class="grid grid-cols-2 lg:grid-cols-3 grid-flow-row-dense gap-3 md:gap-5 lg:gap-8 w-full">
     <% ['lg:row-5', 'lg:row-4', 'lg:row-5', 'lg:row-5', 'lg:row-4', 'lg:row-4'].forEach((item) => { %>
     <div class="<%= item %> duration-1000 anim anim-circle" data-anim>
-      <a class="pack pack-xl bg-grey dark:bg-dark rounded-xl shadow-md h-full" data-movement="light" data-fancybox="grid" draggable="false" href="/img/pictures/town-grey.jpg">
-        <%= loader %>
-        <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>
+      <a class="pack pack-xl bg-grey dark:bg-dark rounded-xl shadow-md h-full" data-media data-movement="light" data-fancybox="grid" draggable="false" href="/img/pictures/town-grey.jpg">
+        <%= loader({className: null, icon}) %>
+        <%= picture({src: '/', format: '', className: 'pack-image image rounded-inherit', data: 'data-lazy data-src="/img/pictures/town-grey.jpg"'}) %>
       </a>
     </div>
     <% }) %>
@@ -49,11 +49,14 @@
     Comparison
   </h2>
   <div class="relative bg-grey dark:bg-dark rounded-2xl overflow-hidden w-full duration-500 anim anim-fade" data-anim data-compare>
-    <%= loader %>
-    <div class="pack pack-xs absolute z-10 w-1/2 h-full" data-compare-before>
-      <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'image', data: 'data-compare-image'}) %>
+    <div class="pack pack-xs absolute z-10 bg-grey dark:bg-dark w-1/2 h-full" data-compare-before data-media>
+      <%= loader({className: null, icon}) %>
+      <%= picture({src: '/', format: '', className: 'image', data: 'data-lazy data-compare-image data-src="/img/pictures/town-grey.jpg"'}) %>
     </div>
-    <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'block relative rounded-inherit size-full', data: null}) %>
+    <div class="relative bg-grey dark:bg-dark rounded-inherit overflow-hidden" data-media>
+      <%= loader({className: null, icon}) %>
+      <%= picture({src: '/', format: '', className: 'block relative rounded-inherit w-full', data: 'data-compare-image data-lazy data-src="/img/pictures/town.jpg"'}) %>
+    </div>
     <div class="flex items-center justify-center absolute top-0 bottom-0 left-2/4 z-20 bg-white dark:bg-black -translate-x-1/2 w-1 h-[95%] my-auto" data-compare-change>
       <button class="btn btn-primary btn-fill rounded-full shrink-0 cursor-col-resize size-12">
         <%= icon({id: 'arrows', className: 'icon text-xl', data: null}) %>

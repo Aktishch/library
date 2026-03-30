@@ -6,12 +6,12 @@
 
   var icon = _.template(require('./components/icon.html').default)
   var picture = _.template(require('./components/picture.html').default)
-  var loader = _.template(require('./components/loader.html').default)({className: null, icon})
+  var loader = _.template(require('./components/loader.html').default)
   var preloader = require('./components/preloader.html').default
   var error = require('./components/error.html').default
   var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
-  var player = _.template(require('./includes/player.html').default)({icon, picture, loader})
-  var footer = _.template(require('./includes/footer.html').default)({picture, loader})
+  var player = _.template(require('./includes/player.html').default)({icon, picture})
+  var footer = _.template(require('./includes/footer.html').default)({icon, picture, loader})
 %>
 
 <%= header %>
@@ -50,9 +50,9 @@
     <% for (var i = 0; i < 3; i++) { %>
     <div class="duration-500 anim anim-up" data-anim>
       <article class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
-        <div class="pack pack-md bg-grey dark:bg-dark rounded-t-inherit" data-movement="light">
-          <%= loader %>
-          <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'pack-image image rounded-t-inherit', data: null}) %>
+        <div class="pack pack-md bg-grey dark:bg-dark rounded-t-inherit" data-media data-movement="light">
+          <%= loader({className: null, icon}) %>
+          <%= picture({src: '/', format: '', className: 'pack-image image rounded-t-inherit', data: 'data-lazy data-src="/img/pictures/town.jpg"'}) %>
         </div>
         <div class="card-content py-5 px-3 md:px-5">
           <h4 class="font-alt font-semibold text-2xl/tight mb-4">
@@ -71,9 +71,9 @@
       <article class="inverted h-full">
         <div class="inverted-before">
           <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
-            <div class="pack pack-xs bg-grey dark:bg-dark rounded-t-inherit">
-              <%= loader %>
-              <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'image rounded-t-inherit', data: null}) %>
+            <div class="pack pack-xs bg-grey dark:bg-dark rounded-t-inherit" data-media>
+              <%= loader({className: null, icon}) %>
+              <%= picture({src: '/', format: '', className: 'image rounded-t-inherit', data: 'data-lazy data-src="/img/pictures/town-grey.jpg"'}) %>
             </div>
             <div class="card-content py-5 px-3 md:px-5">
               <h4 class="font-alt font-semibold text-2xl/tight">
@@ -232,9 +232,9 @@
     paralax, form and other...
   </h3>
   <div class="relative w-full max-w-xl mx-auto" data-filtering="filtering">
-    <%= picture({src: '/img/pictures/circle-grey', format: 'png', className: 'absolute top-20 -left-8 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer data-parallax-speed="4" data-parallax-depth="2"'}) %>
-    <%= picture({src: '/img/pictures/circle-white', format: 'png', className: 'absolute -bottom-8 -right-8 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer="reverse" data-parallax-speed="4" data-parallax-depth="2"'}) %>
-    <%= picture({src: '/img/pictures/circle-red', format: 'png', className: 'absolute bottom-0 -right-7 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-smooth-layer="bottom" data-smooth-speed="1" data-smooth-depth="2"'}) %>
+    <%= picture({src: '/img/pictures/circle-grey', format: 'svg', className: 'absolute top-20 -left-8 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer data-parallax-speed="4" data-parallax-depth="2"'}) %>
+    <%= picture({src: '/img/pictures/circle-white', format: 'svg', className: 'absolute -bottom-8 -right-8 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer="reverse" data-parallax-speed="4" data-parallax-depth="2"'}) %>
+    <%= picture({src: '/img/pictures/circle-red', format: 'svg', className: 'absolute bottom-0 -right-7 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-smooth-layer="bottom" data-smooth-speed="1" data-smooth-depth="2"'}) %>
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-4 relative bg-grey md:bg-opacity-0 text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white overflow-hidden md:pb-4 mb-5 md:mb-10 duration-500 anim anim-up" data-anim>
       <% ['text-style', 'form-validate', 'switches', 'file'].forEach((item, key) => { %>
       <button class="text-xl grow p-4 md:p-0 [&.filtering-active]:bg-second md:[&.filtering-active]:bg-opacity-0 [&.filtering-active]:text-white md:[&.filtering-active]:text-primary [&.filtering-active]:pointer-events-none <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="filtering" data-filtering-value="<%= key %>"><%= item %></button>
@@ -517,11 +517,11 @@
   <div class="flex flex-col lg:flex-row items-center lg:justify-between gap-5 md:gap-10">
     <% parallax.forEach((item) => { %>
     <div class="w-72" data-parallax-hovered="600">
-      <div class="pack pack-xxl bg-grey dark:bg-dark transition-transform ease-linear" data-parallax-item="10">
-        <%= loader %>
-        <%= picture({src: item.bg, format: 'png', className: 'image', data: null}) %>
+      <div class="pack pack-xxl bg-grey dark:bg-dark transition-transform ease-linear" data-parallax-item="10" data-media>
+        <%= loader({className: null, icon}) %>
+        <%= picture({src: '/', format: '', className: 'image', data: `data-lazy data-src="${item.bg}.png"`}) %>
         <div class="absolute inset-5 border-8 border-solid border-second transition-transform ease-linear" data-parallax-item="100"></div>
-        <%= picture({src: item.img, format: 'png', className: 'image transition-transform ease-linear', data: 'data-parallax-item="80"'}) %>
+        <%= picture({src: '/', format: '', className: 'image transition-transform ease-linear', data: `data-parallax-item="80" data-lazy data-src="${item.img}.png"`}) %>
         <div class="absolute top-auto bottom-0 left-0 right-0 text-white transition-transform ease-linear pointer-events-none p-10" data-parallax-item="160">
           <h2 class="font-medium text-xl/tight mb-3">
             Hover me!

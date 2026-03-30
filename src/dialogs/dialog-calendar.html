@@ -1,7 +1,7 @@
 <%
   var icon = _.template(require('../components/icon.html').default)
   var picture = _.template(require('../components/picture.html').default)
-  var loader = _.template(require('../components/loader.html').default)({className: null, icon})
+  var loader = _.template(require('../components/loader.html').default)
   var preloader = require('../components/preloader.html').default
 %>
 
@@ -15,9 +15,9 @@
     </div>
     <div class="w-full md:w-1/2">
       <% ['date-5-2', 'date-7-2', 'date-10-3'].forEach((item) => { %>
-      <div class="filtering-card pack pack-md bg-gray rounded-2xl w-full" data-filtering-card="calendar" data-filtering-value="<%= item %>">
-        <%= loader %>
-        <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>
+      <div class="filtering-card pack pack-md bg-gray rounded-2xl w-full" data-filtering-card="calendar" data-filtering-value="<%= item %>" data-media>
+        <%= loader({className: null, icon}) %>
+        <%= picture({src: '/', format: '', className: 'pack-image image rounded-inherit', data: 'data-lazy data-src="/img/pictures/town-grey.jpg"'}) %>
       </div>
       <% }) %>
     </div>

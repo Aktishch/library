@@ -8,6 +8,9 @@
     ],
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"],
+    "paths": {
+      "ymaps": ["./node_modules/@types/yandex-maps"]
+    }
   }
 }

@@ -82,7 +82,7 @@ $colors: ("primary": #af1a4c,
     @apply select-none;
 
     [src="/"] {
-      @apply opacity-0 invisible;
+      @apply invisible;
     }
   }
 

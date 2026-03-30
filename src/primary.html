@@ -6,13 +6,13 @@
 
   var icon = _.template(require('./components/icon.html').default)
   var picture = _.template(require('./components/picture.html').default)
-  var loader = _.template(require('./components/loader.html').default)({className: null, icon})
+  var loader = _.template(require('./components/loader.html').default)
   var preloader = require('./components/preloader.html').default
   var error = require('./components/error.html').default
   var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
   var heading = _.template(require('./includes/heading.html').default)({data})
-  var player = _.template(require('./includes/player.html').default)({icon, picture, loader})
-  var footer = _.template(require('./includes/footer.html').default)({picture, loader})
+  var player = _.template(require('./includes/player.html').default)({icon, picture})
+  var footer = _.template(require('./includes/footer.html').default)({icon, picture, loader})
 %>
 
 <%= header %>
@@ -34,9 +34,9 @@
     <div class="swiper p-4 -m-4" data-slider-swiper="gallery">
       <div class="swiper-wrapper">
         <% for (var i = 0; i < 6; i++) { %>
-        <a class="swiper-slide pack pack-md bg-grey dark:bg-dark rounded-2xl shadow-md" data-movement="light" data-fancybox="gallery" draggable="false" href="/img/pictures/town.jpg">
-          <%= loader %>
-          <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>
+        <a class="swiper-slide pack pack-md bg-grey dark:bg-dark rounded-2xl shadow-md" data-media data-movement="light" data-fancybox="gallery" draggable="false" href="/img/pictures/town.jpg">
+          <%= loader({className: null, icon}) %>
+          <%= picture({src: '/', format: '', className: 'pack-image image rounded-inherit', data: 'data-lazy data-src="/img/pictures/town.jpg"'}) %>
         </a>
         <% } %>
       </div>
@@ -118,9 +118,9 @@
         <% products.forEach((item) => { %>
         <div class="swiper-slide h-auto">
           <div class="group/product card dark:bg-black shadow-md hover:shadow-xl transition-shadow cursor-pointer p-1" data-product>
-            <div class="pack pack-md bg-grey dark:bg-dark rounded-inherit">
-              <%= loader %>
-              <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'image rounded-inherit', data: 'data-product-image="/img/pictures/town-grey.jpg"'}) %>
+            <div class="pack pack-md bg-grey dark:bg-dark rounded-inherit" data-media>
+              <%= loader({className: null, icon}) %>
+              <%= picture({src: '/', format: '', className: 'image rounded-inherit', data: 'data-lazy data-product-image="/img/pictures/town-grey.jpg" data-src="/img/pictures/town-grey.jpg"'}) %>
               <label class="block absolute top-2 right-2 rounded-full opacity-0 invisible overflow-hidden cursor-pointer transition-[opacity,_visibility] pointer-coarse:visible pointer-coarse:opacity-100 group group-hover/product:opacity-100 group-hover/product:visible has-[:checked]:visible has-[:checked]:opacity-100" data-waved="light">
                 <input class="peer hidden" type="checkbox">
                 <div class="flex items-center justify-center bg-white/40 text-2xl text-red text-opacity-50 stroke-red rounded-full transition ease-linear size-10 group-has-[:checked]:text-opacity-100">
@@ -176,9 +176,9 @@
   </div>
   <div class="container flex gap-5 md:gap-10 md:sticky md:top-40 overflow-x-auto md:overflow-x-hidden scroll-smooth pt-0" data-scrolling-horizontal data-smooth-sticky>
     <% for (var i = 0; i < 6; i++) { %>
-    <a class="pack pack-xs bg-grey dark:bg-dark rounded-3xl shadow-md shrink-0 w-80 md:w-[800px]" data-movement="light" data-fancybox="horizontal" draggable="false" href="/img/pictures/town.jpg">
-      <%= loader %>
-      <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'image rounded-inherit md:translate-x-[var(--scroll-moving)] md:scale-150 transition-transform ease-in-out duration-300', data: 'data-scrolling-image'}) %>
+    <a class="pack pack-xs bg-grey dark:bg-dark rounded-3xl shadow-md shrink-0 w-80 md:w-[800px]" data-media data-movement="light" data-fancybox="horizontal" draggable="false" href="/img/pictures/town.jpg">
+      <%= loader({className: null, icon}) %>
+      <%= picture({src: '/', format: '', className: 'image rounded-inherit md:translate-x-[var(--scroll-moving)] md:scale-150 transition-transform ease-in-out duration-300', data: 'data-scrolling-image data-lazy data-src="/img/pictures/town.jpg"'}) %>
     </a>
     <% } %>
   </div>
@@ -259,9 +259,9 @@
       </div>
     </form>
     <div class="hidden md:block w-full max-w-80 lg:max-w-sm">
-      <div class="pack pack-xl bg-grey dark:bg-dark rounded-xl h-full" data-movement="light">
-        <%= loader %>
-        <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>
+      <div class="pack pack-xl bg-grey dark:bg-dark rounded-xl h-full" data-media data-movement="light">
+        <%= loader({className: null, icon}) %>
+        <%= picture({src: '/', format: '', className: 'pack-image image rounded-inherit', data: 'data-lazy data-src="/img/pictures/town-grey.jpg"'}) %>
       </div>
     </div>
   </div>
@@ -274,9 +274,9 @@
     <div class="swiper h-full" data-slider-swiper="description-bg">
       <div class="swiper-wrapper">
         <% for (var i = 0; i < 6; i++) { %>
-        <div class="swiper-slide pack pack-lg bg-grey dark:bg-dark h-full">
-          <%= loader %>
-          <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'image', data: null}) %>
+        <div class="swiper-slide pack pack-lg bg-grey dark:bg-dark h-full" data-media>
+          <%= loader({className: null, icon}) %>
+          <%= picture({src: '/', format: '', className: 'image', data: 'data-lazy data-src="/img/pictures/town.jpg"'}) %>
         </div>
         <% } %>
       </div>
@@ -288,9 +288,9 @@
         <div class="swiper h-full" data-slider-swiper="description">
           <div class="swiper-wrapper h-full">
             <% for (var i = 0; i < 6; i++) { %>
-            <a class="swiper-slide pack pack-xl h-full" data-movement="light" data-fancybox="catalog" draggable="false" href="/img/pictures/town.jpg">
-              <%= loader %>
-              <%= picture({src: '/img/pictures/town', format: 'jpg', className: 'pack-image image', data: null}) %>
+            <a class="swiper-slide pack pack-xl h-full" data-media data-movement="light" data-fancybox="catalog" draggable="false" href="/img/pictures/town.jpg">
+              <%= loader({className: null, icon}) %>
+              <%= picture({src: '/', format: '', className: 'pack-image image', data: 'data-lazy data-src="/img/pictures/town.jpg"'}) %>
             </a>
             <% } %>
           </div>
@@ -300,9 +300,9 @@
         <div class="swiper" data-slider-swiper="description-bullets">
           <div class="swiper-wrapper">
             <% for (var i = 0; i < 6; i++) { %>
-            <button class="swiper-slide pack pack-xl bg-grey dark:bg-dark rounded-2xl">
-              <%= loader %>
-              <%= picture({src: '/img/pictures/town-grey', format: 'jpg', className: 'pack-image image rounded-inherit', data: null}) %>
+            <button class="swiper-slide pack pack-xl bg-grey dark:bg-dark rounded-2xl" data-media>
+              <%= loader({className: null, icon}) %>
+              <%= picture({src: '/', format: '', className: 'pack-image image rounded-inherit', data: 'data-lazy data-src="/img/pictures/town-grey.jpg"'}) %>
             </button>
             <% } %>
           </div>
