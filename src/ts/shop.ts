@@ -1,5 +1,20 @@
 import { Coordinates } from './utils'
 
+const className: string[] = [
+  'in-shop',
+  'flex',
+  'items-center',
+  'justify-center',
+  'fixed',
+  'z-30',
+  'bg-primary',
+  'rounded-lg',
+  'pointer-events-none',
+  '-translate-y-1/2',
+  '-translate-x-1/2',
+  'size-10',
+]
+
 export default (): void => {
   const shop = document.querySelector('*[data-shop]') as HTMLDivElement
 
@@ -13,21 +28,6 @@ export default (): void => {
   const oldPrice = shop.querySelector('*[data-shop-oldprice]') as HTMLSpanElement
   const price = shop.querySelector('*[data-shop-price]') as HTMLSpanElement
   const products = document.querySelectorAll('*[data-product]') as NodeListOf<HTMLDivElement>
-  const className: string[] = [
-    'in-shop',
-    'flex',
-    'items-center',
-    'justify-center',
-    'fixed',
-    'z-30',
-    'bg-primary',
-    'rounded-lg',
-    'pointer-events-none',
-    '-translate-y-1/2',
-    '-translate-x-1/2',
-    'size-10',
-  ]
-
   let timeOut: NodeJS.Timeout
 
   const shopShow = (): void => {

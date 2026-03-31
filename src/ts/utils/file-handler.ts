@@ -6,13 +6,15 @@ type FileHandler = {
 }
 
 const className: string[] = ['invisible', 'opacity-0']
+const types: string[] = ['image/jpeg', 'image/png']
+const size: number = 2 * Math.pow(1024, 2)
 
 export const fileHandler = ({ error, file }: FileHandler): boolean => {
-  if (!['image/jpeg', 'image/png'].includes(file.type)) {
+  if (!types.includes(file.type)) {
     error.classList.remove(...className)
     error.innerText = errors.file.type
     return false
-  } else if (file.size > 2 * Math.pow(1024, 2)) {
+  } else if (file.size > size) {
     error.classList.remove(...className)
     error.innerText = errors.file.size
     return false

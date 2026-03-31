@@ -3,20 +3,25 @@ import localeRu from 'air-datepicker/locale/ru'
 import filtering from './filtering'
 import { touchDevice } from './utils'
 
+const excludeDates: number[] = [+new Date(2026, 1, 5), +new Date(2026, 1, 7), +new Date(2026, 2, 10)]
+const className: string[] = ['opacity-20', 'pointer-events-none']
+
 type AirDatepickerCell = {
   date: Date
   cellType: string
 }
 
-type AirDatepickerRenderCell = {
-  classes: string
-  attrs: {
-    'data-filtering-category': string
-    'data-filtering-value': string
-  }
+type Attrs = {
+  'data-filtering-category': string
+  'data-filtering-value': string
+  'data-waved': string
+  'data-active'?: string
 }
 
-const excludeDates: number[] = [+new Date(2026, 1, 5), +new Date(2026, 1, 7), +new Date(2026, 2, 10)]
+type AirDatepickerRenderCell = {
+  classes: string
+  attrs: Attrs
+}
 
 declare global {
   interface Window {
@@ -28,30 +33,36 @@ declare global {
 window.AirDatepicker = AirDatepicker
 window.excludeDates = excludeDates
 
-const className: string[] = ['opacity-20', 'pointer-events-none']
-
 export const createCalendar = (): void => {
   const calendar = document.getElementById('calendar') as HTMLDivElement
 
   if (!calendar) return
 
+  const dates: number[] = []
+
   const renderCellHandler = ({ date, cellType }: AirDatepickerCell): AirDatepickerRenderCell | undefined => {
     if (cellType === 'day') {
-      return {
-        classes: window.excludeDates.includes(+date)
-          ? 'filtering-active btn btn-primary btn-fill text-sm'
-          : 'pointer-events-none',
-        attrs: {
-          'data-filtering-category': 'calendar',
-          'data-filtering-value': `date-${date.getDate()}-${date.getMonth() + 1}`,
-        },
+      const condition: boolean = window.excludeDates.includes(+date)
+      const classes: string = condition
+        ? 'btn btn-primary btn-fill text-sm [&[data-active]]:opacity-50 [&[data-active]]:pointer-events-none'
+        : 'pointer-events-none'
+      const attrs: Attrs = {
+        'data-filtering-category': 'calendar',
+        'data-filtering-value': `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`,
+        'data-waved': 'light',
       }
+
+      if (condition) dates.push(+date)
+      if (dates.length !== 0 && dates[0] === +date) attrs['data-active'] = ''
+
+      return { classes, attrs }
     }
   }
 
   new window.AirDatepicker(calendar, {
     locale: localeRu,
     onChangeViewDate: (): void => {
+      dates.length = 0
       calendar.classList.add(...className)
       setTimeout((): void => {
         filtering()
@@ -61,6 +72,8 @@ export const createCalendar = (): void => {
     onRenderCell: renderCellHandler,
     selectedDates: [new Date()],
   }) as AirDatepicker<HTMLDivElement>
+
+  filtering()
 }
 
 export default (): void => {

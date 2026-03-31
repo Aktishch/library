@@ -6,6 +6,7 @@ const quantityDecrease = (event: Event): void => {
 
   --value
   input.value = String(value)
+
   if (value < 1) input.value = '1'
 }
 

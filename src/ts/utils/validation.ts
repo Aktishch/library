@@ -111,11 +111,7 @@ export const validation = (form: HTMLFormElement): boolean => {
         const files = input.files as FileList
         const file = files[0] as File
 
-        if (file && !fileHandler({ error, file })) {
-          getError()
-        } else {
-          error.innerText = errors.file.default
-        }
+        file && !fileHandler({ error, file }) ? getError() : (error.innerText = errors.file.default)
         break
       }
     }

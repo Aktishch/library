@@ -11,7 +11,7 @@ type FilterHandler = {
   plug: HTMLDivElement
 }
 
-const className: string = 'filtering-active'
+const dataActive: string = 'data-active'
 
 const addTransition = (item: HTMLDivElement): void => {
   item.classList.add('transition', 'ease-linear')
@@ -58,7 +58,7 @@ export default (): void => {
       let active = categories[0] as HTMLElement
 
       categories.forEach((category: HTMLElement): void => {
-        if (category.classList.contains(className)) active = category
+        if (category.hasAttribute(dataActive)) active = category
       })
 
       return active
@@ -68,8 +68,8 @@ export default (): void => {
       const active = currentCategory() as HTMLElement
       const name: string = String(category.dataset.filteringValue)
 
-      active.classList.remove(className)
-      category.classList.add(className)
+      active.removeAttribute(dataActive)
+      category.setAttribute(dataActive, '')
 
       if (line) {
         line.style.width = `${category.offsetWidth}px`

@@ -70,7 +70,7 @@ export default (): void => {
 
     const urlImageToObject = async (): Promise<void> => {
       await fetch(requestUrl)
-        .then((response: Response): Promise<Blob> => {
+        .then((response: Response): Promise<Blob | null> => {
           return response.ok ? response.blob() : null
         })
         .then((blob: Blob): void => {

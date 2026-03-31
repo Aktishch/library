@@ -24,9 +24,7 @@ export default (): void => {
     })
   }
 
-  const checkDraw = (): boolean => {
-    return cells.every((cell: HTMLButtonElement): boolean => cell.textContent !== '')
-  }
+  const checkDraw = (): boolean => cells.every((cell: HTMLButtonElement): boolean => cell.textContent !== '')
 
   const checkCell = (cell: HTMLButtonElement): void => {
     cell.textContent = player

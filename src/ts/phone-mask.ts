@@ -1,6 +1,4 @@
-const getPhoneValue = (input: HTMLInputElement): string => {
-  return input.value.replace(/\D/g, '')
-}
+const getPhoneValue = (input: HTMLInputElement): string => input.value.replace(/\D/g, '')
 
 const formatterValue = (value: string): string => {
   if (!['7', '8'].includes(value[0])) value = '7' + value

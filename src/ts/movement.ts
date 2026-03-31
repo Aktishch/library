@@ -2,7 +2,6 @@ import { Coordinates, touchDevice } from './utils'
 
 const setMovement = (event: MouseEvent): void => {
   const item = (event.target as HTMLElement).closest('[data-movement]') as HTMLElement
-
   const coordinates: Coordinates = {
     top: event.clientY - item.getBoundingClientRect().top,
     left: event.clientX - item.getBoundingClientRect().left,

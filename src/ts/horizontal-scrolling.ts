@@ -28,9 +28,7 @@ const setHorizontalScrolling = (): void => {
     horizontal.scrollLeft = offsetTop + horizontal.offsetHeight - scrolling.offsetTop
 
     images.forEach((image: HTMLImageElement): void => {
-      if (!image) return
-
-      image.style.setProperty('--scroll-moving', `-${moving}%`)
+      if (image) image.style.setProperty('--scroll-moving', `-${moving}%`)
     })
   })
 }

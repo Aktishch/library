@@ -54,8 +54,8 @@ export default (): void => {
     input.addEventListener('input', ((): void => {
       const hex: string = input.value
       const rgb: string = hexToRgb(hex)
-      colors[name] = { hex, rgb }
 
+      colors[name] = { hex, rgb }
       html.style.setProperty(`--color-${name}`, rgb)
       localStorage.setItem('pallete', JSON.stringify(colors))
     }) as EventListener)

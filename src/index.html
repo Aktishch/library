@@ -237,7 +237,7 @@
     <%= picture({src: '/img/pictures/circle-red', format: 'svg', className: 'absolute bottom-0 -right-7 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-smooth-layer="bottom" data-smooth-speed="1" data-smooth-depth="2"'}) %>
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-4 relative bg-grey md:bg-opacity-0 text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white overflow-hidden md:pb-4 mb-5 md:mb-10 duration-500 anim anim-up" data-anim>
       <% ['text-style', 'form-validate', 'switches', 'file'].forEach((item, key) => { %>
-      <button class="text-xl grow p-4 md:p-0 [&.filtering-active]:bg-second md:[&.filtering-active]:bg-opacity-0 [&.filtering-active]:text-white md:[&.filtering-active]:text-primary [&.filtering-active]:pointer-events-none <%= key === 0 ? 'filtering-active' : null %>" data-filtering-category="filtering" data-filtering-value="<%= key %>"><%= item %></button>
+      <button class="text-xl grow p-4 md:p-0 [&[data-active]]:bg-second md:[&[data-active]]:bg-opacity-0 [&[data-active]]:text-white md:[&[data-active]]:text-primary [&[data-active]]:pointer-events-none" data-filtering-category="filtering" data-filtering-value="<%= key %>" <%= key === 0 ? 'data-active' : null %>><%= item %></button>
       <% }) %>
       <span class="hidden md:block absolute bottom-0 left-0 bg-primary rounded-t-lg transition-[left,_width] ease-linear h-1" data-filtering-line="filtering"></span>
     </div>

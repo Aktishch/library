@@ -17,7 +17,6 @@ export default (): void => {
 
       if (rendering.dataset.rendering !== undefined)
         context.fillText(String(rendering.dataset.rendering), canvas.width / 2, canvas.height / 1.5)
-
       if (download) download.href = canvas.toDataURL()
     }) as EventListener)
 

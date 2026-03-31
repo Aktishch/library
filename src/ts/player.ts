@@ -94,7 +94,6 @@ const setPlayer = ({ id, playlist }: Player): void => {
 
       if (audio.played)
         compositionIcon.setAttribute('href', key === index ? '/img/icons.svg#pause' : '/img/icons.svg#play')
-
       if (audio.paused) compositionIcon.setAttribute('href', '/img/icons.svg#play')
     }
   }
@@ -350,6 +349,6 @@ const playOnlyOne = (event: Event): void => {
 }
 
 export default (): void => {
-  setPlayer({ id: 'player', playlist: playlist })
+  setPlayer({ id: 'player', playlist })
   document.addEventListener('play', playOnlyOne as EventListener, true)
 }

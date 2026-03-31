@@ -1,6 +1,5 @@
 import { Fancybox } from '@fancyapps/ui/dist/fancybox/'
 import { createCalendar } from './air-datepicker'
-import filtering from './filtering'
 import imagePreview from './image-preview'
 import lazyLoad from './lazy-load'
 import { getStateSubmitBtn } from './submit-handler'
@@ -99,7 +98,6 @@ export default (): void => {
       'Carousel.contentReady': (): void => {
         loadUpdate()
         createCalendar()
-        filtering()
       },
     },
   })
