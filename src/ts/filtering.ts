@@ -48,7 +48,7 @@ export default (): void => {
     if (!filter) return
 
     const value: string = String(filter.dataset.filtering)
-    const hash: string = window.location.hash.substr(1)
+    const hash: string = window.location.hash.slice(1)
     const categories = document.querySelectorAll(`*[data-filtering-category="${value}"]`) as NodeListOf<HTMLElement>
     const cards = document.querySelectorAll(`*[data-filtering-card="${value}"]`) as NodeListOf<HTMLDivElement>
     const plug = document.querySelector(`*[data-filtering-plug="${value}"]`) as HTMLDivElement

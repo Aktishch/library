@@ -1,8 +1,11 @@
+type AccordionItem = HTMLButtonElement | HTMLAnchorElement
+
 const className: string[] = ['overflow-hidden']
 
 const createAccordion = (accordion: HTMLDivElement): void => {
   const toggle = accordion.querySelector('*[data-accordion-toggle]') as HTMLDivElement | HTMLButtonElement
   const content = accordion.querySelector('*[data-accordion-content]') as HTMLDivElement
+  const items = accordion.querySelectorAll('*[data-accordion-item]') as NodeListOf<AccordionItem>
   let timeOut: NodeJS.Timeout
 
   const setAccordionHeight = (duration = true): void => {
@@ -25,6 +28,11 @@ const createAccordion = (accordion: HTMLDivElement): void => {
     }, transitionDuration)
   }
 
+  const accordionClose = (): void => {
+    accordion.dataset.accordion = ''
+    setAccordionHeight()
+  }
+
   toggle.classList.add('cursor-pointer')
   content.style.transitionProperty = 'height'
   setAccordionHeight(false)
@@ -34,24 +42,25 @@ const createAccordion = (accordion: HTMLDivElement): void => {
     setAccordionHeight()
   }) as EventListener)
 
+  items.forEach((item: AccordionItem): void => {
+    if (!item) return
+
+    item.addEventListener('click', accordionClose as EventListener)
+  })
+
   if (accordion.hasAttribute('data-close-click')) {
     document.addEventListener('click', ((event: Event): void => {
       if (
         (event.target as HTMLElement).closest('[data-close-click]') !== accordion &&
         accordion.dataset.accordion === 'active'
-      ) {
-        accordion.dataset.accordion = ''
-        setAccordionHeight()
-      }
+      )
+        accordionClose()
     }) as EventListener)
   }
 
   if (accordion.hasAttribute('data-close-scroll')) {
     document.addEventListener('scroll', ((): void => {
-      if (accordion.dataset.accordion === 'active') {
-        accordion.dataset.accordion = ''
-        setAccordionHeight()
-      }
+      if (accordion.dataset.accordion === 'active') accordionClose()
     }) as EventListener)
   }
 }

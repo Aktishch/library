@@ -21,7 +21,7 @@ export default (): void => {
     }
 
     if ((event.target as HTMLButtonElement).closest('[data-sidebar-close]')) {
-      const close = event.target as HTMLButtonElement
+      const close = event.target as HTMLButtonElement | HTMLAnchorElement
       const sidebar = document.querySelector(`#${close.dataset.sidebarClose}`) as HTMLDivElement
 
       if (sidebar) closeSidebar(sidebar)
@@ -29,13 +29,6 @@ export default (): void => {
 
     if ((event.target as HTMLDivElement).hasAttribute('data-sidebar')) {
       const sidebar = event.target as HTMLDivElement
-
-      if (sidebar) closeSidebar(sidebar)
-    }
-
-    if ((event.target as HTMLAnchorElement).hasAttribute('data-scroll')) {
-      const link = event.target as HTMLAnchorElement
-      const sidebar = link.closest('[data-sidebar]') as HTMLDivElement
 
       if (sidebar) closeSidebar(sidebar)
     }

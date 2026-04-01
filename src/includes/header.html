@@ -160,7 +160,7 @@
           <div data-accordion-content>
             <div class="flex flex-col items-start gap-2 pl-5 mt-2">
               <% nav.blocks.forEach((item) => { %>
-              <a class="text-lg underline-offset-4 hover:underline" data-scroll draggable="false" href="<%= item.id %>"><%= item.text %></a>
+              <a class="text-lg underline-offset-4 hover:underline" data-scroll data-sidebar-close="menu" draggable="false" href="<%= item.id %>"><%= item.text %></a>
               <% }) %>
             </div>
           </div>
