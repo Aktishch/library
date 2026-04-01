@@ -1,5 +1,4 @@
 import { errors } from './errors'
-import { fileHandler } from './file-handler'
 
 type FormLabel = HTMLLabelElement | HTMLDivElement
 
@@ -108,10 +107,11 @@ export const validation = (form: HTMLFormElement): boolean => {
       }
 
       case 'file': {
-        const files = input.files as FileList
-        const file = files[0] as File
+        if ((input.files as FileList).length === 0) {
+          error.innerText = errors.file.default
+          getError()
+        }
 
-        file && !fileHandler({ error, file }) ? getError() : (error.innerText = errors.file.default)
         break
       }
     }

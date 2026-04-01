@@ -28,7 +28,7 @@ export default (): void => {
       remove.disabled = true
       label.classList.remove(...labelClassName)
       data = new DataTransfer() as DataTransfer
-      input.value = ''
+      uploadFilesList()
     }
 
     const getImagePreview = (files: FileList): void => {
@@ -39,8 +39,8 @@ export default (): void => {
           image.src = url
           remove.disabled = false
           label.classList.add(...labelClassName)
-          data.items.add(file)
-          uploadFilesList()
+
+          if ((data.files as FileList).length < 1) data.items.add(file)
 
           if (preview.dataset.preview === 'avatar') {
             const formData = new FormData(preview) as FormData
@@ -63,9 +63,9 @@ export default (): void => {
               .catch((error: string): void => console.log(error))
           }
         })
-      } else {
-        uploadFilesList()
       }
+
+      uploadFilesList()
     }
 
     const urlImageToObject = async (): Promise<void> => {
@@ -79,8 +79,7 @@ export default (): void => {
             const name: string = parts[parts.length - 1]
 
             data.items.add(new File([blob], name, { type: blob.type }))
-            uploadFilesList()
-            getImagePreview(input.files)
+            input.files = data.files
           } else {
             defaultState()
           }
@@ -88,7 +87,7 @@ export default (): void => {
         .catch((error: string): void => console.log(error))
     }
 
-    urlImageToObject()
+    urlImageToObject().finally((): void => getImagePreview(input.files))
 
     if (drag) {
       const dragEvents: string[] = ['dragenter', 'dragover', 'dragleave', 'drop']
@@ -112,6 +111,7 @@ export default (): void => {
               const files = (event.dataTransfer as DataTransfer).files as FileList
 
               drag.classList.remove(...dragClassName)
+              data = new DataTransfer() as DataTransfer
               getImagePreview(files)
               break
             }

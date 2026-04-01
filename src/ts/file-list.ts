@@ -61,13 +61,11 @@ export default () => {
               label.classList.add(...className)
               text.textContent = content.limit
             }
-
-            uploadFilesList()
           })
         }
-      } else {
-        uploadFilesList()
       }
+
+      uploadFilesList()
     }) as EventListener)
 
     filelist.addEventListener('click', ((event: Event): void => {

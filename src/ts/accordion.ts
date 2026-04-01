@@ -43,9 +43,7 @@ const createAccordion = (accordion: HTMLDivElement): void => {
   }) as EventListener)
 
   items.forEach((item: AccordionItem): void => {
-    if (!item) return
-
-    item.addEventListener('click', accordionClose as EventListener)
+    if (item) item.addEventListener('click', accordionClose as EventListener)
   })
 
   if (accordion.hasAttribute('data-close-click')) {

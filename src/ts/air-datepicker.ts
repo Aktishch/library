@@ -3,8 +3,12 @@ import localeRu from 'air-datepicker/locale/ru'
 import filtering from './filtering'
 import { touchDevice } from './utils'
 
-const excludeDates: number[] = [+new Date(2026, 1, 5), +new Date(2026, 1, 7), +new Date(2026, 2, 10)]
-const className: string[] = ['opacity-20', 'pointer-events-none']
+declare global {
+  interface Window {
+    AirDatepicker: typeof AirDatepicker
+    excludeDates: number[]
+  }
+}
 
 type AirDatepickerCell = {
   date: Date
@@ -23,12 +27,8 @@ type AirDatepickerRenderCell = {
   attrs: Attrs
 }
 
-declare global {
-  interface Window {
-    AirDatepicker: typeof AirDatepicker
-    excludeDates: typeof excludeDates
-  }
-}
+const excludeDates: number[] = [+new Date(2026, 1, 5), +new Date(2026, 1, 7), +new Date(2026, 2, 10)]
+const className: string[] = ['opacity-20', 'pointer-events-none']
 
 window.AirDatepicker = AirDatepicker
 window.excludeDates = excludeDates

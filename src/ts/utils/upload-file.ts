@@ -5,9 +5,12 @@ type UploadFile = {
   url: string
 }
 
+type Resolve = (value: UploadFile | PromiseLike<UploadFile>) => void
+type Reject = (reason?: string) => void
+
 export const uploadFile = (file: File): Promise<UploadFile> => {
-  return new Promise<UploadFile>((resolve, reject): void => {
-    const reader = new FileReader() as FileReader
+  return new Promise<UploadFile>((resolve: Resolve, reject: Reject): void => {
+    const reader: FileReader = new FileReader()
     const createReject = (): void => reject(en ? 'File upload error' : 'Ошибка при загрузке файла')
 
     reader.readAsDataURL(file)
