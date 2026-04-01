@@ -8,7 +8,7 @@ const createAccordion = (accordion: HTMLDivElement): void => {
   const items = accordion.querySelectorAll('*[data-accordion-item]') as NodeListOf<AccordionItem>
   let timeOut: NodeJS.Timeout
 
-  const setAccordionHeight = (duration = true): void => {
+  const setAccordionHeight = (duration: boolean = true): void => {
     if (timeOut) clearTimeout(timeOut)
 
     const scrollHeight: number = content.scrollHeight

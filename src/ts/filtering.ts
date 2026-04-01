@@ -11,8 +11,6 @@ type FilterHandler = {
   plug: HTMLDivElement
 }
 
-const dataActive: string = 'data-active'
-
 const addTransition = (item: HTMLDivElement): void => {
   item.classList.add('transition', 'ease-linear')
 }
@@ -34,7 +32,7 @@ const filterHandler = ({ name, cards, plug }: FilterHandler): void => {
     filterCardsShowing({ condition: absence && !showAll, item: card })
   })
 
-  const allHidden: boolean = ([...cards] as HTMLDivElement[]).every((card: HTMLDivElement) =>
+  const allHidden: boolean = ([...cards] as HTMLDivElement[]).every((card: HTMLDivElement): boolean =>
     card.classList.contains('hidden')
   )
 
@@ -58,7 +56,7 @@ export default (): void => {
       let active = categories[0] as HTMLElement
 
       categories.forEach((category: HTMLElement): void => {
-        if (category.hasAttribute(dataActive)) active = category
+        if (category.hasAttribute('data-active')) active = category
       })
 
       return active
@@ -68,8 +66,8 @@ export default (): void => {
       const active = currentCategory() as HTMLElement
       const name: string = String(category.dataset.filteringValue)
 
-      active.removeAttribute(dataActive)
-      category.setAttribute(dataActive, '')
+      active.removeAttribute('data-active')
+      category.setAttribute('data-active', '')
 
       if (line) {
         line.style.width = `${category.offsetWidth}px`

@@ -67,7 +67,7 @@ export default (): void => {
       })
 
       hovered.addEventListener('mousemove', ((event: MouseEvent): void => {
-        const rect = (event.target as HTMLElement).getBoundingClientRect() as DOMRect
+        const rect: DOMRect = (event.target as HTMLElement).getBoundingClientRect()
         const coordinates: Coordinates = {
           top: (event.clientY - rect.top) / rect.height,
           left: (event.clientX - rect.left) / rect.width,

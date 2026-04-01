@@ -17,7 +17,7 @@ export default (): void => {
 
     window.addEventListener('focus', ((): void => {
       clearTimeout(timer)
-      title.innerText = String(text)
+      title.innerText = text
     }) as EventListener)
   }
 }

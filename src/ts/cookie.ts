@@ -14,7 +14,7 @@ export default (): void => {
     } else {
       const button = cookie.querySelector('*[data-cookie-button]') as HTMLButtonElement
       const expires: number = Number(cookie.dataset.expires) || 7
-      const path: string = String(cookie.dataset.cookie) || '/'
+      const path: string = cookie.dataset.cookie || '/'
 
       button.addEventListener('click', ((): void => {
         getCookies({ value, path, expires })

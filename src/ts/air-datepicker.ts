@@ -27,6 +27,8 @@ type AirDatepickerRenderCell = {
   attrs: Attrs
 }
 
+type Dates = { date: Date | Date[] }
+
 const excludeDates: number[] = [+new Date(2026, 1, 5), +new Date(2026, 1, 7), +new Date(2026, 2, 10)]
 const className: string[] = ['opacity-20', 'pointer-events-none']
 
@@ -86,7 +88,7 @@ export default (): void => {
     const inputMax = datepicker.querySelector('*[data-datepicker-max]') as HTMLInputElement
 
     const min = new window.AirDatepicker(inputMin, {
-      onSelect({ date }) {
+      onSelect({ date }: Dates) {
         max.update({
           minDate: String(date),
         })
@@ -99,7 +101,7 @@ export default (): void => {
     }) as AirDatepicker<HTMLInputElement>
 
     const max = new window.AirDatepicker(inputMax, {
-      onSelect({ date }) {
+      onSelect({ date }: Dates) {
         min.update({
           maxDate: String(date),
         })

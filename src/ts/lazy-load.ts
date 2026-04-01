@@ -6,12 +6,14 @@ declare global {
   }
 }
 
+type LazyElement = HTMLImageElement | HTMLPictureElement | HTMLVideoElement | HTMLSourceElement | HTMLIFrameElement
+
 window.LazyLoad = LazyLoad
 
 export default (): ILazyLoadInstance => {
   return new window.LazyLoad({
     elements_selector: '*[data-lazy]',
-    callback_loaded: (element: HTMLElement): void => {
+    callback_loaded: (element: LazyElement): void => {
       const media = element.closest('[data-media]') as HTMLElement
 
       if (!media) return

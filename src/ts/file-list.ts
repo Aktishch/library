@@ -13,7 +13,7 @@ const content: Content = {
   limit: en ? 'No more than 3 files' : 'Не больше 3 файлов',
 }
 
-export default () => {
+export default (): void => {
   const filelists = document.querySelectorAll('*[data-filelist]') as NodeListOf<HTMLDivElement>
 
   filelists.forEach((filelist: HTMLDivElement): void => {
@@ -24,10 +24,10 @@ export default () => {
     const error = filelist.querySelector('*[data-error]') as HTMLSpanElement
     const text = label.querySelector('*[data-filelist-text]') as HTMLSpanElement
     const items = filelist.querySelector('*[data-filelist-items]') as HTMLUListElement
-    let data = new DataTransfer() as DataTransfer
+    let data: DataTransfer = new DataTransfer()
 
     const uploadFilesList = (): void => {
-      input.files = data.files as FileList
+      input.files = data.files
     }
 
     text.textContent = content.default
@@ -69,12 +69,12 @@ export default () => {
     }) as EventListener)
 
     filelist.addEventListener('click', ((event: Event): void => {
-      if ((event.target as HTMLButtonElement).closest('[data-filelist-remove]')) {
+      if ((event.target as HTMLElement).closest('[data-filelist-remove]')) {
         const remove = event.target as HTMLButtonElement
         const item = remove.closest('[data-filelist-item]') as HTMLLIElement
         const files = data.files as FileList
 
-        data = new DataTransfer() as DataTransfer
+        data = new DataTransfer()
 
         for (let i: number = 0; i < files.length; i++) {
           const file = files[i] as File
