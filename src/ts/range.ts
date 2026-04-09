@@ -43,8 +43,8 @@ export default (): void => {
   ranges.forEach((range: HTMLDivElement): void => {
     if (!range) return
 
-    const size: number = range.dataset.range !== '' ? Number(range.dataset.range) : 28
     const wrappers = range.querySelectorAll('*[data-range-wrapper]') as NodeListOf<HTMLDivElement>
+    const size: number = Number(range.dataset.range) | 28
     const first: number = 0
     const last: number = 1
 

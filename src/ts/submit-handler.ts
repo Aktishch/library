@@ -14,7 +14,7 @@ export const getStateSubmitBtn = (): void => {
 
     const togglesChecked = (): void => {
       const allChecked: boolean = ([...toggles] as HTMLInputElement[]).every(
-        (toggle: HTMLInputElement) => toggle.checked
+        (toggle: HTMLInputElement): boolean => toggle.checked
       )
 
       submitBtn.disabled = !allChecked
@@ -44,7 +44,7 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
       if (!validation(form)) return
 
       const formData: FormData = new FormData(form)
-      const searchParams = new URLSearchParams() as URLSearchParams
+      const searchParams: URLSearchParams = new URLSearchParams()
       const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
       let requestUrl: string
 

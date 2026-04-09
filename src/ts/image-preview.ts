@@ -112,7 +112,7 @@ export default (): void => {
             }
 
             case 'drop': {
-              const files = (event.dataTransfer as DataTransfer).files as FileList
+              const files: FileList = (event.dataTransfer as DataTransfer).files
 
               drag.classList.remove(...dragClassName)
               getImagePreview(files)

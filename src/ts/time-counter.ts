@@ -28,7 +28,9 @@ export default (): void => {
       Math.floor((distance % minute) / 1000),
     ]
 
-    units.forEach((element: HTMLSpanElement, index: number): string => (element.textContent = String(values[index])))
+    units.forEach((unit: HTMLSpanElement, index: number): void => {
+      unit.textContent = String(values[index])
+    })
 
     if (distance < 0) removeTimeCounter()
   }

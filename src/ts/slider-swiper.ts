@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-Swiper.use([Navigation, Pagination, Scrollbar, Autoplay, Grid, Thumbs, EffectCoverflow])
+Swiper.use([Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs])
 Swiper.defaults.touchStartPreventDefault = false
 window.Swiper = Swiper
 
@@ -127,7 +127,7 @@ const createQuizSlider = (): void => {
     pagination: {
       el: pagination,
       type: 'custom',
-      renderCustom: (_, current: number, total: number): string => {
+      renderCustom: (_: Swiper, current: number, total: number): string => {
         return String(total - current)
       },
     },
@@ -155,18 +155,18 @@ const createDescriptionSlider = (): void => {
   const sliderBg = document.querySelector('*[data-slider="description-bg"]') as HTMLDivElement
   const valueBg: string = String(sliderBg.dataset.slider)
   const swiperBg = sliderBg.querySelector(`*[data-slider-swiper="${valueBg}"]`) as HTMLDivElement
-  const descriptionBg = new window.Swiper(swiperBg, {
+  const descriptionBg: Swiper = new window.Swiper(swiperBg, {
     slidesPerView: 1,
     slidesPerGroup: 1,
     spaceBetween: 30,
     speed: 1000,
     allowTouchMove: false,
-  }) as Swiper
+  })
 
   const sliderBullets = document.querySelector('*[data-slider="description-bullets"]') as HTMLDivElement
   const valueBullets: string = String(sliderBullets.dataset.slider)
   const swiperBullets = sliderBullets.querySelector(`*[data-slider-swiper="${valueBullets}"]`) as HTMLDivElement
-  const descriptionBullets = new window.Swiper(swiperBullets, {
+  const descriptionBullets: Swiper = new window.Swiper(swiperBullets, {
     slidesPerView: 3,
     slidesPerGroup: 1,
     spaceBetween: 20,
@@ -177,7 +177,7 @@ const createDescriptionSlider = (): void => {
         slidesPerView: 4,
       },
     },
-  }) as Swiper
+  })
 
   const value: string = String(slider.dataset.slider)
   const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement

@@ -12,7 +12,7 @@ const setWriteText = (section: HTMLElement): void => {
       if (!letters[0]) return clearInterval(interval)
       record.innerHTML += letters.shift()
     },
-    speed !== undefined ? Number(speed) : 100
+    Number(speed) | 100
   )
 }
 

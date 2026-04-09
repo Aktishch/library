@@ -1,9 +1,9 @@
 import { Coordinates, scrolledPage } from './utils'
 
-const setOffset = (element: HTMLElement): Coordinates => {
+const setOffset = (item: HTMLElement): Coordinates => {
   return {
-    top: element.getBoundingClientRect().top + scrolledPage().top,
-    left: element.getBoundingClientRect().left + scrolledPage().left,
+    top: item.getBoundingClientRect().top + scrolledPage().top,
+    left: item.getBoundingClientRect().left + scrolledPage().left,
   } as Coordinates
 }
 

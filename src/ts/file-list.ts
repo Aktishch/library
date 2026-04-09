@@ -33,7 +33,7 @@ export default (): void => {
     text.textContent = content.default
 
     input.addEventListener('change', ((): void => {
-      const files = input.files as FileList
+      const files: FileList = input.files
 
       if (files.length !== 0) {
         for (let i: number = 0; i < files.length; i++) {
@@ -72,12 +72,12 @@ export default (): void => {
       if ((event.target as HTMLElement).closest('[data-filelist-remove]')) {
         const remove = event.target as HTMLButtonElement
         const item = remove.closest('[data-filelist-item]') as HTMLLIElement
-        const files = data.files as FileList
+        const files: FileList = data.files
 
         data = new DataTransfer()
 
         for (let i: number = 0; i < files.length; i++) {
-          const file = files[i] as File
+          const file: File = files[i]
 
           if (remove.dataset.filelistRemove === file.name) {
             item.remove()

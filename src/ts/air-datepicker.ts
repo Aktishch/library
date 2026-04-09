@@ -6,7 +6,6 @@ import { touchDevice } from './utils'
 declare global {
   interface Window {
     AirDatepicker: typeof AirDatepicker
-    excludeDates: number[]
   }
 }
 
@@ -33,7 +32,6 @@ const excludeDates: number[] = [+new Date(2026, 1, 5), +new Date(2026, 1, 7), +n
 const className: string[] = ['opacity-20', 'pointer-events-none']
 
 window.AirDatepicker = AirDatepicker
-window.excludeDates = excludeDates
 
 export const createCalendar = (): void => {
   const calendar = document.getElementById('calendar') as HTMLDivElement
@@ -44,7 +42,7 @@ export const createCalendar = (): void => {
 
   const renderCellHandler = ({ date, cellType }: AirDatepickerCell): AirDatepickerRenderCell | undefined => {
     if (cellType === 'day') {
-      const condition: boolean = window.excludeDates.includes(+date)
+      const condition: boolean = excludeDates.includes(+date)
       const classes: string = condition
         ? 'btn btn-primary btn-fill text-sm [&[data-active]]:opacity-50 [&[data-active]]:pointer-events-none'
         : 'pointer-events-none'

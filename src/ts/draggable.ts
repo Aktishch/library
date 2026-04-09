@@ -1,13 +1,13 @@
 import { Coordinates, scrollbarHidden, scrollbarShow } from './utils'
 
 type Draggable = {
-  element: HTMLButtonElement | HTMLDivElement
+  item: HTMLButtonElement | HTMLDivElement
   positionX: number
   positionY: number
 }
 
-const setTranslateDraggable = ({ element, positionX, positionY }: Draggable): void => {
-  element.style.transform = `translate(${positionX}px, ${positionY}px)`
+const setTranslateDraggable = ({ item, positionX, positionY }: Draggable): void => {
+  item.style.transform = `translate(${positionX}px, ${positionY}px)`
 }
 
 const setDraggable = (id: string): void => {
@@ -25,7 +25,7 @@ const setDraggable = (id: string): void => {
 
   const getDragPosition = (): void => {
     setTranslateDraggable({
-      element: (draggable.closest('[data-draggable]') as HTMLDivElement) || draggable,
+      item: (draggable.closest('[data-draggable]') as HTMLDivElement) || draggable,
       positionX: coordinates.left,
       positionY: coordinates.top,
     })

@@ -13,8 +13,8 @@ window.LazyLoad = LazyLoad
 export default (): ILazyLoadInstance => {
   return new window.LazyLoad({
     elements_selector: '*[data-lazy]',
-    callback_loaded: (element: LazyElement): void => {
-      const media = element.closest('[data-media]') as HTMLElement
+    callback_loaded: (item: LazyElement): void => {
+      const media = item.closest('[data-media]') as HTMLElement
 
       if (!media) return
 
@@ -22,5 +22,5 @@ export default (): ILazyLoadInstance => {
 
       if (loader) loader.remove()
     },
-  })
+  }) as ILazyLoadInstance
 }

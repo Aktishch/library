@@ -4,7 +4,7 @@ import imagePreview from './image-preview'
 import lazyLoad from './lazy-load'
 import { getStateSubmitBtn } from './submit-handler'
 
-type FancyboxDialog = {
+type Dialog = {
   open: (src: string) => void
   notClosing: (src: string) => void
   close: () => void
@@ -13,7 +13,7 @@ type FancyboxDialog = {
 declare global {
   interface Window {
     Fancybox: typeof Fancybox
-    dialog: FancyboxDialog
+    dialog: Dialog
   }
 }
 
@@ -22,7 +22,7 @@ window.Fancybox = Fancybox
 
 const loadUpdate = (): void => lazyLoad().update()
 
-export const dialog: FancyboxDialog = {
+export const dialog: Dialog = {
   open: (src: string): void => {
     window.Fancybox.show(
       [

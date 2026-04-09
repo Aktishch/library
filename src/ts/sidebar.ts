@@ -1,6 +1,8 @@
 import { media } from '../../plugins/media'
 import { scrollbarHidden, scrollbarShow } from './utils'
 
+type SidebarButton = HTMLButtonElement | HTMLAnchorElement
+
 export const openSidebar = (sidebar: HTMLElement): void => {
   scrollbarHidden()
   sidebar.dataset.sidebar = 'open'
@@ -13,15 +15,15 @@ export const closeSidebar = (sidebar: HTMLElement): void => {
 
 export default (): void => {
   document.addEventListener('click', ((event: Event): void => {
-    if ((event.target as HTMLButtonElement).closest('[data-sidebar-open]')) {
-      const open = event.target as HTMLButtonElement
+    if ((event.target as SidebarButton).closest('[data-sidebar-open]')) {
+      const open = event.target as SidebarButton
       const sidebar = document.querySelector(`#${open.dataset.sidebarOpen}`) as HTMLDivElement
 
       if (sidebar) openSidebar(sidebar)
     }
 
-    if ((event.target as HTMLButtonElement).closest('[data-sidebar-close]')) {
-      const close = event.target as HTMLButtonElement | HTMLAnchorElement
+    if ((event.target as SidebarButton).closest('[data-sidebar-close]')) {
+      const close = event.target as SidebarButton
       const sidebar = document.querySelector(`#${close.dataset.sidebarClose}`) as HTMLDivElement
 
       if (sidebar) closeSidebar(sidebar)
