@@ -1,5 +1,5 @@
-import { dialog } from './fancybox'
-import { validation } from './utils'
+import { dialog } from '@ts/fancybox'
+import { validation } from '@utils'
 
 const className: string[] = ['pointer-events-none', 'opacity-50']
 

@@ -1,10 +1,10 @@
+import { media } from '@plugins/media'
+import { checkQuizSlide } from '@ts/quiz'
 import Swiper from 'swiper'
 import { Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules'
-import { media } from '../../plugins/media'
-import { checkQuizSlide } from './quiz'
 
 interface QuizSwiper extends Swiper {
-  visibleSlides: [HTMLDivElement]
+  visibleSlides: HTMLDivElement[]
 }
 
 declare global {

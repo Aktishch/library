@@ -1,4 +1,4 @@
-import { touchDevice } from './touch-device'
+import { touchDevice } from '@utils/touch-device'
 
 const className: string[] = ['overflow-hidden']
 

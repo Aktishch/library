@@ -1,4 +1,4 @@
-import { getCookies } from './utils'
+import { getCookies } from '@utils'
 
 export default (): void => {
   const html = document.documentElement as HTMLHtmlElement

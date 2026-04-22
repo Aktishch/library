@@ -1,42 +1,24 @@
 import { formatColor, parseColor } from 'tailwindcss/lib/util/color'
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette'
 import plugin from 'tailwindcss/plugin'
-import { PluginAPI } from 'tailwindcss/types/config'
+import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
+import { Color, getRGB } from './color'
 
-type Color = {
-  mode: 'rgba'
-  color: string[]
-  alpha: string
-}
-
-type InputColor = {
-  '--tw-input-color': string
-  '--tw-input-hovered': string
-}
-
-type InputSize = {
-  '--tw-input-size': string
-}
+const hovered: string = '0.1'
 
 module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
-  const hovered: string = '0.1'
-
-  const getAlpha = (color: string, alpha: string = '1'): string => {
-    return String(theme(color).replace('<alpha-value>', alpha))
-  }
-
   addComponents({
     '.input': {
-      '--tw-input-text': getAlpha('colors.black.DEFAULT'),
-      '--tw-input-color': getAlpha('colors.black.DEFAULT'),
-      '--tw-input-hovered': getAlpha('colors.black.DEFAULT', hovered),
+      '--tw-input-text': getRGB(theme('colors.black.DEFAULT')),
+      '--tw-input-color': getRGB(theme('colors.black.DEFAULT')),
+      '--tw-input-hovered': getRGB(theme('colors.black.DEFAULT'), hovered),
       display: 'block',
       width: '100%',
       height: 'var(--tw-input-size)',
       color: 'var(--tw-input-text)',
       fontSize: theme('fontSize.base'),
       fontWeight: theme('fontWeight.normal'),
-      backgroundColor: getAlpha('colors.white.DEFAULT'),
+      backgroundColor: getRGB(theme('colors.white.DEFAULT')),
       padding: 'calc(var(--tw-input-size) / 4) calc(var(--tw-input-size) / 3)',
       border: '1px solid var(--tw-input-color)',
       borderRadius: theme('borderRadius.lg'),
@@ -52,11 +34,11 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
         opacity: '0.5',
       },
       '&-fade': {
-        '--tw-input-text': getAlpha('colors.white.DEFAULT'),
+        '--tw-input-text': getRGB(theme('colors.white.DEFAULT')),
         backgroundColor: theme('colors.transparent'),
       },
       '&&-error': {
-        '--tw-input-color': getAlpha('colors.red.DEFAULT'),
+        '--tw-input-color': getRGB(theme('colors.red.DEFAULT')),
       },
       '&:-webkit-autofill': {
         color: 'var(--tw-input-text) !important',
@@ -76,9 +58,9 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
   })
   matchComponents(
     {
-      input: (color: string | (({}) => string)): InputColor => {
+      input: (color: string): CSSRuleObject | null => {
         if (typeof color === 'function') {
-          const value: string = color({})
+          const value: string = (color as ({}) => string)({})
           const parsed: Color = parseColor(value)
 
           return {
@@ -90,6 +72,8 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
             } as Color),
           }
         }
+
+        return null
       },
     },
     {
@@ -99,10 +83,8 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
   )
   matchComponents(
     {
-      input: (constant: number): InputSize => {
-        return {
-          '--tw-input-size': `${constant / 16}rem`,
-        }
+      input: (constant: string | number): CSSRuleObject | null => {
+        return typeof constant === 'number' ? { '--tw-input-size': `${constant / 16}rem` } : null
       },
     },
     {

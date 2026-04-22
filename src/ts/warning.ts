@@ -1,4 +1,4 @@
-import { dialog } from './fancybox'
+import { dialog } from '@ts/fancybox'
 
 export default (): void => {
   if (sessionStorage.getItem('warning') !== 'positive')

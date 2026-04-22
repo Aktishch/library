@@ -1,4 +1,4 @@
-import { errors } from './errors'
+import { errors } from '@utils/errors'
 
 type FileHandler = {
   error: HTMLSpanElement

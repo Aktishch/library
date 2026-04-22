@@ -1,4 +1,4 @@
-import { scrolledPage } from './utils'
+import { scrolledPage } from '@utils'
 
 export const scrollToElement = (block: HTMLElement): void => {
   if (!block) return

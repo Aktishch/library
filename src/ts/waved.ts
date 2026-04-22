@@ -1,4 +1,4 @@
-import { Coordinates, touchDevice } from './utils'
+import { Coordinates, touchDevice } from '@utils'
 
 type WavedCircle = {
   positionY: number

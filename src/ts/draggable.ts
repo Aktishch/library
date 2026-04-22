@@ -1,4 +1,4 @@
-import { Coordinates, scrollbarHidden, scrollbarShow } from './utils'
+import { Coordinates, scrollbarHidden, scrollbarShow } from '@utils'
 
 type Draggable = {
   item: HTMLButtonElement | HTMLDivElement

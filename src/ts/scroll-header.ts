@@ -1,4 +1,4 @@
-import { scrolledPage } from './utils'
+import { scrolledPage } from '@utils'
 
 const className: string[] = ['sm:-translate-y-full']
 

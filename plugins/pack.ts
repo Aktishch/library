@@ -1,9 +1,5 @@
 import plugin from 'tailwindcss/plugin'
-import { PluginAPI } from 'tailwindcss/types/config'
-
-type PackSize = {
-  '--tw-pack-size': string
-}
+import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
 
 module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
   addComponents({
@@ -30,8 +26,8 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
   })
   matchComponents(
     {
-      pack: (size: number): PackSize => {
-        return { '--tw-pack-size': `${size}%` }
+      pack: (size: string | number): CSSRuleObject | null => {
+        return typeof size === 'number' ? { '--tw-pack-size': `${size}%` } : null
       },
     },
     {

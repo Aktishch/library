@@ -20,13 +20,13 @@ export default (): void => {
 
     if (smartMenuWidth > 0 && smartMenuWidth < lengthWidth) {
       breaks.push(lengthWidth)
-      list.prepend(length.lastElementChild)
+      list.prepend(length.lastElementChild as HTMLLIElement)
       count.innerText = String(breaks.length)
       updateSmartMenu()
     } else {
       if (smartMenuWidth > breaks[breaks.length - 1]) {
         breaks.pop()
-        length.append(list.firstElementChild)
+        length.append(list.firstElementChild as HTMLLIElement)
         count.innerText = String(breaks.length)
       }
     }

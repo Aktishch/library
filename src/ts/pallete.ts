@@ -1,4 +1,4 @@
-import { touchDevice } from './utils'
+import { touchDevice } from '@utils'
 
 type PalleteColors = {
   [index: string]: {

@@ -1,10 +1,12 @@
 import plugin from 'tailwindcss/plugin'
 import { PluginAPI } from 'tailwindcss/types/config'
 
+type AnimationObject = {
+  [index: string]: string
+}
+
 type Animation = {
-  [index: string]: {
-    [value: string]: string
-  }
+  [index: string]: AnimationObject
 }
 
 type AnimationElement = [string, string]
@@ -26,7 +28,7 @@ module.exports = plugin(
         clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
       },
     }
-    Object.entries(theme('anim')).map(([key, value]: AnimationElement): void => {
+    Object.entries(theme('anim') as AnimationObject).map(([key, value]: AnimationElement): void => {
       anim = {
         ...anim,
         [`.anim-${key}:not([data-anim="show"])`]: {
@@ -36,7 +38,7 @@ module.exports = plugin(
         },
       }
     })
-    Object.entries(theme('clipPath')).map(([key, value]: AnimationElement): void => {
+    Object.entries(theme('clipPath') as AnimationObject).map(([key, value]: AnimationElement): void => {
       clipPath = {
         ...clipPath,
         [`.clip-path-${key}:not([data-anim="show"])`]: {

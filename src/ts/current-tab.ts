@@ -1,4 +1,4 @@
-import { en } from './utils'
+import { en } from '@utils'
 
 export default (): void => {
   const title = document.querySelector('title') as HTMLTitleElement

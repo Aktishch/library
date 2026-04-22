@@ -1,4 +1,4 @@
-import { scrollToElement } from './scroll-to'
+import { scrollToElement } from '@ts/scroll-to'
 
 type FilterCardsShowing = {
   condition: boolean

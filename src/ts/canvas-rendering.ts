@@ -7,7 +7,7 @@ export default (): void => {
     const canvas = rendering.querySelector('*[data-rendering-canvas]') as HTMLCanvasElement
     const download = rendering.querySelector('*[data-rendering-download]') as HTMLAnchorElement
     const image = new Image() as HTMLImageElement
-    const context: CanvasRenderingContext2D = canvas.getContext('2d')
+    const context = canvas.getContext('2d') as CanvasRenderingContext2D
 
     image.addEventListener('load', ((): void => {
       context.drawImage(image, 0, 0)

@@ -1,4 +1,4 @@
-import { Coordinates, touchDevice } from './utils'
+import { Coordinates, touchDevice } from '@utils'
 
 export default (): void => {
   const parallaxes = document.querySelectorAll('*[data-parallax]') as NodeListOf<HTMLElement>

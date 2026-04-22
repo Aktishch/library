@@ -32,7 +32,7 @@ const generatePlugins = ({ templateDir, script, src }: GeneratePlugins): Templat
           minify: {
             collapseWhitespace: false,
           },
-        })
+        }) as HtmlWebpackPlugin
       }
     })
     .filter((templateFile: TemplateFile): boolean => templateFile !== null)
@@ -47,7 +47,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts'],
     alias: {
-      '@src': path.resolve(__dirname, 'src/'),
+      '@plugins': path.resolve(__dirname, 'plugins'),
+      '@ts': path.resolve(__dirname, 'src/ts'),
+      '@utils': path.resolve(__dirname, 'src/ts/utils'),
     },
   },
   output: {

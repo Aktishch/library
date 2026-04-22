@@ -1,4 +1,4 @@
-import { Coordinates, scrolledPage } from './utils'
+import { Coordinates, scrolledPage } from '@utils'
 
 const setOffset = (item: HTMLElement): Coordinates => {
   return {

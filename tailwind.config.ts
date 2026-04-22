@@ -1,11 +1,8 @@
 import type { Config } from 'tailwindcss'
+import { createColor } from './plugins/color'
 import { media } from './plugins/media'
 
 const { xs, sm, md, lg, xl, xxl } = media
-
-const createColor = (variable: string): string => {
-  return `rgba(var(--color-${variable}), <alpha-value>)`
-}
 
 module.exports = {
   content: ['./src/**/*.html', './src/ts/**/*.ts'],

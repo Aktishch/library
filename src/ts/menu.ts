@@ -1,5 +1,5 @@
-import { closeSidebar, openSidebar } from './sidebar'
-import { touchDevice } from './utils'
+import { closeSidebar, openSidebar } from '@ts/sidebar'
+import { touchDevice } from '@utils'
 
 export default (): void => {
   const menu = document.getElementById('menu') as HTMLDivElement

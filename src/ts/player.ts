@@ -1,4 +1,4 @@
-import { scrollbarHidden, scrollbarShow, timeFormat } from './utils'
+import { scrollbarHidden, scrollbarShow, timeFormat } from '@utils'
 
 type Playlist = {
   artist: string

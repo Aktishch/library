@@ -1,4 +1,4 @@
-import { getCookies } from './utils'
+import { getCookies } from '@utils'
 
 export default (): void => {
   const cookies = document.querySelectorAll('*[data-cookie]') as NodeListOf<HTMLElement>

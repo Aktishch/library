@@ -1,15 +1,27 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es2025",
+    "lib": ["DOM", "DOM.Iterable", "ES2025"],
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true,
+    "noUncheckedSideEffectImports": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
+    "noImplicitAny": false,
+    "ignoreDeprecations": "6.0",
     "moduleResolution": "node",
     "typeRoots": ["./node_modules/@types"],
     "paths": {
+      "@plugins/*": ["./plugins/*"],
+      "@ts/*": ["./src/ts/*"],
+      "@utils": ["./src/ts/utils"],
+      "@utils/*": ["./src/ts/utils/*"],
       "ymaps": ["./node_modules/@types/yandex-maps"]
     }
   }

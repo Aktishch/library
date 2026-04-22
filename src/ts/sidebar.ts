@@ -1,6 +1,7 @@
-import { media } from '../../plugins/media'
-import { scrollbarHidden, scrollbarShow } from './utils'
+import { media } from '@plugins/media'
+import { scrollbarHidden, scrollbarShow } from '@utils'
 
+type SidebarResize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 type SidebarButton = HTMLButtonElement | HTMLAnchorElement
 
 export const openSidebar = (sidebar: HTMLElement): void => {
@@ -40,8 +41,8 @@ export default (): void => {
     const sidebars = document.querySelectorAll('*[data-sidebar]') as NodeListOf<HTMLDivElement>
 
     sidebars.forEach((sidebar: HTMLDivElement): void => {
-      if (sidebar.dataset.sidebarResize) {
-        const breakpoint: number = media[sidebar.dataset.sidebarResize]
+      if (sidebar.hasAttribute('data-sidebar-resize')) {
+        const breakpoint: number = media[sidebar.dataset.sidebarResize as SidebarResize]
 
         if ((document.documentElement as HTMLHtmlElement).clientWidth > breakpoint) closeSidebar(sidebar)
       }

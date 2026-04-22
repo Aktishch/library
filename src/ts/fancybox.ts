@@ -1,8 +1,8 @@
 import { Fancybox } from '@fancyapps/ui/dist/fancybox/'
-import { createCalendar } from './air-datepicker'
-import imagePreview from './image-preview'
-import lazyLoad from './lazy-load'
-import { getStateSubmitBtn } from './submit-handler'
+import { createCalendar } from '@ts/air-datepicker'
+import imagePreview from '@ts/image-preview'
+import lazyLoad from '@ts/lazy-load'
+import { getStateSubmitBtn } from '@ts/submit-handler'
 
 type Dialog = {
   open: (src: string) => void

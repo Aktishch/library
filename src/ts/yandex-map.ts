@@ -1,17 +1,19 @@
+import { en } from '@utils'
 import ymaps from 'ymaps'
-import { en } from './utils'
 
 type ymaps = typeof ymaps
 
+interface YandexMap extends ymaps {
+  load: (api: string) => Promise<ymaps>
+}
+
 declare global {
   interface Window {
-    ymaps: ymaps & {
-      load?: (api: string) => Promise<ymaps>
-    }
+    ymaps: YandexMap
   }
 }
 
-window.ymaps = ymaps
+window.ymaps = ymaps as YandexMap
 
 export default (): void => {
   const yandex = document.querySelector('*[data-yandex]') as HTMLElement

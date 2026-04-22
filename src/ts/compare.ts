@@ -1,4 +1,4 @@
-import { scrollbarHidden, scrollbarShow } from './utils'
+import { scrollbarHidden, scrollbarShow } from '@utils'
 
 export default (): void => {
   const compares = document.querySelectorAll('*[data-compare]') as NodeListOf<HTMLDivElement>

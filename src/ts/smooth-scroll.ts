@@ -1,5 +1,5 @@
-import { setAnimation } from './animation'
-import { safari, scrolledPage, touchDevice } from './utils'
+import { setAnimation } from '@ts/animation'
+import { safari, scrolledPage, touchDevice } from '@utils'
 
 const className: string[] = ['will-change-transform']
 

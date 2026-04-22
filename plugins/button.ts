@@ -1,52 +1,30 @@
 import { formatColor, parseColor } from 'tailwindcss/lib/util/color'
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette'
 import plugin from 'tailwindcss/plugin'
-import { PluginAPI } from 'tailwindcss/types/config'
-
-type Color = {
-  mode: 'rgba'
-  color: string[]
-  alpha: string
-}
+import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
+import { Color, getRGB } from './color'
 
 type OpacityValue = {
   fade: string
   focus: string
 }
 
-type BtnColor = {
-  '--tw-btn-color': string
-  '--tw-btn-fade': string
-  '--tw-btn-focus': string
-}
-
-type BtnSize = {
-  '--tw-btn-size': string
-  borderRadius: string
-  height: string
-  paddingInline: string
+const opacityValue: OpacityValue = {
+  fade: '0.3',
+  focus: '0.4',
 }
 
 module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
-  const opacityValue: OpacityValue = {
-    fade: '0.3',
-    focus: '0.4',
-  }
-
-  const getAlpha = (color: string, alpha: string = '1'): string => {
-    return String(theme(color).replace('<alpha-value>', alpha))
-  }
-
   addComponents({
     '.btn': {
       '*': {
         pointerEvents: 'none',
       },
-      '--tw-btn-color': getAlpha('colors.black.DEFAULT'),
-      '--tw-btn-fade': getAlpha('colors.black.DEFAULT', opacityValue.fade),
-      '--tw-btn-focus': getAlpha('colors.black.DEFAULT', opacityValue.focus),
-      '--tw-btn-accent': getAlpha('colors.white.DEFAULT'),
-      '--tw-btn-hovered': getAlpha('colors.black.DEFAULT'),
+      '--tw-btn-color': getRGB(theme('colors.black.DEFAULT')),
+      '--tw-btn-fade': getRGB(theme('colors.black.DEFAULT'), opacityValue.fade),
+      '--tw-btn-focus': getRGB(theme('colors.black.DEFAULT'), opacityValue.focus),
+      '--tw-btn-accent': getRGB(theme('colors.white.DEFAULT')),
+      '--tw-btn-hovered': getRGB(theme('colors.black.DEFAULT')),
       '--tw-btn-fill': 'color-mix(in srgb, var(--tw-btn-color) 80%, var(--tw-btn-hovered))',
       color: 'var(--tw-btn-color)',
       fontSize: theme('fontSize.base'),
@@ -74,7 +52,7 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
           backgroundColor: 'var(--tw-btn-fade)',
         },
         '&:active': {
-          boxShadow: `inset 0 4px 4px ${getAlpha('colors.black.DEFAULT', opacityValue.fade)}`,
+          boxShadow: `inset 0 4px 4px ${getRGB(theme('colors.black.DEFAULT'), opacityValue.fade)}`,
           transform: 'translateY(0.25rem)',
         },
       },
@@ -123,7 +101,7 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
         border: '1px solid var(--tw-btn-color)',
       },
       '&-light': {
-        '--tw-btn-hovered': getAlpha('colors.white.DEFAULT'),
+        '--tw-btn-hovered': getRGB(theme('colors.white.DEFAULT')),
       },
       '&-swipe': {
         zIndex: '1',
@@ -155,9 +133,9 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
   })
   matchComponents(
     {
-      btn: (color: string | (({}) => string)): BtnColor => {
+      btn: (color: string): CSSRuleObject | null => {
         if (typeof color === 'function') {
-          const value: string = color({})
+          const value: string = (color as ({}) => string)({})
           const parsed: Color = parseColor(value)
 
           return {
@@ -174,6 +152,8 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
             } as Color),
           }
         }
+
+        return null
       },
     },
     {
@@ -183,13 +163,15 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
   )
   matchComponents(
     {
-      btn: (constant: number): BtnSize => {
-        return {
-          '--tw-btn-size': `${constant / 16}rem`,
-          borderRadius: String(theme('borderRadius.md')),
-          height: 'var(--tw-btn-size)',
-          paddingInline: `calc(var(--tw-btn-size) / 2)`,
-        }
+      btn: (constant: string | number): CSSRuleObject | null => {
+        return typeof constant === 'number'
+          ? {
+              '--tw-btn-size': `${constant / 16}rem`,
+              borderRadius: String(theme('borderRadius.md')),
+              height: 'var(--tw-btn-size)',
+              paddingInline: `calc(var(--tw-btn-size) / 2)`,
+            }
+          : null
       },
     },
     {

@@ -1,4 +1,4 @@
-import { en, fileHandler, uploadFile } from './utils'
+import { en, fileHandler, uploadFile } from '@utils'
 
 type Content = {
   default: string
@@ -33,7 +33,7 @@ export default (): void => {
     text.textContent = content.default
 
     input.addEventListener('change', ((): void => {
-      const files: FileList = input.files
+      const files = input.files as FileList
 
       if (files.length !== 0) {
         for (let i: number = 0; i < files.length; i++) {

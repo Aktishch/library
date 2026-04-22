@@ -1,7 +1,7 @@
+import filtering from '@ts/filtering'
+import { touchDevice } from '@utils'
 import AirDatepicker, { AirDatepickerPosition } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
-import filtering from './filtering'
-import { touchDevice } from './utils'
 
 declare global {
   interface Window {

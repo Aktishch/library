@@ -1,5 +1,5 @@
-import { dialog } from './fancybox'
-import { fileHandler, uploadFile } from './utils'
+import { dialog } from '@ts/fancybox'
+import { fileHandler, uploadFile } from '@utils'
 
 const dragClassName: string[] = ['bg-opacity-50']
 const labelClassName: string[] = ['pointer-events-none', 'opacity-50']
@@ -16,7 +16,7 @@ export default (): void => {
     const input = label.querySelector('*[data-preview-input]') as HTMLInputElement
     const error = preview.querySelector('*[data-error]') as HTMLSpanElement
     const drag = preview.querySelector('*[data-preview-drag]') as HTMLDivElement
-    const requestUrl: string = image.dataset.previewImage
+    const requestUrl: string = String(image.dataset.previewImage)
     let data: DataTransfer = new DataTransfer()
 
     const uploadFilesList = (): void => {
@@ -73,10 +73,10 @@ export default (): void => {
 
     const urlImageToObject = async (): Promise<void> => {
       await fetch(requestUrl)
-        .then((response: Response): Promise<Blob | null> => {
+        .then((response: Response): Promise<Blob> | null => {
           return response.ok ? response.blob() : null
         })
-        .then((blob: Blob): void => {
+        .then((blob: Blob | null): void => {
           if (blob && requestUrl !== '') {
             const parts: string[] = requestUrl.split('/')
             const name: string = parts[parts.length - 1]
@@ -91,7 +91,7 @@ export default (): void => {
         .catch((error: string): void => console.log(error))
     }
 
-    urlImageToObject().finally((): void => getImagePreview(input.files))
+    urlImageToObject().finally((): void => getImagePreview(input.files as FileList))
 
     if (drag) {
       const dragEvents: string[] = ['dragenter', 'dragover', 'dragleave', 'drop']
@@ -124,7 +124,7 @@ export default (): void => {
     }
 
     input.addEventListener('change', ((): void => {
-      getImagePreview(input.files)
+      getImagePreview(input.files as FileList)
     }) as EventListener)
 
     remove.addEventListener('click', defaultState as EventListener)

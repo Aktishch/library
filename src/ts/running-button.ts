@@ -1,4 +1,4 @@
-import { Coordinates } from './utils'
+import { Coordinates } from '@utils'
 
 type RandomPosition = {
   min: number

@@ -1,4 +1,4 @@
-import { Coordinates } from './coordinates'
+import { Coordinates } from '@utils/coordinates'
 
 export const scrolledPage = (): Coordinates => {
   return {

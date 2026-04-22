@@ -1,4 +1,4 @@
-import { Coordinates, touchDevice } from './utils'
+import { Coordinates, touchDevice } from '@utils'
 
 const setMovement = (event: MouseEvent): void => {
   const item = (event.target as HTMLElement).closest('[data-movement]') as HTMLElement
