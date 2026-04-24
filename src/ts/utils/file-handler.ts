@@ -1,6 +1,6 @@
 import { errors } from '@utils/errors'
 
-type FileHandler = {
+interface FileHandler {
   error: HTMLSpanElement
   file: File
 }

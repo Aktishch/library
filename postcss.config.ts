@@ -1,14 +1,27 @@
-module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {
-      overrideBrowserslist: [
-        '>0.5%',
-        'last 5 chrome version',
-        'last 5 firefox version',
-        'last 15 safari version',
-        'last 5 ie version',
-      ],
-    },
-  },
+import autoprefixer from 'autoprefixer'
+import postcss from 'postcss'
+import tailwindcss, { Config } from 'tailwindcss'
+
+interface PostcssConfig {
+  plugins: (
+    | postcss.PluginCreator<
+        | string
+        | Config
+        | {
+            config: string | Config
+          }
+      >
+    | (postcss.Plugin & autoprefixer.ExportedAPI)
+  )[]
 }
+
+module.exports = {
+  plugins: [
+    tailwindcss,
+    autoprefixer({
+      grid: 'autoplace',
+      flexbox: 'no-2009',
+      supports: false,
+    }),
+  ],
+} as PostcssConfig

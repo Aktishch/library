@@ -1,6 +1,6 @@
 import { Coordinates, scrollbarHidden, scrollbarShow } from '@utils'
 
-type Draggable = {
+interface Draggable {
   item: HTMLButtonElement | HTMLDivElement
   positionX: number
   positionY: number

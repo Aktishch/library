@@ -1,6 +1,6 @@
 import { Coordinates } from '@utils'
 
-type RandomPosition = {
+interface RandomPosition {
   min: number
   max: number
 }

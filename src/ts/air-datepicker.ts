@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-type AirDatepickerCell = {
+interface AirDatepickerCell {
   date: Date
   cellType: string
 }
@@ -21,7 +21,7 @@ type Attrs = {
   'data-active'?: string
 }
 
-type AirDatepickerRenderCell = {
+interface AirDatepickerRenderCell {
   classes: string
   attrs: Attrs
 }

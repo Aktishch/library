@@ -14,8 +14,6 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "noImplicitAny": false,
-    "ignoreDeprecations": "6.0",
-    "moduleResolution": "node",
     "typeRoots": ["./node_modules/@types"],
     "paths": {
       "@plugins/*": ["./plugins/*"],

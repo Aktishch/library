@@ -1,4 +1,4 @@
-type GetCookies = {
+interface GetCookies {
   value: string
   path: string
   expires: number

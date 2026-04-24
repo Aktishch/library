@@ -1,6 +1,6 @@
 import { en, fileHandler, uploadFile } from '@utils'
 
-type Content = {
+interface Content {
   default: string
   more: string
   limit: string

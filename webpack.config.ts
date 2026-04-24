@@ -6,7 +6,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
 import { Configuration } from 'webpack'
 
-type GeneratePlugins = {
+interface GeneratePlugins {
   templateDir: string
   script: 'body' | 'head' | boolean
   src: string

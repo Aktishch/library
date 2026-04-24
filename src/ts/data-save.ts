@@ -1,4 +1,6 @@
-type DataSave = { [index: string]: string }
+interface DataSave {
+  [index: string]: string
+}
 
 const checkingValue = (input: HTMLInputElement): boolean =>
   input.dataset.input !== 'file' && input.dataset.input !== 'switch'

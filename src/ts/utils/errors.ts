@@ -1,6 +1,6 @@
 import { en } from '@utils/en'
 
-type Errors = {
+interface Errors {
   default: string
   tel: string
   email: string

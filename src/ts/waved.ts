@@ -1,6 +1,6 @@
 import { Coordinates, touchDevice } from '@utils'
 
-type WavedCircle = {
+interface WavedCircle {
   positionY: number
   positionX: number
 }

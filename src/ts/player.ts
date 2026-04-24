@@ -1,24 +1,24 @@
 import { scrollbarHidden, scrollbarShow, timeFormat } from '@utils'
 
-type Playlist = {
+interface Playlist {
   artist: string
   song: string
   audio: string
   poster: string
 }
 
-type Player = {
+interface Player {
   id: string
   playlist: Playlist[]
 }
 
-type PlayerCondition = {
+interface PlayerCondition {
   status: string
   time: number
   index: number
 }
 
-type PlayerTiming = {
+interface PlayerTiming {
   type: string
   time: HTMLSpanElement
 }

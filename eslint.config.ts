@@ -1,25 +1,28 @@
 import tsPlugin from '@typescript-eslint/eslint-plugin'
 import prettierPlugin from 'eslint-plugin-prettier'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import { Config, defineConfig } from 'eslint/config'
+import tseslint from 'typescript-eslint'
 
-module.exports = [
+module.exports = defineConfig([
   {
     ignores: ['node_modules/'],
   },
   {
     files: ['**/*.js', '**/*.ts'],
     languageOptions: {
+      parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: ['./tsconfig.json'],
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        project: './tsconfig.json',
       },
     },
     plugins: {
-      '@typescript-eslint': tsPlugin,
       prettier: prettierPlugin,
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
-      ...prettierPlugin.configs?.rules,
       'import/order': 'off',
       '@typescript-eslint/no-explicit-any': ['off'],
       '@typescript-eslint/member-ordering': 0,
@@ -29,4 +32,5 @@ module.exports = [
     },
   },
   eslintPluginPrettierRecommended,
-]
+  tseslint.configs.recommended,
+]) as Config

@@ -1,6 +1,6 @@
 import { en } from '@utils/en'
 
-type UploadFile = {
+interface UploadFile {
   file: File
   url: string
 }

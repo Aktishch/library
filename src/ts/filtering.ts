@@ -1,11 +1,11 @@
 import { scrollToElement } from '@ts/scroll-to'
 
-type FilterCardsShowing = {
+interface FilterCardsShowing {
   condition: boolean
   item: HTMLDivElement
 }
 
-type FilterHandler = {
+interface FilterHandler {
   name: string
   cards: NodeListOf<HTMLDivElement>
   plug: HTMLDivElement

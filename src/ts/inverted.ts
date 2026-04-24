@@ -1,4 +1,4 @@
-type InvertedToggle = {
+interface InvertedToggle {
   event: Event
   condition: string
 }
