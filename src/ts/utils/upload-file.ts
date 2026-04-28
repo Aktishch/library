@@ -6,12 +6,12 @@ interface UploadFile {
 }
 
 type Resolve = (value: UploadFile | PromiseLike<UploadFile>) => void
-type Reject = (reason?: string) => void
+type Reject = (reason?: Error) => void
 
 export const uploadFile = (file: File): Promise<UploadFile> => {
   return new Promise<UploadFile>((resolve: Resolve, reject: Reject): void => {
     const reader: FileReader = new FileReader()
-    const createReject = (): void => reject(en ? 'File upload error' : 'Ошибка при загрузке файла')
+    const createReject = (): void => reject(new Error(en ? 'File upload error' : 'Ошибка при загрузке файла'))
 
     reader.readAsDataURL(file)
 

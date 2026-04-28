@@ -75,5 +75,5 @@ export default (): void => {
         alert(hintContent)
       })
     })
-    .catch((error: string) => console.log(error))
+    .catch((error: string) => console.log(new Error(error)))
 }

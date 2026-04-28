@@ -63,7 +63,7 @@ export default (): void => {
                 avatar.src = url
                 dialog.close()
               })
-              .catch((error: string): void => console.log(error))
+              .catch((error: string): void => console.log(new Error(error)))
           }
         })
       }
@@ -88,7 +88,7 @@ export default (): void => {
             defaultState()
           }
         })
-        .catch((error: string): void => console.log(error))
+        .catch((error: string): void => console.log(new Error(error)))
     }
 
     urlImageToObject().finally((): void => getImagePreview(input.files as FileList))

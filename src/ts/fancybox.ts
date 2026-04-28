@@ -4,7 +4,7 @@ import imagePreview from '@ts/image-preview'
 import lazyLoad from '@ts/lazy-load'
 import { getStateSubmitBtn } from '@ts/submit-handler'
 
-type Dialog = {
+interface Dialog {
   open: (src: string) => void
   notClosing: (src: string) => void
   close: () => void

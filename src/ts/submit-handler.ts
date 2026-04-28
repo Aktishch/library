@@ -93,7 +93,7 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
                 items.innerHTML = ''
               }
             })
-            .catch((error: string): void => console.log(error))
+            .catch((error: string): void => console.log(new Error(error)))
 
           break
         }

@@ -1,3 +1,5 @@
+import { en } from '@utils/en'
+
 export default (): void => {
   const renderings = document.querySelectorAll('*[data-rendering]') as NodeListOf<HTMLDivElement>
 
@@ -18,6 +20,10 @@ export default (): void => {
       if (rendering.dataset.rendering !== undefined)
         context.fillText(String(rendering.dataset.rendering), canvas.width / 2, canvas.height / 1.5)
       if (download) download.href = canvas.toDataURL()
+    }) as EventListener)
+
+    image.addEventListener('error', ((): void => {
+      console.log(new Error(en ? 'Не удалось загрузить изображение' : "Couldn't upload image"))
     }) as EventListener)
 
     image.src = String(canvas.dataset.renderingCanvas)
