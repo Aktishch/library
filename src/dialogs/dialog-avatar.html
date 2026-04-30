@@ -5,23 +5,26 @@
 %>
 
 <div class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-80 max-w-full px-5 py-10">
-  <form data-preview="avatar">
+  <form data-form="avatar">
     <input type="hidden" value="Аватарка" name="theme">
-    <div class="relative mb-5">
-      <div class="pack pack-xl bg-primary rounded-full w-1/2 mx-auto">
-        <div class="flex items-center justify-center absolute inset-0 rounded-inherit">
-          <%= icon({id: 'user', className: 'icon text-white dark:text-black text-6xl', data: null}) %>
+    <div data-preview="avatar">
+      <div class="relative mb-5">
+        <div class="pack pack-xl bg-primary rounded-full w-1/2 mx-auto" data-preview-drag>
+          <div class="flex items-center justify-center absolute inset-0 rounded-inherit pointer-events-none">
+            <%= icon({id: 'user', className: 'icon text-white dark:text-black text-6xl', data: null}) %>
+          </div>
+          <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'data-preview-image'}) %>
         </div>
-        <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'data-preview-image'}) %>
+        <%= error %>
       </div>
-      <%= error %>
+      <div class="flex flex-wrap items-center justify-between gap-4 w-full">
+        <label class="btn btn-second btn-fill btn-lg grow" data-preview-label data-waved="dark">
+          <input hidden data-preview-input type="file" name="file[]">
+          Загрузить
+        </label>
+        <button class="btn btn-second btn-fade btn-contur btn-lg grow" data-preview-remove data-waved="light" type="button" disabled>Удалить</button>
+      </div>
     </div>
-    <div class="flex flex-wrap items-center justify-between gap-4 w-full">
-      <label class="btn btn-second btn-fill btn-lg grow" data-preview-label data-waved="dark">
-        <input hidden data-preview-input type="file" name="file[]">
-        Загрузить
-      </label>
-      <button class="btn btn-second btn-fade btn-contur btn-lg grow" data-preview-remove data-waved="light" type="button" disabled>Удалить</button>
-    </div>
+    <button hidden type="submit"></button>
   </form>
 </div>

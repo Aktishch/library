@@ -85,9 +85,9 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-avatar]', {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (): void => {
+      'Carousel.contentReady': (fancyboxRef): void => {
         loadUpdate()
-        imagePreview()
+        imagePreview(fancyboxRef.getContainer())
       },
     },
   })

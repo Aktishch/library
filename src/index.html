@@ -446,30 +446,32 @@
               <div class="flex items-center justify-center absolute inset-0">
                 <%= icon({id: 'user', className: 'icon text-white text-sm', data: null}) %>
               </div>
-              <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'data-avatar'}) %>
+              <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'id="avatar"'}) %>
             </a>
             <h4 class="font-bold text-2xl">
               Name Surname
             </h4>
           </div>
-          <form class="mb-5" data-form="submit" data-preview>
+          <form class="mb-5" data-form="submit">
             <input type="hidden" value="Изображение" name="theme">
-            <div class="flex flex-col" data-label>
-              <div class="relative mb-5">
-                <div class="pack pack-xl bg-second rounded-2xl transition" data-preview-drag>
-                  <%= picture({src: '', format: '', className: 'image object-scale-down', data: 'data-preview-image="http://localhost:9000/img/pictures/town.jpg"'}) %>
+            <div data-preview>
+              <div data-label>
+                <div class="relative mb-5">
+                  <div class="pack pack-xl bg-second rounded-2xl transition" data-preview-drag>
+                    <%= picture({src: '', format: '', className: 'image object-scale-down', data: 'data-preview-image="http://localhost:9000/img/pictures/town.jpg"'}) %>
+                  </div>
+                  <button class="btn btn-gray btn-fill absolute top-3 right-3 rounded-lg size-10" data-preview-remove data-waved="dark" type="button">
+                    <%= icon({id: 'trash', className: 'icon text-red text-2xl', data: null}) %>
+                  </button>
+                  <%= error %>
                 </div>
-                <button class="btn btn-gray btn-fill absolute top-3 right-3 rounded-lg size-10" data-preview-remove data-waved="dark" type="button">
-                  <%= icon({id: 'trash', className: 'icon text-red text-2xl', data: null}) %>
-                </button>
-                <%= error %>
-              </div>
-              <div class="flex flex-wrap items-center justify-between gap-4">
-                <label class="btn btn-primary btn-fill btn-lg grow" data-preview-label data-waved="light">
-                  <input hidden data-preview-input data-input="file" type="file" name="files[]">
-                  Загрузить
-                </label>
-                <button class="btn btn-primary btn-contur btn-lg grow" data-waved="dark" type="submit">Отправить</button>
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <label class="btn btn-primary btn-fill btn-lg grow" data-preview-label data-waved="light">
+                    <input hidden data-preview-input data-input="file" type="file" name="files[]">
+                    Загрузить
+                  </label>
+                  <button class="btn btn-primary btn-contur btn-lg grow" data-waved="dark" type="submit">Отправить</button>
+                </div>
               </div>
             </div>
           </form>

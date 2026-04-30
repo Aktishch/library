@@ -44,17 +44,11 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
       if (!validation(form)) return
 
       const formData: FormData = new FormData(form)
-      const searchParams: URLSearchParams = new URLSearchParams()
       const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
-      let requestUrl: string
-
-      for (const pair of formData.entries()) searchParams.append(pair[0], String(pair[1]))
-
-      const queryString: string = searchParams.toString()
+      const requestUrl: string = '/ajax/submit-handler.php'
 
       switch (form.dataset.form) {
         case 'submit': {
-          requestUrl = '/ajax/submit-handler.php'
           submitBtn.disabled = true
           dialog.notClosing('/dialogs/dialog-preloader.html')
 
@@ -70,16 +64,6 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
               dialog.open(response.status ? '/dialogs/dialog-success.html' : '/dialogs/dialog-error.html')
               form.reset()
               submitBtn.disabled = false
-
-              if (form.hasAttribute('data-preview')) {
-                const label = form.querySelector('*[data-preview-label]') as HTMLLabelElement
-                const image = form.querySelector('*[data-preview-image]') as HTMLImageElement
-                const remove = form.querySelector('*[data-preview-remove]') as HTMLButtonElement
-
-                image.src = ''
-                remove.disabled = true
-                label.classList.remove(...className)
-              }
 
               const filelist = document.querySelector('*[data-filelist]') as HTMLDivElement
 
@@ -98,10 +82,33 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
           break
         }
 
+        case 'avatar': {
+          dialog.notClosing('/dialogs/dialog-preloader.html')
+
+          await fetch(requestUrl, {
+            method: 'POST',
+            body: formData,
+          })
+            .then((response: Response): void => {
+              response.text()
+            })
+            .then((): void => {
+              dialog.close()
+            })
+            .catch((error: string): void => console.log(new Error(error)))
+
+          break
+        }
+
         case 'params': {
-          requestUrl = `/dialogs/dialog-authorization.html?${queryString}`
+          const searchParams: URLSearchParams = new URLSearchParams()
+
+          for (const pair of formData.entries()) searchParams.append(pair[0], String(pair[1]))
+
+          const queryString: string = searchParams.toString()
+
           dialog.close()
-          dialog.open(requestUrl)
+          dialog.open(`/dialogs/dialog-authorization.html?${queryString}`)
           break
         }
       }
