@@ -23,7 +23,7 @@ export default (): void => {
     }) as EventListener)
 
     image.addEventListener('error', ((): void => {
-      console.log(new Error(en ? 'Не удалось загрузить изображение' : "Couldn't upload image"))
+      console.log(new Error(en ? "Couldn't upload image" : 'Не удалось загрузить изображение'))
     }) as EventListener)
 
     image.src = String(canvas.dataset.renderingCanvas)

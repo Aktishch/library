@@ -24,6 +24,7 @@ export default (): void => {
   const loader = yandex.querySelector('*[data-loader]') as HTMLDivElement
   const coordinates: string[] = String(yandexMap.dataset.yandexMap).split(',')
   const point: string = String(yandexMap.dataset.point)
+  const pointSize: number[] = [62, 62]
   const lang: string = en ? 'en_US' : 'ru_RU'
   const mark: number[] = []
 
@@ -48,8 +49,8 @@ export default (): void => {
         {
           iconLayout: 'default#image',
           iconImageHref: point,
-          iconImageSize: [62, 62],
-          iconImageOffset: [-31, -31],
+          iconImageSize: pointSize,
+          iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2],
         }
       ) as ymaps.Placemark
 

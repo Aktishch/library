@@ -24,39 +24,39 @@
   <!-- Шапка документа -->
 
   <% var nav = {
-      pages: [
-        {
-          link: 'index.html',
-          text: 'Front-page'
-        },
-        {
-          link: 'primary.html',
-          text: 'Primary-page'
-        },
-        {
-          link: 'second.html',
-          text: 'Second-page'
-        },
-        {
-          link: 'icons.html',
-          text: 'Icons-page'
-        },
-      ],
-      blocks: [
-        {
-          id: '#header',
-          text: 'Header'
-        },
-        {
-          id: '#player',
-          text: 'Player'
-        },
-        {
-          id: '#footer',
-          text: 'Footer'
-        }
-      ]
-    } %>
+    pages: [
+      {
+        link: 'index.html',
+        text: 'Front-page'
+      },
+      {
+        link: 'primary.html',
+        text: 'Primary-page'
+      },
+      {
+        link: 'second.html',
+        text: 'Second-page'
+      },
+      {
+        link: 'icons.html',
+        text: 'Icons-page'
+      },
+    ],
+    blocks: [
+      {
+        id: '#header',
+        text: 'Header'
+      },
+      {
+        id: '#player',
+        text: 'Player'
+      },
+      {
+        id: '#footer',
+        text: 'Footer'
+      }
+    ]
+  } %>
 
   <header class="container flex items-center justify-between gap-5 fixed top-0 left-0 right-0 z-30 bg-black transition-transform duration-300 py-4" data-header>
     <a class="btn btn-white shrink-0 w-36" data-waved="light" draggable="false" href="/">
@@ -90,52 +90,52 @@
   <% var social = ['ok', 'yt', 'inst', 'tw', 'fb', 'vk'] %>
 
   <% var pallete = [
-      {
-        text: 'Первичный',
-        name: 'primary',
-        value: '#af1a4c'
-      },
-      {
-        text: 'Вторичный',
-        name: 'second',
-        value: '#d7a751'
-      },
-      {
-        text: 'Черный',
-        name: 'black',
-        value: '#000000'
-      },
-      {
-        text: 'Белый',
-        name: 'white',
-        value: '#ffffff'
-      },
-      {
-        text: 'Темно-серый',
-        name: 'gray',
-        value: '#b2b2b2'
-      },
-      {
-        text: 'Светло-серый',
-        name: 'grey',
-        value: '#f6f7f9'
-      },
-      {
-        text: 'Темный',
-        name: 'dark',
-        value: '#303030'
-      },
-      {
-        text: 'Красный',
-        name: 'red',
-        value: '#be1b1b'
-      },
-      {
-        text: 'Зеленый',
-        name: 'green',
-        value: '#27ae60'
-      }
-    ] %>
+    {
+      text: 'Первичный',
+      name: 'primary',
+      value: '#af1a4c'
+    },
+    {
+      text: 'Вторичный',
+      name: 'second',
+      value: '#d7a751'
+    },
+    {
+      text: 'Черный',
+      name: 'black',
+      value: '#000000'
+    },
+    {
+      text: 'Белый',
+      name: 'white',
+      value: '#ffffff'
+    },
+    {
+      text: 'Темно-серый',
+      name: 'gray',
+      value: '#b2b2b2'
+    },
+    {
+      text: 'Светло-серый',
+      name: 'grey',
+      value: '#f6f7f9'
+    },
+    {
+      text: 'Темный',
+      name: 'dark',
+      value: '#303030'
+    },
+    {
+      text: 'Красный',
+      name: 'red',
+      value: '#be1b1b'
+    },
+    {
+      text: 'Зеленый',
+      name: 'green',
+      value: '#27ae60'
+    }
+  ] %>
 
   <div class="group/menu fixed inset-0 z-40 bg-black/50 transition-[opacity,_visibility] duration-100 [&[data-sidebar=close]]:invisible [&[data-sidebar=close]]:opacity-0" data-sidebar="close" data-sidebar-resize="lg" id="menu">
     <div class="flex flex-col bg-black/70 backdrop-blur-sm overflow-auto transition-[opacity,_visibility,_transform] duration-300 size-full max-w-[375px] group-[[data-sidebar=close]]/menu:invisible group-[[data-sidebar=close]]/menu:opacity-0 group-[[data-sidebar=close]]/menu:-translate-x-full">

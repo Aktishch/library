@@ -83,8 +83,8 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
   )
   matchComponents(
     {
-      input: (constant: string | number): CSSRuleObject | null => {
-        return typeof constant === 'number' ? { '--tw-input-size': `${constant / 16}rem` } : null
+      input: (constant: string | number): CSSRuleObject => {
+        return { '--tw-input-size': `${Number(constant) / 16}rem` }
       },
     },
     {

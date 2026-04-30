@@ -26,8 +26,8 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
   })
   matchComponents(
     {
-      pack: (size: string | number): CSSRuleObject | null => {
-        return typeof size === 'number' ? { '--tw-pack-size': `${size}%` } : null
+      pack: (size: string | number): CSSRuleObject => {
+        return { '--tw-pack-size': `${size}%` }
       },
     },
     {

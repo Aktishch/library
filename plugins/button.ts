@@ -163,15 +163,13 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
   )
   matchComponents(
     {
-      btn: (constant: string | number): CSSRuleObject | null => {
-        return typeof constant === 'number'
-          ? {
-              '--tw-btn-size': `${constant / 16}rem`,
-              borderRadius: String(theme('borderRadius.md')),
-              height: 'var(--tw-btn-size)',
-              paddingInline: `calc(var(--tw-btn-size) / 2)`,
-            }
-          : null
+      btn: (constant: string | number): CSSRuleObject => {
+        return {
+          '--tw-btn-size': `${Number(constant) / 16}rem`,
+          borderRadius: String(theme('borderRadius.md')),
+          height: 'var(--tw-btn-size)',
+          paddingInline: `calc(var(--tw-btn-size) / 2)`,
+        }
       },
     },
     {
