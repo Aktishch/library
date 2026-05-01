@@ -40,7 +40,7 @@ export const validation = (form: HTMLFormElement): boolean => {
     input.value.length === 0 ? getError() : hideError()
 
     switch (input.dataset.input) {
-      case 'name': {
+      case 'text': {
         if (input.value.length === 1) getError()
         break
       }
@@ -97,7 +97,7 @@ export const validation = (form: HTMLFormElement): boolean => {
         break
       }
 
-      case 'text': {
+      case 'description': {
         if (input.value.length > 0 && input.value.length < 10) {
           error.innerText = errors.text
           getError()

@@ -1,10 +1,8 @@
 import { dialog } from '@ts/fancybox'
-import { validation } from '@utils'
+import { Container, validation } from '@utils'
 
-const className: string[] = ['pointer-events-none', 'opacity-50']
-
-export const getStateSubmitBtn = (): void => {
-  const forms = document.querySelectorAll('*[data-form]') as NodeListOf<HTMLFormElement>
+export const getStateSubmitBtn = (container: Container = document): void => {
+  const forms = container.querySelectorAll('*[data-form]') as NodeListOf<HTMLFormElement>
 
   forms.forEach((form: HTMLFormElement): void => {
     if (!form) return
@@ -29,7 +27,7 @@ export const getStateSubmitBtn = (): void => {
   })
 }
 
-const formSubmitHandler = async (event: Event): Promise<void> => {
+const submitHandler = async (event: Event): Promise<void> => {
   const form = event.target as HTMLFormElement
 
   switch (form.dataset.form) {
@@ -64,18 +62,6 @@ const formSubmitHandler = async (event: Event): Promise<void> => {
               dialog.open(response.status ? '/dialogs/dialog-success.html' : '/dialogs/dialog-error.html')
               form.reset()
               submitBtn.disabled = false
-
-              const filelist = document.querySelector('*[data-filelist]') as HTMLDivElement
-
-              if (filelist) {
-                const label = filelist.querySelector('*[data-filelist-label]') as HTMLLabelElement
-                const text = label.querySelector('*[data-filelist-text]') as HTMLSpanElement
-                const items = filelist.querySelector('*[data-filelist-items]') as HTMLUListElement
-
-                label.classList.remove(...className)
-                text.textContent = 'Загрузить файлы'
-                items.innerHTML = ''
-              }
             })
             .catch((error: string): void => console.log(new Error(error)))
 
@@ -122,7 +108,7 @@ export default (): void => {
   getStateSubmitBtn()
 
   document.addEventListener('submit', ((event: Event): void => {
-    if ((event.target as HTMLFormElement).hasAttribute('data-form')) formSubmitHandler(event)
+    if ((event.target as HTMLFormElement).hasAttribute('data-form')) submitHandler(event)
   }) as EventListener)
 
   document.addEventListener('keypress', ((event: KeyboardEvent): void => {

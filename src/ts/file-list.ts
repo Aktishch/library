@@ -1,4 +1,4 @@
-import { en, fileHandler, uploadFile } from '@utils'
+import { Container, en, fileHandler, uploadFile, validation } from '@utils'
 
 interface Content {
   default: string
@@ -13,12 +13,13 @@ const content: Content = {
   limit: en ? 'No more than 3 files' : 'Не больше 3 файлов',
 }
 
-export default (): void => {
-  const filelists = document.querySelectorAll('*[data-filelist]') as NodeListOf<HTMLDivElement>
+export default (container: Container = document): void => {
+  const filelists = container.querySelectorAll('*[data-filelist]') as NodeListOf<HTMLDivElement>
 
   filelists.forEach((filelist: HTMLDivElement): void => {
     if (!filelist) return
 
+    const form = filelist.closest('[data-form]') as HTMLFormElement
     const label = filelist.querySelector('*[data-filelist-label]') as HTMLLabelElement
     const input = label.querySelector('*[data-filelist-input]') as HTMLInputElement
     const error = filelist.querySelector('*[data-error]') as HTMLSpanElement
@@ -37,31 +38,33 @@ export default (): void => {
 
       if (files.length !== 0) {
         for (let i: number = 0; i < files.length; i++) {
-          uploadFile(files[i] as File).then(({ file }): void => {
-            if (!fileHandler({ error, file })) return
+          uploadFile(files[i] as File)
+            .then(({ file }): void => {
+              if (!fileHandler({ error, file })) return
 
-            if ((data.files as FileList).length < 3) {
-              const item = document.createElement('li') as HTMLLIElement
+              if ((data.files as FileList).length < 3) {
+                const item = document.createElement('li') as HTMLLIElement
 
-              item.classList.add('flex', 'items-center', 'justify-between', 'gap-5')
-              item.setAttribute('data-filelist-item', '')
-              item.innerHTML = `
+                item.classList.add('flex', 'items-center', 'justify-between', 'gap-5')
+                item.setAttribute('data-filelist-item', '')
+                item.innerHTML = `
                 <span class="truncate">${file.name}</span>
                 <button class="btn btn-gray text-sm p-1" data-filelist-remove="${file.name}" data-waved="dark" type="button">
                   <svg class="icon">
                     <use href="/img/icons.svg#close"></use>
                   </svg>
                 </button>`
-              items.appendChild(item)
-              text.textContent = content.more
-              data.items.add(file)
-            }
+                items.appendChild(item)
+                text.textContent = content.more
+                data.items.add(file)
+              }
 
-            if ((data.files as FileList).length === 3) {
-              label.classList.add(...className)
-              text.textContent = content.limit
-            }
-          })
+              if ((data.files as FileList).length === 3) {
+                label.classList.add(...className)
+                text.textContent = content.limit
+              }
+            })
+            .catch((error: string): void => console.log(new Error(error)))
         }
       }
 
@@ -94,6 +97,17 @@ export default (): void => {
           label.classList.remove(...className)
           text.textContent = content.more
         }
+      }
+    }) as EventListener)
+
+    form.addEventListener('submit', ((event: Event): void => {
+      event.preventDefault()
+
+      if (validation(form)) {
+        label.classList.remove(...className)
+        text.textContent = content.default
+        items.innerHTML = ''
+        data = new DataTransfer()
       }
     }) as EventListener)
   })

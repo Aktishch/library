@@ -1,5 +1,5 @@
 import filtering from '@ts/filtering'
-import { touchDevice } from '@utils'
+import { Container, touchDevice } from '@utils'
 import AirDatepicker, { AirDatepickerPosition } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
 
@@ -28,20 +28,22 @@ interface AirDatepickerRenderCell {
 
 type Dates = { date: Date | Date[] }
 
-const excludeDates: number[] = [+new Date(2026, 1, 5), +new Date(2026, 1, 7), +new Date(2026, 2, 10)]
-const className: string[] = ['opacity-20', 'pointer-events-none']
+const excludeDates: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +new Date(2026, 5, 10)]
 
 window.AirDatepicker = AirDatepicker
 
-export const createCalendar = (): void => {
-  const calendar = document.getElementById('calendar') as HTMLDivElement
+export const createCalendar = (container: Container = document): void => {
+  const calendar = container.querySelector('#calendar') as HTMLDivElement
 
   if (!calendar) return
 
   const dates: number[] = []
+  let timeOut: NodeJS.Timeout
 
   const renderCellHandler = ({ date, cellType }: AirDatepickerCell): AirDatepickerRenderCell | undefined => {
     if (cellType === 'day') {
+      if (timeOut) clearTimeout(timeOut)
+
       const condition: boolean = excludeDates.includes(+date)
       const classes: string = condition
         ? 'btn btn-primary btn-fill text-sm [&[data-active]]:opacity-50 [&[data-active]]:pointer-events-none'
@@ -55,29 +57,26 @@ export const createCalendar = (): void => {
       if (condition) dates.push(+date)
       if (dates.length !== 0 && dates[0] === +date) attrs['data-active'] = ''
 
+      timeOut = setTimeout((): void => {
+        dates.length = 0
+        filtering(container)
+      }, 50)
+
       return { classes, attrs }
     }
   }
 
   new window.AirDatepicker(calendar, {
     locale: localeRu,
-    onChangeViewDate: (): void => {
-      dates.length = 0
-      calendar.classList.add(...className)
-      setTimeout((): void => {
-        filtering()
-        calendar.classList.remove(...className)
-      }, 500)
-    },
     onRenderCell: renderCellHandler,
     selectedDates: [new Date()],
   }) as AirDatepicker<HTMLDivElement>
 
-  filtering()
+  filtering(container)
 }
 
-export default (): void => {
-  const datepickers = document.querySelectorAll('*[data-datepicker]') as NodeListOf<HTMLFormElement>
+export default (container: Container = document): void => {
+  const datepickers = container.querySelectorAll('*[data-datepicker]') as NodeListOf<HTMLFormElement>
 
   datepickers.forEach((datepicker: HTMLFormElement): void => {
     if (!datepicker) return

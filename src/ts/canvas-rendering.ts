@@ -1,7 +1,7 @@
-import { en } from '@utils/en'
+import { Container, en } from '@utils'
 
-export default (): void => {
-  const renderings = document.querySelectorAll('*[data-rendering]') as NodeListOf<HTMLDivElement>
+export default (container: Container = document): void => {
+  const renderings = container.querySelectorAll('*[data-rendering]') as NodeListOf<HTMLDivElement>
 
   renderings.forEach((rendering: HTMLDivElement): void => {
     if (!rendering) return

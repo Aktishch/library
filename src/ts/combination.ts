@@ -1,5 +1,5 @@
 export default (): void => {
-  const keys: string[] = ['r', 'a', 'c', 'c', 'o', 'o', 'n']
+  const keys: string[] = ['s', 't', 'a', 'r', 't']
   let status: boolean = true
   let index: number = 0
 
@@ -10,7 +10,7 @@ export default (): void => {
       index++
 
       if (index === keys.length) {
-        alert('Енот')
+        alert('Start')
         status = false
         index = 0
       }

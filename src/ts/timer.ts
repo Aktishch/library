@@ -1,7 +1,7 @@
-import { timeFormat } from '@utils'
+import { Container, timeFormat } from '@utils'
 
-export default (): void => {
-  const timer = document.querySelector('*[data-timer]') as HTMLDivElement
+export default (container: Container = document): void => {
+  const timer = container.querySelector('*[data-timer]') as HTMLDivElement
 
   if (!timer) return
 

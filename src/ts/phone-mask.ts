@@ -1,3 +1,5 @@
+const phoneEvents: string[] = ['input', 'keyup', 'keydown']
+
 const getPhoneValue = (input: HTMLInputElement): string => input.value.replace(/\D/g, '')
 
 const formatterValue = (value: string): string => {
@@ -45,8 +47,6 @@ const onKeyDown = (event: KeyboardEvent): void => {
 }
 
 export default (): void => {
-  const phoneEvents: string[] = ['input', 'keyup', 'keydown']
-
   phoneEvents.forEach((phoneEvent: string): void => {
     document.addEventListener(phoneEvent, ((event: Event): void => {
       if ((event.target as HTMLInputElement).getAttribute('type') === 'tel') {

@@ -1,5 +1,6 @@
 import { media } from '@plugins/media'
 import { checkQuizSlide } from '@ts/quiz'
+import { Container } from '@utils'
 import Swiper from 'swiper'
 import { Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules'
 
@@ -19,8 +20,8 @@ window.Swiper = Swiper
 
 const { sm, md, lg, xl } = media
 
-const createGallerySlider = (): void => {
-  const slider = document.querySelector('*[data-slider="gallery"]') as HTMLDivElement
+const createGallerySlider = (container: Container = document): void => {
+  const slider = container.querySelector('*[data-slider="gallery"]') as HTMLDivElement
 
   if (!slider) return
 
@@ -62,8 +63,8 @@ const createGallerySlider = (): void => {
   }) as Swiper
 }
 
-const createProductsSlider = (): void => {
-  const slider = document.querySelector('*[data-slider="products"]') as HTMLDivElement
+const createProductsSlider = (container: Container = document): void => {
+  const slider = container.querySelector('*[data-slider="products"]') as HTMLDivElement
 
   if (!slider) return
 
@@ -101,8 +102,8 @@ const createProductsSlider = (): void => {
   }) as Swiper
 }
 
-const createQuizSlider = (): void => {
-  const slider = document.querySelector('*[data-slider="quiz"]') as HTMLDivElement
+const createQuizSlider = (container: Container = document): void => {
+  const slider = container.querySelector('*[data-slider="quiz"]') as HTMLDivElement
 
   if (!slider) return
 
@@ -147,12 +148,12 @@ const createQuizSlider = (): void => {
   }) as Swiper
 }
 
-const createDescriptionSlider = (): void => {
-  const slider = document.querySelector('*[data-slider="description"]') as HTMLDivElement
+const createDescriptionSlider = (container: Container = document): void => {
+  const slider = container.querySelector('*[data-slider="description"]') as HTMLDivElement
 
   if (!slider) return
 
-  const sliderBg = document.querySelector('*[data-slider="description-bg"]') as HTMLDivElement
+  const sliderBg = container.querySelector('*[data-slider="description-bg"]') as HTMLDivElement
   const valueBg: string = String(sliderBg.dataset.slider)
   const swiperBg = sliderBg.querySelector(`*[data-slider-swiper="${valueBg}"]`) as HTMLDivElement
   const descriptionBg: Swiper = new window.Swiper(swiperBg, {
@@ -163,7 +164,7 @@ const createDescriptionSlider = (): void => {
     allowTouchMove: false,
   })
 
-  const sliderBullets = document.querySelector('*[data-slider="description-bullets"]') as HTMLDivElement
+  const sliderBullets = container.querySelector('*[data-slider="description-bullets"]') as HTMLDivElement
   const valueBullets: string = String(sliderBullets.dataset.slider)
   const swiperBullets = sliderBullets.querySelector(`*[data-slider-swiper="${valueBullets}"]`) as HTMLDivElement
   const descriptionBullets: Swiper = new window.Swiper(swiperBullets, {

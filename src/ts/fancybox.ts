@@ -75,9 +75,9 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-form]', {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (): void => {
+      'Carousel.contentReady': (fancyboxRef): void => {
         loadUpdate()
-        getStateSubmitBtn()
+        getStateSubmitBtn(fancyboxRef.getContainer())
       },
     },
   })
@@ -95,9 +95,9 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-calendar]', {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (): void => {
+      'Carousel.contentReady': (fancyboxRef): void => {
         loadUpdate()
-        createCalendar()
+        createCalendar(fancyboxRef.getContainer())
       },
     },
   })

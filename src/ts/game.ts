@@ -1,5 +1,7 @@
-export default (): void => {
-  const game = document.querySelector('*[data-game]') as HTMLDivElement
+import { Container } from '@utils'
+
+export default (container: Container = document): void => {
+  const game = container.querySelector('*[data-game]') as HTMLDivElement
 
   if (!game) return
 

@@ -1,7 +1,7 @@
-import { scrollbarHidden, scrollbarShow } from '@utils'
+import { Container, scrollbarHidden, scrollbarShow } from '@utils'
 
-export default (): void => {
-  const compares = document.querySelectorAll('*[data-compare]') as NodeListOf<HTMLDivElement>
+export default (container: Container = document): void => {
+  const compares = container.querySelectorAll('*[data-compare]') as NodeListOf<HTMLDivElement>
 
   compares.forEach((compare: HTMLDivElement): void => {
     if (!compare) return

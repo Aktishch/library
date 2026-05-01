@@ -1,4 +1,5 @@
 import { scrollToElement } from '@ts/scroll-to'
+import { Container } from '@utils'
 
 interface FilterCardsShowing {
   condition: boolean
@@ -39,18 +40,18 @@ const filterHandler = ({ name, cards, plug }: FilterHandler): void => {
   if (plug) filterCardsShowing({ condition: !allHidden, item: plug })
 }
 
-export default (): void => {
-  const filters = document.querySelectorAll('*[data-filtering]') as NodeListOf<HTMLDivElement>
+export default (container: Container = document): void => {
+  const filters = container.querySelectorAll('*[data-filtering]') as NodeListOf<HTMLDivElement>
 
   filters.forEach((filter: HTMLDivElement): void => {
     if (!filter) return
 
     const value: string = String(filter.dataset.filtering)
     const hash: string = window.location.hash.slice(1)
-    const categories = document.querySelectorAll(`*[data-filtering-category="${value}"]`) as NodeListOf<HTMLElement>
-    const cards = document.querySelectorAll(`*[data-filtering-card="${value}"]`) as NodeListOf<HTMLDivElement>
-    const plug = document.querySelector(`*[data-filtering-plug="${value}"]`) as HTMLDivElement
-    const line = document.querySelector(`*[data-filtering-line="${value}"]`) as HTMLSpanElement
+    const categories = container.querySelectorAll(`*[data-filtering-category="${value}"]`) as NodeListOf<HTMLElement>
+    const cards = container.querySelectorAll(`*[data-filtering-card="${value}"]`) as NodeListOf<HTMLDivElement>
+    const plug = container.querySelector(`*[data-filtering-plug="${value}"]`) as HTMLDivElement
+    const line = container.querySelector(`*[data-filtering-line="${value}"]`) as HTMLSpanElement
 
     const currentCategory = (): HTMLElement => {
       let active = categories[0] as HTMLElement
@@ -99,7 +100,7 @@ export default (): void => {
           const category = categories[index] as HTMLElement
 
           currentCard(category)
-          setTimeout((): void => scrollToElement(filter), 100)
+          setTimeout((): void => scrollToElement(filter), 50)
         }
       }
     }

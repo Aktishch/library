@@ -62,7 +62,6 @@ import './scss/main.scss'
 window.addEventListener('DOMContentLoaded', ((): void => {
   accordion()
   airDatepicker()
-  animation()
   canvasRendering()
   combination()
   compare()
@@ -114,5 +113,5 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   worldMap()
   writeText()
   yandexMap()
-  preloader()
+  preloader().finally((): void => animation())
 }) as EventListener)

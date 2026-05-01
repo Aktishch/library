@@ -1,4 +1,4 @@
-const inputName = (event: Event): void => {
+const inputText = (event: Event): void => {
   const input = event.target as HTMLInputElement
   const regExp: RegExp = /[0-9.,!@№#$%^&*()-=_+`~{}[\]\\/?<>|'"]/
 
@@ -20,8 +20,8 @@ const inputFloat = (event: Event): void => {
 export default (): void => {
   document.addEventListener('input', ((event: Event): void => {
     switch ((event.target as HTMLInputElement).getAttribute('data-input')) {
-      case 'name': {
-        inputName(event)
+      case 'text': {
+        inputText(event)
         break
       }
 

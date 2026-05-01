@@ -1,7 +1,7 @@
-import { getCookies } from '@utils'
+import { Container, getCookies } from '@utils'
 
-export default (): void => {
-  const cookies = document.querySelectorAll('*[data-cookie]') as NodeListOf<HTMLElement>
+export default (container: Container = document): void => {
+  const cookies = container.querySelectorAll('*[data-cookie]') as NodeListOf<HTMLElement>
 
   cookies.forEach((cookie: HTMLElement): void => {
     if (!cookie) return

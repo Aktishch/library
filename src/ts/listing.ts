@@ -1,7 +1,9 @@
+import { Container } from '@utils'
+
 const className: string[] = ['hidden']
 
-export default (): void => {
-  const listings = document.querySelectorAll('*[data-listing]') as NodeListOf<HTMLElement>
+export default (container: Container = document): void => {
+  const listings = container.querySelectorAll('*[data-listing]') as NodeListOf<HTMLElement>
 
   listings.forEach((listing: HTMLElement): void => {
     if (!listing) return

@@ -1,3 +1,5 @@
+import { Container } from '@utils'
+
 interface RangePosition {
   size: number
   number: number
@@ -37,8 +39,8 @@ const getBubblesPosition = ({ size, number, input, progress, bubble }: RangePosi
   bubble.innerHTML = String(value)
 }
 
-export default (): void => {
-  const ranges = document.querySelectorAll('*[data-range]') as NodeListOf<HTMLDivElement>
+export default (container: Container = document): void => {
+  const ranges = container.querySelectorAll('*[data-range]') as NodeListOf<HTMLDivElement>
 
   ranges.forEach((range: HTMLDivElement): void => {
     if (!range) return

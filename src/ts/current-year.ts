@@ -1,5 +1,9 @@
-export default (): void => {
-  const year = document.querySelector('#year') as HTMLSpanElement
+import { Container } from '@utils'
 
-  if (year) year.innerText = String(new Date().getFullYear())
+export default (container: Container = document): void => {
+  const years = container.querySelectorAll('*[data-current-year]') as NodeListOf<HTMLSpanElement>
+
+  years.forEach((year: HTMLSpanElement): void => {
+    if (year) year.innerText = String(new Date().getFullYear())
+  })
 }

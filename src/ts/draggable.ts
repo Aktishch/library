@@ -1,4 +1,4 @@
-import { Coordinates, scrollbarHidden, scrollbarShow } from '@utils'
+import { Container, Coordinates, scrollbarHidden, scrollbarShow } from '@utils'
 
 interface Draggable {
   item: HTMLButtonElement | HTMLDivElement
@@ -10,8 +10,8 @@ const setTranslateDraggable = ({ item, positionX, positionY }: Draggable): void 
   item.style.transform = `translate(${positionX}px, ${positionY}px)`
 }
 
-const setDraggable = (id: string): void => {
-  const draggable = document.querySelector(`#${id}`) as HTMLButtonElement
+const setDraggable = (id: string, container: Container = document): void => {
+  const draggable = container.querySelector(`#${id}`) as HTMLButtonElement
 
   if (!draggable) return
 

@@ -1,4 +1,4 @@
-import { Container, fileHandler, uploadFile } from '@utils'
+import { Container, fileHandler, uploadFile, validation } from '@utils'
 
 const dragEvents: string[] = ['dragenter', 'dragover', 'dragleave', 'drop']
 const dragClassName: string[] = ['bg-opacity-50']
@@ -36,23 +36,25 @@ export default (container: Container = document): void => {
 
     const getImagePreview = (files: FileList): void => {
       if (files.length !== 0) {
-        uploadFile(files[0] as File).then(({ file, url }): void => {
-          if (!fileHandler({ error, file })) return
+        uploadFile(files[0] as File)
+          .then(({ file, url }): void => {
+            if (!fileHandler({ error, file })) return
 
-          drag.classList.add('pointer-events-none')
-          image.src = url
-          remove.disabled = false
-          label.classList.add(...labelClassName)
-          data.items.add(file)
+            drag.classList.add('pointer-events-none')
+            image.src = url
+            remove.disabled = false
+            label.classList.add(...labelClassName)
+            data.items.add(file)
 
-          if (form && form.dataset.form === 'avatar') {
-            const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
-            const avatar = document.querySelector(`#${preview.dataset.preview}`) as HTMLImageElement
+            if (form && form.dataset.form === 'avatar') {
+              const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
+              const avatar = document.querySelector(`#${preview.dataset.preview}`) as HTMLImageElement
 
-            submitBtn.click()
-            avatar.src = url
-          }
-        })
+              submitBtn.click()
+              avatar.src = url
+            }
+          })
+          .catch((error: string): void => console.log(new Error(error)))
       }
 
       uploadFilesList()
@@ -117,7 +119,7 @@ export default (container: Container = document): void => {
     form.addEventListener('submit', ((event: Event): void => {
       event.preventDefault()
 
-      if ((input.files as FileList).length !== 0) defaultState(false)
+      if (validation(form)) defaultState(false)
     }) as EventListener)
   })
 }
