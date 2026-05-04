@@ -1,5 +1,3 @@
-import { Container } from '@utils'
-
 interface DataSave {
   [index: string]: string
 }
@@ -7,16 +5,16 @@ interface DataSave {
 const checkingValue = (input: HTMLInputElement): boolean =>
   input.dataset.input !== 'file' && input.dataset.input !== 'switch'
 
-const saveFormData = (id: string, container: Container = document): void => {
-  const form = container.querySelector(`#${id}`) as HTMLFormElement
+const saveFormData = (id: string): void => {
+  const form = document.getElementById(id) as HTMLFormElement
 
   if (!form) return
 
   const inputs = form.querySelectorAll('*[data-input]') as NodeListOf<HTMLInputElement>
   let formData: DataSave = {}
 
-  if (sessionStorage.getItem(`${id}`)) {
-    formData = JSON.parse(sessionStorage.getItem(`${id}`) || '{}')
+  if (sessionStorage.getItem(id)) {
+    formData = JSON.parse(sessionStorage.getItem(id) || '{}')
 
     inputs.forEach((input: HTMLInputElement): void => {
       if (checkingValue(input)) {
@@ -29,7 +27,7 @@ const saveFormData = (id: string, container: Container = document): void => {
     inputs.forEach((input: HTMLInputElement): void => {
       if (checkingValue(input)) {
         formData[input.name] = input.value
-        sessionStorage.setItem(`${id}`, JSON.stringify(formData))
+        sessionStorage.setItem(id, JSON.stringify(formData))
       }
     })
   }) as EventListener)

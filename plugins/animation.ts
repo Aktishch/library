@@ -32,7 +32,7 @@ module.exports = plugin(
       anim = {
         ...anim,
         [`.anim-${key}:not([data-anim="show"])`]: {
-          transform: `${value}`,
+          transform: value,
           visibility: 'hidden',
           opacity: '0',
         },
@@ -42,7 +42,7 @@ module.exports = plugin(
       clipPath = {
         ...clipPath,
         [`.clip-path-${key}:not([data-anim="show"])`]: {
-          clipPath: `${value}`,
+          clipPath: value,
         },
       }
     })

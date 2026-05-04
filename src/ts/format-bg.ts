@@ -17,7 +17,7 @@ const createBackground = ({ data, container }: CreateBackground): void => {
   const items = container.querySelectorAll(`*[${data}]`) as NodeListOf<HTMLElement>
 
   items.forEach((item: HTMLElement): void => {
-    if (item) item.style.backgroundImage = `url('${item.getAttribute(`${data}`)}')`
+    if (item) item.style.backgroundImage = `url('${item.getAttribute(data)}')`
   })
 }
 

@@ -18,14 +18,14 @@ export default (): void => {
   document.addEventListener('click', ((event: Event): void => {
     if ((event.target as SidebarButton).closest('[data-sidebar-open]')) {
       const open = event.target as SidebarButton
-      const sidebar = document.querySelector(`#${open.dataset.sidebarOpen}`) as HTMLDivElement
+      const sidebar = document.getElementById(String(open.dataset.sidebarOpen)) as HTMLDivElement
 
       if (sidebar) openSidebar(sidebar)
     }
 
     if ((event.target as SidebarButton).closest('[data-sidebar-close]')) {
       const close = event.target as SidebarButton
-      const sidebar = document.querySelector(`#${close.dataset.sidebarClose}`) as HTMLDivElement
+      const sidebar = document.getElementById(String(close.dataset.sidebarClose)) as HTMLDivElement
 
       if (sidebar) closeSidebar(sidebar)
     }

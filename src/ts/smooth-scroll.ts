@@ -4,7 +4,7 @@ import { safari, scrolledPage, touchDevice } from '@utils'
 const className: string[] = ['will-change-transform']
 
 export default (): void => {
-  const smoothScroll = document.querySelector('#smooth-scroll') as HTMLDivElement
+  const smoothScroll = document.getElementById('smooth-scroll') as HTMLDivElement
 
   if (!smoothScroll || safari || touchDevice()) return
 

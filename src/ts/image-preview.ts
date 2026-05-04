@@ -48,7 +48,7 @@ export default (container: Container = document): void => {
 
             if (form && form.dataset.form === 'avatar') {
               const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
-              const avatar = document.querySelector(`#${preview.dataset.preview}`) as HTMLImageElement
+              const avatar = document.getElementById(String(preview.dataset.preview)) as HTMLImageElement
 
               submitBtn.click()
               avatar.src = url

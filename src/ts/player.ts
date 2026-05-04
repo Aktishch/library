@@ -13,9 +13,10 @@ interface Player {
 }
 
 interface Condition {
-  status: string
-  time: number
   index: number
+  time: number
+  status: boolean
+  muted: boolean
   active: boolean
 }
 
@@ -79,7 +80,7 @@ const createComposition = (composition: Composition): HTMLLIElement => {
 }
 
 const setPlayer = ({ id, playlist }: Player): void => {
-  const player = document.querySelector(`#${id}`) as HTMLElement
+  const player = document.getElementById(id) as HTMLElement
 
   if (!player) return
 
@@ -114,14 +115,17 @@ const setPlayer = ({ id, playlist }: Player): void => {
       const start = player.querySelector('*[data-player-start]') as HTMLSpanElement
       const end = player.querySelector('*[data-player-end]') as HTMLSpanElement
       const volume = player.querySelector('*[data-player-volume]') as HTMLButtonElement
-      const condition: Condition = sessionStorage.getItem(`${id}`)
-        ? JSON.parse(sessionStorage.getItem(`${id}`) || '{}')
+      const condition: Condition = sessionStorage.getItem(id)
+        ? JSON.parse(sessionStorage.getItem(id) || '{}')
         : {
-            status: 'pause',
-            time: 0,
             index: 0,
+            time: 0,
+            status: false,
+            muted: false,
             active: false,
           }
+
+      const saveStorage = (): void => sessionStorage.setItem(id, JSON.stringify(condition))
 
       const loadPoster = async (requestUrl: string): Promise<void> => {
         await fetch(requestUrl)
@@ -166,12 +170,12 @@ const setPlayer = ({ id, playlist }: Player): void => {
           audio.play()
           icon.setAttribute('href', '/img/icons.svg#pause')
           currentComposition()
-          condition.status = 'play'
+          condition.status = true
         } else {
           audio.pause()
           icon.setAttribute('href', '/img/icons.svg#play')
           currentComposition()
-          condition.status = 'pause'
+          condition.status = false
         }
       }
 
@@ -311,7 +315,7 @@ const setPlayer = ({ id, playlist }: Player): void => {
         range.style.width = `${(audio.currentTime / audio.duration) * 100}%`
         audioTiming({ type: event.type, time: start })
         condition.time = audio.currentTime
-        sessionStorage.setItem(`${id}`, JSON.stringify(condition))
+        saveStorage()
       }
 
       const audioEnd = (): void => {
@@ -329,28 +333,33 @@ const setPlayer = ({ id, playlist }: Player): void => {
         createError(en ? 'Failed to load audio' : 'Не удалось загрузить аудио')
       }
 
-      const mutedState = (): void => {
+      const volumeState = (): void => {
         const status = volume.querySelector('svg') as SVGSVGElement
         const icon = status.querySelector('use') as SVGUseElement
 
-        if (volume.dataset.playerVolume === 'off') {
-          volume.dataset.playerVolume = ''
-          status.classList.remove('opacity-50')
-          icon.setAttribute('href', '/img/icons.svg#volume-on')
-          audio.muted = false
-        } else {
-          volume.dataset.playerVolume = 'off'
+        if (condition.muted) {
           status.classList.add('opacity-50')
           icon.setAttribute('href', '/img/icons.svg#volume-off')
-          audio.muted = true
+        } else {
+          status.classList.remove('opacity-50')
+          icon.setAttribute('href', '/img/icons.svg#volume-on')
         }
+
+        audio.muted = condition.muted
+      }
+
+      const mutedState = (): void => {
+        condition.muted = condition.muted ? false : true
+        saveStorage()
+        volumeState()
       }
 
       const playerInit = (): void => {
         setComposition(condition.index)
+        volumeState()
         audio.currentTime = condition.time
 
-        if (condition.status === 'play') {
+        if (condition.status) {
           statusComposition()
 
           if (audio.paused) audioPause()

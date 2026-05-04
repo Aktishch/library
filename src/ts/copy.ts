@@ -8,6 +8,7 @@ const copyText = (event: Event): void => {
   button.disabled = true
   window.navigator.clipboard.writeText(String(copy.dataset.copy))
   result.classList.remove(...className)
+
   setTimeout((): void => {
     button.disabled = false
     result.classList.add(...className)

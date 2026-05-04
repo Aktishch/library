@@ -1,29 +1,33 @@
-const writeText = (): void => {
-  const records = document.querySelectorAll('*[data-record]') as NodeListOf<HTMLElement>
+import { Container } from '@utils'
 
-  if (records.length !== 0) {
-    records.forEach((record: HTMLElement): void => {
-      if (!record) return
+export default (container: Container = document): void => {
+  const writeText = (): void => {
+    const records = container.querySelectorAll('*[data-record]') as NodeListOf<HTMLElement>
 
-      const text: string = String(record.dataset.record)
-      const speed: string | undefined = record.dataset.recordSpeed
-      const letters: string[] = [text].join('').split('')
+    if (records.length !== 0) {
+      records.forEach((record: HTMLElement): void => {
+        if (!record) return
 
-      if (window.screen.height >= record.getBoundingClientRect().top) {
-        const interval = setInterval(
-          (): void => {
-            if (!letters[0]) return clearInterval(interval)
-            record.innerHTML += letters.shift()
-          },
-          Number(speed) | 100
-        )
+        const text: string = String(record.dataset.record)
+        const speed: string | undefined = record.dataset.recordSpeed
+        const letters: string[] = [text].join('').split('')
 
-        record.removeAttribute('data-record')
-      }
-    })
-  } else {
-    document.removeEventListener('scroll', writeText as EventListener)
+        if (window.screen.height >= record.getBoundingClientRect().top) {
+          const interval = setInterval(
+            (): void => {
+              if (!letters[0]) return clearInterval(interval)
+              record.innerHTML += letters.shift()
+            },
+            Number(speed) | 100
+          )
+
+          record.removeAttribute('data-record')
+        }
+      })
+    } else {
+      container.removeEventListener('scroll', writeText as EventListener)
+    }
   }
-}
 
-export default (): void => document.addEventListener('scroll', writeText as EventListener, { passive: true })
+  container.addEventListener('scroll', writeText as EventListener, { passive: true })
+}

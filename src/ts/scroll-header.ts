@@ -22,7 +22,7 @@ export default (): void => {
   scrollHeader()
   document.addEventListener('scroll', scrollHeader as EventListener, { passive: true })
 
-  const smoothScroll = document.querySelector('#smooth-scroll') as HTMLDivElement
+  const smoothScroll = document.getElementById('smooth-scroll') as HTMLDivElement
 
   if (smoothScroll) {
     const wrapperResize = (): void => {
