@@ -20,7 +20,7 @@ export default (): void => {
   }
 
   scrollHeader()
-  document.addEventListener('scroll', scrollHeader as EventListener)
+  document.addEventListener('scroll', scrollHeader as EventListener, { passive: true })
 
   const smoothScroll = document.querySelector('#smooth-scroll') as HTMLDivElement
 

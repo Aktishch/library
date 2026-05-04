@@ -1,5 +1,7 @@
-export default (): void => {
-  const counter = document.querySelector('*[data-counter]') as HTMLDivElement
+import { Container } from '@utils'
+
+export default (container: Container = document): void => {
+  const counter = container.querySelector('*[data-counter]') as HTMLDivElement
 
   if (!counter) return
 
@@ -29,6 +31,8 @@ export default (): void => {
     ]
 
     units.forEach((unit: HTMLSpanElement, index: number): void => {
+      if (!unit) return
+
       unit.textContent = String(values[index])
     })
 

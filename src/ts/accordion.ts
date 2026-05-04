@@ -1,8 +1,15 @@
+import { Container } from '@utils'
+
+interface CreateAccordion {
+  accordion: HTMLDivElement
+  container: Container
+}
+
 type AccordionItem = HTMLButtonElement | HTMLAnchorElement
 
 const className: string[] = ['overflow-hidden']
 
-const createAccordion = (accordion: HTMLDivElement): void => {
+const createAccordion = ({ accordion, container }: CreateAccordion): void => {
   const toggle = accordion.querySelector('*[data-accordion-toggle]') as HTMLDivElement | HTMLButtonElement
   const content = accordion.querySelector('*[data-accordion-content]') as HTMLDivElement
   const items = accordion.querySelectorAll('*[data-accordion-item]') as NodeListOf<AccordionItem>
@@ -46,27 +53,28 @@ const createAccordion = (accordion: HTMLDivElement): void => {
     if (item) item.addEventListener('click', accordionClose as EventListener)
   })
 
-  if (accordion.hasAttribute('data-close-click')) {
-    document.addEventListener('click', ((event: Event): void => {
-      if (
-        (event.target as HTMLElement).closest('[data-close-click]') !== accordion &&
-        accordion.dataset.accordion === 'active'
-      )
-        accordionClose()
-    }) as EventListener)
-  }
+  container.addEventListener('click', ((event: Event): void => {
+    if (
+      (event.target as HTMLElement).closest('[data-close-click]') !== accordion &&
+      accordion.dataset.accordion === 'active' &&
+      accordion.hasAttribute('data-close-click')
+    )
+      accordionClose()
+  }) as EventListener)
 
-  if (accordion.hasAttribute('data-close-scroll')) {
-    document.addEventListener('scroll', ((): void => {
-      if (accordion.dataset.accordion === 'active') accordionClose()
-    }) as EventListener)
-  }
+  container.addEventListener(
+    'scroll',
+    ((): void => {
+      if (accordion.hasAttribute('data-close-scroll') && accordion.dataset.accordion === 'active') accordionClose()
+    }) as EventListener,
+    { passive: true }
+  )
 }
 
-export default (): void => {
-  const accordions = document.querySelectorAll('*[data-accordion]') as NodeListOf<HTMLDivElement>
+export default (container: Container = document): void => {
+  const accordions = container.querySelectorAll('*[data-accordion]') as NodeListOf<HTMLDivElement>
 
   accordions.forEach((accordion: HTMLDivElement): void => {
-    if (accordion) createAccordion(accordion)
+    if (accordion) createAccordion({ accordion, container })
   })
 }

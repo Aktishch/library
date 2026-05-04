@@ -1,4 +1,4 @@
-import { Container, fileHandler, uploadFile, validation } from '@utils'
+import { Container, createError, fileHandler, uploadFile, validation } from '@utils'
 
 const dragEvents: string[] = ['dragenter', 'dragover', 'dragleave', 'drop']
 const dragClassName: string[] = ['bg-opacity-50']
@@ -54,7 +54,7 @@ export default (container: Container = document): void => {
               avatar.src = url
             }
           })
-          .catch((error: string): void => console.log(new Error(error)))
+          .catch((error: string): void => createError(error))
       }
 
       uploadFilesList()
@@ -77,7 +77,7 @@ export default (container: Container = document): void => {
             defaultState()
           }
         })
-        .catch((error: string): void => console.log(new Error(error)))
+        .catch((error: string): void => createError(error))
     }
 
     urlImageToObject().finally((): void => getImagePreview(input.files as FileList))

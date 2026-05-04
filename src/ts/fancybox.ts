@@ -1,4 +1,4 @@
-import { Fancybox } from '@fancyapps/ui/dist/fancybox/'
+import { CarouselSlide, Fancybox } from '@fancyapps/ui/dist/fancybox/'
 import { createCalendar } from '@ts/air-datepicker'
 import imagePreview from '@ts/image-preview'
 import lazyLoad from '@ts/lazy-load'
@@ -75,9 +75,9 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-form]', {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (fancyboxRef): void => {
+      'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
         loadUpdate()
-        getStateSubmitBtn(fancyboxRef.getContainer())
+        getStateSubmitBtn(slide.el)
       },
     },
   })
@@ -85,9 +85,9 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-avatar]', {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (fancyboxRef): void => {
+      'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
         loadUpdate()
-        imagePreview(fancyboxRef.getContainer())
+        imagePreview(slide.el)
       },
     },
   })
@@ -95,9 +95,9 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-calendar]', {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (fancyboxRef): void => {
+      'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
         loadUpdate()
-        createCalendar(fancyboxRef.getContainer())
+        createCalendar(slide.el)
       },
     },
   })

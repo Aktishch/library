@@ -1,5 +1,10 @@
 import { Container } from '@utils'
 
+interface CreateBackground {
+  data: string
+  container: Container
+}
+
 const canUseWebp = (): boolean => {
   const canvas = document.createElement('canvas') as HTMLCanvasElement
 
@@ -8,7 +13,7 @@ const canUseWebp = (): boolean => {
     : false
 }
 
-const createBackground = (data: string, container: Container): void => {
+const createBackground = ({ data, container }: CreateBackground): void => {
   const items = container.querySelectorAll(`*[${data}]`) as NodeListOf<HTMLElement>
 
   items.forEach((item: HTMLElement): void => {
@@ -20,7 +25,7 @@ export default (container: Container = document): void => {
   const firefox: RegExpMatchArray | null = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./)
   const firefoxVersion: number = firefox ? Number(firefox[1]) : 0
 
-  createBackground('data-bg', container)
+  createBackground({ data: 'data-bg', container })
 
-  if (canUseWebp() || firefoxVersion >= 65) createBackground('data-bg-webp', container)
+  if (canUseWebp() || firefoxVersion >= 65) createBackground({ data: 'data-bg-webp', container })
 }

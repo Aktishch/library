@@ -1,7 +1,9 @@
+import { Container } from '@utils'
+
 const className: string[] = ['invisible', 'opacity-0']
 
-export default (): void => {
-  const world = document.querySelector('*[data-world]') as HTMLElement
+export default (container: Container = document): void => {
+  const world = container.querySelector('*[data-world]') as HTMLElement
 
   if (!world) return
 
@@ -14,6 +16,8 @@ export default (): void => {
   const ratio: number = 880 / map.getBoundingClientRect().width
 
   countries.forEach((country: HTMLAnchorElement): void => {
+    if (!country) return
+
     const path = country.querySelector('path') as SVGPathElement
     const pathHeight: number = path.getBoundingClientRect().height * ratio
     const pathWidth: number = path.getBoundingClientRect().width * ratio

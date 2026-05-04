@@ -36,5 +36,5 @@ export default (): void => {
   getLinksPosition()
   window.addEventListener('resize', getLinksPosition as EventListener)
   btn.addEventListener('click', doubleTap as EventListener)
-  btn.addEventListener('touchstart', doubleTap as EventListener)
+  btn.addEventListener('touchstart', doubleTap as EventListener, { passive: true })
 }

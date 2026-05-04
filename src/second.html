@@ -11,7 +11,7 @@
   var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
   var heading = _.template(require('./includes/heading.html').default)({data})
   var worldMap = require('./includes/world-map.html').default
-  var player = _.template(require('./includes/player.html').default)({icon, picture})
+  var player = _.template(require('./includes/player.html').default)({icon, picture, loader})
   var footer = _.template(require('./includes/footer.html').default)({icon, picture, loader})
 %>
 

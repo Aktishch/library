@@ -9,17 +9,8 @@
       @apply top-2 right-2 bg-white text-black rounded-full shadow-md;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    input[hidden] {
-      &:empty {
-        @apply hidden;
-      }
+    [hidden]:empty {
+      @apply hidden;
     }
   }
 }

@@ -37,8 +37,8 @@ const scrollingInViewport = (): void => {
     document.removeEventListener('wheel', setHorizontalScrolling as EventListener)
     document.removeEventListener('scroll', setHorizontalScrolling as EventListener)
   } else {
-    document.addEventListener('wheel', setHorizontalScrolling as EventListener)
-    document.addEventListener('scroll', setHorizontalScrolling as EventListener)
+    document.addEventListener('wheel', setHorizontalScrolling as EventListener, { passive: true })
+    document.addEventListener('scroll', setHorizontalScrolling as EventListener, { passive: true })
   }
 }
 

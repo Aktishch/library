@@ -54,6 +54,6 @@ const setWaved = (event: Event): void => {
 }
 
 export default (): void => {
-  document.addEventListener('touchstart', setWaved as EventListener)
+  document.addEventListener('touchstart', setWaved as EventListener, { passive: true })
   document.addEventListener('mousedown', setWaved as EventListener)
 }

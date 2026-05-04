@@ -1,28 +1,29 @@
-const setWriteText = (section: HTMLElement): void => {
-  const record = section.querySelector('*[data-record]') as HTMLElement
+const writeText = (): void => {
+  const records = document.querySelectorAll('*[data-record]') as NodeListOf<HTMLElement>
 
-  if (!record) return
+  if (records.length !== 0) {
+    records.forEach((record: HTMLElement): void => {
+      if (!record) return
 
-  const text: string = String(record.dataset.record)
-  const speed: string | undefined = record.dataset.recordSpeed
-  const letters: string[] = [text].join('').split('')
+      const text: string = String(record.dataset.record)
+      const speed: string | undefined = record.dataset.recordSpeed
+      const letters: string[] = [text].join('').split('')
 
-  const interval = setInterval(
-    (): void => {
-      if (!letters[0]) return clearInterval(interval)
-      record.innerHTML += letters.shift()
-    },
-    Number(speed) | 100
-  )
-}
+      if (window.screen.height >= record.getBoundingClientRect().top) {
+        const interval = setInterval(
+          (): void => {
+            if (!letters[0]) return clearInterval(interval)
+            record.innerHTML += letters.shift()
+          },
+          Number(speed) | 100
+        )
 
-const scrollToText = (): void => {
-  const section = document.querySelector('*[data-section]') as HTMLElement
-
-  if (section && window.screen.height >= section.getBoundingClientRect().top) {
-    setWriteText(section)
-    document.removeEventListener('scroll', scrollToText as EventListener)
+        record.removeAttribute('data-record')
+      }
+    })
+  } else {
+    document.removeEventListener('scroll', writeText as EventListener)
   }
 }
 
-export default (): void => document.addEventListener('scroll', scrollToText as EventListener)
+export default (): void => document.addEventListener('scroll', writeText as EventListener, { passive: true })

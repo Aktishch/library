@@ -1,42 +1,15 @@
-<% var compositions = [
-  {
-    artist: 'Slipknot',
-    song: 'Snuff'
-  },
-  {
-    artist: 'System of a down',
-    song: 'Lonely Day'
-  },
-  {
-    artist: 'Scorpions',
-    song: 'Slave Me'
-  }
-] %>
-
 <section class="container container-xs bg-grey dark:bg-dark" data-player="random" id="player">
-  <dialog id="playlist">
+  <div id="playlist" style="display: none;">
     <div class="bg-white dark:bg-black text-black dark:text-white rounded-xl p-5 md:p-10 max-w-sm">
       <h4 class="font-alt font-bold text-center text-3xl mb-6">
         Playlist
       </h4>
-      <div class="flex flex-col gap-4">
-        <% compositions.forEach((item) => { %>
-        <div class="flex items-center gap-2">
-          <button class="btn btn-primary btn-fade text-4xl rounded-full shrink-0 size-10" data-player-composition data-waved="dark">
-            <%= icon({id: 'loading', className: 'loading icon hidden', data: 'data-player-loading'}) %>
-            <%= icon({id: 'play', className: 'icon', data: 'data-player-status'}) %>
-          </button>
-          <div class="flex flex-col">
-            <span class="font-semibold text-xl"><%= item.artist %></span>
-            <span class="opacity-70"><%= item.song %></span>
-          </div>
-        </div>
-        <% }) %>
-      </div>
+      <ul class="flex flex-col gap-4" data-player-listing></ul>
     </div>
-  </dialog>
+  </div>
   <div class="flex flex-col items-center justify-center bg-white dark:bg-black rounded-3xl shadow-md w-full max-w-lg py-6 px-2 md:px-6 mx-auto anim anim-up" data-anim data-player-controls>
     <div class="pack pack-xl bg-grey dark:bg-dark rounded-full w-full max-w-64 mb-5 md:md-8">
+      <%= loader({className: null, icon}) %>
       <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'data-player-poster'}) %>
     </div>
     <h3 class="font-alt font-bold text-center text-2xl/normal md:text-3xl/normal" data-player-artist></h3>

@@ -56,6 +56,8 @@ const setDraggable = (id: string, container: Container = document): void => {
   }
 
   const dragMove = (event: Event): void => {
+    event.stopPropagation()
+
     if (!active) return
 
     switch (event.type) {
@@ -84,16 +86,20 @@ const setDraggable = (id: string, container: Container = document): void => {
     getDragPosition()
   }
 
-  draggable.addEventListener('touchstart', scrollbarHidden as EventListener)
-  draggable.addEventListener('touchend', scrollbarShow as EventListener)
+  draggable.addEventListener('touchstart', scrollbarHidden as EventListener, { passive: true })
+  draggable.addEventListener('touchend', scrollbarShow as EventListener, { passive: true })
+  draggable.addEventListener('touchcancel', scrollbarShow as EventListener, { passive: true })
   draggable.addEventListener('mousedown', scrollbarHidden as EventListener)
   draggable.addEventListener('mouseup', scrollbarShow as EventListener)
-  body.addEventListener('touchstart', dragStart as EventListener)
-  body.addEventListener('touchmove', dragMove as EventListener)
-  body.addEventListener('touchend', dragEnd as EventListener)
+  draggable.addEventListener('mouseleave', scrollbarShow as EventListener)
+  body.addEventListener('touchstart', dragStart as EventListener, { passive: true })
+  body.addEventListener('touchend', dragEnd as EventListener, { passive: true })
+  body.addEventListener('touchcancel', dragEnd as EventListener, { passive: true })
+  body.addEventListener('touchmove', dragMove as EventListener, { passive: true })
   body.addEventListener('mousedown', dragStart as EventListener)
-  body.addEventListener('mousemove', dragMove as EventListener)
   body.addEventListener('mouseup', dragEnd as EventListener)
+  body.addEventListener('mouseleave', dragEnd as EventListener)
+  body.addEventListener('mousemove', dragMove as EventListener)
 }
 
 export default (): void => setDraggable('draggable')

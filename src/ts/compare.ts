@@ -31,7 +31,6 @@ export default (container: Container = document): void => {
 
     const compareMove = (event: Event): void => {
       event.stopPropagation()
-      event.preventDefault()
 
       if (!active) return
 
@@ -62,9 +61,9 @@ export default (container: Container = document): void => {
     compare.addEventListener('mouseup', compareEnd as EventListener)
     compare.addEventListener('mouseleave', compareEnd as EventListener)
     compare.addEventListener('mousemove', compareMove as EventListener)
-    compare.addEventListener('touchstart', compareStart as EventListener)
-    compare.addEventListener('touchend', compareEnd as EventListener)
-    compare.addEventListener('touchcancel', compareEnd as EventListener)
-    compare.addEventListener('touchmove', compareMove as EventListener)
+    compare.addEventListener('touchstart', compareStart as EventListener, { passive: true })
+    compare.addEventListener('touchend', compareEnd as EventListener, { passive: true })
+    compare.addEventListener('touchcancel', compareEnd as EventListener, { passive: true })
+    compare.addEventListener('touchmove', compareMove as EventListener, { passive: true })
   })
 }

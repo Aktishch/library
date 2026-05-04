@@ -1,4 +1,4 @@
-import { Container, en, fileHandler, uploadFile, validation } from '@utils'
+import { Container, createError, en, fileHandler, uploadFile, validation } from '@utils'
 
 interface Content {
   default: string
@@ -64,7 +64,7 @@ export default (container: Container = document): void => {
                 text.textContent = content.limit
               }
             })
-            .catch((error: string): void => console.log(new Error(error)))
+            .catch((error: string): void => createError(error))
         }
       }
 

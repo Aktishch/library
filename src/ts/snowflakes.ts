@@ -1,9 +1,11 @@
 import { Coordinates, touchDevice } from '@utils'
 
 export default (): void => {
+  if (touchDevice()) return
+
   const snow = document.querySelector('*[data-snow]') as HTMLDivElement
 
-  if (!snow || touchDevice()) return
+  if (!snow) return
 
   let flag: boolean = true
 

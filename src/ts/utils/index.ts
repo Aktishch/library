@@ -1,3 +1,4 @@
+export * from '@utils/create-error'
 export * from '@utils/en'
 export * from '@utils/errors'
 export * from '@utils/file-handler'

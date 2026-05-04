@@ -7,4 +7,4 @@ const setProgressLineWidth = (): void => {
     progressLine.style.width = `${Math.floor((scrolledPage().top / (document.documentElement.scrollHeight - window.innerHeight)) * 100)}%`
 }
 
-export default (): void => document.addEventListener('scroll', setProgressLineWidth as EventListener)
+export default (): void => document.addEventListener('scroll', setProgressLineWidth as EventListener, { passive: true })

@@ -10,7 +10,7 @@
   var preloader = require('./components/preloader.html').default
   var error = require('./components/error.html').default
   var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
-  var player = _.template(require('./includes/player.html').default)({icon, picture})
+  var player = _.template(require('./includes/player.html').default)({icon, picture, loader})
   var footer = _.template(require('./includes/footer.html').default)({icon, picture, loader})
 %>
 
@@ -224,7 +224,7 @@
   }
 ] %>
 
-<section class="container flex flex-col items-center bg-white dark:bg-black bg-center bg-no-repeat bg-cover text-white overflow-hidden min-h-screen" data-smooth-wrapper data-parallax data-section data-bg="/img/pictures/town-grey.jpg" data-bg-webp="/img/pictures/town-grey.webp">
+<section class="container flex flex-col items-center bg-white dark:bg-black bg-center bg-no-repeat bg-cover text-white overflow-hidden min-h-screen" data-smooth-wrapper data-parallax data-bg="/img/pictures/town-grey.jpg" data-bg-webp="/img/pictures/town-grey.webp">
   <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-3 duration-500 anim anim-up" data-anim data-movement="blend">
     Filter
   </h2>
@@ -356,7 +356,7 @@
               <span class="text-xl">Policy</span>
             </label>
           </div>
-          <button class="btn btn-second btn-fill btn-lg" data-waved="dark" type="submit">Submit</button>
+          <button class="btn btn-second btn-fill btn-lg" data-waved="dark" type="submit" disabled>Submit</button>
         </form>
         <div class="flex items-center justify-center mt-5">
           <a class="text-second text-lg underline-offset-4 hover:underline cursor-pointer w-max" data-fancybox-dialog data-type="ajax" draggable="false" href="/dialogs/dialog-politics.html">Privacy policy</a>

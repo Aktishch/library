@@ -1,4 +1,4 @@
-import { Container, en } from '@utils'
+import { Container, createError, en } from '@utils'
 
 export default (container: Container = document): void => {
   const renderings = container.querySelectorAll('*[data-rendering]') as NodeListOf<HTMLDivElement>
@@ -13,7 +13,7 @@ export default (container: Container = document): void => {
 
     image.addEventListener('load', ((): void => {
       context.drawImage(image, 0, 0)
-      context.font = '1.5rem SF Pro Display'
+      context.font = '1.5rem var(--font-alt)'
       context.fillStyle = '#000'
       context.textAlign = 'center'
 
@@ -23,7 +23,7 @@ export default (container: Container = document): void => {
     }) as EventListener)
 
     image.addEventListener('error', ((): void => {
-      console.log(new Error(en ? "Couldn't upload image" : 'Не удалось загрузить изображение'))
+      createError(en ? "Couldn't upload image" : 'Не удалось загрузить изображение')
     }) as EventListener)
 
     image.src = String(canvas.dataset.renderingCanvas)
