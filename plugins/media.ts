@@ -1,4 +1,4 @@
-type Media = {
+interface Media {
   xs: number
   sm: number
   md: number

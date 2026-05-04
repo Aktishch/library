@@ -4,12 +4,12 @@ import plugin from 'tailwindcss/plugin'
 import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
 import { Color, getRGB } from './color'
 
-type OpacityValue = {
+interface ColorOpacity {
   fade: string
   focus: string
 }
 
-const opacityValue: OpacityValue = {
+const colorOpacity: ColorOpacity = {
   fade: '0.3',
   focus: '0.4',
 }
@@ -21,8 +21,8 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
         pointerEvents: 'none',
       },
       '--tw-btn-color': getRGB(theme('colors.black.DEFAULT')),
-      '--tw-btn-fade': getRGB(theme('colors.black.DEFAULT'), opacityValue.fade),
-      '--tw-btn-focus': getRGB(theme('colors.black.DEFAULT'), opacityValue.focus),
+      '--tw-btn-fade': getRGB(theme('colors.black.DEFAULT'), colorOpacity.fade),
+      '--tw-btn-focus': getRGB(theme('colors.black.DEFAULT'), colorOpacity.focus),
       '--tw-btn-accent': getRGB(theme('colors.white.DEFAULT')),
       '--tw-btn-hovered': getRGB(theme('colors.black.DEFAULT')),
       '--tw-btn-fill': 'color-mix(in srgb, var(--tw-btn-color) 80%, var(--tw-btn-hovered))',
@@ -52,7 +52,7 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
           backgroundColor: 'var(--tw-btn-fade)',
         },
         '&:active': {
-          boxShadow: `inset 0 4px 4px ${getRGB(theme('colors.black.DEFAULT'), opacityValue.fade)}`,
+          boxShadow: `inset 0 4px 4px ${getRGB(theme('colors.black.DEFAULT'), colorOpacity.fade)}`,
           transform: 'translateY(0.25rem)',
         },
       },
@@ -143,12 +143,12 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
             '--tw-btn-fade': formatColor({
               mode: 'rgba',
               color: parsed.color,
-              alpha: opacityValue.fade,
+              alpha: colorOpacity.fade,
             } as Color),
             '--tw-btn-focus': formatColor({
               mode: 'rgba',
               color: parsed.color,
-              alpha: opacityValue.focus,
+              alpha: colorOpacity.focus,
             } as Color),
           }
         }

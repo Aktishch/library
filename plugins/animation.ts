@@ -1,11 +1,11 @@
 import plugin from 'tailwindcss/plugin'
 import { PluginAPI } from 'tailwindcss/types/config'
 
-type AnimationObject = {
+interface AnimationObject {
   [index: string]: string
 }
 
-type Animation = {
+interface Animation {
   [index: string]: AnimationObject
 }
 

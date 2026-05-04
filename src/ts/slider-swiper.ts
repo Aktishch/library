@@ -128,7 +128,7 @@ const createQuizSlider = (container: Container = document): void => {
     pagination: {
       el: pagination,
       type: 'custom',
-      renderCustom: (_: Swiper, current: number, total: number): string => {
+      renderCustom: (_, current: number, total: number): string => {
         return String(total - current)
       },
     },

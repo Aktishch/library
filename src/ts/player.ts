@@ -326,9 +326,6 @@ const setPlayer = ({ id, playlist }: Player): void => {
       }
 
       const audioError = (): void => {
-        if (start) start.innerText = '00:00'
-        if (end) end.innerText = '00:00'
-
         createError(en ? 'Failed to load audio' : 'Не удалось загрузить аудио')
       }
 
@@ -358,6 +355,9 @@ const setPlayer = ({ id, playlist }: Player): void => {
 
           if (audio.paused) audioPause()
         }
+
+        if (start) start.innerText = '00:00'
+        if (end) end.innerText = '00:00'
 
         compositions.forEach((composition: HTMLButtonElement, key: number): void => {
           if (!composition) return
