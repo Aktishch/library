@@ -21,15 +21,4 @@ export default (): void => {
 
   scrollHeader()
   document.addEventListener('scroll', scrollHeader as EventListener, { passive: true })
-
-  const smoothScroll = document.getElementById('smooth-scroll') as HTMLDivElement
-
-  if (smoothScroll) {
-    const wrapperResize = (): void => {
-      smoothScroll.style.paddingTop = `${header.offsetHeight}px`
-    }
-
-    wrapperResize()
-    window.addEventListener('resize', wrapperResize as EventListener)
-  }
 }

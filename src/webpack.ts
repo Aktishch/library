@@ -21,6 +21,7 @@ import input from '@ts/input'
 import inverted from '@ts/inverted'
 import lazyLoad from '@ts/lazy-load'
 import listing from '@ts/listing'
+import locomotiveScroll from '@ts/locomotive-scroll'
 import menu from '@ts/menu'
 import movement from '@ts/movement'
 import outNumber from '@ts/out-number'
@@ -41,7 +42,6 @@ import shop from '@ts/shop'
 import sidebar from '@ts/sidebar'
 import sliderSwiper from '@ts/slider-swiper'
 import smartMenu from '@ts/smart-menu'
-import smoothScroll from '@ts/smooth-scroll'
 import snowflakes from '@ts/snowflakes'
 import social from '@ts/social'
 import submitHandler from '@ts/submit-handler'
@@ -56,6 +56,7 @@ import yandexMap from '@ts/yandex-map'
 
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
 import 'air-datepicker/air-datepicker.css'
+import 'locomotive-scroll/dist/locomotive-scroll.css'
 import 'swiper/css/bundle'
 import './scss/main.scss'
 
@@ -100,7 +101,7 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   sidebar()
   sliderSwiper()
   smartMenu()
-  smoothScroll()
+  locomotiveScroll()
   snowflakes()
   social()
   submitHandler()

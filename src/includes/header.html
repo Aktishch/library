@@ -58,7 +58,7 @@
     ]
   } %>
 
-  <header class="container flex items-center justify-between gap-5 fixed top-0 left-0 right-0 z-30 bg-black transition-transform duration-300 py-4" data-header>
+  <header class="container flex items-center justify-between gap-5 sticky top-0 z-30 bg-black transition-transform duration-300 py-4" data-header>
     <a class="btn btn-white shrink-0 w-36" data-waved="light" draggable="false" href="/">
       <%= picture({src: '/img/pictures/logo', format: 'png', className: 'block w-full', data: null}) %>
     </a>
@@ -249,31 +249,27 @@
     </div>
   </div>
 
-  <!-- Плавная прокрутка -->
+  <!-- Умное меню -->
 
-  <div data-smooth-speed="4" id="smooth-scroll">
-
-    <!-- Умное меню -->
-
-    <nav class="container <%= data.status ? null : 'hidden' %> relative z-10 py-4 duration-500 anim anim-down" data-anim>
-      <div class="flex items-center justify-between w-full max-w-full" data-smart>
-        <h2 class="font-alt font-bold text-lg" data-smart-title>
-          Smart-menu items
-        </h2>
-        <ul class="flex justify-between gap-3" data-smart-length>
-          <% for (var i = 1; i < 9; i++) { %>
-          <li>
-            <button class="btn btn-primary btn-text btn-lg dark:bg-dark font-semibold shadow-md min-w-max" data-waved="dark">Smart-menu item <%= i %></button>
-          </li>
-          <% } %>
-        </ul>
-        <div class="relative min-w-max" data-smart-nav data-accordion data-close-scroll>
-          <a class="btn btn-primary btn-fill btn-lg btn-bubbles" data-accordion-toggle draggable="false" href="javascript: ;">
-            more <span class="ml-1" data-smart-count>0</span>
-          </a>
-          <div class="absolute top-12 right-0 bg-white dark:bg-opacity-0 rounded-lg shadow-md" data-accordion-content>
-            <ul class="flex flex-col gap-3 p-3" data-smart-list></ul>
-          </div>
+  <nav class="container <%= data.status ? null : 'hidden' %> relative z-10 py-4 duration-500 anim anim-down" data-anim>
+    <div class="flex items-center justify-between w-full max-w-full" data-smart>
+      <h2 class="font-alt font-bold text-lg" data-smart-title>
+        Smart-menu items
+      </h2>
+      <ul class="flex justify-between gap-3" data-smart-length>
+        <% for (var i = 1; i < 9; i++) { %>
+        <li>
+          <button class="btn btn-primary btn-text btn-lg dark:bg-dark font-semibold shadow-md min-w-max" data-waved="dark">Smart-menu item <%= i %></button>
+        </li>
+        <% } %>
+      </ul>
+      <div class="relative min-w-max" data-smart-nav data-accordion data-close-scroll>
+        <a class="btn btn-primary btn-fill btn-lg btn-bubbles" data-accordion-toggle draggable="false" href="javascript: ;">
+          more <span class="ml-1" data-smart-count>0</span>
+        </a>
+        <div class="absolute top-12 right-0 bg-white dark:bg-opacity-0 rounded-lg shadow-md" data-accordion-content>
+          <ul class="flex flex-col gap-3 p-3" data-smart-list></ul>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>

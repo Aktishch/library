@@ -168,13 +168,13 @@
 
 <!-- Горизорнтальный скролл -->
 
-<section class="bg-white dark:bg-black md:h-[var(--scroll-height)]" data-scrolling data-smooth-wrapper>
+<section class="bg-white dark:bg-black md:h-[var(--scroll-height)]" data-scrolling>
   <div class="container flex flex-col items-start pb-0 mb-5 md:md-10">
     <h2 class="font-alt font-bold text-4xl/tight lg:text-5xl/tight duration-500 anim anim-up" data-anim data-movement="blend">
       Horizontal scroll
     </h2>
   </div>
-  <div class="container flex gap-5 md:gap-10 md:sticky md:top-40 overflow-x-auto md:overflow-x-hidden scroll-smooth pt-0" data-scrolling-horizontal data-smooth-sticky>
+  <div class="container flex gap-5 md:gap-10 md:sticky md:top-40 overflow-x-auto md:overflow-x-hidden pt-0" data-scrolling-horizontal>
     <% for (var i = 0; i < 6; i++) { %>
     <a class="pack pack-xs bg-grey dark:bg-dark rounded-3xl shadow-md shrink-0 w-80 md:w-[800px]" data-media data-movement="light" data-fancybox="horizontal" draggable="false" href="/img/pictures/town.jpg">
       <%= loader({className: null, icon}) %>
