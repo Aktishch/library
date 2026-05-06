@@ -26,7 +26,6 @@ export default (container: Container = document): void => {
       more: en ? 'Upload more' : 'Загрузить ещё',
       limit: en ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`,
     }
-
     let data: DataTransfer = new DataTransfer()
 
     const uploadFilesList = (): void => {
