@@ -192,7 +192,7 @@
 
   <!-- Перетаскиваемое социальное меню -->
 
-  <nav class="flex flex-col items-center justify-center fixed bottom-2 -left-12 z-20 rounded-full pointer-events-none select-none touch-none size-48" data-social="0.7" data-draggable>
+  <nav class="flex flex-col items-center justify-center fixed bottom-2 -left-12 z-20 rounded-full pointer-events-none select-none touch-none size-48" data-social="0.7" data-draggable-parent="draggable">
     <div class="absolute inset-0 bg-primary bg-opacity-30 rounded-full pointer-events-auto transition ease-in-out duration-300 [&:not([data-social-round=show])]:scale-0 [&:not([data-social-round=show])]:-rotate-180 [&:not([data-social-round=show])]:opacity-0" data-social-round>
       <% social.forEach((item) => { %>
       <a class="btn btn-second absolute rounded-full" data-social-link data-waved="dark" draggable="false" href="javascript: ;">
@@ -200,7 +200,7 @@
       </a>
       <% }) %>
     </div>
-    <button class="btn btn-primary btn-contur rounded-full shadow-md pointer-events-auto size-10 p-1 before:content-auto before:block before:bg-current before:rounded-inherit before:size-full" data-social-button data-waved="light" id="draggable"></button>
+    <button class="btn btn-primary btn-contur rounded-full shadow-md pointer-events-auto size-10 p-1 before:content-auto before:block before:bg-current before:rounded-inherit before:size-full" data-social-button data-waved="light" data-draggable="draggable"></button>
   </nav>
 
   <!-- Переключатель темы -->

@@ -1,7 +1,7 @@
-import { Coordinates, scrollbarHidden, scrollbarShow } from '@utils'
+import { Container, Coordinates, scrollbarHidden, scrollbarShow } from '@utils'
 
 interface Draggable {
-  item: HTMLButtonElement | HTMLDivElement
+  item: HTMLElement
   positionX: number
   positionY: number
 }
@@ -10,96 +10,93 @@ const setTranslateDraggable = ({ item, positionX, positionY }: Draggable): void 
   item.style.transform = `translate(${positionX}px, ${positionY}px)`
 }
 
-const setDraggable = (id: string): void => {
-  const draggable = document.getElementById(id) as HTMLButtonElement
+export default (container: Container = document): void => {
+  const draggables = container.querySelectorAll('*[data-draggable]') as NodeListOf<HTMLElement>
 
-  if (!draggable) return
+  draggables.forEach((draggable: HTMLElement): void => {
+    if (!draggable) return
 
-  const body = document.body as HTMLBodyElement
-  const coordinates: Coordinates = { top: 0, left: 0 }
-  let active: boolean = false
-  let currentY: number
-  let currentX: number
-  let initialY: number
-  let initialX: number
+    const body = document.body as HTMLBodyElement
+    const value: string = String(draggable.dataset.draggable)
+    const coordinates: Coordinates = JSON.parse(sessionStorage.getItem(value) || JSON.stringify({ top: 0, left: 0 }))
+    let active: boolean = false
+    let currentY: number
+    let currentX: number
+    let initialY: number
+    let initialX: number
 
-  const getDragPosition = (): void => {
-    setTranslateDraggable({
-      item: (draggable.closest('[data-draggable]') as HTMLDivElement) || draggable,
-      positionX: coordinates.left,
-      positionY: coordinates.top,
-    })
-  }
-
-  const dragStart = (event: Event): void => {
-    switch (event.type) {
-      case 'touchstart': {
-        initialY = (event as TouchEvent).touches[0].clientY - coordinates.top
-        initialX = (event as TouchEvent).touches[0].clientX - coordinates.left
-        break
-      }
-
-      case 'mousedown': {
-        initialY = (event as MouseEvent).clientY - coordinates.top
-        initialX = (event as MouseEvent).clientX - coordinates.left
-        break
-      }
+    const getDragPosition = (): void => {
+      setTranslateDraggable({
+        item: (draggable.closest(`[data-draggable-parent=${value}]`) as HTMLDivElement) || draggable,
+        positionX: coordinates.left,
+        positionY: coordinates.top,
+      })
     }
 
-    if (event.target === draggable) active = true
-  }
+    const dragStart = (event: Event): void => {
+      switch (event.type) {
+        case 'touchstart': {
+          initialY = (event as TouchEvent).touches[0].clientY - coordinates.top
+          initialX = (event as TouchEvent).touches[0].clientX - coordinates.left
+          break
+        }
 
-  const dragEnd = (): void => {
-    initialX = currentX
-    initialY = currentY
-    active = false
-  }
-
-  const dragMove = (event: Event): void => {
-    event.stopPropagation()
-
-    if (!active) return
-
-    switch (event.type) {
-      case 'touchmove': {
-        currentX = (event as TouchEvent).touches[0].clientX - initialX
-        currentY = (event as TouchEvent).touches[0].clientY - initialY
-        break
+        case 'mousedown': {
+          initialY = (event as MouseEvent).clientY - coordinates.top
+          initialX = (event as MouseEvent).clientX - coordinates.left
+          break
+        }
       }
 
-      case 'mousemove': {
-        currentX = (event as MouseEvent).clientX - initialX
-        currentY = (event as MouseEvent).clientY - initialY
-        break
-      }
+      if (event.target === draggable) active = true
     }
 
-    coordinates.top = currentY
-    coordinates.left = currentX
-    getDragPosition()
-    sessionStorage.setItem(id, JSON.stringify(coordinates))
-  }
+    const dragEnd = (): void => {
+      initialX = currentX
+      initialY = currentY
+      active = false
+    }
 
-  if (sessionStorage.getItem(id)) {
-    coordinates.top = JSON.parse(sessionStorage.getItem(id) || '{}').top
-    coordinates.left = JSON.parse(sessionStorage.getItem(id) || '{}').left
-    getDragPosition()
-  }
+    const dragMove = (event: Event): void => {
+      event.stopPropagation()
 
-  draggable.addEventListener('touchstart', scrollbarHidden as EventListener, { passive: true })
-  draggable.addEventListener('touchend', scrollbarShow as EventListener, { passive: true })
-  draggable.addEventListener('touchcancel', scrollbarShow as EventListener, { passive: true })
-  draggable.addEventListener('mousedown', scrollbarHidden as EventListener)
-  draggable.addEventListener('mouseup', scrollbarShow as EventListener)
-  draggable.addEventListener('mouseleave', scrollbarShow as EventListener)
-  body.addEventListener('touchstart', dragStart as EventListener, { passive: true })
-  body.addEventListener('touchend', dragEnd as EventListener, { passive: true })
-  body.addEventListener('touchcancel', dragEnd as EventListener, { passive: true })
-  body.addEventListener('touchmove', dragMove as EventListener, { passive: true })
-  body.addEventListener('mousedown', dragStart as EventListener)
-  body.addEventListener('mouseup', dragEnd as EventListener)
-  body.addEventListener('mouseleave', dragEnd as EventListener)
-  body.addEventListener('mousemove', dragMove as EventListener)
+      if (!active) return
+
+      switch (event.type) {
+        case 'touchmove': {
+          currentX = (event as TouchEvent).touches[0].clientX - initialX
+          currentY = (event as TouchEvent).touches[0].clientY - initialY
+          break
+        }
+
+        case 'mousemove': {
+          currentX = (event as MouseEvent).clientX - initialX
+          currentY = (event as MouseEvent).clientY - initialY
+          break
+        }
+      }
+
+      coordinates.top = currentY
+      coordinates.left = currentX
+      getDragPosition()
+      sessionStorage.setItem(value, JSON.stringify(coordinates))
+    }
+
+    getDragPosition()
+
+    draggable.addEventListener('touchstart', scrollbarHidden as EventListener, { passive: true })
+    draggable.addEventListener('touchend', scrollbarShow as EventListener, { passive: true })
+    draggable.addEventListener('touchcancel', scrollbarShow as EventListener, { passive: true })
+    draggable.addEventListener('mousedown', scrollbarHidden as EventListener)
+    draggable.addEventListener('mouseup', scrollbarShow as EventListener)
+    draggable.addEventListener('mouseleave', scrollbarShow as EventListener)
+    body.addEventListener('touchstart', dragStart as EventListener, { passive: true })
+    body.addEventListener('touchend', dragEnd as EventListener, { passive: true })
+    body.addEventListener('touchcancel', dragEnd as EventListener, { passive: true })
+    body.addEventListener('touchmove', dragMove as EventListener, { passive: true })
+    body.addEventListener('mousedown', dragStart as EventListener)
+    body.addEventListener('mouseup', dragEnd as EventListener)
+    body.addEventListener('mouseleave', dragEnd as EventListener)
+    body.addEventListener('mousemove', dragMove as EventListener)
+  })
 }
-
-export default (): void => setDraggable('draggable')

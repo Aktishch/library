@@ -1,4 +1,4 @@
-import { createError, en } from '@utils'
+import { createError, en, scrollbarHidden, scrollbarShow } from '@utils'
 
 interface LoadTimePreloader {
   item: HTMLDivElement
@@ -9,6 +9,8 @@ type Resolve = (value: HTMLDivElement | PromiseLike<HTMLDivElement>) => void
 type Reject = (reason?: string) => void
 
 const loadTimePreloader = ({ item, ms }: LoadTimePreloader): Promise<HTMLDivElement> => {
+  scrollbarHidden()
+
   return new Promise((resolve: Resolve, reject: Reject): NodeJS.Timeout => {
     return setTimeout((): void => {
       item ? resolve(item) : reject(en ? 'Item was not found' : 'Элемент не был найден')
@@ -28,6 +30,7 @@ export default async (): Promise<void> => {
 
   await loadTimePreloader({ item: preloader, ms: duration })
     .then((item: HTMLDivElement): void => {
+      scrollbarShow()
       item.remove()
     })
     .catch((error: string): void => createError(error))

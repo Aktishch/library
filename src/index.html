@@ -257,7 +257,7 @@
         </p>
       </div>
       <div data-filtering-card="filtering" data-filtering-value="1">
-        <form class="flex flex-col gap-5 w-full max-w-sm mx-auto" data-form="submit" data-datepicker id="data-save">
+        <form class="flex flex-col gap-5 w-full max-w-sm mx-auto" data-form="submit" data-save="save" data-datepicker>
           <input type="hidden" value="Главная" name="theme">
           <label data-label>
             <h5 class="font-medium text-xl/none mb-3">
@@ -348,11 +348,11 @@
               </label>
               <%= error %>
             </div>
-            <ul class="flex flex-col gap-1 text-xs empty:hidden" data-filelist-items></ul>
+            <ul class="flex flex-col gap-1 text-xs empty:hidden" data-filelist-items="5"></ul>
           </div>
           <div class="flex">
             <label class="flex flex-row items-center cursor-pointer">
-              <input class="switch switch-checkbox mr-2" data-toggle-submit type="checkbox" checked>
+              <input class="switch switch-checkbox mr-2" data-toggle-submit type="checkbox" checked name="politics">
               <span class="text-xl">Policy</span>
             </label>
           </div>

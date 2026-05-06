@@ -16,9 +16,7 @@ export const checkQuizSlide = (slide: HTMLElement): void => {
       if (!input) return
 
       if (input.type === 'checkbox' || input.type === 'radio') {
-        const toggle = input as HTMLInputElement
-
-        if (toggle.checked !== false) active = true
+        if ((input as HTMLInputElement).checked !== false) active = true
       } else if (input.value.length !== 0) {
         active = true
       }

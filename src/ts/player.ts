@@ -115,15 +115,16 @@ const setPlayer = ({ id, playlist }: Player): void => {
       const start = player.querySelector('*[data-player-start]') as HTMLSpanElement
       const end = player.querySelector('*[data-player-end]') as HTMLSpanElement
       const volume = player.querySelector('*[data-player-volume]') as HTMLButtonElement
-      const condition: Condition = sessionStorage.getItem(id)
-        ? JSON.parse(sessionStorage.getItem(id) || '{}')
-        : {
+      const condition: Condition = JSON.parse(
+        sessionStorage.getItem(id) ||
+          JSON.stringify({
             index: 0,
             time: 0,
             status: false,
             muted: false,
             active: false,
-          }
+          })
+      )
 
       const saveStorage = (): void => sessionStorage.setItem(id, JSON.stringify(condition))
 
@@ -208,23 +209,11 @@ const setPlayer = ({ id, playlist }: Player): void => {
         const duration: number = audio.duration
         let offsetX: number = 0
 
-        switch (event.type) {
-          case 'click': {
-            offsetX = (event as MouseEvent).offsetX
-            break
-          }
+        if (event.type === 'click' || event.type === 'mousemove') offsetX = (event as MouseEvent).offsetX
 
-          case 'mousemove': {
-            offsetX = (event as MouseEvent).offsetX
-            break
-          }
-
-          case 'touchmove': {
-            for (let i: number = 0; i < (event as TouchEvent).changedTouches.length; i++) {
-              offsetX = (event as TouchEvent).changedTouches[i].pageX - progress.getBoundingClientRect().left
-            }
-
-            break
+        if (event.type === 'touchmove') {
+          for (let i: number = 0; i < (event as TouchEvent).changedTouches.length; i++) {
+            offsetX = (event as TouchEvent).changedTouches[i].pageX - progress.getBoundingClientRect().left
           }
         }
 

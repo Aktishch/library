@@ -7,11 +7,6 @@ interface Content {
 }
 
 const className: string[] = ['pointer-events-none', 'opacity-50']
-const content: Content = {
-  default: en ? 'Upload files' : 'Загрузить файлы',
-  more: en ? 'Upload more' : 'Загрузить ещё',
-  limit: en ? 'No more than 3 files' : 'Не больше 3 файлов',
-}
 
 export default (container: Container = document): void => {
   const filelists = container.querySelectorAll('*[data-filelist]') as NodeListOf<HTMLDivElement>
@@ -25,6 +20,13 @@ export default (container: Container = document): void => {
     const error = filelist.querySelector('*[data-error]') as HTMLSpanElement
     const text = label.querySelector('*[data-filelist-text]') as HTMLSpanElement
     const items = filelist.querySelector('*[data-filelist-items]') as HTMLUListElement
+    const maxLength: number = Number(items.dataset.filelistItems) || 3
+    const content: Content = {
+      default: en ? 'Upload files' : 'Загрузить файлы',
+      more: en ? 'Upload more' : 'Загрузить ещё',
+      limit: en ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`,
+    }
+
     let data: DataTransfer = new DataTransfer()
 
     const uploadFilesList = (): void => {
@@ -42,7 +44,7 @@ export default (container: Container = document): void => {
             .then(({ file }): void => {
               if (!fileHandler({ error, file })) return
 
-              if ((data.files as FileList).length < 3) {
+              if ((data.files as FileList).length < maxLength) {
                 const item = document.createElement('li') as HTMLLIElement
 
                 item.classList.add('flex', 'items-center', 'justify-between', 'gap-5')
@@ -59,7 +61,7 @@ export default (container: Container = document): void => {
                 data.items.add(file)
               }
 
-              if ((data.files as FileList).length === 3) {
+              if ((data.files as FileList).length === maxLength) {
                 label.classList.add(...className)
                 text.textContent = content.limit
               }
@@ -72,7 +74,7 @@ export default (container: Container = document): void => {
     }) as EventListener)
 
     filelist.addEventListener('click', ((event: Event): void => {
-      if ((event.target as HTMLElement).closest('[data-filelist-remove]')) {
+      if ((event.target as HTMLButtonElement).closest('[data-filelist-remove]')) {
         const remove = event.target as HTMLButtonElement
         const item = remove.closest('[data-filelist-item]') as HTMLLIElement
         const files: FileList = data.files
@@ -94,9 +96,10 @@ export default (container: Container = document): void => {
           input.value = ''
           text.textContent = content.default
         } else {
-          label.classList.remove(...className)
           text.textContent = content.more
         }
+
+        label.classList.remove(...className)
       }
     }) as EventListener)
 
