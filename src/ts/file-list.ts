@@ -73,8 +73,9 @@ export default (container: Container = document): void => {
     }) as EventListener)
 
     filelist.addEventListener('click', ((event: Event): void => {
-      if ((event.target as HTMLButtonElement).closest('[data-filelist-remove]')) {
-        const remove = event.target as HTMLButtonElement
+      const remove = event.target as HTMLButtonElement
+
+      if (remove.closest('[data-filelist-remove]')) {
         const item = remove.closest('[data-filelist-item]') as HTMLLIElement
         const files: FileList = data.files
 

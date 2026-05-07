@@ -19,7 +19,7 @@ export default (): void => {
   const items = pallete.querySelectorAll('*[data-pallete-item]') as NodeListOf<HTMLLIElement>
   const reset = pallete.querySelector('*[data-pallete-reset]') as HTMLButtonElement
 
-  const hexToRgb = (hex: string): string => {
+  const hexToRGB = (hex: string): string => {
     hex = hex.replace(/^#/, '')
 
     const r: number = parseInt(hex.substring(0, 2), 16)
@@ -38,8 +38,10 @@ export default (): void => {
 
     const input = item.querySelector('*[data-pallete-input]') as HTMLInputElement
     const button = item.querySelector('*[data-pallete-button]') as HTMLButtonElement
-    const name: string = String(input.dataset.palleteInput)
-    const value: string = String(button.dataset.palleteButton)
+    const name: string | undefined = input.dataset.palleteInput
+    const value: string | undefined = button.dataset.palleteButton
+
+    if (!name || !value) return
 
     const colorRemove = (): void => {
       if (colors[name]) delete colors[name]
@@ -53,7 +55,7 @@ export default (): void => {
 
     input.addEventListener('input', ((): void => {
       const hex: string = input.value
-      const rgb: string = hexToRgb(hex)
+      const rgb: string = hexToRGB(hex)
 
       colors[name] = { hex, rgb }
       html.style.setProperty(`--color-${name}`, rgb)

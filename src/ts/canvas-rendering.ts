@@ -17,8 +17,8 @@ export default (container: Container = document): void => {
       context.fillStyle = '#000'
       context.textAlign = 'center'
 
-      if (rendering.dataset.rendering !== undefined)
-        context.fillText(String(rendering.dataset.rendering), canvas.width / 2, canvas.height / 1.5)
+      if (rendering.dataset.rendering)
+        context.fillText(rendering.dataset.rendering, canvas.width / 2, canvas.height / 1.5)
       if (download) download.href = canvas.toDataURL()
     }) as EventListener)
 
@@ -26,6 +26,6 @@ export default (container: Container = document): void => {
       createError(en ? "Couldn't upload image" : 'Не удалось загрузить изображение')
     }) as EventListener)
 
-    image.src = String(canvas.dataset.renderingCanvas)
+    if (canvas.dataset.renderingCanvas) image.src = canvas.dataset.renderingCanvas
   })
 }

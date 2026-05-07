@@ -14,10 +14,10 @@ export default (container: Container = document): void => {
   const draggables = container.querySelectorAll('*[data-draggable]') as NodeListOf<HTMLElement>
 
   draggables.forEach((draggable: HTMLElement): void => {
-    if (!draggable) return
+    if (!draggable || !draggable.dataset.draggable) return
 
     const body = document.body as HTMLBodyElement
-    const value: string = String(draggable.dataset.draggable)
+    const value: string = draggable.dataset.draggable
     const coordinates: Coordinates = JSON.parse(sessionStorage.getItem(value) || JSON.stringify({ top: 0, left: 0 }))
     let active: boolean = false
     let currentY: number
@@ -27,7 +27,7 @@ export default (container: Container = document): void => {
 
     const getDragPosition = (): void => {
       setTranslateDraggable({
-        item: (draggable.closest(`[data-draggable-parent=${value}]`) as HTMLDivElement) || draggable,
+        item: (draggable.closest(`[data-draggable-parent=${value}]`) as HTMLElement) || draggable,
         positionX: coordinates.left,
         positionY: coordinates.top,
       })

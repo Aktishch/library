@@ -6,7 +6,7 @@ export default (container: Container = document): void => {
 
     if (items.length !== 0) {
       items.forEach((item: HTMLSpanElement): void => {
-        if (!item) return
+        if (!item || !item.dataset.number) return
 
         const number: number = Number(item.dataset.number)
         const step: number = Number(item.dataset.numberStep) || 0.5
@@ -20,10 +20,10 @@ export default (container: Container = document): void => {
             sum += step
 
             if (sum >= number) {
-              item.innerHTML = String(number.toFixed(fixed))
+              item.innerHTML = number.toFixed(fixed)
               clearInterval(interval)
             } else {
-              item.innerHTML = String(sum.toFixed(fixed))
+              item.innerHTML = sum.toFixed(fixed)
             }
           }, timer)
 

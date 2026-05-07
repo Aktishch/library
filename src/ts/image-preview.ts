@@ -17,7 +17,7 @@ export default (container: Container = document): void => {
     const label = preview.querySelector('*[data-preview-label]') as HTMLLabelElement
     const input = label.querySelector('*[data-preview-input]') as HTMLInputElement
     const error = preview.querySelector('*[data-error]') as HTMLSpanElement
-    const requestUrl: string = String(image.dataset.previewImage)
+    const requestUrl: string = image.dataset.previewImage || ''
     let data: DataTransfer = new DataTransfer()
 
     const uploadFilesList = (): void => {
@@ -48,10 +48,14 @@ export default (container: Container = document): void => {
 
             if (form && form.dataset.form === 'avatar') {
               const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
-              const avatar = document.getElementById(String(preview.dataset.preview)) as HTMLImageElement
 
               submitBtn.click()
-              avatar.src = url
+
+              if (preview.dataset.preview) {
+                const avatar = document.getElementById(preview.dataset.preview) as HTMLImageElement
+
+                avatar.src = url
+              }
             }
           })
           .catch((error: string): void => createError(error))

@@ -13,9 +13,9 @@ export default (container: Container = document): void => {
   const forms = container.querySelectorAll('*[data-save]') as NodeListOf<HTMLFormElement>
 
   forms.forEach((form: HTMLFormElement): void => {
-    if (!form) return
+    if (!form || !form.dataset.save) return
 
-    const value: string = String(form.dataset.save)
+    const value: string = form.dataset.save
     const inputs: FormInput[] = [
       ...form.querySelectorAll('input'),
       ...form.querySelectorAll('select'),
