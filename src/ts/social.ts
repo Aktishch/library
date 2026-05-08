@@ -1,3 +1,5 @@
+import { Coordinates } from '@utils'
+
 export default (): void => {
   const social = document.querySelector('*[data-social]') as HTMLDivElement
 
@@ -24,13 +26,18 @@ export default (): void => {
     const step: number = (2 * Math.PI) / length
     let angle: number = 0
 
-    for (let i: number = 0; i < length; i++) {
-      const link = links[i] as HTMLAnchorElement
+    links.forEach((link: HTMLAnchorElement): void => {
+      if (!link) return
 
-      link.style.top = Math.round(height / 2 + radius * Math.sin(angle) - link.offsetHeight / 2) + 'px'
-      link.style.left = Math.round(width / 2 + radius * Math.cos(angle) - link.offsetWidth / 2) + 'px'
+      const coordinates: Coordinates = {
+        top: Math.round(height / 2 + radius * Math.sin(angle) - link.offsetHeight / 2),
+        left: Math.round(width / 2 + radius * Math.cos(angle) - link.offsetWidth / 2),
+      }
+
+      link.style.top = `${coordinates.top}px`
+      link.style.left = `${coordinates.left}px`
       angle += step
-    }
+    })
   }
 
   getLinksPosition()

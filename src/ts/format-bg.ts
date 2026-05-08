@@ -27,5 +27,5 @@ export default (container: Container = document): void => {
 
   createBackground({ data: 'data-bg', container })
 
-  if (canUseWebp() || firefoxVersion >= 65) createBackground({ data: 'data-bg-webp', container })
+  if (canUseWebp() || firefoxVersion >= 65) createBackground({ data: 'data-webp', container })
 }

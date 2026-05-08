@@ -21,60 +21,63 @@ export default (): void => {
   if (!yandex) return
 
   const yandexMap = yandex.querySelector('*[data-yandex-map]') as HTMLDivElement
-  const loader = yandex.querySelector('*[data-loader]') as HTMLDivElement
-  const coordinates: string[] = String(yandexMap.dataset.yandexMap).split(',')
-  const point: string = String(yandexMap.dataset.point)
-  const pointSize: number[] = [62, 62]
-  const lang: string = en ? 'en_US' : 'ru_RU'
-  const mark: number[] = []
 
-  for (let i: number = 0; i < coordinates.length; i++) mark.push(Number(coordinates[i]))
+  if (yandexMap.dataset.yandexMap) {
+    const loader = yandex.querySelector('*[data-loader]') as HTMLDivElement
+    const coordinates: string[] = yandexMap.dataset.yandexMap.split(',')
+    const point: string = yandexMap.dataset.point || ''
+    const pointSize: number[] = [62, 62]
+    const lang: string = en ? 'en_US' : 'ru_RU'
+    const mark: number[] = []
 
-  window.ymaps
-    .load(`https://api-maps.yandex.ru/2.1/?lang=${lang}`)
-    .then((maps: ymaps): void => {
-      const map = new maps.Map(yandexMap, {
-        center: mark,
-        zoom: 16,
-      }) as ymaps.Map
+    for (let i: number = 0; i < coordinates.length; i++) mark.push(Number(coordinates[i]))
 
-      const placemark = new maps.Placemark(
-        mark,
-        {
-          hintContent: 'Студия К.И.Т.',
-          balloonContentHeader: 'Студия К.И.Т.',
-          balloonContentBody: 'г. Краснодар',
-          balloonContentFooter: 'ул.Рождественская Набережная 45/1',
-        },
-        {
-          iconLayout: 'default#image',
-          iconImageHref: point,
-          iconImageSize: pointSize,
-          iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2],
-        }
-      ) as ymaps.Placemark
+    window.ymaps
+      .load(`https://api-maps.yandex.ru/2.1/?lang=${lang}`)
+      .then((maps: ymaps): void => {
+        const map = new maps.Map(yandexMap, {
+          center: mark,
+          zoom: 16,
+        }) as ymaps.Map
 
-      map.controls.remove('geolocationControl')
-      map.controls.remove('searchControl')
-      map.controls.remove('trafficControl')
-      map.controls.remove('typeSelector')
-      map.controls.remove('fullscreenControl')
-      map.controls.remove('zoomControl')
-      map.controls.remove('rulerControl')
-      map.behaviors.disable(['scrollZoom'])
-      map.geoObjects.add(placemark)
-      loader.remove()
+        const placemark = new maps.Placemark(
+          mark,
+          {
+            hintContent: 'Студия К.И.Т.',
+            balloonContentHeader: 'Студия К.И.Т.',
+            balloonContentBody: 'г. Краснодар',
+            balloonContentFooter: 'ул.Рождественская Набережная 45/1',
+          },
+          {
+            iconLayout: 'default#image',
+            iconImageHref: point,
+            iconImageSize: pointSize,
+            iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2],
+          }
+        ) as ymaps.Placemark
 
-      map.geoObjects.events.add<'click'>('click', (event: ymaps.IEvent<PointerEvent, {}>): void => {
-        const target: EventTarget | any = event.get('target')
-        const hintContent = target.properties._data.hintContent
+        map.controls.remove('geolocationControl')
+        map.controls.remove('searchControl')
+        map.controls.remove('trafficControl')
+        map.controls.remove('typeSelector')
+        map.controls.remove('fullscreenControl')
+        map.controls.remove('zoomControl')
+        map.controls.remove('rulerControl')
+        map.behaviors.disable(['scrollZoom'])
+        map.geoObjects.add(placemark)
+        loader.remove()
 
-        map.panTo(target.geometry.getCoordinates(), {
-          useMapMargin: true,
+        map.geoObjects.events.add<'click'>('click', (event: ymaps.IEvent<PointerEvent, {}>): void => {
+          const target: EventTarget | any = event.get('target')
+          const hintContent = target.properties._data.hintContent
+
+          map.panTo(target.geometry.getCoordinates(), {
+            useMapMargin: true,
+          })
+
+          alert(hintContent)
         })
-
-        alert(hintContent)
       })
-    })
-    .catch((error: string) => createError(error))
+      .catch((error: string) => createError(error))
+  }
 }

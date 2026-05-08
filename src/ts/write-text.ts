@@ -6,20 +6,18 @@ export default (container: Container = document): void => {
 
     if (records.length !== 0) {
       records.forEach((record: HTMLElement): void => {
-        if (!record) return
+        if (!record || !record.dataset.record) return
 
-        const text: string = String(record.dataset.record)
-        const speed: string | undefined = record.dataset.recordSpeed
+        const text: string = record.dataset.record
+        const speed: number = Number(record.dataset.speed) || 100
         const letters: string[] = [text].join('').split('')
 
         if (window.screen.height >= record.getBoundingClientRect().top) {
-          const interval = setInterval(
-            (): void => {
-              if (!letters[0]) return clearInterval(interval)
-              record.innerHTML += letters.shift()
-            },
-            Number(speed) | 100
-          )
+          const interval = setInterval((): void => {
+            if (!letters[0]) return clearInterval(interval)
+
+            record.innerHTML += letters.shift()
+          }, speed)
 
           record.removeAttribute('data-record')
         }

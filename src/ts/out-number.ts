@@ -9,9 +9,9 @@ export default (container: Container = document): void => {
         if (!item || !item.dataset.number) return
 
         const number: number = Number(item.dataset.number)
-        const step: number = Number(item.dataset.numberStep) || 0.5
-        const time: number = Number(item.dataset.numberTime) * 1000 || 1000
-        const fixed: number = Number(item.dataset.numberFixed) || 0
+        const step: number = Number(item.dataset.step) || 0.5
+        const time: number = Number(item.dataset.time) * 1000 || 1000
+        const fixed: number = Number(item.dataset.fixed) || 0
         const timer: number = Math.round(time / (number / step))
         let sum: number = 0
 

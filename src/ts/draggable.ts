@@ -16,7 +16,6 @@ export default (container: Container = document): void => {
   draggables.forEach((draggable: HTMLElement): void => {
     if (!draggable || !draggable.dataset.draggable) return
 
-    const body = document.body as HTMLBodyElement
     const value: string = draggable.dataset.draggable
     const coordinates: Coordinates = JSON.parse(sessionStorage.getItem(value) || JSON.stringify({ top: 0, left: 0 }))
     let active: boolean = false
@@ -58,8 +57,6 @@ export default (container: Container = document): void => {
     }
 
     const dragMove = (event: Event): void => {
-      event.stopPropagation()
-
       if (!active) return
 
       switch (event.type) {
@@ -90,13 +87,13 @@ export default (container: Container = document): void => {
     draggable.addEventListener('mousedown', scrollbarHidden as EventListener)
     draggable.addEventListener('mouseup', scrollbarShow as EventListener)
     draggable.addEventListener('mouseleave', scrollbarShow as EventListener)
-    body.addEventListener('touchstart', dragStart as EventListener, { passive: true })
-    body.addEventListener('touchend', dragEnd as EventListener, { passive: true })
-    body.addEventListener('touchcancel', dragEnd as EventListener, { passive: true })
-    body.addEventListener('touchmove', dragMove as EventListener, { passive: true })
-    body.addEventListener('mousedown', dragStart as EventListener)
-    body.addEventListener('mouseup', dragEnd as EventListener)
-    body.addEventListener('mouseleave', dragEnd as EventListener)
-    body.addEventListener('mousemove', dragMove as EventListener)
+    container.addEventListener('touchstart', dragStart as EventListener, { passive: true })
+    container.addEventListener('touchend', dragEnd as EventListener, { passive: true })
+    container.addEventListener('touchcancel', dragEnd as EventListener, { passive: true })
+    container.addEventListener('touchmove', dragMove as EventListener, { passive: true })
+    container.addEventListener('mousedown', dragStart as EventListener)
+    container.addEventListener('mouseup', dragEnd as EventListener)
+    container.addEventListener('mouseleave', dragEnd as EventListener)
+    container.addEventListener('mousemove', dragMove as EventListener)
   })
 }

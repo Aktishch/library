@@ -30,7 +30,6 @@ export default (): void => {
   }
 
   const touchMove = (event: TouchEvent): void => {
-    event.stopPropagation()
     active = true
     currentX = event.touches[0].clientX
   }

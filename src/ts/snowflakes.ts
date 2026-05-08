@@ -12,9 +12,6 @@ export default (): void => {
   const createSnowflake = (event: MouseEvent): void => {
     if (!flag) return
 
-    flag = false
-    setTimeout((): boolean => (flag = true), 300)
-
     const snowflake = document.createElement('span') as HTMLSpanElement
     const size: number = Math.random() * 60
     const coordinates: Coordinates = {
@@ -28,7 +25,11 @@ export default (): void => {
     snowflake.style.top = `${coordinates.top}px`
     snowflake.style.left = `${coordinates.left}px`
     snow.appendChild(snowflake)
+    flag = false
     setTimeout((): void => snowflake.remove(), 3000)
+    setTimeout((): void => {
+      flag = true
+    }, 300)
   }
 
   document.addEventListener('mousemove', createSnowflake as EventListener)

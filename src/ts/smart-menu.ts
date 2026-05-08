@@ -1,11 +1,20 @@
+interface VisibilityItem {
+  condition: boolean
+  item: HTMLElement
+}
+
 const className: string[] = ['hidden']
+
+const visibilityItem = ({ condition, item }: VisibilityItem): void => {
+  condition ? item.classList.add(...className) : item.classList.remove(...className)
+}
 
 export default (): void => {
   const smartMenu = document.querySelector('*[data-smart]') as HTMLDivElement
 
   if (!smartMenu) return
 
-  const title = smartMenu.querySelector('*[data-smart-title]') as HTMLElement
+  const title = smartMenu.querySelector('*[data-smart-title]') as HTMLHeadingElement
   const length = smartMenu.querySelector('*[data-smart-length]') as HTMLUListElement
   const nav = smartMenu.querySelector('*[data-smart-nav]') as HTMLDivElement
   const count = smartMenu.querySelector('*[data-smart-count]') as HTMLSpanElement
@@ -21,20 +30,20 @@ export default (): void => {
     if (smartMenuWidth > 0 && smartMenuWidth < lengthWidth) {
       breaks.push(lengthWidth)
       list.prepend(length.lastElementChild as HTMLLIElement)
-      count.innerText = String(breaks.length)
       updateSmartMenu()
     } else {
       if (smartMenuWidth > breaks[breaks.length - 1]) {
         breaks.pop()
         length.append(list.firstElementChild as HTMLLIElement)
-        count.innerText = String(breaks.length)
       }
     }
 
+    count.innerText = String(breaks.length)
+
     const items = list.querySelectorAll('li') as NodeListOf<HTMLLIElement>
 
-    items.length === 0 ? nav.classList.add(...className) : nav.classList.remove(...className)
-    lengthWidth === 0 ? title.classList.remove(...className) : title.classList.add(...className)
+    visibilityItem({ condition: items.length === 0, item: nav })
+    visibilityItem({ condition: lengthWidth !== 0, item: title })
   }
 
   updateSmartMenu()

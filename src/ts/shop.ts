@@ -74,16 +74,13 @@ export default (): void => {
       setTimeout((): void => {
         shopShow()
 
-        if (image && productImage) image.src = String(productImage.dataset.productImage)
-        if (name && productName) name.innerText = String(productName.textContent)
+        if (image && productImage && productImage.dataset.productImage) image.src = productImage.dataset.productImage
+        if (name && productName) name.innerText = productName.textContent
+        if (price && productPrice) price.innerText = productPrice.textContent
 
-        quantity && productQuantity ? (quantity.innerText = String(productQuantity.value)) : (quantity.innerText = '1')
+        quantity.innerText = quantity && productQuantity ? productQuantity.value : '1'
+        oldPrice.innerText = oldPrice && productOldPrice ? productOldPrice.textContent : ''
 
-        oldPrice && productOldPrice
-          ? (oldPrice.innerText = String(productOldPrice.textContent))
-          : (oldPrice.innerText = '')
-
-        if (price && productPrice) price.innerText = String(productPrice.textContent)
         if (timeOut) clearTimeout(timeOut)
 
         timeOut = setTimeout((): void => shopHidden(), 5000)

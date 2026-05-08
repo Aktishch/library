@@ -33,7 +33,7 @@ const excludeDates: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +n
 window.AirDatepicker = AirDatepicker
 
 export const createCalendar = (container: Container = document): void => {
-  const calendar = container.querySelector('#calendar') as HTMLDivElement
+  const calendar = container.querySelector('*[data-calendar]') as HTMLDivElement
 
   if (!calendar) return
 

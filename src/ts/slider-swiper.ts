@@ -23,9 +23,9 @@ const { sm, md, lg, xl } = media
 const createGallerySlider = (container: Container = document): void => {
   const slider = container.querySelector('*[data-slider="gallery"]') as HTMLDivElement
 
-  if (!slider) return
+  if (!slider || !slider.dataset.slider) return
 
-  const value: string = String(slider.dataset.slider)
+  const value: string = slider.dataset.slider
   const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
   const pagination = slider.querySelector(`*[data-slider-pagination="${value}"]`) as HTMLDivElement
   const prev = slider.querySelector(`*[data-slider-prev="${value}"]`) as HTMLButtonElement
@@ -42,7 +42,7 @@ const createGallerySlider = (container: Container = document): void => {
     },
     effect: 'coverflow',
     slidesPerView: 1.3,
-    spaceBetween: 20,
+    spaceBetween: 16,
     grabCursor: true,
     watchSlidesProgress: true,
     loop: true,
@@ -66,9 +66,9 @@ const createGallerySlider = (container: Container = document): void => {
 const createProductsSlider = (container: Container = document): void => {
   const slider = container.querySelector('*[data-slider="products"]') as HTMLDivElement
 
-  if (!slider) return
+  if (!slider || !slider.dataset.slider) return
 
-  const value: string = String(slider.dataset.slider)
+  const value: string = slider.dataset.slider
   const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
   const pagination = slider.querySelector(`*[data-slider-pagination="${value}"]`) as HTMLDivElement
   const prev = slider.querySelector(`*[data-slider-prev="${value}"]`) as HTMLButtonElement
@@ -85,7 +85,7 @@ const createProductsSlider = (container: Container = document): void => {
     },
     slidesPerView: 1.3,
     slidesPerGroup: 1,
-    spaceBetween: 20,
+    spaceBetween: 16,
     grabCursor: true,
     watchSlidesProgress: true,
     breakpoints: {
@@ -105,9 +105,9 @@ const createProductsSlider = (container: Container = document): void => {
 const createQuizSlider = (container: Container = document): void => {
   const slider = container.querySelector('*[data-slider="quiz"]') as HTMLDivElement
 
-  if (!slider) return
+  if (!slider || !slider.dataset.slider) return
 
-  const value: string = String(slider.dataset.slider)
+  const value: string = slider.dataset.slider
   const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
   const pagination = slider.querySelector(`*[data-slider-pagination="${value}"]`) as HTMLDivElement
   const prev = slider.querySelector(`*[data-slider-prev="${value}"]`) as HTMLButtonElement
@@ -138,7 +138,7 @@ const createQuizSlider = (container: Container = document): void => {
     },
     slidesPerView: 1,
     slidesPerGroup: 1,
-    spaceBetween: 30,
+    spaceBetween: 16,
     allowTouchMove: false,
     watchSlidesProgress: true,
     on: {
@@ -148,29 +148,18 @@ const createQuizSlider = (container: Container = document): void => {
   }) as Swiper
 }
 
-const createDescriptionSlider = (container: Container = document): void => {
-  const slider = container.querySelector('*[data-slider="description"]') as HTMLDivElement
+const createThumbsSlider = (container: Container = document): Swiper | undefined => {
+  const slider = container.querySelector('*[data-slider="thumbs"]') as HTMLDivElement
 
-  if (!slider) return
+  if (!slider || !slider.dataset.slider) return
 
-  const sliderBg = container.querySelector('*[data-slider="description-bg"]') as HTMLDivElement
-  const valueBg: string = String(sliderBg.dataset.slider)
-  const swiperBg = sliderBg.querySelector(`*[data-slider-swiper="${valueBg}"]`) as HTMLDivElement
-  const descriptionBg: Swiper = new window.Swiper(swiperBg, {
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-    spaceBetween: 30,
-    speed: 1000,
-    allowTouchMove: false,
-  })
+  const value: string = slider.dataset.slider
+  const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
 
-  const sliderBullets = container.querySelector('*[data-slider="description-bullets"]') as HTMLDivElement
-  const valueBullets: string = String(sliderBullets.dataset.slider)
-  const swiperBullets = sliderBullets.querySelector(`*[data-slider-swiper="${valueBullets}"]`) as HTMLDivElement
-  const descriptionBullets: Swiper = new window.Swiper(swiperBullets, {
+  return new window.Swiper(swiper, {
     slidesPerView: 3,
     slidesPerGroup: 1,
-    spaceBetween: 20,
+    spaceBetween: 16,
     speed: 1000,
     grabCursor: true,
     breakpoints: {
@@ -178,23 +167,46 @@ const createDescriptionSlider = (container: Container = document): void => {
         slidesPerView: 4,
       },
     },
-  })
+  }) as Swiper
+}
 
-  const value: string = String(slider.dataset.slider)
+const createBgSlider = (container: Container = document): Swiper | undefined => {
+  const slider = container.querySelector('*[data-slider="bg"]') as HTMLDivElement
+
+  if (!slider || !slider.dataset.slider) return
+
+  const value: string = slider.dataset.slider
+  const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
+
+  return new window.Swiper(swiper, {
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+    spaceBetween: 16,
+    speed: 1000,
+    allowTouchMove: false,
+  }) as Swiper
+}
+
+const createDescriptionSlider = (container: Container = document): void => {
+  const slider = container.querySelector('*[data-slider="description"]') as HTMLDivElement
+
+  if (!slider || !slider.dataset.slider) return
+
+  const value: string = slider.dataset.slider
   const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
 
   new window.Swiper(swiper, {
     slidesPerView: 1,
     slidesPerGroup: 1,
-    spaceBetween: 30,
+    spaceBetween: 16,
     speed: 1000,
     grabCursor: true,
     thumbs: {
-      swiper: descriptionBullets,
+      swiper: createThumbsSlider(),
     },
     on: {
       slideChange: (swiper: Swiper): void => {
-        descriptionBg.slideTo(swiper.activeIndex)
+        ;(createBgSlider() as Swiper).slideTo(swiper.activeIndex)
       },
     },
   }) as Swiper

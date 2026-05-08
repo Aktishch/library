@@ -13,7 +13,10 @@ export default (): void => {
 
   document.addEventListener('click', ((event: Event): void => {
     if ((event.target as HTMLButtonElement).hasAttribute('data-negative')) {
-      const currentTab = window.open('', '_self') as Window
+      const currentTab: Window | null = window.open('', '_self')
+
+      if (!currentTab) return
+
       const html = currentTab.document.documentElement as HTMLHtmlElement
 
       setTimeout((): void => {

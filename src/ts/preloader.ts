@@ -13,7 +13,7 @@ const loadTimePreloader = ({ item, ms }: LoadTimePreloader): Promise<HTMLDivElem
 
   return new Promise((resolve: Resolve, reject: Reject): NodeJS.Timeout => {
     return setTimeout((): void => {
-      item ? resolve(item) : reject(en ? 'Item was not found' : 'Элемент не был найден')
+      item ? resolve(item) : reject(en ? 'Preloader was not found' : 'Прелоадер не был найден')
     }, ms)
   })
 }

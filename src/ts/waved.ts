@@ -6,9 +6,9 @@ interface WavedCircle {
 }
 
 const setWaved = (event: Event): void => {
-  if ((event.target as HTMLElement).closest('[data-waved]')) {
-    const item = (event.target as HTMLElement).closest('[data-waved]') as HTMLElement
+  const item = event.target as HTMLElement
 
+  if (item.closest('[data-waved]')) {
     const waved = document.createElement('div') as HTMLDivElement
     const circle = document.createElement('div') as HTMLDivElement
 

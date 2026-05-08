@@ -9,9 +9,9 @@ export default (container: Container = document): void => {
   const timer = counter.querySelector('*[data-counter-timer]') as HTMLDivElement
   const units = timer.querySelectorAll('*[data-counter-unit]') as NodeListOf<HTMLSpanElement>
   const date: number = new Date(
-    Number(counter.dataset.year),
-    Number(counter.dataset.month) - 1,
-    Number(counter.dataset.day),
+    Number(counter.dataset.year) || 0,
+    Number(counter.dataset.month) - 1 || 0,
+    Number(counter.dataset.day) || 0,
     Number(counter.dataset.hour) || 0,
     Number(counter.dataset.minute) || 0,
     Number(counter.dataset.second) || 0
@@ -31,9 +31,7 @@ export default (container: Container = document): void => {
     ]
 
     units.forEach((unit: HTMLSpanElement, index: number): void => {
-      if (!unit) return
-
-      unit.textContent = String(values[index])
+      if (unit) unit.textContent = String(values[index])
     })
 
     if (distance < 0) removeTimeCounter()

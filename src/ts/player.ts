@@ -90,9 +90,7 @@ const setPlayer = ({ id, playlist }: Player): void => {
     if (!listing) return
 
     playlist.forEach((composition: Composition): void => {
-      if (!composition) return
-
-      listing.appendChild(createComposition(composition))
+      if (composition) listing.appendChild(createComposition(composition))
     })
   }
 
@@ -147,9 +145,11 @@ const setPlayer = ({ id, playlist }: Player): void => {
         if (audio) audio.src = composition.audio
 
         if (poster) {
-          loadPoster(composition.poster).finally((): void => {
-            poster.src = composition.poster
-          })
+          loadPoster(composition.poster)
+            .finally((): void => {
+              poster.src = composition.poster
+            })
+            .catch((error: string): void => createError(error))
         }
       }
 
@@ -209,9 +209,9 @@ const setPlayer = ({ id, playlist }: Player): void => {
         const duration: number = audio.duration
         let offsetX: number = 0
 
-        if (event.type === 'click' || event.type === 'mousemove') offsetX = (event as MouseEvent).offsetX
-
-        if (event.type === 'touchmove') {
+        if (event.type === 'click' || event.type === 'mousemove') {
+          offsetX = (event as MouseEvent).offsetX
+        } else if (event.type === 'touchmove') {
           for (let i: number = 0; i < (event as TouchEvent).changedTouches.length; i++) {
             offsetX = (event as TouchEvent).changedTouches[i].pageX - progress.getBoundingClientRect().left
           }

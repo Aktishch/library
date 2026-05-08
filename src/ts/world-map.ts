@@ -38,8 +38,8 @@ export default (container: Container = document): void => {
     }
 
     const currentCountry = (): void => {
-      flag.src = String(country.dataset.worldSource)
-      title.innerText = String(country.dataset.worldCountry)
+      if (country.dataset.worldSource) flag.src = country.dataset.worldSource
+      if (country.dataset.worldCountry) title.innerText = country.dataset.worldCountry
     }
 
     image.classList.add('pointer-events-none', 'size-5')
@@ -51,7 +51,9 @@ export default (container: Container = document): void => {
     image.setAttribute('href', '/img/pictures/flag.svg')
     image.setAttribute('y', String(positionY - (image.getBoundingClientRect().height * ratio) / 1.2))
     image.setAttribute('x', String(positionX))
-    text.innerHTML = String(country.dataset.worldCountry)
+
+    if (country.dataset.worldCountry) text.innerHTML = country.dataset.worldCountry
+
     text.setAttribute('y', String(positionY + (text.getBoundingClientRect().height * ratio) / 1.2))
     text.setAttribute('x', String(positionX))
     rect.setAttribute('width', String(text.getBoundingClientRect().width))
