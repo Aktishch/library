@@ -3,6 +3,7 @@ import { createCalendar } from '@ts/air-datepicker'
 import imagePreview from '@ts/image-preview'
 import lazyLoad from '@ts/lazy-load'
 import { getStateSubmitBtn } from '@ts/submit-handler'
+import { touchDevice } from '@utils'
 
 interface Dialog {
   open: (src: string) => void
@@ -18,6 +19,15 @@ declare global {
 }
 
 Fancybox.getDefaults().placeFocusBack = false
+
+if (!touchDevice()) {
+  Fancybox.getDefaults().on.ready = (fancyboxRef): void => {
+    const container = fancyboxRef.getContainer() as HTMLElement
+
+    container.setAttribute('data-lenis-prevent', '')
+  }
+}
+
 window.Fancybox = Fancybox
 
 const loadUpdate = (): void => lazyLoad().update()

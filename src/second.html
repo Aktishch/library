@@ -32,7 +32,7 @@
   </h3>
   <div class="grid grid-cols-2 lg:grid-cols-3 grid-flow-row-dense gap-3 md:gap-5 lg:gap-8 w-full">
     <% ['lg:row-5', 'lg:row-4', 'lg:row-5', 'lg:row-5', 'lg:row-4', 'lg:row-4'].forEach((item) => { %>
-    <div class="<%= item %> duration-1000 anim anim-circle" data-anim>
+    <div class="duration-1000 anim anim-circle <%= item %>" data-anim>
       <a class="pack pack-xl bg-grey dark:bg-dark rounded-xl shadow-md h-full" data-media data-movement="light" data-fancybox="grid" draggable="false" href="/img/pictures/town-grey.jpg">
         <%= loader({className: null, icon}) %>
         <%= picture({src: '/', format: '', className: 'pack-image image rounded-inherit', data: 'data-lazy data-src="/img/pictures/town-grey.jpg"'}) %>

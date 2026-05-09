@@ -1,3 +1,4 @@
+import { touchDevice } from '@utils'
 import LocomotiveScroll from 'locomotive-scroll'
 
 declare global {
@@ -9,6 +10,8 @@ declare global {
 window.LocomotiveScroll = LocomotiveScroll
 
 export default (): void => {
+  if (touchDevice()) return
+
   new window.LocomotiveScroll({
     lenisOptions: {
       wrapper: window,

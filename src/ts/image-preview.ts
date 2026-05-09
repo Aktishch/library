@@ -52,7 +52,7 @@ export default (container: Container = document): void => {
               submitBtn.click()
 
               if (preview.dataset.preview) {
-                const avatar = document.getElementById(preview.dataset.preview) as HTMLImageElement
+                const avatar = document.querySelector(`*[data-avatar="${preview.dataset.preview}"]`) as HTMLImageElement
 
                 avatar.src = url
               }

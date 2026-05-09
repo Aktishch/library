@@ -14,10 +14,11 @@ export const scrollToElement = (block: HTMLElement): void => {
 
 export default (): void => {
   document.addEventListener('click', ((event: Event): void => {
-    if ((event.target as HTMLAnchorElement).closest('[data-scroll]')) {
+    const link = event.target as HTMLAnchorElement
+
+    if (link.closest('[data-scroll-to]')) {
       event.preventDefault()
 
-      const link = (event.target as HTMLAnchorElement).closest('[data-scroll]') as HTMLAnchorElement
       const id: string = String(link.getAttribute('href'))
 
       if (id[0] !== '#' || id === '#') return

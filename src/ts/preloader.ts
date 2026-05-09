@@ -1,37 +1,30 @@
 import { createError, en, scrollbarHidden, scrollbarShow } from '@utils'
 
-interface LoadTimePreloader {
-  item: HTMLDivElement
-  ms: number
-}
-
 type Resolve = (value: HTMLDivElement | PromiseLike<HTMLDivElement>) => void
 type Reject = (reason?: string) => void
 
-const loadTimePreloader = ({ item, ms }: LoadTimePreloader): Promise<HTMLDivElement> => {
-  scrollbarHidden()
+const loadTimePreloader = (preloader: HTMLDivElement): Promise<HTMLDivElement> => {
+  return new Promise((resolve: Resolve, reject: Reject): void => {
+    if (preloader) {
+      scrollbarHidden()
 
-  return new Promise((resolve: Resolve, reject: Reject): NodeJS.Timeout => {
-    return setTimeout((): void => {
-      item ? resolve(item) : reject(en ? 'Preloader was not found' : 'Прелоадер не был найден')
-    }, ms)
+      const duration: number = 500
+
+      preloader.style.transitionDuration = `${duration}ms`
+      preloader.classList.add('invisible', 'opacity-0')
+
+      setTimeout((): void => resolve(preloader), duration)
+    } else {
+      reject(en ? 'Preloader was not found' : 'Прелоадер не был найден')
+    }
   })
 }
 
 export default async (): Promise<void> => {
-  const preloader = document.querySelector('*[data-preloader]') as HTMLDivElement
-
-  if (!preloader) return
-
-  const duration: number = 500
-
-  preloader.style.transitionDuration = `${duration}ms`
-  preloader.classList.add('invisible', 'opacity-0')
-
-  await loadTimePreloader({ item: preloader, ms: duration })
-    .then((item: HTMLDivElement): void => {
+  await loadTimePreloader(document.querySelector('*[data-preloader]') as HTMLDivElement)
+    .then((preloader: HTMLDivElement): void => {
       scrollbarShow()
-      item.remove()
+      preloader.remove()
     })
     .catch((error: string): void => createError(error))
 }

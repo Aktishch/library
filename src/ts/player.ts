@@ -132,7 +132,7 @@ const setPlayer = ({ id, playlist }: Player): void => {
             return response.ok ? response.blob() : null
           })
           .then((blob: Blob | null): void => {
-            blob ? loader.classList.add('hidden') : loader.classList.remove('hidden')
+            blob && requestUrl !== '' ? loader.classList.add('hidden') : loader.classList.remove('hidden')
           })
           .catch((error: string): void => createError(error))
       }

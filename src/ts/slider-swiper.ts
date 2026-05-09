@@ -188,12 +188,18 @@ const createBgSlider = (container: Container = document): Swiper | undefined => 
 }
 
 const createDescriptionSlider = (container: Container = document): void => {
-  const slider = container.querySelector('*[data-slider="description"]') as HTMLDivElement
+  const description = container.querySelector('*[data-description]') as HTMLElement
+
+  if (!description) return
+
+  const slider = description.querySelector('*[data-slider="description"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
 
   const value: string = slider.dataset.slider
   const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
+  const thumbs: Swiper | undefined = createThumbsSlider(description)
+  const bg: Swiper | undefined = createBgSlider(description)
 
   new window.Swiper(swiper, {
     slidesPerView: 1,
@@ -202,11 +208,11 @@ const createDescriptionSlider = (container: Container = document): void => {
     speed: 1000,
     grabCursor: true,
     thumbs: {
-      swiper: createThumbsSlider(),
+      swiper: thumbs,
     },
     on: {
       slideChange: (swiper: Swiper): void => {
-        ;(createBgSlider() as Swiper).slideTo(swiper.activeIndex)
+        if (bg !== undefined) bg.slideTo(swiper.activeIndex)
       },
     },
   }) as Swiper

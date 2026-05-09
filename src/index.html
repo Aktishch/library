@@ -24,7 +24,7 @@
     Main block
   </h1>
   <div class="w-full duration-500 delay-300 anim anim-up" data-anim>
-    <a class="btn btn-primary btn-fill btn-lg btn-glow w-full max-w-48 mx-auto" data-waved="light" data-scroll draggable="false" href="#content">Show more</a>
+    <a class="btn btn-primary btn-fill btn-lg btn-glow w-full max-w-48 mx-auto" data-waved="light" data-scroll-to draggable="false" href="#content">Show more</a>
   </div>
 </section>
 
@@ -234,7 +234,7 @@
   <div class="relative w-full max-w-xl mx-auto" data-filtering="filtering">
     <%= picture({src: '/img/pictures/circle-grey', format: 'svg', className: 'absolute top-20 -left-8 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer data-parallax-speed="4" data-parallax-depth="2"'}) %>
     <%= picture({src: '/img/pictures/circle-white', format: 'svg', className: 'absolute -bottom-8 -right-8 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-parallax-layer="reverse" data-parallax-speed="4" data-parallax-depth="2"'}) %>
-    <%= picture({src: '/img/pictures/circle-red', format: 'svg', className: 'absolute bottom-0 -right-7 z-10 drop-shadow-md pointer-events-none w-16', data: null}) %>
+    <%= picture({src: '/img/pictures/circle-red', format: 'svg', className: 'absolute bottom-0 -right-7 z-10 drop-shadow-md pointer-events-none w-16', data: 'data-scroll data-scroll-speed="-0.1"'}) %>
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-4 relative bg-grey md:bg-opacity-0 text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white overflow-hidden md:pb-4 mb-5 md:mb-10 duration-500 anim anim-up" data-anim>
       <% ['text-style', 'form-validate', 'switches', 'file'].forEach((item, key) => { %>
       <button class="text-xl grow p-4 md:p-0 [&[data-active]]:bg-second md:[&[data-active]]:bg-opacity-0 [&[data-active]]:text-white md:[&[data-active]]:text-primary [&[data-active]]:pointer-events-none" data-filtering-category="filtering" data-filtering-value="<%= key %>" <%= key === 0 ? 'data-active' : null %>><%= item %></button>
@@ -446,7 +446,7 @@
               <div class="flex items-center justify-center absolute inset-0">
                 <%= icon({id: 'user', className: 'icon text-white text-sm', data: null}) %>
               </div>
-              <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'id="avatar"'}) %>
+              <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'data-avatar="avatar"'}) %>
             </a>
             <h4 class="font-bold text-2xl">
               Name Surname

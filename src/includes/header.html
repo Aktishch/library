@@ -74,7 +74,7 @@
         <div class="absolute top-10 right-0 bg-white rounded-lg shadow-md w-full" data-accordion-content>
           <div class="flex flex-col gap-4 p-4">
             <% nav.blocks.forEach((item) => { %>
-            <a class="btn btn-gray text-sm underline-offset-4 hover:underline" data-waved="dark" data-scroll draggable="false" href="<%= item.id %>"><%= item.text %></a>
+            <a class="btn btn-gray text-sm underline-offset-4 hover:underline" data-waved="dark" data-scroll-to draggable="false" href="<%= item.id %>"><%= item.text %></a>
             <% }) %>
           </div>
         </div>
@@ -137,9 +137,9 @@
     }
   ] %>
 
-  <div class="group/menu fixed inset-0 z-40 bg-black/50 transition-[opacity,_visibility] duration-100 [&[data-sidebar=close]]:invisible [&[data-sidebar=close]]:opacity-0" data-sidebar="close" data-breakpoint="lg" id="menu">
-    <div class="flex flex-col bg-black/70 backdrop-blur-sm overflow-auto transition-[opacity,_visibility,_transform] duration-300 size-full max-w-[375px] group-[[data-sidebar=close]]/menu:invisible group-[[data-sidebar=close]]/menu:opacity-0 group-[[data-sidebar=close]]/menu:-translate-x-full">
-      <div class="flex items-center justify-between gap-2 bg-black transition-transform duration-500 delay-300 p-4 group-[[data-sidebar=close]]/menu:-translate-y-full">
+  <div class="group/menu fixed inset-0 z-40 bg-black/50 transition-[opacity,_visibility] duration-100 [&:not([data-open])]:invisible [&:not([data-open])]:opacity-0" data-menu data-sidebar="menu" data-breakpoint="lg" data-lenis-prevent>
+    <div class="flex flex-col bg-black/70 backdrop-blur-sm overflow-auto transition-[opacity,_visibility,_transform] duration-300 size-full max-w-[375px] group-[:not([data-open])]/menu:invisible group-[:not([data-open])]/menu:opacity-0 group-[:not([data-open])]/menu:-translate-x-full">
+      <div class="flex items-center justify-between gap-2 bg-black transition-transform duration-500 delay-300 p-4 group-[:not([data-open])]/menu:-translate-y-full">
         <a class="btn btn-white shrink-0 w-36" data-waved="light" draggable="false" href="/">
           <%= picture({src: '/img/pictures/logo', format: 'png', className: 'block w-full', data: null}) %>
         </a>
@@ -148,7 +148,7 @@
           <%= icon({id: 'close', className: 'icon text-white text-2xl', data: null}) %>
         </button>
       </div>
-      <div class="flex flex-col items-start gap-4 text-white transition-[opacity,_visibility,_transform] duration-700 delay-500 px-4 pt-4 pb-10 group-[[data-sidebar=close]]/menu:invisible group-[[data-sidebar=close]]/menu:opacity-0 group-[[data-sidebar=close]]/menu:-translate-x-full">
+      <div class="flex flex-col items-start gap-4 text-white transition-[opacity,_visibility,_transform] duration-700 delay-500 px-4 pt-4 pb-10 group-[:not([data-open])]/menu:invisible group-[:not([data-open])]/menu:opacity-0 group-[:not([data-open])]/menu:-translate-x-full">
         <% nav.pages.forEach((item) => { %>
         <a class="text-xl underline-offset-4 hover:underline" draggable="false" href="<%= item.link %>"><%= item.text %></a>
         <% }) %>
@@ -160,13 +160,13 @@
           <div data-accordion-content>
             <div class="flex flex-col items-start gap-2 pl-5 mt-2">
               <% nav.blocks.forEach((item) => { %>
-              <a class="text-lg underline-offset-4 hover:underline" data-scroll data-sidebar-close="menu" draggable="false" href="<%= item.id %>"><%= item.text %></a>
+              <a class="text-lg underline-offset-4 hover:underline" data-scroll-to data-sidebar-close="menu" draggable="false" href="<%= item.id %>"><%= item.text %></a>
               <% }) %>
             </div>
           </div>
         </div>
       </div>
-      <div class="transition-[opacity,_visibility,_transform] duration-500 delay-1000 px-4 pt-4 pb-10 mt-auto group-[[data-sidebar=close]]/menu:invisible group-[[data-sidebar=close]]/menu:opacity-0 group-[[data-sidebar=close]]/menu:translate-y-1/4">
+      <div class="transition-[opacity,_visibility,_transform] duration-500 delay-1000 px-4 pt-4 pb-10 mt-auto group-[:not([data-open])]/menu:invisible group-[:not([data-open])]/menu:opacity-0 group-[:not([data-open])]/menu:translate-y-1/4">
         <div class="text-white mb-7" data-pallete>
           <ul class="flex flex-col gap-4 mb-8">
             <% pallete.forEach((item) => { %>
@@ -251,7 +251,7 @@
 
   <!-- Умное меню -->
 
-  <nav class="container <%= data.status ? null : 'hidden' %> relative z-10 py-4 duration-500 anim anim-down" data-anim>
+  <nav class="container relative z-10 py-4 duration-500 anim anim-down <%= data.status ? null : 'hidden' %>" data-anim>
     <div class="flex items-center justify-between w-full max-w-full" data-smart>
       <h2 class="font-alt font-bold text-lg" data-smart-title>
         Smart-menu items

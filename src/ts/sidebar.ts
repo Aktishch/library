@@ -4,14 +4,18 @@ import { scrollbarHidden, scrollbarShow } from '@utils'
 type SidebarBreakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 type SidebarButton = HTMLButtonElement | HTMLAnchorElement
 
+const getSidebar = (value: string): HTMLDivElement => {
+  return document.querySelector(`*[data-sidebar="${value}"]`) as HTMLDivElement
+}
+
 export const openSidebar = (sidebar: HTMLElement): void => {
   scrollbarHidden()
-  sidebar.dataset.sidebar = 'open'
+  sidebar.setAttribute('data-open', '')
 }
 
 export const closeSidebar = (sidebar: HTMLElement): void => {
   scrollbarShow()
-  sidebar.dataset.sidebar = 'close'
+  sidebar.removeAttribute('data-open')
 }
 
 export default (): void => {
@@ -19,13 +23,13 @@ export default (): void => {
     const toggle = event.target as SidebarButton | HTMLDivElement
 
     if (toggle.closest('[data-sidebar-open]') && toggle.dataset.sidebarOpen) {
-      const sidebar = document.getElementById(toggle.dataset.sidebarOpen) as HTMLDivElement
+      const sidebar = getSidebar(toggle.dataset.sidebarOpen) as HTMLDivElement
 
       if (sidebar) openSidebar(sidebar)
     }
 
     if (toggle.closest('[data-sidebar-close]') && toggle.dataset.sidebarClose) {
-      const sidebar = document.getElementById(toggle.dataset.sidebarClose) as HTMLDivElement
+      const sidebar = getSidebar(toggle.dataset.sidebarClose) as HTMLDivElement
 
       if (sidebar) closeSidebar(sidebar)
     }

@@ -4,7 +4,7 @@ import { touchDevice } from '@utils'
 export default (): void => {
   if (!touchDevice()) return
 
-  const menu = document.getElementById('menu') as HTMLDivElement
+  const menu = document.querySelector('*[data-menu]') as HTMLDivElement
 
   if (!menu) return
 
@@ -20,7 +20,7 @@ export default (): void => {
   const touchEnd = (event: TouchEvent): void => {
     if (!active) return
 
-    if ((event.target as HTMLElement).closest(`#${menu.id}`)) {
+    if ((event.target as HTMLElement).closest('[data-menu]')) {
       if (initialX - currentX > value) closeSidebar(menu)
     } else {
       if (initialX <= 32 && initialX - currentX < -value) openSidebar(menu)
