@@ -1,4 +1,4 @@
-import { Container, createError, fileHandler, uploadFile, validation } from '@utils'
+import { Container, createError, getValidate, handleFile, uploadFile } from '@utils'
 
 const dragEvents: string[] = ['dragenter', 'dragover', 'dragleave', 'drop']
 const dragClassName: string[] = ['bg-opacity-50']
@@ -24,7 +24,7 @@ export default (container: Container = document): void => {
       input.files = data.files
     }
 
-    const defaultState = (reset: boolean = true): void => {
+    const setDefaultState = (reset: boolean = true): void => {
       drag.classList.remove('pointer-events-none')
       image.src = ''
       remove.disabled = true
@@ -34,11 +34,11 @@ export default (container: Container = document): void => {
       if (reset) uploadFilesList()
     }
 
-    const getImagePreview = (files: FileList): void => {
+    const setPreview = (files: FileList): void => {
       if (files.length !== 0) {
         uploadFile(files[0] as File)
           .then(({ file, url }): void => {
-            if (!fileHandler({ error, file })) return
+            if (!handleFile({ error, file })) return
 
             drag.classList.add('pointer-events-none')
             image.src = url
@@ -64,7 +64,7 @@ export default (container: Container = document): void => {
       uploadFilesList()
     }
 
-    const urlImageToObject = async (): Promise<void> => {
+    const handleImage = async (): Promise<void> => {
       await fetch(requestUrl)
         .then((response: Response): Promise<Blob> | null => {
           return response.ok ? response.blob() : null
@@ -78,13 +78,13 @@ export default (container: Container = document): void => {
             input.files = data.files
             data = new DataTransfer()
           } else {
-            defaultState()
+            setDefaultState()
           }
         })
         .catch((error: string): void => createError(error))
     }
 
-    urlImageToObject().finally((): void => getImagePreview(input.files as FileList))
+    handleImage().finally((): void => setPreview(input.files as FileList))
 
     dragEvents.forEach((dragEvent: string): void => {
       drag.addEventListener(dragEvent, ((event: DragEvent): void => {
@@ -105,7 +105,7 @@ export default (container: Container = document): void => {
             const files: FileList = (event.dataTransfer as DataTransfer).files
 
             drag.classList.remove(...dragClassName)
-            getImagePreview(files)
+            setPreview(files)
             break
           }
         }
@@ -113,17 +113,17 @@ export default (container: Container = document): void => {
     })
 
     input.addEventListener('change', ((): void => {
-      getImagePreview(input.files as FileList)
+      setPreview(input.files as FileList)
     }) as EventListener)
 
     remove.addEventListener('click', ((): void => {
-      defaultState()
+      setDefaultState()
     }) as EventListener)
 
     form.addEventListener('submit', ((event: Event): void => {
       event.preventDefault()
 
-      if (validation(form)) defaultState(false)
+      if (getValidate(form)) setDefaultState(false)
     }) as EventListener)
   })
 }

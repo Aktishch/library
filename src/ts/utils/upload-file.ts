@@ -1,4 +1,4 @@
-import { en } from '@utils/en'
+import { isEn } from '@utils/is-en'
 
 interface UploadFile {
   file: File
@@ -11,14 +11,14 @@ type Reject = (reason?: string) => void
 export const uploadFile = (file: File): Promise<UploadFile> => {
   return new Promise<UploadFile>((resolve: Resolve, reject: Reject): void => {
     const reader: FileReader = new FileReader()
-    const createReject = (): void => reject(en ? 'File upload error' : 'Ошибка при загрузке файла')
+    const setReject = (): void => reject(isEn ? 'File upload error' : 'Ошибка при загрузке файла')
 
     reader.readAsDataURL(file)
 
     reader.addEventListener('loadend', ((): void => {
-      reader.result ? resolve({ file, url: reader.result.toString() }) : createReject()
+      reader.result ? resolve({ file, url: reader.result.toString() }) : setReject()
     }) as EventListener)
 
-    reader.addEventListener('error', createReject as EventListener)
+    reader.addEventListener('error', setReject as EventListener)
   })
 }

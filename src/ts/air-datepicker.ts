@@ -1,5 +1,5 @@
 import filtering from '@ts/filtering'
-import { Container, touchDevice } from '@utils'
+import { Container, getTouchDevice } from '@utils'
 import AirDatepicker, { AirDatepickerPosition } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
 
@@ -40,7 +40,7 @@ export const createCalendar = (container: Container = document): void => {
   const dates: number[] = []
   let timeOut: NodeJS.Timeout
 
-  const renderCellHandler = ({ date, cellType }: AirDatepickerCell): AirDatepickerRenderCell | undefined => {
+  const renderCell = ({ date, cellType }: AirDatepickerCell): AirDatepickerRenderCell | undefined => {
     if (cellType === 'day') {
       if (timeOut) clearTimeout(timeOut)
 
@@ -68,7 +68,7 @@ export const createCalendar = (container: Container = document): void => {
 
   new window.AirDatepicker(calendar, {
     locale: localeRu,
-    onRenderCell: renderCellHandler,
+    onRenderCell: renderCell,
     selectedDates: [new Date()],
   }) as AirDatepicker<HTMLDivElement>
 
@@ -91,7 +91,7 @@ export default (container: Container = document): void => {
         })
       },
       locale: localeRu,
-      isMobile: touchDevice(),
+      isMobile: getTouchDevice(),
       autoClose: true,
       minDate: new Date(),
       position: (inputMin.dataset.position as AirDatepickerPosition) || 'bottom left',
@@ -104,7 +104,7 @@ export default (container: Container = document): void => {
         })
       },
       locale: localeRu,
-      isMobile: touchDevice(),
+      isMobile: getTouchDevice(),
       autoClose: true,
       minDate: new Date(),
       position: (inputMax.dataset.position as AirDatepickerPosition) || 'bottom left',

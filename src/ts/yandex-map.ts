@@ -1,4 +1,4 @@
-import { createError, en } from '@utils'
+import { createError, isEn } from '@utils'
 import ymaps from 'ymaps'
 
 type ymaps = typeof ymaps
@@ -27,7 +27,7 @@ export default (): void => {
     const coordinates: string[] = yandexMap.dataset.yandexMap.split(',')
     const point: string = yandexMap.dataset.point || ''
     const pointSize: number[] = [62, 62]
-    const lang: string = en ? 'en_US' : 'ru_RU'
+    const lang: string = isEn ? 'en_US' : 'ru_RU'
     const mark: number[] = []
 
     for (let i: number = 0; i < coordinates.length; i++) mark.push(Number(coordinates[i]))

@@ -1,15 +1,15 @@
 import { errors } from '@utils/errors'
 
-type FormLabel = HTMLLabelElement | HTMLDivElement
+type Label = HTMLLabelElement | HTMLDivElement
 
 const inputClassName: string[] = ['input-error']
 const errorClassName: string[] = ['invisible', 'opacity-0']
 
-export const validation = (form: HTMLFormElement): boolean => {
-  const labels = form.querySelectorAll('*[data-label]') as NodeListOf<FormLabel>
+export const getValidate = (form: HTMLFormElement): boolean => {
+  const labels = form.querySelectorAll('*[data-label]') as NodeListOf<Label>
   let validate: boolean = true
 
-  labels.forEach((label: FormLabel): void => {
+  labels.forEach((label: Label): void => {
     if (!label) return
 
     const input = label.querySelector('*[data-input]') as HTMLInputElement
@@ -17,7 +17,7 @@ export const validation = (form: HTMLFormElement): boolean => {
 
     if (!input || !error) return
 
-    const getError = (): void => {
+    const showError = (): void => {
       input.focus()
       input.classList.add(...inputClassName)
       error.classList.remove(...errorClassName)
@@ -32,16 +32,16 @@ export const validation = (form: HTMLFormElement): boolean => {
     const maxLengthInputTel = (value: number): void => {
       if (input.value.length > 0 && input.value.length < value) {
         error.innerText = errors.tel
-        getError()
+        showError()
       }
     }
 
     error.innerText = errors.default
-    input.value.length === 0 ? getError() : hideError()
+    input.value.length === 0 ? showError() : hideError()
 
     switch (input.dataset.input) {
       case 'text': {
-        if (input.value.length === 1) getError()
+        if (input.value.length === 1) showError()
         break
       }
 
@@ -64,7 +64,7 @@ export const validation = (form: HTMLFormElement): boolean => {
       case 'email': {
         if (!/^\s*([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,8})+\s*$/.test(input.value)) {
           error.innerText = errors.email
-          getError()
+          showError()
         }
 
         break
@@ -73,7 +73,7 @@ export const validation = (form: HTMLFormElement): boolean => {
       case 'login': {
         if (!/^[a-zA-Z0-9]+$/.test(input.value)) {
           error.innerText = errors.login
-          getError()
+          showError()
         }
 
         break
@@ -82,7 +82,7 @@ export const validation = (form: HTMLFormElement): boolean => {
       case 'password': {
         if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(input.value)) {
           error.innerText = errors.password
-          getError()
+          showError()
         }
 
         break
@@ -91,7 +91,7 @@ export const validation = (form: HTMLFormElement): boolean => {
       case 'select': {
         if (input.value === 'empty') {
           error.innerText = errors.select
-          getError()
+          showError()
         }
 
         break
@@ -100,7 +100,7 @@ export const validation = (form: HTMLFormElement): boolean => {
       case 'description': {
         if (input.value.length > 0 && input.value.length < 10) {
           error.innerText = errors.text
-          getError()
+          showError()
         }
 
         break
@@ -109,7 +109,7 @@ export const validation = (form: HTMLFormElement): boolean => {
       case 'file': {
         if ((input.files as FileList).length === 0) {
           error.innerText = errors.file.default
-          getError()
+          showError()
         }
 
         break

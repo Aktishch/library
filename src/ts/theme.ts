@@ -1,4 +1,4 @@
-import { getCookies } from '@utils'
+import { setCookies } from '@utils'
 
 export default (): void => {
   const html = document.documentElement as HTMLHtmlElement
@@ -16,7 +16,7 @@ export default (): void => {
 
     html.dataset.theme = status ? '' : 'dark'
     togglesChecked(!status)
-    getCookies({ value, path: '/', expires: !status ? 31 : -1 })
+    setCookies({ value, path: '/', expires: !status ? 31 : -1 })
   }
 
   if (document.cookie.indexOf(value) !== -1) {

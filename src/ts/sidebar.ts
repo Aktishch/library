@@ -1,5 +1,5 @@
 import { media } from '@plugins/media'
-import { scrollbarHidden, scrollbarShow } from '@utils'
+import { hideScrollbar, showScrollbar } from '@utils'
 
 type SidebarBreakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 type SidebarButton = HTMLButtonElement | HTMLAnchorElement
@@ -9,12 +9,12 @@ const getSidebar = (value: string): HTMLDivElement => {
 }
 
 export const openSidebar = (sidebar: HTMLElement): void => {
-  scrollbarHidden()
+  hideScrollbar()
   sidebar.setAttribute('data-open', '')
 }
 
 export const closeSidebar = (sidebar: HTMLElement): void => {
-  scrollbarShow()
+  showScrollbar()
   sidebar.removeAttribute('data-open')
 }
 

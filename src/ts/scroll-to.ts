@@ -1,31 +1,42 @@
-import { scrolledPage } from '@utils'
+import { getScrollPosition } from '@utils'
 
-export const scrollToElement = (block: HTMLElement): void => {
+interface ScrollTo {
+  block: HTMLElement
+  behavior: 'smooth' | 'auto'
+}
+
+const hash: string = window.location.hash
+
+export const targetId: string | null = hash ? hash.replace('#', '') : null
+
+if (hash) window.history.replaceState(null, document.title, window.location.pathname + window.location.search)
+
+const scrollTo = ({ block, behavior }: ScrollTo): void => {
   if (!block) return
 
   const header = document.querySelector('*[data-header]') as HTMLElement
-  const offsetTop: number = block.getBoundingClientRect().top + scrolledPage().top - (header ? header.offsetHeight : 0)
+  const offsetTop: number =
+    block.getBoundingClientRect().top + getScrollPosition().top - (header ? header.offsetHeight : 0)
 
-  window.scrollTo({
-    top: offsetTop,
-    behavior: 'smooth',
-  })
+  window.scrollTo({ top: offsetTop, behavior })
 }
 
 export default (): void => {
+  if (targetId) scrollTo({ block: document.querySelector(`#${targetId}`) as HTMLElement, behavior: 'auto' })
+
   document.addEventListener('click', ((event: Event): void => {
     const link = event.target as HTMLAnchorElement
 
     if (link.closest('[data-scroll-to]')) {
       event.preventDefault()
 
-      const id: string = String(link.getAttribute('href'))
+      const id: string | null = link.getAttribute('href')
 
-      if (id[0] !== '#' || id === '#') return
+      if (id) {
+        if (id[0] !== '#' || id === '#') return
 
-      const block = document.querySelector(id) as HTMLElement
-
-      scrollToElement(block)
+        scrollTo({ block: document.querySelector(id) as HTMLElement, behavior: 'smooth' })
+      }
     }
   }) as EventListener)
 }

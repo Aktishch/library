@@ -1,6 +1,6 @@
 import { Coordinates } from '@utils/types'
 
-export const scrolledPage = (): Coordinates => {
+export const getScrollPosition = (): Coordinates => {
   return {
     top:
       (window && window.scrollY && window.self.pageYOffset) ||

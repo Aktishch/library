@@ -1,6 +1,6 @@
-import { touchDevice } from '@utils'
+import { getTouchDevice } from '@utils'
 
-interface PalleteColors {
+interface Colors {
   [index: string]: {
     hex: string
     rgb: string
@@ -8,18 +8,18 @@ interface PalleteColors {
 }
 
 export default (): void => {
-  if (touchDevice()) return
+  if (getTouchDevice()) return
 
   const html = document.documentElement as HTMLHtmlElement
   const pallete = html.querySelector('*[data-pallete]') as HTMLDivElement
 
   if (!pallete) return
 
-  const colors: PalleteColors = JSON.parse(localStorage.getItem('pallete') || '{}')
   const items = pallete.querySelectorAll('*[data-pallete-item]') as NodeListOf<HTMLLIElement>
   const reset = pallete.querySelector('*[data-pallete-reset]') as HTMLButtonElement
+  const colors: Colors = JSON.parse(localStorage.getItem('pallete') || '{}')
 
-  const hexToRGB = (hex: string): string => {
+  const getRgb = (hex: string): string => {
     hex = hex.replace(/^#/, '')
 
     const r: number = parseInt(hex.substring(0, 2), 16)
@@ -43,7 +43,7 @@ export default (): void => {
 
     if (!name || !value) return
 
-    const colorRemove = (): void => {
+    const removeColor = (): void => {
       if (colors[name]) delete colors[name]
 
       input.value = value
@@ -55,14 +55,14 @@ export default (): void => {
 
     input.addEventListener('input', ((): void => {
       const hex: string = input.value
-      const rgb: string = hexToRGB(hex)
+      const rgb: string = getRgb(hex)
 
       colors[name] = { hex, rgb }
       html.style.setProperty(`--color-${name}`, rgb)
       localStorage.setItem('pallete', JSON.stringify(colors))
     }) as EventListener)
 
-    button.addEventListener('click', colorRemove as EventListener)
-    reset.addEventListener('click', colorRemove as EventListener)
+    button.addEventListener('click', removeColor as EventListener)
+    reset.addEventListener('click', removeColor as EventListener)
   })
 }

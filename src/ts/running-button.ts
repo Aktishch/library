@@ -1,4 +1,4 @@
-import { Container, Coordinates, touchDevice } from '@utils'
+import { Container, Coordinates, getTouchDevice } from '@utils'
 
 interface RandomPosition {
   min: number
@@ -8,7 +8,7 @@ interface RandomPosition {
 const randomPosition = ({ min, max }: RandomPosition): number => Math.floor(min + Math.random() * (max - min + 1))
 
 export default (container: Container = document): void => {
-  if (touchDevice()) return
+  if (getTouchDevice()) return
 
   const running = container.querySelector('*[data-running]') as HTMLDivElement
 

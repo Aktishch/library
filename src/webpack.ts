@@ -24,7 +24,7 @@ import listing from '@ts/listing'
 import locomotiveScroll from '@ts/locomotive-scroll'
 import menu from '@ts/menu'
 import movement from '@ts/movement'
-import outNumber from '@ts/out-number'
+import outNumbers from '@ts/out-numbers'
 import pallete from '@ts/pallete'
 import parallax from '@ts/parallax'
 import password from '@ts/password'
@@ -114,7 +114,7 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   yandexMap()
   preloader().finally((): void => {
     animation()
-    outNumber()
+    outNumbers()
     writeText()
   })
 }) as EventListener)

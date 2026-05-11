@@ -4,9 +4,9 @@ interface DataSave {
   [index: string]: string | boolean
 }
 
-type FormInput = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+type Input = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 
-const inputHandler = (input: FormInput): boolean =>
+const handleInput = (input: Input): boolean =>
   !input || input.hasAttribute('hidden') || input.type === 'hidden' || input.type === 'file'
 
 export default (container: Container = document): void => {
@@ -16,44 +16,44 @@ export default (container: Container = document): void => {
     if (!form || !form.dataset.save) return
 
     const value: string = form.dataset.save
-    const inputs: FormInput[] = [
+    const inputs: Input[] = [
       ...form.querySelectorAll('input'),
       ...form.querySelectorAll('select'),
       ...form.querySelectorAll('textarea'),
     ]
-    const formData: DataSave = JSON.parse(sessionStorage.getItem(value) || '{}')
+    const dataSave: DataSave = JSON.parse(sessionStorage.getItem(value) || '{}')
 
-    const checkingValue = (): void => {
-      inputs.forEach((input: FormInput): void => {
-        if (inputHandler(input)) return
+    const enterData = (): void => {
+      inputs.forEach((input: Input): void => {
+        if (handleInput(input)) return
 
         if (input.type === 'checkbox' || input.type === 'radio') {
-          formData[input.name] = (input as HTMLInputElement).checked
+          dataSave[input.name] = (input as HTMLInputElement).checked
         } else if (input.value.length !== 0) {
-          formData[input.name] = input.value
+          dataSave[input.name] = input.value
         }
       })
 
-      sessionStorage.setItem(value, JSON.stringify(formData))
+      sessionStorage.setItem(value, JSON.stringify(dataSave))
     }
 
-    if (Object.keys(formData).length !== 0) {
-      inputs.forEach((input: FormInput): void => {
-        if (inputHandler(input)) return
+    if (Object.keys(dataSave).length !== 0) {
+      inputs.forEach((input: Input): void => {
+        if (handleInput(input)) return
 
-        for (const key in formData) {
+        for (const key in dataSave) {
           if (input.name === key) {
             if (input.type === 'checkbox' || input.type === 'radio') {
-              ;(input as HTMLInputElement).checked = formData[key] as boolean
+              ;(input as HTMLInputElement).checked = dataSave[key] as boolean
             } else {
-              input.value = formData[key] as string
+              input.value = dataSave[key] as string
             }
           }
         }
       })
     }
 
-    checkingValue()
-    form.addEventListener('input', checkingValue)
+    enterData()
+    form.addEventListener('input', enterData)
   })
 }

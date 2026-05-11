@@ -1,4 +1,4 @@
-import { Coordinates, touchDevice } from '@utils'
+import { Coordinates, getTouchDevice } from '@utils'
 
 interface WavedCircle {
   positionY: number
@@ -29,7 +29,7 @@ const setWaved = (event: Event): void => {
 
     switch (event.type) {
       case 'touchstart': {
-        if (!touchDevice()) return
+        if (!getTouchDevice()) return
 
         createCircle({
           positionY: (event as TouchEvent).touches[0].clientY,
@@ -40,7 +40,7 @@ const setWaved = (event: Event): void => {
       }
 
       case 'mousedown': {
-        if (touchDevice()) return
+        if (getTouchDevice()) return
 
         createCircle({
           positionY: (event as MouseEvent).clientY,

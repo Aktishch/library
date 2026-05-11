@@ -1,4 +1,4 @@
-import { en } from '@utils'
+import { isEn } from '@utils'
 
 export default (): void => {
   const title = document.querySelector('title') as HTMLTitleElement
@@ -10,7 +10,7 @@ export default (): void => {
 
   window.addEventListener('blur', ((): void => {
     timer = setTimeout((): void => {
-      title.innerText = en ? 'You have left the page' : 'Вы покинули страницу'
+      title.innerText = isEn ? 'You have left the page' : 'Вы покинули страницу'
     }, 5000)
   }) as EventListener)
 

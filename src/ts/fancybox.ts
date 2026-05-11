@@ -3,7 +3,7 @@ import { createCalendar } from '@ts/air-datepicker'
 import imagePreview from '@ts/image-preview'
 import lazyLoad from '@ts/lazy-load'
 import { getStateSubmitBtn } from '@ts/submit-handler'
-import { touchDevice } from '@utils'
+import { getTouchDevice } from '@utils'
 
 interface Dialog {
   open: (src: string) => void
@@ -20,7 +20,7 @@ declare global {
 
 Fancybox.getDefaults().placeFocusBack = false
 
-if (!touchDevice()) {
+if (!getTouchDevice()) {
   Fancybox.getDefaults().on.ready = (fancyboxRef): void => {
     const container = fancyboxRef.getContainer() as HTMLElement
 
@@ -30,7 +30,7 @@ if (!touchDevice()) {
 
 window.Fancybox = Fancybox
 
-const loadUpdate = (): void => lazyLoad().update()
+const updateLoad = (): void => lazyLoad().update()
 
 export const dialog: Dialog = {
   open: (src: string): void => {
@@ -44,7 +44,7 @@ export const dialog: Dialog = {
       {
         dragToClose: false,
         on: {
-          'Carousel.contentReady': (): void => loadUpdate(),
+          'Carousel.contentReady': (): void => updateLoad(),
         },
       }
     )
@@ -62,7 +62,7 @@ export const dialog: Dialog = {
         closeButton: false,
         backdropClick: false,
         on: {
-          'Carousel.contentReady': (): void => loadUpdate(),
+          'Carousel.contentReady': (): void => updateLoad(),
         },
       }
     )
@@ -78,7 +78,7 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-dialog]', {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (): void => loadUpdate(),
+      'Carousel.contentReady': (): void => updateLoad(),
     },
   })
 
@@ -86,7 +86,7 @@ export default (): void => {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
-        loadUpdate()
+        updateLoad()
         getStateSubmitBtn(slide.el)
       },
     },
@@ -96,7 +96,7 @@ export default (): void => {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
-        loadUpdate()
+        updateLoad()
         imagePreview(slide.el)
       },
     },
@@ -106,7 +106,7 @@ export default (): void => {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
-        loadUpdate()
+        updateLoad()
         createCalendar(slide.el)
       },
     },

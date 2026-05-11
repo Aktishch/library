@@ -1,4 +1,4 @@
-import { Container, scrollbarHidden, scrollbarShow } from '@utils'
+import { Container, hideScrollbar, showScrollbar } from '@utils'
 
 export default (container: Container = document): void => {
   const compares = container.querySelectorAll('*[data-compare]') as NodeListOf<HTMLDivElement>
@@ -13,23 +13,23 @@ export default (container: Container = document): void => {
     let value: number
     let position: number
 
-    const setSizeImage = (): void => {
+    const setWidthImage = (): void => {
       image.style.width = `${compare.offsetWidth}px`
     }
 
-    const compareStart = (event: Event): void => {
+    const startCompare = (event: Event): void => {
       if ((event.target as HTMLElement).closest('[data-compare-change]')) {
-        scrollbarHidden()
+        hideScrollbar()
         active = true
       }
     }
 
-    const compareEnd = (): void => {
-      scrollbarShow()
+    const endCompare = (): void => {
+      showScrollbar()
       active = false
     }
 
-    const compareMove = (event: Event): void => {
+    const moveCompare = (event: Event): void => {
       event.stopPropagation()
 
       if (!active) return
@@ -55,15 +55,15 @@ export default (container: Container = document): void => {
       change.style.left = `${value}px`
     }
 
-    setSizeImage()
-    window.addEventListener('resize', setSizeImage as EventListener)
-    compare.addEventListener('mousedown', compareStart as EventListener)
-    compare.addEventListener('mouseup', compareEnd as EventListener)
-    compare.addEventListener('mouseleave', compareEnd as EventListener)
-    compare.addEventListener('mousemove', compareMove as EventListener)
-    compare.addEventListener('touchstart', compareStart as EventListener, { passive: true })
-    compare.addEventListener('touchend', compareEnd as EventListener, { passive: true })
-    compare.addEventListener('touchcancel', compareEnd as EventListener, { passive: true })
-    compare.addEventListener('touchmove', compareMove as EventListener, { passive: true })
+    setWidthImage()
+    window.addEventListener('resize', setWidthImage as EventListener)
+    compare.addEventListener('mousedown', startCompare as EventListener)
+    compare.addEventListener('mouseup', endCompare as EventListener)
+    compare.addEventListener('mouseleave', endCompare as EventListener)
+    compare.addEventListener('mousemove', moveCompare as EventListener)
+    compare.addEventListener('touchstart', startCompare as EventListener, { passive: true })
+    compare.addEventListener('touchend', endCompare as EventListener, { passive: true })
+    compare.addEventListener('touchcancel', endCompare as EventListener, { passive: true })
+    compare.addEventListener('touchmove', moveCompare as EventListener, { passive: true })
   })
 }

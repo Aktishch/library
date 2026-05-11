@@ -1,4 +1,4 @@
-import { Container, getCookies } from '@utils'
+import { Container, setCookies } from '@utils'
 
 export default (container: Container = document): void => {
   const cookies = container.querySelectorAll('*[data-cookie]') as NodeListOf<HTMLElement>
@@ -17,7 +17,7 @@ export default (container: Container = document): void => {
       const path: string = cookie.dataset.cookie || '/'
 
       button.addEventListener('click', ((): void => {
-        getCookies({ value, path, expires })
+        setCookies({ value, path, expires })
         cookie.remove()
       }) as EventListener)
     }

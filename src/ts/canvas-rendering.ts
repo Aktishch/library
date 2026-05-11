@@ -1,4 +1,4 @@
-import { Container, createError, en } from '@utils'
+import { Container, createError, isEn } from '@utils'
 
 export default (container: Container = document): void => {
   const renderings = container.querySelectorAll('*[data-rendering]') as NodeListOf<HTMLDivElement>
@@ -23,7 +23,7 @@ export default (container: Container = document): void => {
     }) as EventListener)
 
     image.addEventListener('error', ((): void => {
-      createError(en ? "Couldn't upload image" : 'Не удалось загрузить изображение')
+      createError(isEn ? "Couldn't upload image" : 'Не удалось загрузить изображение')
     }) as EventListener)
 
     if (canvas.dataset.renderingCanvas) image.src = canvas.dataset.renderingCanvas

@@ -1,4 +1,4 @@
-import { en } from '@utils/en'
+import { isEn } from '@utils/is-en'
 
 interface Errors {
   default: string
@@ -16,16 +16,16 @@ interface Errors {
 }
 
 export const errors: Errors = {
-  default: en ? 'Fill in this field' : 'Заполните это поле',
-  tel: en ? 'Enter the correct number' : 'Введите корректный номер',
-  email: en ? 'Enter the correct address' : 'Введите корректный адрес',
-  login: en ? 'Invalid username' : 'Неверный логин',
-  password: en ? 'Invalid password' : 'Неверный пароль',
-  select: en ? 'Choose an option' : 'Выберите вариант',
-  text: en ? 'Enter at least 10 characters' : 'Введите не менее 10 символов',
+  default: isEn ? 'Fill in this field' : 'Заполните это поле',
+  tel: isEn ? 'Enter the correct number' : 'Введите корректный номер',
+  email: isEn ? 'Enter the correct address' : 'Введите корректный адрес',
+  login: isEn ? 'Invalid username' : 'Неверный логин',
+  password: isEn ? 'Invalid password' : 'Неверный пароль',
+  select: isEn ? 'Choose an option' : 'Выберите вариант',
+  text: isEn ? 'Enter at least 10 characters' : 'Введите не менее 10 символов',
   file: {
-    default: en ? 'Upload the file' : 'Загрузите файл',
-    type: en ? 'jpg or png only' : 'Только jpg или png',
-    size: en ? 'The size is not more than 2 MB' : 'Размер не более 2 мб',
+    default: isEn ? 'Upload the file' : 'Загрузите файл',
+    type: isEn ? 'jpg or png only' : 'Только jpg или png',
+    size: isEn ? 'The size is not more than 2 MB' : 'Размер не более 2 мб',
   },
 }

@@ -1,4 +1,4 @@
-import { Container, createError, en, fileHandler, uploadFile, validation } from '@utils'
+import { Container, createError, getValidate, handleFile, isEn, uploadFile } from '@utils'
 
 interface Content {
   default: string
@@ -22,9 +22,9 @@ export default (container: Container = document): void => {
     const items = filelist.querySelector('*[data-filelist-items]') as HTMLUListElement
     const maxLength: number = Number(items.dataset.filelistItems) || 3
     const content: Content = {
-      default: en ? 'Upload files' : 'Загрузить файлы',
-      more: en ? 'Upload more' : 'Загрузить ещё',
-      limit: en ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`,
+      default: isEn ? 'Upload files' : 'Загрузить файлы',
+      more: isEn ? 'Upload more' : 'Загрузить ещё',
+      limit: isEn ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`,
     }
     let data: DataTransfer = new DataTransfer()
 
@@ -41,7 +41,7 @@ export default (container: Container = document): void => {
         for (let i: number = 0; i < files.length; i++) {
           uploadFile(files[i] as File)
             .then(({ file }): void => {
-              if (!fileHandler({ error, file })) return
+              if (!handleFile({ error, file })) return
 
               if ((data.files as FileList).length < maxLength) {
                 const item = document.createElement('li') as HTMLLIElement
@@ -106,7 +106,7 @@ export default (container: Container = document): void => {
     form.addEventListener('submit', ((event: Event): void => {
       event.preventDefault()
 
-      if (validation(form)) {
+      if (getValidate(form)) {
         label.classList.remove(...className)
         text.textContent = content.default
         items.innerHTML = ''

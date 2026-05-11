@@ -1,18 +1,18 @@
-import { Container, Coordinates, touchDevice } from '@utils'
+import { Container, Coordinates, getTouchDevice } from '@utils'
 
 const setMovement = (event: MouseEvent): void => {
-  const item = (event.target as HTMLElement).closest('[data-movement]') as HTMLElement
+  const movement = (event.target as HTMLElement).closest('[data-movement]') as HTMLElement
   const coordinates: Coordinates = {
-    top: event.clientY - item.getBoundingClientRect().top,
-    left: event.clientX - item.getBoundingClientRect().left,
+    top: event.clientY - movement.getBoundingClientRect().top,
+    left: event.clientX - movement.getBoundingClientRect().left,
   }
 
-  item.style.setProperty('--y', `${coordinates.top}px`)
-  item.style.setProperty('--x', `${coordinates.left}px`)
+  movement.style.setProperty('--y', `${coordinates.top}px`)
+  movement.style.setProperty('--x', `${coordinates.left}px`)
 }
 
 export default (container: Container = document): void => {
-  if (touchDevice()) return
+  if (getTouchDevice()) return
 
   const movements = container.querySelectorAll('*[data-movement]') as NodeListOf<HTMLElement>
 

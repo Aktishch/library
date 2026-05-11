@@ -1,4 +1,4 @@
-import { Container, timeFormat } from '@utils'
+import { Container, getTimeFormat } from '@utils'
 
 export default (container: Container = document): void => {
   const timer = container.querySelector('*[data-timer]') as HTMLDivElement
@@ -43,7 +43,7 @@ export default (container: Container = document): void => {
         seconds = 0
       }
 
-      units.innerText = `${timeFormat(hours)}:${timeFormat(minutes)}:${timeFormat(seconds)}`
+      units.innerText = `${getTimeFormat(hours)}:${getTimeFormat(minutes)}:${getTimeFormat(seconds)}`
       stopwatch.style.transform = `rotate(${6 * steps}deg)`
       setTimeout(setTime, 1000)
     }

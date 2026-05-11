@@ -1,7 +1,7 @@
 import { Container } from '@utils'
 
 export default (container: Container = document): void => {
-  const outNumber = (): void => {
+  const setOutNumbers = (): void => {
     const items = container.querySelectorAll('*[data-number]') as NodeListOf<HTMLSpanElement>
 
     if (items.length !== 0) {
@@ -31,9 +31,9 @@ export default (container: Container = document): void => {
         }
       })
     } else {
-      container.removeEventListener('scroll', outNumber as EventListener)
+      container.removeEventListener('scroll', setOutNumbers as EventListener)
     }
   }
 
-  container.addEventListener('scroll', outNumber as EventListener, { passive: true })
+  container.addEventListener('scroll', setOutNumbers as EventListener, { passive: true })
 }

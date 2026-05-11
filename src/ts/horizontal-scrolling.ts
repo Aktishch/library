@@ -1,7 +1,7 @@
 import { media } from '@plugins/media'
-import { scrolledPage } from '@utils'
+import { getScrollPosition } from '@utils'
 
-const setScrollingHeight = (): void => {
+const setHorizontalScrollingHeight = (): void => {
   const scrollings = document.querySelectorAll('*[data-scrolling]') as NodeListOf<HTMLElement>
 
   scrollings.forEach((scrolling: HTMLElement): void => {
@@ -14,7 +14,7 @@ const setScrollingHeight = (): void => {
   })
 }
 
-const setHorizontalScrolling = (): void => {
+const createHorizontalScrolling = (): void => {
   const scrollings = document.querySelectorAll('*[data-scrolling]') as NodeListOf<HTMLElement>
 
   scrollings.forEach((scrolling: HTMLElement): void => {
@@ -24,7 +24,7 @@ const setHorizontalScrolling = (): void => {
     const images = scrolling.querySelectorAll('*[data-scrolling-image]') as NodeListOf<HTMLImageElement>
     const moving: number = (horizontal.scrollLeft / (horizontal.scrollWidth - horizontal.clientWidth)) * 20
 
-    horizontal.scrollLeft = scrolledPage().top + horizontal.offsetHeight - scrolling.offsetTop
+    horizontal.scrollLeft = getScrollPosition().top + horizontal.offsetHeight - scrolling.offsetTop
 
     images.forEach((image: HTMLImageElement): void => {
       if (image) image.style.setProperty('--scroll-moving', `-${moving}%`)
@@ -32,20 +32,20 @@ const setHorizontalScrolling = (): void => {
   })
 }
 
-const scrollingInViewport = (): void => {
+const setBreakpoint = (): void => {
   if ((document.documentElement as HTMLHtmlElement).clientWidth < media.md) {
-    document.removeEventListener('wheel', setHorizontalScrolling as EventListener)
-    document.removeEventListener('scroll', setHorizontalScrolling as EventListener)
+    document.removeEventListener('wheel', createHorizontalScrolling as EventListener)
+    document.removeEventListener('scroll', createHorizontalScrolling as EventListener)
   } else {
-    document.addEventListener('wheel', setHorizontalScrolling as EventListener, { passive: true })
-    document.addEventListener('scroll', setHorizontalScrolling as EventListener, { passive: true })
+    document.addEventListener('wheel', createHorizontalScrolling as EventListener, { passive: true })
+    document.addEventListener('scroll', createHorizontalScrolling as EventListener, { passive: true })
   }
 }
 
 export default (): void => {
-  setScrollingHeight()
-  setHorizontalScrolling()
-  scrollingInViewport()
-  window.addEventListener('resize', setScrollingHeight as EventListener)
-  window.addEventListener('resize', scrollingInViewport as EventListener)
+  setHorizontalScrollingHeight()
+  createHorizontalScrolling()
+  setBreakpoint()
+  window.addEventListener('resize', setHorizontalScrollingHeight as EventListener)
+  window.addEventListener('resize', setBreakpoint as EventListener)
 }

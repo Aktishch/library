@@ -1,15 +1,15 @@
-import { Coordinates, scrolledPage } from '@utils'
+import { Coordinates, getScrollPosition } from '@utils'
 
 const repeat: boolean = true
 
-const setOffset = (item: HTMLElement): Coordinates => {
+const getOffset = (item: HTMLElement): Coordinates => {
   return {
-    top: item.getBoundingClientRect().top + scrolledPage().top,
-    left: item.getBoundingClientRect().left + scrolledPage().left,
+    top: item.getBoundingClientRect().top + getScrollPosition().top,
+    left: item.getBoundingClientRect().left + getScrollPosition().left,
   } as Coordinates
 }
 
-export const setAnimation = (): void => {
+const setAnimation = (): void => {
   const items = document.querySelectorAll('*[data-anim]') as NodeListOf<HTMLElement>
 
   const allShow: boolean = ([...items] as HTMLElement[]).every(
@@ -21,13 +21,13 @@ export const setAnimation = (): void => {
       if (!item) return
 
       const height: number = item.offsetHeight
-      const offsetTop: number = setOffset(item).top
+      const offsetTop: number = getOffset(item).top
       const screenPosition: number = 3
       let point: number = window.innerHeight - height / screenPosition
 
       if (point > window.innerHeight) point = window.innerHeight - window.innerHeight / screenPosition
 
-      const state: boolean = scrolledPage().top > offsetTop - point && scrolledPage().top < offsetTop + height
+      const state: boolean = getScrollPosition().top > offsetTop - point && getScrollPosition().top < offsetTop + height
 
       if (state) {
         item.dataset.anim = 'show'

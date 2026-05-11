@@ -1,11 +1,16 @@
-import { Container } from '@utils'
+import { Container, createError, isEn } from '@utils'
+
+interface HandleBackground {
+  item: HTMLElement
+  requestUrl: string
+}
 
 interface CreateBackground {
   data: string
   container: Container
 }
 
-const canUseWebp = (): boolean => {
+const getWebp = (): boolean => {
   const canvas = document.createElement('canvas') as HTMLCanvasElement
 
   return canvas.getContext && canvas.getContext('2d')
@@ -13,11 +18,28 @@ const canUseWebp = (): boolean => {
     : false
 }
 
+const handleBackground = async ({ item, requestUrl }: HandleBackground): Promise<void> => {
+  await fetch(requestUrl)
+    .then((response: Response): boolean => {
+      return response.ok
+    })
+    .then((response: boolean): void => {
+      response
+        ? (item.style.backgroundImage = `url('${requestUrl}')`)
+        : createError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
+    })
+    .catch((error: string): void => createError(error))
+}
+
 const createBackground = ({ data, container }: CreateBackground): void => {
   const items = container.querySelectorAll(`*[${data}]`) as NodeListOf<HTMLElement>
 
   items.forEach((item: HTMLElement): void => {
-    if (item) item.style.backgroundImage = `url('${item.getAttribute(data)}')`
+    if (!item) return
+
+    const requestUrl: string | null = item.getAttribute(data)
+
+    if (requestUrl) handleBackground({ item, requestUrl })
   })
 }
 
@@ -27,5 +49,5 @@ export default (container: Container = document): void => {
 
   createBackground({ data: 'data-bg', container })
 
-  if (canUseWebp() || firefoxVersion >= 65) createBackground({ data: 'data-webp', container })
+  if (getWebp() || firefoxVersion >= 65) createBackground({ data: 'data-webp', container })
 }

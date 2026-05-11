@@ -1,7 +1,7 @@
-import { Container, Coordinates, touchDevice } from '@utils'
+import { Container, Coordinates, getTouchDevice } from '@utils'
 
 export default (container: Container = document): void => {
-  if (touchDevice()) return
+  if (getTouchDevice()) return
 
   const parallaxes = container.querySelectorAll('*[data-parallax]') as NodeListOf<HTMLElement>
 

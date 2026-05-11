@@ -4,4 +4,4 @@ declare global {
   }
 }
 
-export const safari: boolean = window.safari !== undefined
+export const isSafari: boolean = window.safari !== undefined

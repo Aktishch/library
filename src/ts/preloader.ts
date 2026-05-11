@@ -1,4 +1,4 @@
-import { createError, en, scrollbarHidden, scrollbarShow } from '@utils'
+import { createError, hideScrollbar, isEn, showScrollbar } from '@utils'
 
 type Resolve = (value: HTMLDivElement | PromiseLike<HTMLDivElement>) => void
 type Reject = (reason?: string) => void
@@ -6,7 +6,7 @@ type Reject = (reason?: string) => void
 const loadTimePreloader = (preloader: HTMLDivElement): Promise<HTMLDivElement> => {
   return new Promise((resolve: Resolve, reject: Reject): void => {
     if (preloader) {
-      scrollbarHidden()
+      hideScrollbar()
 
       const duration: number = 500
 
@@ -15,7 +15,7 @@ const loadTimePreloader = (preloader: HTMLDivElement): Promise<HTMLDivElement> =
 
       setTimeout((): void => resolve(preloader), duration)
     } else {
-      reject(en ? 'Preloader was not found' : 'Прелоадер не был найден')
+      reject(isEn ? 'Preloader was not found' : 'Прелоадер не был найден')
     }
   })
 }
@@ -23,7 +23,7 @@ const loadTimePreloader = (preloader: HTMLDivElement): Promise<HTMLDivElement> =
 export default async (): Promise<void> => {
   await loadTimePreloader(document.querySelector('*[data-preloader]') as HTMLDivElement)
     .then((preloader: HTMLDivElement): void => {
-      scrollbarShow()
+      showScrollbar()
       preloader.remove()
     })
     .catch((error: string): void => createError(error))

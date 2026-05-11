@@ -1,24 +1,24 @@
-import { scrollToElement } from '@ts/scroll-to'
+import { targetId } from '@ts/scroll-to'
 import { Container } from '@utils'
 
-interface FilterCardsShowing {
+interface ShowItem {
   condition: boolean
   item: HTMLDivElement
 }
 
-interface FilterHandler {
+interface HandleCards {
   name: string
   cards: NodeListOf<HTMLDivElement>
   plug: HTMLDivElement
 }
 
-type FilterCategory = HTMLButtonElement | HTMLAnchorElement
+type Category = HTMLButtonElement | HTMLAnchorElement
 
 const addTransition = (item: HTMLDivElement): void => {
   item.classList.add('transition', 'ease-linear')
 }
 
-const filterCardsShowing = ({ condition, item }: FilterCardsShowing): void => {
+const showItem = ({ condition, item }: ShowItem): void => {
   if (condition) {
     item.classList.add('hidden', 'translate-y-10', 'opacity-0')
   } else {
@@ -27,7 +27,7 @@ const filterCardsShowing = ({ condition, item }: FilterCardsShowing): void => {
   }
 }
 
-const filterHandler = ({ name, cards, plug }: FilterHandler): void => {
+const handleCards = ({ name, cards, plug }: HandleCards): void => {
   cards.forEach((card: HTMLDivElement): void => {
     const value: string | undefined = card.dataset.filteringValue
 
@@ -36,14 +36,14 @@ const filterHandler = ({ name, cards, plug }: FilterHandler): void => {
     const absence: boolean = value.split(' ').includes(name) === false
     const showAll: boolean = name.toLowerCase() === 'all'
 
-    filterCardsShowing({ condition: absence && !showAll, item: card })
+    showItem({ condition: absence && !showAll, item: card })
   })
 
   const allHidden: boolean = ([...cards] as HTMLDivElement[]).every((card: HTMLDivElement): boolean =>
     card.classList.contains('hidden')
   )
 
-  if (plug) filterCardsShowing({ condition: !allHidden, item: plug })
+  if (plug) showItem({ condition: !allHidden, item: plug })
 }
 
 export default (container: Container = document): void => {
@@ -53,24 +53,23 @@ export default (container: Container = document): void => {
     if (!filter || !filter.dataset.filtering) return
 
     const value: string = filter.dataset.filtering
-    const hash: string = window.location.hash.slice(1)
-    const categories = container.querySelectorAll(`*[data-filtering-category="${value}"]`) as NodeListOf<FilterCategory>
+    const categories = container.querySelectorAll(`*[data-filtering-category="${value}"]`) as NodeListOf<Category>
     const cards = container.querySelectorAll(`*[data-filtering-card="${value}"]`) as NodeListOf<HTMLDivElement>
     const plug = container.querySelector(`*[data-filtering-plug="${value}"]`) as HTMLDivElement
     const line = container.querySelector(`*[data-filtering-line="${value}"]`) as HTMLSpanElement
 
-    const currentCategory = (): FilterCategory => {
-      let active = categories[0] as FilterCategory
+    const getCurrentCategory = (): Category => {
+      let active = categories[0] as Category
 
-      categories.forEach((category: FilterCategory): void => {
+      categories.forEach((category: Category): void => {
         if (category.hasAttribute('data-active')) active = category
       })
 
       return active
     }
 
-    const currentCard = (category: FilterCategory): void => {
-      const active = currentCategory() as FilterCategory
+    const setCurrentCard = (category: Category): void => {
+      const active = getCurrentCategory() as Category
       const name: string | undefined = category.dataset.filteringValue
 
       if (!name) return
@@ -83,7 +82,7 @@ export default (container: Container = document): void => {
         line.style.left = `${category.offsetLeft}px`
       }
 
-      filterHandler({ name, cards, plug })
+      handleCards({ name, cards, plug })
     }
 
     cards.forEach((card: HTMLDivElement): void => {
@@ -92,23 +91,22 @@ export default (container: Container = document): void => {
 
     if (plug) addTransition(plug)
 
-    currentCard(currentCategory())
+    setCurrentCard(getCurrentCategory())
 
-    categories.forEach((category: FilterCategory): void => {
+    categories.forEach((category: Category): void => {
       if (!category) return
 
       category.addEventListener('click', ((): void => {
-        currentCard(category)
+        setCurrentCard(category)
       }) as EventListener)
     })
 
-    if (hash && hash !== '') {
+    if (targetId && targetId !== '') {
       for (const [index, card] of cards.entries()) {
-        if (card.querySelector(`#${hash}`)) {
-          const category = categories[index] as FilterCategory
+        if (card.querySelector(`#${targetId}`)) {
+          const category = categories[index] as Category
 
-          currentCard(category)
-          setTimeout((): void => scrollToElement(filter), 50)
+          if (category) setCurrentCard(category)
         }
       }
     }

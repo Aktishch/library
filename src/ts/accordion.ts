@@ -35,7 +35,7 @@ const createAccordion = ({ accordion, container }: CreateAccordion): void => {
     }, transitionDuration)
   }
 
-  const accordionClose = (): void => {
+  const closeAccordion = (): void => {
     accordion.dataset.accordion = ''
     setAccordionHeight()
   }
@@ -50,7 +50,7 @@ const createAccordion = ({ accordion, container }: CreateAccordion): void => {
   }) as EventListener)
 
   items.forEach((item: AccordionItem): void => {
-    if (item) item.addEventListener('click', accordionClose as EventListener)
+    if (item) item.addEventListener('click', closeAccordion as EventListener)
   })
 
   container.addEventListener('click', ((event: Event): void => {
@@ -59,13 +59,13 @@ const createAccordion = ({ accordion, container }: CreateAccordion): void => {
       accordion.dataset.accordion === 'active' &&
       accordion.hasAttribute('data-close-click')
     )
-      accordionClose()
+      closeAccordion()
   }) as EventListener)
 
   container.addEventListener(
     'scroll',
     ((): void => {
-      if (accordion.hasAttribute('data-close-scroll') && accordion.dataset.accordion === 'active') accordionClose()
+      if (accordion.hasAttribute('data-close-scroll') && accordion.dataset.accordion === 'active') closeAccordion()
     }) as EventListener,
     { passive: true }
   )

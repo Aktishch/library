@@ -1,8 +1,8 @@
 import { closeSidebar, openSidebar } from '@ts/sidebar'
-import { touchDevice } from '@utils'
+import { getTouchDevice } from '@utils'
 
 export default (): void => {
-  if (!touchDevice()) return
+  if (!getTouchDevice()) return
 
   const menu = document.querySelector('*[data-menu]') as HTMLDivElement
 
@@ -13,11 +13,11 @@ export default (): void => {
   let currentX: number
   let active: boolean = false
 
-  const touchStart = (event: TouchEvent): void => {
+  const startMenu = (event: TouchEvent): void => {
     initialX = event.touches[0].clientX
   }
 
-  const touchEnd = (event: TouchEvent): void => {
+  const endMenu = (event: TouchEvent): void => {
     if (!active) return
 
     if ((event.target as HTMLElement).closest('[data-menu]')) {
@@ -29,13 +29,13 @@ export default (): void => {
     active = false
   }
 
-  const touchMove = (event: TouchEvent): void => {
+  const moveMenu = (event: TouchEvent): void => {
     active = true
     currentX = event.touches[0].clientX
   }
 
-  document.addEventListener('touchstart', touchStart as EventListener, { passive: true })
-  document.addEventListener('touchend', touchEnd as EventListener, { passive: true })
-  document.addEventListener('touchcancel', touchEnd as EventListener, { passive: true })
-  document.addEventListener('touchmove', touchMove as EventListener, { passive: true })
+  document.addEventListener('touchstart', startMenu as EventListener, { passive: true })
+  document.addEventListener('touchend', endMenu as EventListener, { passive: true })
+  document.addEventListener('touchcancel', endMenu as EventListener, { passive: true })
+  document.addEventListener('touchmove', moveMenu as EventListener, { passive: true })
 }

@@ -1,4 +1,4 @@
-import { scrolledPage } from '@utils'
+import { getScrollPosition } from '@utils'
 
 const className: string[] = ['sm:-translate-y-full']
 
@@ -7,10 +7,10 @@ export default (): void => {
 
   if (!header) return
 
-  let prevOffsetTop: number = scrolledPage().top
+  let prevOffsetTop: number = getScrollPosition().top
 
   const scrollHeader = (): void => {
-    const currentOffsetTop: number = scrolledPage().top
+    const currentOffsetTop: number = getScrollPosition().top
 
     if (header.offsetHeight < currentOffsetTop) {
       prevOffsetTop > currentOffsetTop ? header.classList.remove(...className) : header.classList.add(...className)

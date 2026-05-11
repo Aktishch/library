@@ -2,7 +2,7 @@ const phoneEvents: string[] = ['input', 'keyup', 'keydown']
 
 const getPhoneValue = (input: HTMLInputElement): string => input.value.replace(/\D/g, '')
 
-const formatterValue = (value: string): string => {
+const getFormatValue = (value: string): string => {
   if (!['7', '8'].includes(value[0])) value = '7' + value
 
   const firstVal: string = value[0] === '8' ? '8' : '+7'
@@ -26,11 +26,11 @@ const onInput = (event: InputEvent): '' | undefined => {
   if (!value) return (input.value = '')
 
   if (input.value.length !== selection) {
-    if (event.data) input.value = formatterValue(value)
+    if (event.data) input.value = getFormatValue(value)
     return
   }
 
-  input.value = formatterValue(value)
+  input.value = getFormatValue(value)
 }
 
 const onKeyUp = (event: KeyboardEvent): void => {
