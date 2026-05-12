@@ -10,6 +10,6 @@ export const createColor = (variable: string): string => {
   return `rgba(var(--color-${variable}), ${value})`
 }
 
-export const getRGB = (color: string, alpha: string = '1'): string => {
+export const getRgb = (color: string, alpha: string = '1'): string => {
   return color.replace(value, alpha)
 }

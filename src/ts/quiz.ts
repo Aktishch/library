@@ -1,8 +1,8 @@
-type QuizInput = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+type Input = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 
 export const checkQuizSlide = (slide: HTMLElement): void => {
   const quiz = slide.closest('[data-quiz]') as HTMLElement
-  const inputs: QuizInput[] = [
+  const inputs: Input[] = [
     ...slide.querySelectorAll('input'),
     ...slide.querySelectorAll('select'),
     ...slide.querySelectorAll('textarea'),
@@ -12,7 +12,7 @@ export const checkQuizSlide = (slide: HTMLElement): void => {
   if (inputs.length === 0) {
     active = true
   } else {
-    inputs.forEach((input: QuizInput): void => {
+    inputs.forEach((input: Input): void => {
       if (!input) return
 
       if (input.type === 'checkbox' || input.type === 'radio') {
@@ -28,7 +28,7 @@ export const checkQuizSlide = (slide: HTMLElement): void => {
 
 export default (): void => {
   document.addEventListener('input', ((event: InputEvent): void => {
-    const slide = (event.target as QuizInput).closest('[data-quiz-slide]') as HTMLElement
+    const slide = (event.target as Input).closest('[data-quiz-slide]') as HTMLElement
 
     if (slide) checkQuizSlide(slide)
   }) as EventListener)

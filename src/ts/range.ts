@@ -1,6 +1,6 @@
 import { Container } from '@utils'
 
-interface RangePosition {
+interface SetBubblesPosition {
   size: number
   number: number
   input: HTMLInputElement
@@ -10,7 +10,7 @@ interface RangePosition {
 
 type RangeElement = HTMLInputElement | HTMLOutputElement
 
-const getBubblesPosition = ({ size, number, input, progress, bubble }: RangePosition): void => {
+const setBubblesPosition = ({ size, number, input, progress, bubble }: SetBubblesPosition): void => {
   const percent: number = size / 100
   const half: number = size / 2
   const value: number = Number(input.value)
@@ -59,13 +59,13 @@ export default (container: Container = document): void => {
         const progress = range.querySelector('*[data-range-progress]') as HTMLDivElement
         const bubble = range.querySelector('*[data-range-bubble]') as HTMLOutputElement
 
-        const changeRange = (): void => {
-          getBubblesPosition({ size, number: first, input, progress, bubble })
+        const onChange = (): void => {
+          setBubblesPosition({ size, number: first, input, progress, bubble })
           output.value = input.value
         }
 
-        changeRange()
-        input.addEventListener('input', changeRange as EventListener)
+        onChange()
+        input.addEventListener('input', onChange as EventListener)
         break
       }
 
@@ -86,15 +86,15 @@ export default (container: Container = document): void => {
         ) as HTMLDivElement
         const lastBubble = (wrappers[last] as HTMLDivElement).querySelector('*[data-range-bubble]') as HTMLOutputElement
 
-        const changeRanges = (): void => {
-          getBubblesPosition({
+        const onChange = (): void => {
+          setBubblesPosition({
             size,
             number: first,
             input: firstInput,
             progress: firstProgress,
             bubble: firstBubble,
           })
-          getBubblesPosition({
+          setBubblesPosition({
             size,
             number: last,
             input: lastInput,
@@ -105,7 +105,7 @@ export default (container: Container = document): void => {
 
         firstOutput.value = firstInput.value
         lastOutput.value = lastInput.value
-        changeRanges()
+        onChange()
 
         firstOutput.addEventListener('input', ((): void => {
           if (Number(firstOutput.value) > Number(lastOutput.value)) {
@@ -115,7 +115,7 @@ export default (container: Container = document): void => {
           }
 
           firstInput.value = firstOutput.value
-          changeRanges()
+          onChange()
         }) as EventListener)
 
         lastOutput.addEventListener('input', ((): void => {
@@ -126,7 +126,7 @@ export default (container: Container = document): void => {
           }
 
           lastInput.value = lastOutput.value
-          changeRanges()
+          onChange()
         }) as EventListener)
 
         firstInput.addEventListener('input', ((): void => {
@@ -136,7 +136,7 @@ export default (container: Container = document): void => {
           }
 
           firstOutput.value = firstInput.value
-          changeRanges()
+          onChange()
         }) as EventListener)
 
         lastInput.addEventListener('input', ((): void => {
@@ -146,7 +146,7 @@ export default (container: Container = document): void => {
           }
 
           lastOutput.value = lastInput.value
-          changeRanges()
+          onChange()
         }) as EventListener)
 
         break

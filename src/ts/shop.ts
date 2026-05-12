@@ -30,33 +30,33 @@ export default (): void => {
   const products = document.querySelectorAll('*[data-product]') as NodeListOf<HTMLDivElement>
   let timeOut: NodeJS.Timeout
 
-  const shopShow = (): void => {
+  const showShop = (): void => {
     shop.dataset.shop = 'show'
   }
 
-  const shopHidden = (): void => {
+  const hideShop = (): void => {
     shop.dataset.shop = ''
   }
 
-  const createAnimInShop = (event: MouseEvent): void => {
-    const inShop = document.createElement('div') as HTMLDivElement
+  const createShopElement = (event: MouseEvent): void => {
+    const div = document.createElement('div') as HTMLDivElement
     const coordinates: Coordinates = {
       top: event.clientY,
       left: event.clientX,
     }
 
-    inShop.classList.add(...className)
-    inShop.style.top = `${coordinates.top}px`
-    inShop.style.left = `${coordinates.left}px`
-    inShop.innerHTML = `
+    div.classList.add(...className)
+    div.style.top = `${coordinates.top}px`
+    div.style.left = `${coordinates.left}px`
+    div.innerHTML = `
       <svg class="icon text-second">
         <use href="/img/icons.svg#basket"></use>
       </svg>`
-    body.appendChild(inShop)
-    setTimeout((): void => inShop.remove(), 2000)
+    body.appendChild(div)
+    setTimeout((): void => div.remove(), 2000)
   }
 
-  close.addEventListener('click', shopHidden as EventListener)
+  close.addEventListener('click', hideShop as EventListener)
 
   products.forEach((product: HTMLDivElement): void => {
     if (!product) return
@@ -68,11 +68,11 @@ export default (): void => {
     const productQuantity = product.querySelector('*[data-product-quantity]') as HTMLInputElement
     const productBtn = product.querySelector('*[data-product-button]') as HTMLButtonElement
 
-    const fillingShop = (): void => {
-      if (shop.dataset.shop === 'show') shopHidden()
+    const addInShop = (): void => {
+      if (shop.dataset.shop === 'show') hideShop()
 
       setTimeout((): void => {
-        shopShow()
+        showShop()
 
         if (image && productImage && productImage.dataset.productImage) image.src = productImage.dataset.productImage
         if (name && productName) name.innerText = productName.textContent
@@ -83,13 +83,13 @@ export default (): void => {
 
         if (timeOut) clearTimeout(timeOut)
 
-        timeOut = setTimeout((): void => shopHidden(), 5000)
+        timeOut = setTimeout((): void => hideShop(), 5000)
       }, 300)
     }
 
     productBtn.addEventListener('click', ((event: MouseEvent): void => {
-      createAnimInShop(event)
-      fillingShop()
+      createShopElement(event)
+      addInShop()
     }) as EventListener)
   })
 }

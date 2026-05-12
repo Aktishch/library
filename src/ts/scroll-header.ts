@@ -9,7 +9,7 @@ export default (): void => {
 
   let prevOffsetTop: number = getScrollPosition().top
 
-  const scrollHeader = (): void => {
+  const onScroll = (): void => {
     const currentOffsetTop: number = getScrollPosition().top
 
     if (header.offsetHeight < currentOffsetTop) {
@@ -19,6 +19,6 @@ export default (): void => {
     prevOffsetTop = currentOffsetTop
   }
 
-  scrollHeader()
-  document.addEventListener('scroll', scrollHeader as EventListener, { passive: true })
+  onScroll()
+  document.addEventListener('scroll', onScroll as EventListener, { passive: true })
 }

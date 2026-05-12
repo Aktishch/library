@@ -5,24 +5,23 @@ export default (): void => {
     setTimeout((): void => dialog.notClosing('/dialogs/dialog-warning.html'), 2000)
 
   document.addEventListener('click', ((event: Event): void => {
-    if ((event.target as HTMLButtonElement).hasAttribute('data-positive')) {
-      sessionStorage.setItem('warning', 'positive')
-      dialog.close()
-    }
-  }) as EventListener)
+    const button = event.target as HTMLButtonElement
 
-  document.addEventListener('click', ((event: Event): void => {
-    if ((event.target as HTMLButtonElement).hasAttribute('data-negative')) {
-      const currentTab: Window | null = window.open('', '_self')
+    if (button.hasAttribute('data-warning')) {
+      const value: string | undefined = button.dataset.warning
 
-      if (!currentTab) return
+      if (value && value === 'positive') {
+        sessionStorage.setItem('warning', value)
+        dialog.close()
+      } else {
+        const currentTab: Window | null = window.open('', '_self')
 
-      const html = currentTab.document.documentElement as HTMLHtmlElement
+        setTimeout((): void => {
+          ;(document.documentElement as HTMLHtmlElement).innerHTML = ''
 
-      setTimeout((): void => {
-        html.innerHTML = ''
-        currentTab.close()
-      }, 1000)
+          if (currentTab) currentTab.close()
+        }, 1000)
+      }
     }
   }) as EventListener)
 }

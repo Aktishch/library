@@ -2,7 +2,7 @@ import { formatColor, parseColor } from 'tailwindcss/lib/util/color'
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette'
 import plugin from 'tailwindcss/plugin'
 import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
-import { Color, getRGB } from './color'
+import { Color, getRgb } from './color'
 
 interface ColorOpacity {
   fade: string
@@ -20,11 +20,11 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
       '*': {
         pointerEvents: 'none',
       },
-      '--tw-btn-color': getRGB(theme('colors.black.DEFAULT')),
-      '--tw-btn-fade': getRGB(theme('colors.black.DEFAULT'), colorOpacity.fade),
-      '--tw-btn-focus': getRGB(theme('colors.black.DEFAULT'), colorOpacity.focus),
-      '--tw-btn-accent': getRGB(theme('colors.white.DEFAULT')),
-      '--tw-btn-hovered': getRGB(theme('colors.black.DEFAULT')),
+      '--tw-btn-color': getRgb(theme('colors.black.DEFAULT')),
+      '--tw-btn-fade': getRgb(theme('colors.black.DEFAULT'), colorOpacity.fade),
+      '--tw-btn-focus': getRgb(theme('colors.black.DEFAULT'), colorOpacity.focus),
+      '--tw-btn-accent': getRgb(theme('colors.white.DEFAULT')),
+      '--tw-btn-hovered': getRgb(theme('colors.black.DEFAULT')),
       '--tw-btn-fill': 'color-mix(in srgb, var(--tw-btn-color) 80%, var(--tw-btn-hovered))',
       color: 'var(--tw-btn-color)',
       fontSize: theme('fontSize.base'),
@@ -52,7 +52,7 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
           backgroundColor: 'var(--tw-btn-fade)',
         },
         '&:active': {
-          boxShadow: `inset 0 4px 4px ${getRGB(theme('colors.black.DEFAULT'), colorOpacity.fade)}`,
+          boxShadow: `inset 0 4px 4px ${getRgb(theme('colors.black.DEFAULT'), colorOpacity.fade)}`,
           transform: 'translateY(0.25rem)',
         },
       },
@@ -101,7 +101,7 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
         border: '1px solid var(--tw-btn-color)',
       },
       '&-light': {
-        '--tw-btn-hovered': getRGB(theme('colors.white.DEFAULT')),
+        '--tw-btn-hovered': getRgb(theme('colors.white.DEFAULT')),
       },
       '&-swipe': {
         zIndex: '1',

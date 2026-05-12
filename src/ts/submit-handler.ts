@@ -1,7 +1,7 @@
 import { dialog } from '@ts/fancybox'
 import { Container, createError, getValidate } from '@utils'
 
-export const getStateSubmitBtn = (container: Container = document): void => {
+export const setStateSubmitBtn = (container: Container = document): void => {
   const forms = container.querySelectorAll('*[data-form]') as NodeListOf<HTMLFormElement>
 
   forms.forEach((form: HTMLFormElement): void => {
@@ -104,7 +104,7 @@ const submitHandler = async (event: Event): Promise<void> => {
 }
 
 export default (): void => {
-  getStateSubmitBtn()
+  setStateSubmitBtn()
 
   document.addEventListener('submit', ((event: Event): void => {
     if ((event.target as HTMLFormElement).hasAttribute('data-form')) submitHandler(event)

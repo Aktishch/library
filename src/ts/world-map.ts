@@ -19,28 +19,13 @@ export default (container: Container = document): void => {
     if (!country) return
 
     const path = country.querySelector('path') as SVGPathElement
-    const pathHeight: number = path.getBoundingClientRect().height * ratio
-    const pathWidth: number = path.getBoundingClientRect().width * ratio
-    const positionY: number = (path.getBoundingClientRect().y - offsetY) * ratio + pathHeight / 2
-    const positionX: number = (path.getBoundingClientRect().x - offsetX) * ratio + pathWidth / 2
     const image = document.createElementNS('http://www.w3.org/2000/svg', 'image') as SVGImageElement
     const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect') as SVGRectElement
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text') as SVGTextElement
-
-    const elementsShow = (): void => {
-      rect.classList.remove(...className)
-      text.classList.remove(...className)
-    }
-
-    const elementsHidden = (): void => {
-      rect.classList.add(...className)
-      text.classList.add(...className)
-    }
-
-    const currentCountry = (): void => {
-      if (country.dataset.worldSource) flag.src = country.dataset.worldSource
-      if (country.dataset.worldCountry) title.innerText = country.dataset.worldCountry
-    }
+    const height: number = path.getBoundingClientRect().height * ratio
+    const width: number = path.getBoundingClientRect().width * ratio
+    const positionY: number = (path.getBoundingClientRect().y - offsetY) * ratio + height / 2
+    const positionX: number = (path.getBoundingClientRect().x - offsetX) * ratio + width / 2
 
     image.classList.add('pointer-events-none', 'size-5')
     rect.classList.add('pointer-events-none', 'fill-white', 'invisible', 'opacity-0', 'transition-opacity')
@@ -62,8 +47,19 @@ export default (container: Container = document): void => {
     rect.setAttribute('x', String(positionX))
     rect.setAttribute('rx', '2')
 
-    path.addEventListener('mouseover', elementsShow as EventListener)
-    path.addEventListener('mouseleave', elementsHidden as EventListener)
-    country.addEventListener('click', currentCountry as EventListener)
+    path.addEventListener('mouseover', ((): void => {
+      rect.classList.remove(...className)
+      text.classList.remove(...className)
+    }) as EventListener)
+
+    path.addEventListener('mouseleave', ((): void => {
+      rect.classList.add(...className)
+      text.classList.add(...className)
+    }) as EventListener)
+
+    country.addEventListener('click', ((): void => {
+      if (country.dataset.worldSource) flag.src = country.dataset.worldSource
+      if (country.dataset.worldCountry) title.innerText = country.dataset.worldCountry
+    }) as EventListener)
   })
 }

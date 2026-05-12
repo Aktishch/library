@@ -2,23 +2,23 @@ import { formatColor, parseColor } from 'tailwindcss/lib/util/color'
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette'
 import plugin from 'tailwindcss/plugin'
 import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
-import { Color, getRGB } from './color'
+import { Color, getRgb } from './color'
 
 const hovered: string = '0.1'
 
 module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
   addComponents({
     '.input': {
-      '--tw-input-text': getRGB(theme('colors.black.DEFAULT')),
-      '--tw-input-color': getRGB(theme('colors.black.DEFAULT')),
-      '--tw-input-hovered': getRGB(theme('colors.black.DEFAULT'), hovered),
+      '--tw-input-text': getRgb(theme('colors.black.DEFAULT')),
+      '--tw-input-color': getRgb(theme('colors.black.DEFAULT')),
+      '--tw-input-hovered': getRgb(theme('colors.black.DEFAULT'), hovered),
       display: 'block',
       width: '100%',
       height: 'var(--tw-input-size)',
       color: 'var(--tw-input-text)',
       fontSize: theme('fontSize.base'),
       fontWeight: theme('fontWeight.normal'),
-      backgroundColor: getRGB(theme('colors.white.DEFAULT')),
+      backgroundColor: getRgb(theme('colors.white.DEFAULT')),
       padding: 'calc(var(--tw-input-size) / 4) calc(var(--tw-input-size) / 3)',
       border: '1px solid var(--tw-input-color)',
       borderRadius: theme('borderRadius.lg'),
@@ -34,11 +34,11 @@ module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): 
         opacity: '0.5',
       },
       '&-fade': {
-        '--tw-input-text': getRGB(theme('colors.white.DEFAULT')),
+        '--tw-input-text': getRgb(theme('colors.white.DEFAULT')),
         backgroundColor: theme('colors.transparent'),
       },
       '&&-error': {
-        '--tw-input-color': getRGB(theme('colors.red.DEFAULT')),
+        '--tw-input-color': getRgb(theme('colors.red.DEFAULT')),
       },
       '&:-webkit-autofill': {
         color: 'var(--tw-input-text) !important',

@@ -2,24 +2,24 @@ import { Container } from '@utils'
 
 export default (container: Container = document): void => {
   const writeText = (): void => {
-    const records = container.querySelectorAll('*[data-record]') as NodeListOf<HTMLElement>
+    const texts = container.querySelectorAll('*[data-text]') as NodeListOf<HTMLElement>
 
-    if (records.length !== 0) {
-      records.forEach((record: HTMLElement): void => {
-        if (!record || !record.dataset.record) return
+    if (texts.length !== 0) {
+      texts.forEach((text: HTMLElement): void => {
+        if (!text || !text.dataset.text) return
 
-        const text: string = record.dataset.record
-        const speed: number = Number(record.dataset.speed) || 100
-        const letters: string[] = [text].join('').split('')
+        const value: string = text.dataset.text
+        const speed: number = Number(text.dataset.speed) || 100
+        const letters: string[] = [value].join('').split('')
 
-        if (window.screen.height >= record.getBoundingClientRect().top) {
+        if (window.screen.height >= text.getBoundingClientRect().top) {
           const interval = setInterval((): void => {
             if (!letters[0]) return clearInterval(interval)
 
-            record.innerHTML += letters.shift()
+            text.innerHTML += letters.shift()
           }, speed)
 
-          record.removeAttribute('data-record')
+          text.removeAttribute('data-text')
         }
       })
     } else {

@@ -17,12 +17,11 @@ export default (container: Container = document): void => {
     Number(counter.dataset.second) || 0
   ).getTime()
 
-  const getTimeCounter = (): void => {
+  const setTimeCounter = (): void => {
     const distance: number = date - new Date().getTime()
     const day: number = 24 * 60 * 60 * 1000
     const hour: number = 60 * 60 * 1000
     const minute: number = 60 * 1000
-
     const values: number[] = [
       Math.floor(distance / day),
       Math.floor((distance % day) / hour),
@@ -37,7 +36,7 @@ export default (container: Container = document): void => {
     if (distance < 0) removeTimeCounter()
   }
 
-  const interval: NodeJS.Timeout = setInterval(getTimeCounter, 1000)
+  const interval: NodeJS.Timeout = setInterval(setTimeCounter, 1000)
 
   const removeTimeCounter = (): void => {
     clearInterval(interval)
@@ -45,5 +44,5 @@ export default (container: Container = document): void => {
     subtitle.classList.remove('hidden')
   }
 
-  getTimeCounter()
+  setTimeCounter()
 }

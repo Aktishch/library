@@ -2,7 +2,7 @@ import { CarouselSlide, Fancybox } from '@fancyapps/ui/dist/fancybox/'
 import { createCalendar } from '@ts/air-datepicker'
 import imagePreview from '@ts/image-preview'
 import lazyLoad from '@ts/lazy-load'
-import { getStateSubmitBtn } from '@ts/submit-handler'
+import { setStateSubmitBtn } from '@ts/submit-handler'
 import { getTouchDevice } from '@utils'
 
 interface Dialog {
@@ -87,7 +87,7 @@ export default (): void => {
     on: {
       'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
         updateLoad()
-        getStateSubmitBtn(slide.el)
+        setStateSubmitBtn(slide.el)
       },
     },
   })

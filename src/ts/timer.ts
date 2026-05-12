@@ -16,7 +16,7 @@ export default (container: Container = document): void => {
   let hours: number
   let steps: number
 
-  const defaultState = (): void => {
+  const setDefaultState = (): void => {
     active = false
     seconds = 0
     minutes = 0
@@ -49,7 +49,7 @@ export default (container: Container = document): void => {
     }
   }
 
-  const statusTimer = (): void => {
+  const setActive = (): void => {
     if (active) {
       active = false
       icon.setAttribute('href', '/img/icons.svg#play')
@@ -60,7 +60,7 @@ export default (container: Container = document): void => {
     }
   }
 
-  defaultState()
-  turn.addEventListener('click', statusTimer as EventListener)
-  reset.addEventListener('click', defaultState as EventListener)
+  setDefaultState()
+  turn.addEventListener('click', setActive as EventListener)
+  reset.addEventListener('click', setDefaultState as EventListener)
 }

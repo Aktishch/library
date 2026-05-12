@@ -1,11 +1,11 @@
 import { Container, Coordinates, getTouchDevice } from '@utils'
 
-interface RandomPosition {
+interface GetRandomPosition {
   min: number
   max: number
 }
 
-const randomPosition = ({ min, max }: RandomPosition): number => Math.floor(min + Math.random() * (max - min + 1))
+const getRandomPosition = ({ min, max }: GetRandomPosition): number => Math.floor(min + Math.random() * (max - min + 1))
 
 export default (container: Container = document): void => {
   if (getTouchDevice()) return
@@ -18,8 +18,8 @@ export default (container: Container = document): void => {
 
   running.addEventListener('mouseenter', ((): void => {
     const coordinates: Coordinates = {
-      top: randomPosition({ min: 0, max: 90 }),
-      left: randomPosition({ min: 0, max: 90 }),
+      top: getRandomPosition({ min: 0, max: 90 }),
+      left: getRandomPosition({ min: 0, max: 90 }),
     }
 
     running.style.top = `${coordinates.top}%`

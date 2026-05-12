@@ -10,7 +10,7 @@ export default (): void => {
   const btn = social.querySelector('*[data-social-button]') as HTMLButtonElement
   let lastTap: number
 
-  const doubleTap = (): void => {
+  const showSocial = (): void => {
     const timeSince: number = new Date().getTime() - lastTap
 
     if (timeSince < 300 && timeSince > 0) round.dataset.socialRound = round.dataset.socialRound === 'show' ? '' : 'show'
@@ -18,7 +18,7 @@ export default (): void => {
     lastTap = new Date().getTime()
   }
 
-  const getLinksPosition = (): void => {
+  const setLinksPosition = (): void => {
     const radius = Number(social.dataset.social) * 100 || 100
     const width: number = social.offsetWidth
     const height: number = social.offsetHeight
@@ -40,8 +40,8 @@ export default (): void => {
     })
   }
 
-  getLinksPosition()
-  window.addEventListener('resize', getLinksPosition as EventListener)
-  btn.addEventListener('click', doubleTap as EventListener)
-  btn.addEventListener('touchstart', doubleTap as EventListener, { passive: true })
+  setLinksPosition()
+  window.addEventListener('resize', setLinksPosition as EventListener)
+  btn.addEventListener('click', showSocial as EventListener)
+  btn.addEventListener('touchstart', showSocial as EventListener, { passive: true })
 }
