@@ -1,4 +1,4 @@
-import { Container, createError, isEn } from '@utils'
+import { Container, createError, getEn } from '@utils'
 
 export default (container: Container = document): void => {
   const renderings = container.querySelectorAll('*[data-rendering]') as NodeListOf<HTMLDivElement>
@@ -9,9 +9,11 @@ export default (container: Container = document): void => {
     const canvas = rendering.querySelector('*[data-rendering-canvas]') as HTMLCanvasElement
     const download = rendering.querySelector('*[data-rendering-download]') as HTMLAnchorElement
     const image = new Image() as HTMLImageElement
-    const context = canvas.getContext('2d') as CanvasRenderingContext2D
+    const context: CanvasRenderingContext2D | null = canvas.getContext('2d')
 
     image.addEventListener('load', ((): void => {
+      if (!context) return
+
       context.drawImage(image, 0, 0)
       context.font = '1.5rem var(--font-alt)'
       context.fillStyle = '#000'
@@ -23,7 +25,7 @@ export default (container: Container = document): void => {
     }) as EventListener)
 
     image.addEventListener('error', ((): void => {
-      createError(isEn ? "Couldn't upload image" : 'Не удалось загрузить изображение')
+      createError(getEn() ? "Couldn't upload image" : 'Не удалось загрузить изображение')
     }) as EventListener)
 
     if (canvas.dataset.renderingCanvas) image.src = canvas.dataset.renderingCanvas

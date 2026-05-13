@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss'
-import { createColor } from './plugins/color'
+import { getColor } from './plugins/color'
 import { media } from './plugins/media'
 
 const { xs, sm, md, lg, xl, xxl } = media
@@ -35,31 +35,31 @@ module.exports = {
       current: 'currentColor',
       inherit: 'inherit',
       primary: {
-        DEFAULT: createColor('primary'),
+        DEFAULT: getColor('primary'),
       },
       second: {
-        DEFAULT: createColor('second'),
+        DEFAULT: getColor('second'),
       },
       black: {
-        DEFAULT: createColor('black'),
+        DEFAULT: getColor('black'),
       },
       white: {
-        DEFAULT: createColor('white'),
+        DEFAULT: getColor('white'),
       },
       gray: {
-        DEFAULT: createColor('gray'),
+        DEFAULT: getColor('gray'),
       },
       grey: {
-        DEFAULT: createColor('grey'),
+        DEFAULT: getColor('grey'),
       },
       dark: {
-        DEFAULT: createColor('dark'),
+        DEFAULT: getColor('dark'),
       },
       red: {
-        DEFAULT: createColor('red'),
+        DEFAULT: getColor('red'),
       },
       green: {
-        DEFAULT: createColor('green'),
+        DEFAULT: getColor('green'),
       },
     },
     fontFamily: {

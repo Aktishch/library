@@ -8,21 +8,24 @@ export const setStateSubmitBtn = (container: Container = document): void => {
     if (!form) return
 
     const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
-    const toggles = form.querySelectorAll('*[data-form-toggle]') as NodeListOf<HTMLInputElement>
 
-    const togglesChecked = (): void => {
-      const allChecked: boolean = ([...toggles] as HTMLInputElement[]).every(
-        (toggle: HTMLInputElement): boolean => toggle.checked
-      )
+    if (submitBtn) {
+      const toggles = form.querySelectorAll('*[data-form-toggle]') as NodeListOf<HTMLInputElement>
 
-      submitBtn.disabled = !allChecked
+      const togglesChecked = (): void => {
+        const allChecked: boolean = ([...toggles] as HTMLInputElement[]).every(
+          (toggle: HTMLInputElement): boolean => toggle.checked
+        )
+
+        submitBtn.disabled = !allChecked
+      }
+
+      togglesChecked()
+
+      toggles.forEach((toggle: HTMLInputElement): void => {
+        if (toggle) toggle.addEventListener('change', togglesChecked as EventListener)
+      })
     }
-
-    togglesChecked()
-
-    toggles.forEach((toggle: HTMLInputElement): void => {
-      if (toggle) toggle.addEventListener('change', togglesChecked as EventListener)
-    })
   })
 }
 

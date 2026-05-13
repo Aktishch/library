@@ -1,6 +1,6 @@
 import { errors } from '@utils/errors'
 
-interface HandleFile {
+interface FileHandler {
   error: HTMLSpanElement
   file: File
 }
@@ -9,7 +9,7 @@ const className: string[] = ['invisible', 'opacity-0']
 const types: string[] = ['image/jpeg', 'image/png']
 const size: number = 2 * Math.pow(1024, 2)
 
-export const handleFile = ({ error, file }: HandleFile): boolean => {
+export const handleFile = ({ error, file }: FileHandler): boolean => {
   if (!types.includes(file.type)) {
     error.classList.remove(...className)
     error.innerText = errors.file.type

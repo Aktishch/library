@@ -1,12 +1,12 @@
 import { targetId } from '@ts/scroll-to'
 import { Container } from '@utils'
 
-interface ShowItem {
+interface CheckedItem {
   condition: boolean
   item: HTMLDivElement
 }
 
-interface HandleCards {
+interface CheckedValue {
   name: string
   cards: NodeListOf<HTMLDivElement>
   plug: HTMLDivElement
@@ -18,7 +18,7 @@ const addTransition = (item: HTMLDivElement): void => {
   item.classList.add('transition', 'ease-linear')
 }
 
-const showItem = ({ condition, item }: ShowItem): void => {
+const checkItem = ({ condition, item }: CheckedItem): void => {
   if (condition) {
     item.classList.add('hidden', 'translate-y-10', 'opacity-0')
   } else {
@@ -27,7 +27,7 @@ const showItem = ({ condition, item }: ShowItem): void => {
   }
 }
 
-const handleCards = ({ name, cards, plug }: HandleCards): void => {
+const checkValue = ({ name, cards, plug }: CheckedValue): void => {
   cards.forEach((card: HTMLDivElement): void => {
     const value: string | undefined = card.dataset.filteringValue
 
@@ -36,14 +36,14 @@ const handleCards = ({ name, cards, plug }: HandleCards): void => {
     const absence: boolean = value.split(' ').includes(name) === false
     const showAll: boolean = name.toLowerCase() === 'all'
 
-    showItem({ condition: absence && !showAll, item: card })
+    checkItem({ condition: absence && !showAll, item: card })
   })
 
   const allHidden: boolean = ([...cards] as HTMLDivElement[]).every((card: HTMLDivElement): boolean =>
     card.classList.contains('hidden')
   )
 
-  if (plug) showItem({ condition: !allHidden, item: plug })
+  if (plug) checkItem({ condition: !allHidden, item: plug })
 }
 
 export default (container: Container = document): void => {
@@ -82,7 +82,7 @@ export default (container: Container = document): void => {
         line.style.left = `${category.offsetLeft}px`
       }
 
-      handleCards({ name, cards, plug })
+      checkValue({ name, cards, plug })
     }
 
     cards.forEach((card: HTMLDivElement): void => {

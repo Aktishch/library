@@ -1,10 +1,10 @@
-interface SetCookies {
+interface Cookies {
   value: string
   path: string
   expires: number
 }
 
-export const setCookies = ({ value, path, expires }: SetCookies): void => {
+export const setCookies = ({ value, path, expires }: Cookies): void => {
   const html = document.documentElement as HTMLHtmlElement
   const domain: string = html.dataset.domain || window.location.hostname
   const date: string = new Date(

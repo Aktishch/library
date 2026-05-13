@@ -21,7 +21,7 @@ export default (container: Container = document): void => {
       let currentY: number = 0
       let currentX: number = 0
 
-      const setParallaxPosition = (): void => {
+      const setPositionLayer = (): void => {
         const initialY: number = currentY - positionY
         const initialX: number = currentX - positionX
 
@@ -31,10 +31,10 @@ export default (container: Container = document): void => {
           layer.dataset.parallaxLayer === 'reverse'
             ? `translate(${-positionX / depth}%, ${-positionY / depth}%)`
             : `translate(${positionX / depth}%, ${positionY / depth}%)`
-        window.requestAnimationFrame(setParallaxPosition)
+        window.requestAnimationFrame(setPositionLayer)
       }
 
-      window.requestAnimationFrame(setParallaxPosition)
+      window.requestAnimationFrame(setPositionLayer)
 
       parallax.addEventListener('mousemove', ((event: MouseEvent): void => {
         const height: number = parallax.offsetHeight

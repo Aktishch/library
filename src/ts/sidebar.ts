@@ -1,7 +1,7 @@
 import { media } from '@plugins/media'
 import { hideScrollbar, showScrollbar } from '@utils'
 
-type SidebarBreakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 type SidebarButton = HTMLButtonElement | HTMLAnchorElement
 
 const getSidebar = (value: string): HTMLDivElement => {
@@ -42,7 +42,7 @@ export default (): void => {
 
     sidebars.forEach((sidebar: HTMLDivElement): void => {
       if (sidebar && sidebar.hasAttribute('data-breakpoint')) {
-        const breakpoint: number = media[sidebar.dataset.breakpoint as SidebarBreakpoint]
+        const breakpoint: number = media[sidebar.dataset.breakpoint as Breakpoint]
 
         if ((document.documentElement as HTMLHtmlElement).clientWidth > breakpoint) closeSidebar(sidebar)
       }

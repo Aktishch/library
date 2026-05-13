@@ -9,7 +9,7 @@ const getOffset = (item: HTMLElement): Coordinates => {
   } as Coordinates
 }
 
-const setAnimation = (): void => {
+const initAnimation = (): void => {
   const items = document.querySelectorAll('*[data-anim]') as NodeListOf<HTMLElement>
 
   const allShow: boolean = ([...items] as HTMLElement[]).every(
@@ -36,11 +36,11 @@ const setAnimation = (): void => {
       }
     })
   } else {
-    document.removeEventListener('scroll', setAnimation as EventListener)
+    document.removeEventListener('scroll', initAnimation as EventListener)
   }
 }
 
 export default (): void => {
-  setAnimation()
-  document.addEventListener('scroll', setAnimation as EventListener, { passive: true })
+  initAnimation()
+  document.addEventListener('scroll', initAnimation as EventListener, { passive: true })
 }

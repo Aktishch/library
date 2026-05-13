@@ -1,6 +1,6 @@
 import { getScrollPosition } from '@utils'
 
-interface ScrollTo {
+interface ScrollingPosition {
   block: HTMLElement
   behavior: 'smooth' | 'auto'
 }
@@ -11,7 +11,7 @@ export const targetId: string | null = hash ? hash.replace('#', '') : null
 
 if (hash) window.history.replaceState(null, document.title, window.location.pathname + window.location.search)
 
-const scrollTo = ({ block, behavior }: ScrollTo): void => {
+const scrollTo = ({ block, behavior }: ScrollingPosition): void => {
   if (!block) return
 
   const header = document.querySelector('*[data-header]') as HTMLElement

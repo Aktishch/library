@@ -17,19 +17,19 @@ export default (container: Container = document): void => {
       image.style.width = `${compare.offsetWidth}px`
     }
 
-    const startCompare = (event: Event): void => {
+    const onStart = (event: Event): void => {
       if ((event.target as HTMLElement).closest('[data-compare-change]')) {
         hideScrollbar()
         active = true
       }
     }
 
-    const endCompare = (): void => {
+    const onEnd = (): void => {
       showScrollbar()
       active = false
     }
 
-    const moveCompare = (event: Event): void => {
+    const onMove = (event: Event): void => {
       event.stopPropagation()
 
       if (!active) return
@@ -57,13 +57,13 @@ export default (container: Container = document): void => {
 
     setWidthImage()
     window.addEventListener('resize', setWidthImage as EventListener)
-    compare.addEventListener('mousedown', startCompare as EventListener)
-    compare.addEventListener('mouseup', endCompare as EventListener)
-    compare.addEventListener('mouseleave', endCompare as EventListener)
-    compare.addEventListener('mousemove', moveCompare as EventListener)
-    compare.addEventListener('touchstart', startCompare as EventListener, { passive: true })
-    compare.addEventListener('touchend', endCompare as EventListener, { passive: true })
-    compare.addEventListener('touchcancel', endCompare as EventListener, { passive: true })
-    compare.addEventListener('touchmove', moveCompare as EventListener, { passive: true })
+    compare.addEventListener('mousedown', onStart as EventListener)
+    compare.addEventListener('mouseup', onEnd as EventListener)
+    compare.addEventListener('mouseleave', onEnd as EventListener)
+    compare.addEventListener('mousemove', onMove as EventListener)
+    compare.addEventListener('touchstart', onStart as EventListener, { passive: true })
+    compare.addEventListener('touchend', onEnd as EventListener, { passive: true })
+    compare.addEventListener('touchcancel', onEnd as EventListener, { passive: true })
+    compare.addEventListener('touchmove', onMove as EventListener, { passive: true })
   })
 }

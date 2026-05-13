@@ -14,13 +14,9 @@ export default (): void => {
         sessionStorage.setItem('warning', value)
         dialog.close()
       } else {
-        const currentTab: Window | null = window.open('', '_self')
+        const html = document.documentElement as HTMLHtmlElement
 
-        setTimeout((): void => {
-          ;(document.documentElement as HTMLHtmlElement).innerHTML = ''
-
-          if (currentTab) currentTab.close()
-        }, 1000)
+        html.innerHTML = ''
       }
     }
   }) as EventListener)

@@ -1,4 +1,4 @@
-import { createError, isEn } from '@utils'
+import { createError, getEn, getSource } from '@utils'
 import ymaps from 'ymaps'
 
 type ymaps = typeof ymaps
@@ -15,6 +15,8 @@ declare global {
 
 window.ymaps = ymaps as YandexMap
 
+const lang: string = getEn() ? 'en_US' : 'ru_RU'
+
 export default (): void => {
   const yandex = document.querySelector('*[data-yandex]') as HTMLElement
 
@@ -25,9 +27,7 @@ export default (): void => {
   if (yandexMap.dataset.yandexMap) {
     const loader = yandex.querySelector('*[data-loader]') as HTMLDivElement
     const coordinates: string[] = yandexMap.dataset.yandexMap.split(',')
-    const point: string = yandexMap.dataset.point || ''
     const pointSize: number[] = [62, 62]
-    const lang: string = isEn ? 'en_US' : 'ru_RU'
     const mark: number[] = []
 
     for (let i: number = 0; i < coordinates.length; i++) mark.push(Number(coordinates[i]))
@@ -50,7 +50,7 @@ export default (): void => {
           },
           {
             iconLayout: 'default#image',
-            iconImageHref: point,
+            iconImageHref: `${getSource()}/img/pictures/point.svg`,
             iconImageSize: pointSize,
             iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2],
           }

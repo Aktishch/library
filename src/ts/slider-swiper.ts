@@ -20,7 +20,7 @@ window.Swiper = Swiper
 
 const { sm, md, lg, xl } = media
 
-const createGallerySlider = (container: Container = document): void => {
+const initGallerySlider = (container: Container = document): void => {
   const slider = container.querySelector('*[data-slider="gallery"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -63,7 +63,7 @@ const createGallerySlider = (container: Container = document): void => {
   }) as Swiper
 }
 
-const createProductsSlider = (container: Container = document): void => {
+const initProductsSlider = (container: Container = document): void => {
   const slider = container.querySelector('*[data-slider="products"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -102,7 +102,7 @@ const createProductsSlider = (container: Container = document): void => {
   }) as Swiper
 }
 
-const createQuizSlider = (container: Container = document): void => {
+const initQuizSlider = (container: Container = document): void => {
   const slider = container.querySelector('*[data-slider="quiz"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -113,7 +113,7 @@ const createQuizSlider = (container: Container = document): void => {
   const prev = slider.querySelector(`*[data-slider-prev="${value}"]`) as HTMLButtonElement
   const next = slider.querySelector(`*[data-slider-next="${value}"]`) as HTMLButtonElement
 
-  const checkSlide = (swiper: QuizSwiper): void => {
+  const checkSwiperSlide = (swiper: QuizSwiper): void => {
     const quiz = swiper.el.closest('[data-quiz]') as HTMLElement
     const visibleSlide = swiper.visibleSlides[0] as HTMLDivElement
 
@@ -142,13 +142,13 @@ const createQuizSlider = (container: Container = document): void => {
     allowTouchMove: false,
     watchSlidesProgress: true,
     on: {
-      init: (swiper: Swiper): void => checkSlide(swiper as QuizSwiper),
-      slideChange: (swiper: Swiper): void => checkSlide(swiper as QuizSwiper),
+      init: (swiper: Swiper): void => checkSwiperSlide(swiper as QuizSwiper),
+      slideChange: (swiper: Swiper): void => checkSwiperSlide(swiper as QuizSwiper),
     },
   }) as Swiper
 }
 
-const createThumbsSlider = (container: Container = document): Swiper | undefined => {
+const initThumbsSlider = (container: Container = document): Swiper | undefined => {
   const slider = container.querySelector('*[data-slider="thumbs"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -170,7 +170,7 @@ const createThumbsSlider = (container: Container = document): Swiper | undefined
   }) as Swiper
 }
 
-const createBgSlider = (container: Container = document): Swiper | undefined => {
+const initBgSlider = (container: Container = document): Swiper | undefined => {
   const slider = container.querySelector('*[data-slider="bg"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -187,7 +187,7 @@ const createBgSlider = (container: Container = document): Swiper | undefined => 
   }) as Swiper
 }
 
-const createDescriptionSlider = (container: Container = document): void => {
+const initDescriptionSlider = (container: Container = document): void => {
   const description = container.querySelector('*[data-description]') as HTMLElement
 
   if (!description) return
@@ -198,8 +198,8 @@ const createDescriptionSlider = (container: Container = document): void => {
 
   const value: string = slider.dataset.slider
   const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
-  const thumbs: Swiper | undefined = createThumbsSlider(description)
-  const bg: Swiper | undefined = createBgSlider(description)
+  const thumbs: Swiper | undefined = initThumbsSlider(description)
+  const bg: Swiper | undefined = initBgSlider(description)
 
   new window.Swiper(swiper, {
     slidesPerView: 1,
@@ -219,8 +219,8 @@ const createDescriptionSlider = (container: Container = document): void => {
 }
 
 export default (): void => {
-  createGallerySlider()
-  createProductsSlider()
-  createQuizSlider()
-  createDescriptionSlider()
+  initGallerySlider()
+  initProductsSlider()
+  initQuizSlider()
+  initDescriptionSlider()
 }

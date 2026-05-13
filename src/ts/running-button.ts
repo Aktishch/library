@@ -1,11 +1,11 @@
 import { Container, Coordinates, getTouchDevice } from '@utils'
 
-interface GetRandomPosition {
+interface RandomPosition {
   min: number
   max: number
 }
 
-const getRandomPosition = ({ min, max }: GetRandomPosition): number => Math.floor(min + Math.random() * (max - min + 1))
+const getRandomPosition = ({ min, max }: RandomPosition): number => Math.floor(min + Math.random() * (max - min + 1))
 
 export default (container: Container = document): void => {
   if (getTouchDevice()) return

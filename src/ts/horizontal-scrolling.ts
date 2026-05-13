@@ -1,7 +1,7 @@
 import { media } from '@plugins/media'
 import { getScrollPosition } from '@utils'
 
-const setHorizontalScrollingHeight = (): void => {
+const setScrollingHeight = (): void => {
   const scrollings = document.querySelectorAll('*[data-scrolling]') as NodeListOf<HTMLElement>
 
   scrollings.forEach((scrolling: HTMLElement): void => {
@@ -14,7 +14,7 @@ const setHorizontalScrollingHeight = (): void => {
   })
 }
 
-const createHorizontalScrolling = (): void => {
+const initHorizontalScroll = (): void => {
   const scrollings = document.querySelectorAll('*[data-scrolling]') as NodeListOf<HTMLElement>
 
   scrollings.forEach((scrolling: HTMLElement): void => {
@@ -34,18 +34,18 @@ const createHorizontalScrolling = (): void => {
 
 const setBreakpoint = (): void => {
   if ((document.documentElement as HTMLHtmlElement).clientWidth < media.md) {
-    document.removeEventListener('wheel', createHorizontalScrolling as EventListener)
-    document.removeEventListener('scroll', createHorizontalScrolling as EventListener)
+    document.removeEventListener('wheel', initHorizontalScroll as EventListener)
+    document.removeEventListener('scroll', initHorizontalScroll as EventListener)
   } else {
-    document.addEventListener('wheel', createHorizontalScrolling as EventListener, { passive: true })
-    document.addEventListener('scroll', createHorizontalScrolling as EventListener, { passive: true })
+    document.addEventListener('wheel', initHorizontalScroll as EventListener, { passive: true })
+    document.addEventListener('scroll', initHorizontalScroll as EventListener, { passive: true })
   }
 }
 
 export default (): void => {
-  setHorizontalScrollingHeight()
-  createHorizontalScrolling()
+  setScrollingHeight()
+  initHorizontalScroll()
   setBreakpoint()
-  window.addEventListener('resize', setHorizontalScrollingHeight as EventListener)
+  window.addEventListener('resize', setScrollingHeight as EventListener)
   window.addEventListener('resize', setBreakpoint as EventListener)
 }

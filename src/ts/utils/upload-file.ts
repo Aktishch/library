@@ -1,17 +1,17 @@
-import { isEn } from '@utils/is-en'
+import { getEn } from '@utils/get-en'
 
-interface UploadFile {
+interface UploadedFile {
   file: File
   url: string
 }
 
-type Resolve = (value: UploadFile | PromiseLike<UploadFile>) => void
+type Resolve = (value: UploadedFile | PromiseLike<UploadedFile>) => void
 type Reject = (reason?: string) => void
 
-export const uploadFile = (file: File): Promise<UploadFile> => {
-  return new Promise<UploadFile>((resolve: Resolve, reject: Reject): void => {
+export const uploadFile = (file: File): Promise<UploadedFile> => {
+  return new Promise<UploadedFile>((resolve: Resolve, reject: Reject): void => {
     const reader: FileReader = new FileReader()
-    const setReject = (): void => reject(isEn ? 'File upload error' : 'Ошибка при загрузке файла')
+    const setReject = (): void => reject(getEn() ? 'File upload error' : 'Ошибка при загрузке файла')
 
     reader.readAsDataURL(file)
 

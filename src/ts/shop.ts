@@ -1,4 +1,4 @@
-import { Coordinates } from '@utils'
+import { Coordinates, getSource } from '@utils'
 
 const className: string[] = [
   'in-shop',
@@ -38,7 +38,7 @@ export default (): void => {
     shop.dataset.shop = ''
   }
 
-  const createShopElement = (event: MouseEvent): void => {
+  const createShopItem = (event: MouseEvent): void => {
     const div = document.createElement('div') as HTMLDivElement
     const coordinates: Coordinates = {
       top: event.clientY,
@@ -50,7 +50,7 @@ export default (): void => {
     div.style.left = `${coordinates.left}px`
     div.innerHTML = `
       <svg class="icon text-second">
-        <use href="/img/icons.svg#basket"></use>
+        <use href="${getSource()}/img/icons.svg#basket"></use>
       </svg>`
     body.appendChild(div)
     setTimeout((): void => div.remove(), 2000)
@@ -88,7 +88,7 @@ export default (): void => {
     }
 
     productBtn.addEventListener('click', ((event: MouseEvent): void => {
-      createShopElement(event)
+      createShopItem(event)
       addInShop()
     }) as EventListener)
   })

@@ -1,16 +1,16 @@
-import { Container, createError, isEn } from '@utils'
+import { Container, createError, getEn } from '@utils'
 
-interface HandleBackground {
+interface BackgroundHandler {
   item: HTMLElement
   requestUrl: string
 }
 
-interface CreateBackground {
+interface BackgroundInitialization {
   data: string
   container: Container
 }
 
-const getWebp = (): boolean => {
+const getFormatWebp = (): boolean => {
   const canvas = document.createElement('canvas') as HTMLCanvasElement
 
   return canvas.getContext && canvas.getContext('2d')
@@ -18,7 +18,7 @@ const getWebp = (): boolean => {
     : false
 }
 
-const handleBackground = async ({ item, requestUrl }: HandleBackground): Promise<void> => {
+const handleBackground = async ({ item, requestUrl }: BackgroundHandler): Promise<void> => {
   await fetch(requestUrl)
     .then((response: Response): boolean => {
       return response.ok
@@ -26,12 +26,12 @@ const handleBackground = async ({ item, requestUrl }: HandleBackground): Promise
     .then((response: boolean): void => {
       response
         ? (item.style.backgroundImage = `url('${requestUrl}')`)
-        : createError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
+        : createError(getEn() ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
     })
     .catch((error: string): void => createError(error))
 }
 
-const createBackground = ({ data, container }: CreateBackground): void => {
+const initBackground = ({ data, container }: BackgroundInitialization): void => {
   const items = container.querySelectorAll(`*[${data}]`) as NodeListOf<HTMLElement>
 
   items.forEach((item: HTMLElement): void => {
@@ -47,7 +47,7 @@ export default (container: Container = document): void => {
   const firefox: RegExpMatchArray | null = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./)
   const firefoxVersion: number = firefox ? Number(firefox[1]) : 0
 
-  createBackground({ data: 'data-bg', container })
+  initBackground({ data: 'data-bg', container })
 
-  if (getWebp() || firefoxVersion >= 65) createBackground({ data: 'data-webp', container })
+  if (getFormatWebp() || firefoxVersion >= 65) initBackground({ data: 'data-webp', container })
 }

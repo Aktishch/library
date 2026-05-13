@@ -6,10 +6,10 @@ export interface Color {
   alpha: string
 }
 
-export const createColor = (variable: string): string => {
+export const getColor = (variable: string): string => {
   return `rgba(var(--color-${variable}), ${value})`
 }
 
-export const getRgb = (color: string, alpha: string = '1'): string => {
+export const getRgba = (color: string, alpha: string = '1'): string => {
   return color.replace(value, alpha)
 }

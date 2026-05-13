@@ -1,10 +1,14 @@
 import { getScrollPosition } from '@utils'
 
-const setProgressLineWidth = (): void => {
+export default (): void => {
   const progressLine = document.querySelector('*[data-progress-line]') as HTMLDivElement
 
-  if (progressLine)
-    progressLine.style.width = `${Math.floor((getScrollPosition().top / (document.documentElement.scrollHeight - window.innerHeight)) * 100)}%`
-}
+  if (!progressLine) return
 
-export default (): void => document.addEventListener('scroll', setProgressLineWidth as EventListener, { passive: true })
+  const setWidthProgress = (): void => {
+    progressLine.style.width = `${Math.floor((getScrollPosition().top / (document.documentElement.scrollHeight - window.innerHeight)) * 100)}%`
+  }
+
+  setWidthProgress()
+  document.addEventListener('scroll', setWidthProgress as EventListener, { passive: true })
+}

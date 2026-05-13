@@ -1,6 +1,6 @@
-import { Container, createError, getValidate, handleFile, isEn, uploadFile } from '@utils'
+import { Container, createError, getEn, getSource, getValidate, handleFile, uploadFile } from '@utils'
 
-interface Content {
+interface Message {
   default: string
   more: string
   limit: string
@@ -21,10 +21,10 @@ export default (container: Container = document): void => {
     const text = label.querySelector('*[data-filelist-text]') as HTMLSpanElement
     const items = filelist.querySelector('*[data-filelist-items]') as HTMLUListElement
     const maxLength: number = Number(items.dataset.filelistItems) || 3
-    const content: Content = {
-      default: isEn ? 'Upload files' : 'Загрузить файлы',
-      more: isEn ? 'Upload more' : 'Загрузить ещё',
-      limit: isEn ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`,
+    const message: Message = {
+      default: getEn() ? 'Upload files' : 'Загрузить файлы',
+      more: getEn() ? 'Upload more' : 'Загрузить ещё',
+      limit: getEn() ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`,
     }
     let data: DataTransfer = new DataTransfer()
 
@@ -32,7 +32,7 @@ export default (container: Container = document): void => {
       input.files = data.files
     }
 
-    text.textContent = content.default
+    text.textContent = message.default
 
     input.addEventListener('change', ((): void => {
       const files = input.files as FileList
@@ -52,17 +52,17 @@ export default (container: Container = document): void => {
                 <span class="truncate">${file.name}</span>
                 <button class="btn btn-gray text-sm p-1" data-filelist-remove="${file.name}" data-waved="dark" type="button">
                   <svg class="icon">
-                    <use href="/img/icons.svg#close"></use>
+                    <use href="${getSource()}/img/icons.svg#close"></use>
                   </svg>
                 </button>`
                 items.appendChild(item)
-                text.textContent = content.more
+                text.textContent = message.more
                 data.items.add(file)
               }
 
               if ((data.files as FileList).length === maxLength) {
                 label.classList.add(...className)
-                text.textContent = content.limit
+                text.textContent = message.limit
               }
             })
             .catch((error: string): void => createError(error))
@@ -94,9 +94,9 @@ export default (container: Container = document): void => {
 
         if ((data.files as FileList).length === 0) {
           input.value = ''
-          text.textContent = content.default
+          text.textContent = message.default
         } else {
-          text.textContent = content.more
+          text.textContent = message.more
         }
 
         label.classList.remove(...className)
@@ -108,7 +108,7 @@ export default (container: Container = document): void => {
 
       if (getValidate(form)) {
         label.classList.remove(...className)
-        text.textContent = content.default
+        text.textContent = message.default
         items.innerHTML = ''
         data = new DataTransfer()
       }

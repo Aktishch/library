@@ -1,6 +1,6 @@
 import { Coordinates, getTouchDevice } from '@utils'
 
-interface CreateWaved {
+interface CirclePoisition {
   positionY: number
   positionX: number
 }
@@ -12,7 +12,7 @@ const setWaved = (event: Event): void => {
     const waved = document.createElement('div') as HTMLDivElement
     const circle = document.createElement('div') as HTMLDivElement
 
-    const createWaved = ({ positionY, positionX }: CreateWaved): void => {
+    const createWavedCircle = ({ positionY, positionX }: CirclePoisition): void => {
       const coordinates: Coordinates = {
         top: positionY - item.getBoundingClientRect().top,
         left: positionX - item.getBoundingClientRect().left,
@@ -31,7 +31,7 @@ const setWaved = (event: Event): void => {
       case 'touchstart': {
         if (!getTouchDevice()) return
 
-        createWaved({
+        createWavedCircle({
           positionY: (event as TouchEvent).touches[0].clientY,
           positionX: (event as TouchEvent).touches[0].clientX,
         })
@@ -42,7 +42,7 @@ const setWaved = (event: Event): void => {
       case 'mousedown': {
         if (getTouchDevice()) return
 
-        createWaved({
+        createWavedCircle({
           positionY: (event as MouseEvent).clientY,
           positionX: (event as MouseEvent).clientX,
         })

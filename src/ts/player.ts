@@ -1,4 +1,4 @@
-import { createError, getTimeFormat, hideScrollbar, isEn, showScrollbar } from '@utils'
+import { createError, getEn, getSource, getTimeFormat, hideScrollbar, showScrollbar } from '@utils'
 
 interface Composition {
   artist: string
@@ -31,19 +31,19 @@ const playlist: Composition[] = [
     song: 'Snuff',
     audio:
       'https://mp3minusovki.com/music/fhvndfjwserjgt/247bab1c312b2335afe3f5c9b496a3d3/01d63b016f64e0739a9e3d2599b6521f.mp3',
-    poster: '/img/pictures/town.jpg',
+    poster: `${getSource()}/img/pictures/town.jpg`,
   },
   {
     artist: 'System of a down',
     song: 'Lonely Day',
     audio: 'https://cdn1.shadam.net/uploads/files/2018-09/1536003683_system-of-a-down-lonely-day.mp3',
-    poster: '/img/pictures/town.jpg',
+    poster: `${getSource()}/img/pictures/town.jpg`,
   },
   {
     artist: 'Scorpions',
     song: 'Slave Me',
     audio: 'https://ruo.morsmusic.org/load/941771577/Scorpions_-_Slave_Me_(musmore.com).mp3',
-    poster: '/img/pictures/town.jpg',
+    poster: `${getSource()}/img/pictures/town.jpg`,
   },
 ]
 
@@ -64,10 +64,10 @@ const createComposition = (composition: Composition): HTMLLIElement => {
   item.innerHTML = `
     <button class="btn btn-primary btn-fade text-4xl rounded-full shrink-0 size-10" data-player-composition data-waved="dark">
       <svg class="loading icon hidden" data-player-loading>
-        <use href="/img/icons.svg#loading"></use>
+        <use href="${getSource()}/img/icons.svg#loading"></use>
       </svg>
       <svg class="icon" data-player-status>
-        <use href="/img/icons.svg#play"></use>
+        <use href="${getSource()}/img/icons.svg#play"></use>
       </svg>
     </button>
     <div class="flex flex-col">
@@ -79,7 +79,7 @@ const createComposition = (composition: Composition): HTMLLIElement => {
   return item
 }
 
-const createPlayer = ({ id, playlist }: Player): void => {
+const initPlayer = ({ id, playlist }: Player): void => {
   const player = document.getElementById(id) as HTMLElement
 
   if (!player) return
@@ -136,7 +136,7 @@ const createPlayer = ({ id, playlist }: Player): void => {
               loader.classList.add('hidden')
             } else {
               loader.classList.remove('hidden')
-              createError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
+              createError(getEn() ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
             }
           })
           .catch((error: string): void => createError(error))
@@ -166,20 +166,23 @@ const createPlayer = ({ id, playlist }: Player): void => {
           const use = status.querySelector('use') as SVGUseElement
 
           if (audio.played)
-            use.setAttribute('href', key === condition.index ? '/img/icons.svg#pause' : '/img/icons.svg#play')
-          if (audio.paused) use.setAttribute('href', '/img/icons.svg#play')
+            use.setAttribute(
+              'href',
+              key === condition.index ? `${getSource()}/img/icons.svg#pause` : `${getSource()}/img/icons.svg#play`
+            )
+          if (audio.paused) use.setAttribute('href', `${getSource()}/img/icons.svg#play`)
         })
       }
 
       const setStatusComposition = (): void => {
         if (audio.paused) {
           audio.play()
-          use.setAttribute('href', '/img/icons.svg#pause')
+          use.setAttribute('href', `${getSource()}/img/icons.svg#pause`)
           setCurrentComposition()
           condition.status = true
         } else {
           audio.pause()
-          use.setAttribute('href', '/img/icons.svg#play')
+          use.setAttribute('href', `${getSource()}/img/icons.svg#play`)
           setCurrentComposition()
           condition.status = false
         }
@@ -225,19 +228,19 @@ const createPlayer = ({ id, playlist }: Player): void => {
         audio.currentTime = (offsetX / width) * duration
       }
 
-      const startProgress = (event: Event): void => {
+      const onStart = (event: Event): void => {
         if ((event.target as HTMLDivElement).closest('[data-player-progress]')) {
           hideScrollbar()
           condition.active = true
         }
       }
 
-      const endProgress = (): void => {
+      const onEnd = (): void => {
         showScrollbar()
         condition.active = false
       }
 
-      const moveProgress = (event: Event): void => {
+      const onMove = (event: Event): void => {
         event.stopPropagation()
 
         if (!condition.active) return
@@ -319,12 +322,12 @@ const createPlayer = ({ id, playlist }: Player): void => {
       }
 
       const pauseAudio = (): void => {
-        use.setAttribute('href', '/img/icons.svg#play')
+        use.setAttribute('href', `${getSource()}/img/icons.svg#play`)
         setCurrentComposition()
       }
 
       const setError = (): void => {
-        createError(isEn ? 'Failed to load audio' : 'Не удалось загрузить аудио')
+        createError(getEn() ? 'Failed to load audio' : 'Не удалось загрузить аудио')
       }
 
       const setVolume = (): void => {
@@ -333,10 +336,10 @@ const createPlayer = ({ id, playlist }: Player): void => {
 
         if (condition.muted) {
           status.classList.add('opacity-50')
-          use.setAttribute('href', '/img/icons.svg#volume-off')
+          use.setAttribute('href', `${getSource()}/img/icons.svg#volume-off`)
         } else {
           status.classList.remove('opacity-50')
-          use.setAttribute('href', '/img/icons.svg#volume-on')
+          use.setAttribute('href', `${getSource()}/img/icons.svg#volume-on`)
         }
 
         audio.muted = condition.muted
@@ -348,7 +351,7 @@ const createPlayer = ({ id, playlist }: Player): void => {
         setVolume()
       }
 
-      const initializePlayer = (): void => {
+      const activatePlayer = (): void => {
         setComposition(condition.index)
         setVolume()
         audio.currentTime = condition.time
@@ -376,19 +379,19 @@ const createPlayer = ({ id, playlist }: Player): void => {
         })
       }
 
-      initializePlayer()
+      activatePlayer()
       play.addEventListener('click', setStatusComposition as EventListener)
       next.addEventListener('click', setNextComposition as EventListener)
       prev.addEventListener('click', setPrevComposition as EventListener)
       progress.addEventListener('click', setProgress as EventListener)
-      player.addEventListener('mousedown', startProgress as EventListener)
-      player.addEventListener('mouseup', endProgress as EventListener)
-      player.addEventListener('mouseleave', endProgress as EventListener)
-      player.addEventListener('mousemove', moveProgress as EventListener)
-      player.addEventListener('touchstart', startProgress as EventListener, { passive: true })
-      player.addEventListener('touchend', endProgress as EventListener, { passive: true })
-      player.addEventListener('touchcancel', endProgress as EventListener, { passive: true })
-      player.addEventListener('touchmove', moveProgress as EventListener, { passive: true })
+      player.addEventListener('mousedown', onStart as EventListener)
+      player.addEventListener('mouseup', onEnd as EventListener)
+      player.addEventListener('mouseleave', onEnd as EventListener)
+      player.addEventListener('mousemove', onMove as EventListener)
+      player.addEventListener('touchstart', onStart as EventListener, { passive: true })
+      player.addEventListener('touchend', onEnd as EventListener, { passive: true })
+      player.addEventListener('touchcancel', onEnd as EventListener, { passive: true })
+      player.addEventListener('touchmove', onMove as EventListener, { passive: true })
       audio.addEventListener('loadstart', loadAudio as EventListener)
       audio.addEventListener('loadeddata', loadAudio as EventListener)
       audio.addEventListener('timeupdate', startAudio as EventListener)
@@ -402,6 +405,6 @@ const createPlayer = ({ id, playlist }: Player): void => {
 }
 
 export default (): void => {
-  createPlayer({ id: 'player', playlist })
+  initPlayer({ id: 'player', playlist })
   document.addEventListener('play', playOnlyOne as EventListener, true)
 }

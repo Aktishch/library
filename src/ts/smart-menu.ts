@@ -1,11 +1,11 @@
-interface ShowItem {
+interface CheckedItem {
   condition: boolean
   item: HTMLElement
 }
 
 const className: string[] = ['hidden']
 
-const showItem = ({ condition, item }: ShowItem): void => {
+const checkItem = ({ condition, item }: CheckedItem): void => {
   condition ? item.classList.add(...className) : item.classList.remove(...className)
 }
 
@@ -42,8 +42,8 @@ export default (): void => {
 
     const items = list.querySelectorAll('li') as NodeListOf<HTMLLIElement>
 
-    showItem({ condition: items.length === 0, item: nav })
-    showItem({ condition: lengthWidth !== 0, item: title })
+    checkItem({ condition: items.length === 0, item: nav })
+    checkItem({ condition: lengthWidth !== 0, item: title })
   }
 
   updateSmartMenu()

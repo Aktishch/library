@@ -1,3 +1,7 @@
+[data-scroll] {
+  @apply will-change-transform;
+}
+
 .fancybox {
   &__dialog &__slide {
 

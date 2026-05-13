@@ -1,5 +1,5 @@
 import { CarouselSlide, Fancybox } from '@fancyapps/ui/dist/fancybox/'
-import { createCalendar } from '@ts/air-datepicker'
+import { initCalendar } from '@ts/air-datepicker'
 import imagePreview from '@ts/image-preview'
 import lazyLoad from '@ts/lazy-load'
 import { setStateSubmitBtn } from '@ts/submit-handler'
@@ -107,7 +107,7 @@ export default (): void => {
     on: {
       'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
         updateLoad()
-        createCalendar(slide.el)
+        initCalendar(slide.el)
       },
     },
   })

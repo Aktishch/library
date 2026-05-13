@@ -1,6 +1,6 @@
 import filtering from '@ts/filtering'
 import { Container, getTouchDevice } from '@utils'
-import AirDatepicker, { AirDatepickerPosition } from 'air-datepicker'
+import AirDatepicker, { AirDatepickerPosition, AirDatepickerViewsSingle } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
 
 declare global {
@@ -9,30 +9,32 @@ declare global {
   }
 }
 
-interface AirDatepickerCell {
+interface Calendar {
   date: Date
-  cellType: string
+  cellType: AirDatepickerViewsSingle
 }
 
-type Attrs = {
+type CalendarAttrs = {
   'data-filtering-category': string
   'data-filtering-value': string
   'data-waved': string
   'data-active'?: string
 }
 
-interface AirDatepickerRenderCell {
+interface CalendarCell {
   classes: string
-  attrs: Attrs
+  attrs: CalendarAttrs
 }
 
-type Dates = { date: Date | Date[] }
+interface Dates {
+  date: Date | Date[]
+}
 
 const excludeDates: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +new Date(2026, 5, 10)]
 
 window.AirDatepicker = AirDatepicker
 
-export const createCalendar = (container: Container = document): void => {
+export const initCalendar = (container: Container = document): void => {
   const calendar = container.querySelector('*[data-calendar]') as HTMLDivElement
 
   if (!calendar) return
@@ -40,7 +42,7 @@ export const createCalendar = (container: Container = document): void => {
   const dates: number[] = []
   let timeOut: NodeJS.Timeout
 
-  const renderCell = ({ date, cellType }: AirDatepickerCell): AirDatepickerRenderCell | undefined => {
+  const renderCalendarCell = ({ date, cellType }: Calendar): CalendarCell | undefined => {
     if (cellType === 'day') {
       if (timeOut) clearTimeout(timeOut)
 
@@ -48,7 +50,7 @@ export const createCalendar = (container: Container = document): void => {
       const classes: string = condition
         ? 'btn btn-primary btn-fill text-sm [&[data-active]]:opacity-50 [&[data-active]]:pointer-events-none'
         : 'pointer-events-none'
-      const attrs: Attrs = {
+      const attrs: CalendarAttrs = {
         'data-filtering-category': 'calendar',
         'data-filtering-value': `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`,
         'data-waved': 'light',
@@ -68,7 +70,7 @@ export const createCalendar = (container: Container = document): void => {
 
   new window.AirDatepicker(calendar, {
     locale: localeRu,
-    onRenderCell: renderCell,
+    onRenderCell: renderCalendarCell,
     selectedDates: [new Date()],
   }) as AirDatepicker<HTMLDivElement>
 

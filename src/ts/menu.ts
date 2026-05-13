@@ -13,11 +13,11 @@ export default (): void => {
   let currentX: number
   let active: boolean = false
 
-  const startMenu = (event: TouchEvent): void => {
+  const onStart = (event: TouchEvent): void => {
     initialX = event.touches[0].clientX
   }
 
-  const endMenu = (event: TouchEvent): void => {
+  const onEnd = (event: TouchEvent): void => {
     if (!active) return
 
     if ((event.target as HTMLElement).closest('[data-menu]')) {
@@ -29,13 +29,13 @@ export default (): void => {
     active = false
   }
 
-  const moveMenu = (event: TouchEvent): void => {
+  const onMove = (event: TouchEvent): void => {
     active = true
     currentX = event.touches[0].clientX
   }
 
-  document.addEventListener('touchstart', startMenu as EventListener, { passive: true })
-  document.addEventListener('touchend', endMenu as EventListener, { passive: true })
-  document.addEventListener('touchcancel', endMenu as EventListener, { passive: true })
-  document.addEventListener('touchmove', moveMenu as EventListener, { passive: true })
+  document.addEventListener('touchstart', onStart as EventListener, { passive: true })
+  document.addEventListener('touchend', onEnd as EventListener, { passive: true })
+  document.addEventListener('touchcancel', onEnd as EventListener, { passive: true })
+  document.addEventListener('touchmove', onMove as EventListener, { passive: true })
 }

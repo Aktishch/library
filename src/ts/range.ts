@@ -1,6 +1,6 @@
 import { Container } from '@utils'
 
-interface SetBubblesPosition {
+interface BubblePosition {
   size: number
   number: number
   input: HTMLInputElement
@@ -10,7 +10,7 @@ interface SetBubblesPosition {
 
 type RangeElement = HTMLInputElement | HTMLOutputElement
 
-const setBubblesPosition = ({ size, number, input, progress, bubble }: SetBubblesPosition): void => {
+const setBubblePosition = ({ size, number, input, progress, bubble }: BubblePosition): void => {
   const percent: number = size / 100
   const half: number = size / 2
   const value: number = Number(input.value)
@@ -60,7 +60,7 @@ export default (container: Container = document): void => {
         const bubble = range.querySelector('*[data-range-bubble]') as HTMLOutputElement
 
         const onChange = (): void => {
-          setBubblesPosition({ size, number: first, input, progress, bubble })
+          setBubblePosition({ size, number: first, input, progress, bubble })
           output.value = input.value
         }
 
@@ -87,14 +87,14 @@ export default (container: Container = document): void => {
         const lastBubble = (wrappers[last] as HTMLDivElement).querySelector('*[data-range-bubble]') as HTMLOutputElement
 
         const onChange = (): void => {
-          setBubblesPosition({
+          setBubblePosition({
             size,
             number: first,
             input: firstInput,
             progress: firstProgress,
             bubble: firstBubble,
           })
-          setBubblesPosition({
+          setBubblePosition({
             size,
             number: last,
             input: lastInput,

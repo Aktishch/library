@@ -1,12 +1,12 @@
 import { Container, Coordinates, hideScrollbar, showScrollbar } from '@utils'
 
-interface SetTranslate {
+interface Translate {
   item: HTMLElement
   positionX: number
   positionY: number
 }
 
-const setTranslate = ({ item, positionX, positionY }: SetTranslate): void => {
+const setTranslate = ({ item, positionX, positionY }: Translate): void => {
   item.style.transform = `translate(${positionX}px, ${positionY}px)`
 }
 
@@ -24,7 +24,7 @@ export default (container: Container = document): void => {
     let initialY: number
     let initialX: number
 
-    const setDraggablePosition = (): void => {
+    const setPosition = (): void => {
       setTranslate({
         item: (draggable.closest(`[data-draggable-parent=${value}]`) as HTMLElement) || draggable,
         positionX: coordinates.left,
@@ -32,7 +32,7 @@ export default (container: Container = document): void => {
       })
     }
 
-    const startDraggable = (event: Event): void => {
+    const onStart = (event: Event): void => {
       switch (event.type) {
         case 'touchstart': {
           initialY = (event as TouchEvent).touches[0].clientY - coordinates.top
@@ -50,13 +50,13 @@ export default (container: Container = document): void => {
       if (event.target === draggable) active = true
     }
 
-    const endDraggable = (): void => {
+    const onEnd = (): void => {
       initialX = currentX
       initialY = currentY
       active = false
     }
 
-    const moveDraggable = (event: Event): void => {
+    const onMove = (event: Event): void => {
       if (!active) return
 
       switch (event.type) {
@@ -75,25 +75,24 @@ export default (container: Container = document): void => {
 
       coordinates.top = currentY
       coordinates.left = currentX
-      setDraggablePosition()
+      setPosition()
       sessionStorage.setItem(value, JSON.stringify(coordinates))
     }
 
-    setDraggablePosition()
-
+    setPosition()
     draggable.addEventListener('touchstart', hideScrollbar as EventListener, { passive: true })
     draggable.addEventListener('touchend', showScrollbar as EventListener, { passive: true })
     draggable.addEventListener('touchcancel', showScrollbar as EventListener, { passive: true })
     draggable.addEventListener('mousedown', hideScrollbar as EventListener)
     draggable.addEventListener('mouseup', showScrollbar as EventListener)
     draggable.addEventListener('mouseleave', showScrollbar as EventListener)
-    container.addEventListener('touchstart', startDraggable as EventListener, { passive: true })
-    container.addEventListener('touchend', endDraggable as EventListener, { passive: true })
-    container.addEventListener('touchcancel', endDraggable as EventListener, { passive: true })
-    container.addEventListener('touchmove', moveDraggable as EventListener, { passive: true })
-    container.addEventListener('mousedown', startDraggable as EventListener)
-    container.addEventListener('mouseup', endDraggable as EventListener)
-    container.addEventListener('mouseleave', endDraggable as EventListener)
-    container.addEventListener('mousemove', moveDraggable as EventListener)
+    container.addEventListener('touchstart', onStart as EventListener, { passive: true })
+    container.addEventListener('touchend', onEnd as EventListener, { passive: true })
+    container.addEventListener('touchcancel', onEnd as EventListener, { passive: true })
+    container.addEventListener('touchmove', onMove as EventListener, { passive: true })
+    container.addEventListener('mousedown', onStart as EventListener)
+    container.addEventListener('mouseup', onEnd as EventListener)
+    container.addEventListener('mouseleave', onEnd as EventListener)
+    container.addEventListener('mousemove', onMove as EventListener)
   })
 }

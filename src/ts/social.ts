@@ -1,7 +1,7 @@
-import { Coordinates } from '@utils'
+import { Container, Coordinates } from '@utils'
 
-export default (): void => {
-  const social = document.querySelector('*[data-social]') as HTMLDivElement
+export default (container: Container = document): void => {
+  const social = container.querySelector('*[data-social]') as HTMLDivElement
 
   if (!social) return
 
@@ -10,7 +10,7 @@ export default (): void => {
   const btn = social.querySelector('*[data-social-button]') as HTMLButtonElement
   let lastTap: number
 
-  const showSocial = (): void => {
+  const checkSocial = (): void => {
     const timeSince: number = new Date().getTime() - lastTap
 
     if (timeSince < 300 && timeSince > 0) round.dataset.socialRound = round.dataset.socialRound === 'show' ? '' : 'show'
@@ -42,6 +42,6 @@ export default (): void => {
 
   setLinksPosition()
   window.addEventListener('resize', setLinksPosition as EventListener)
-  btn.addEventListener('click', showSocial as EventListener)
-  btn.addEventListener('touchstart', showSocial as EventListener, { passive: true })
+  btn.addEventListener('click', checkSocial as EventListener)
+  btn.addEventListener('touchstart', checkSocial as EventListener, { passive: true })
 }

@@ -29,7 +29,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
       error.classList.add(...errorClassName)
     }
 
-    const maxLengthInputTel = (value: number): void => {
+    const setMaxLengthTel = (value: number): void => {
       if (input.value.length > 0 && input.value.length < value) {
         error.innerText = errors.tel
         showError()
@@ -48,12 +48,12 @@ export const getValidate = (form: HTMLFormElement): boolean => {
       case 'tel': {
         switch (input.value[0]) {
           case '8': {
-            maxLengthInputTel(17)
+            setMaxLengthTel(17)
             break
           }
 
           case '+': {
-            maxLengthInputTel(18)
+            setMaxLengthTel(18)
             break
           }
         }
