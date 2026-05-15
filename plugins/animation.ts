@@ -1,5 +1,6 @@
 import plugin from 'tailwindcss/plugin'
 import { PluginAPI } from 'tailwindcss/types/config'
+import { TailwindPlugin } from './plugin'
 
 interface AnimationTheme {
   [index: string]: string
@@ -11,7 +12,7 @@ interface Animation {
 
 type AnimationElement = [string, string]
 
-module.exports = plugin(
+export const animation: TailwindPlugin = plugin(
   ({ addComponents, theme }: PluginAPI): void => {
     let anim: Animation = {
       '.anim': {

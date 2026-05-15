@@ -1,4 +1,4 @@
-import { createError, getEn, hideScrollbar, showScrollbar } from '@utils'
+import { createError, hideScrollbar, isEn, showScrollbar } from '@utils'
 
 type Resolve = (value: HTMLDivElement | PromiseLike<HTMLDivElement>) => void
 type Reject = (reason?: string) => void
@@ -15,7 +15,7 @@ const loadTimePreloader = (preloader: HTMLDivElement): Promise<HTMLDivElement> =
 
       setTimeout((): void => resolve(preloader), duration)
     } else {
-      reject(getEn() ? 'Preloader was not found' : 'Прелоадер не был найден')
+      reject(isEn ? 'Preloader was not found' : 'Прелоадер не был найден')
     }
   })
 }

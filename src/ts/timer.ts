@@ -1,4 +1,4 @@
-import { Container, getSource, getTimeFormat } from '@utils'
+import { Container, getTimeFormat, isSource } from '@utils'
 
 export default (container: Container = document): void => {
   const timer = container.querySelector('*[data-timer]') as HTMLDivElement
@@ -23,7 +23,7 @@ export default (container: Container = document): void => {
     hours = 0
     steps = 0
     units.innerText = '00:00:00'
-    icon.setAttribute('href', `${getSource()}/img/icons.svg#play`)
+    icon.setAttribute('href', `${isSource}/img/icons.svg#play`)
     stopwatch.style.transform = 'rotate(0deg)'
   }
 
@@ -52,10 +52,10 @@ export default (container: Container = document): void => {
   const setActive = (): void => {
     if (active) {
       active = false
-      icon.setAttribute('href', `${getSource()}/img/icons.svg#play`)
+      icon.setAttribute('href', `${isSource}/img/icons.svg#play`)
     } else {
       active = true
-      icon.setAttribute('href', `${getSource()}/img/icons.svg#pause`)
+      icon.setAttribute('href', `${isSource}/img/icons.svg#pause`)
       setTime()
     }
   }

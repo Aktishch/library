@@ -1,4 +1,5 @@
 import { dialog } from '@ts/fancybox'
+import { html } from '@utils'
 
 export default (): void => {
   if (sessionStorage.getItem('warning') !== 'positive')
@@ -14,8 +15,6 @@ export default (): void => {
         sessionStorage.setItem('warning', value)
         dialog.close()
       } else {
-        const html = document.documentElement as HTMLHtmlElement
-
         html.innerHTML = ''
       }
     }

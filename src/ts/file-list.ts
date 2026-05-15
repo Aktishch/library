@@ -1,4 +1,4 @@
-import { Container, createError, getEn, getSource, getValidate, handleFile, uploadFile } from '@utils'
+import { Container, createError, getValidate, handleFile, isEn, isSource, uploadFile } from '@utils'
 
 interface Message {
   default: string
@@ -22,9 +22,9 @@ export default (container: Container = document): void => {
     const items = filelist.querySelector('*[data-filelist-items]') as HTMLUListElement
     const maxLength: number = Number(items.dataset.filelistItems) || 3
     const message: Message = {
-      default: getEn() ? 'Upload files' : 'Загрузить файлы',
-      more: getEn() ? 'Upload more' : 'Загрузить ещё',
-      limit: getEn() ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`,
+      default: isEn ? 'Upload files' : 'Загрузить файлы',
+      more: isEn ? 'Upload more' : 'Загрузить ещё',
+      limit: isEn ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`,
     }
     let data: DataTransfer = new DataTransfer()
 
@@ -52,7 +52,7 @@ export default (container: Container = document): void => {
                 <span class="truncate">${file.name}</span>
                 <button class="btn btn-gray text-sm p-1" data-filelist-remove="${file.name}" data-waved="dark" type="button">
                   <svg class="icon">
-                    <use href="${getSource()}/img/icons.svg#close"></use>
+                    <use href="${isSource}/img/icons.svg#close"></use>
                   </svg>
                 </button>`
                 items.appendChild(item)

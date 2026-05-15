@@ -1,7 +1,8 @@
 import plugin from 'tailwindcss/plugin'
 import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
+import { TailwindPlugin } from './plugin'
 
-module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
+export const pack: TailwindPlugin = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
   addComponents({
     '.pack': {
       display: 'block',

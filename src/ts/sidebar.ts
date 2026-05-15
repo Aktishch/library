@@ -1,5 +1,5 @@
-import { media } from '@plugins/media'
-import { hideScrollbar, showScrollbar } from '@utils'
+import { media } from '@plugins'
+import { hideScrollbar, html, showScrollbar } from '@utils'
 
 type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 type SidebarButton = HTMLButtonElement | HTMLAnchorElement
@@ -44,7 +44,7 @@ export default (): void => {
       if (sidebar && sidebar.hasAttribute('data-breakpoint')) {
         const breakpoint: number = media[sidebar.dataset.breakpoint as Breakpoint]
 
-        if ((document.documentElement as HTMLHtmlElement).clientWidth > breakpoint) closeSidebar(sidebar)
+        if (html.clientWidth > breakpoint) closeSidebar(sidebar)
       }
     })
   }) as EventListener)

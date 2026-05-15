@@ -1,5 +1,5 @@
-import { media } from '@plugins/media'
-import { getScrollPosition } from '@utils'
+import { media } from '@plugins'
+import { getScrollPosition, html } from '@utils'
 
 const setScrollingHeight = (): void => {
   const scrollings = document.querySelectorAll('*[data-scrolling]') as NodeListOf<HTMLElement>
@@ -33,7 +33,7 @@ const initHorizontalScroll = (): void => {
 }
 
 const setBreakpoint = (): void => {
-  if ((document.documentElement as HTMLHtmlElement).clientWidth < media.md) {
+  if (html.clientWidth < media.md) {
     document.removeEventListener('wheel', initHorizontalScroll as EventListener)
     document.removeEventListener('scroll', initHorizontalScroll as EventListener)
   } else {

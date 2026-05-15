@@ -1,4 +1,4 @@
-import { createError, getEn, getSource } from '@utils'
+import { createError, isEn, isSource } from '@utils'
 import ymaps from 'ymaps'
 
 type ymaps = typeof ymaps
@@ -15,7 +15,7 @@ declare global {
 
 window.ymaps = ymaps as YandexMap
 
-const lang: string = getEn() ? 'en_US' : 'ru_RU'
+const lang: string = isEn ? 'en_US' : 'ru_RU'
 
 export default (): void => {
   const yandex = document.querySelector('*[data-yandex]') as HTMLElement
@@ -50,7 +50,7 @@ export default (): void => {
           },
           {
             iconLayout: 'default#image',
-            iconImageHref: `${getSource()}/img/pictures/point.svg`,
+            iconImageHref: `${isSource}/img/pictures/point.svg`,
             iconImageSize: pointSize,
             iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2],
           }

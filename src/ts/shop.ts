@@ -1,4 +1,4 @@
-import { Coordinates, getSource } from '@utils'
+import { Coordinates, isSource } from '@utils'
 
 const className: string[] = [
   'in-shop',
@@ -50,7 +50,7 @@ export default (): void => {
     div.style.left = `${coordinates.left}px`
     div.innerHTML = `
       <svg class="icon text-second">
-        <use href="${getSource()}/img/icons.svg#basket"></use>
+        <use href="${isSource}/img/icons.svg#basket"></use>
       </svg>`
     body.appendChild(div)
     setTimeout((): void => div.remove(), 2000)

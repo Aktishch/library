@@ -1,4 +1,4 @@
-import { getTouchDevice } from '@utils'
+import { getTouchDevice, html } from '@utils'
 import LocomotiveScroll from 'locomotive-scroll'
 
 declare global {
@@ -15,7 +15,7 @@ export default (): void => {
   new window.LocomotiveScroll({
     lenisOptions: {
       wrapper: window,
-      content: document.documentElement,
+      content: html,
       lerp: 0.5,
       duration: 3,
       orientation: 'vertical',

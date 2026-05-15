@@ -1,4 +1,4 @@
-import { getTouchDevice } from '@utils'
+import { getTouchDevice, html } from '@utils'
 
 interface Colors {
   [index: string]: {
@@ -10,8 +10,7 @@ interface Colors {
 export default (): void => {
   if (getTouchDevice()) return
 
-  const html = document.documentElement as HTMLHtmlElement
-  const pallete = html.querySelector('*[data-pallete]') as HTMLDivElement
+  const pallete = document.querySelector('*[data-pallete]') as HTMLDivElement
 
   if (!pallete) return
 

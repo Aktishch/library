@@ -1,10 +1,17 @@
-const value: string = '<alpha-value>'
+import { Config, PluginCreator } from 'tailwindcss/types/config'
+
+export interface TailwindPlugin {
+  handler: PluginCreator
+  config?: Partial<Config>
+}
 
 export interface Color {
   mode: 'rgba'
   color: string[]
   alpha: string
 }
+
+const value: string = '<alpha-value>'
 
 export const getColor = (variable: string): string => {
   return `rgba(var(--color-${variable}), ${value})`

@@ -22,10 +22,11 @@ const initAnimation = (): void => {
 
       const height: number = item.offsetHeight
       const offsetTop: number = getOffset(item).top
+      const innerHeight: number = window.innerHeight
       const screenPosition: number = 3
-      let point: number = window.innerHeight - height / screenPosition
+      let point: number = innerHeight - height / screenPosition
 
-      if (point > window.innerHeight) point = window.innerHeight - window.innerHeight / screenPosition
+      if (point > innerHeight) point = innerHeight - innerHeight / screenPosition
 
       const state: boolean = getScrollPosition().top > offsetTop - point && getScrollPosition().top < offsetTop + height
 

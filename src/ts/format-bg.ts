@@ -1,4 +1,4 @@
-import { Container, createError, getEn } from '@utils'
+import { Container, createError, isEn } from '@utils'
 
 interface BackgroundHandler {
   item: HTMLElement
@@ -26,7 +26,7 @@ const handleBackground = async ({ item, requestUrl }: BackgroundHandler): Promis
     .then((response: boolean): void => {
       response
         ? (item.style.backgroundImage = `url('${requestUrl}')`)
-        : createError(getEn() ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
+        : createError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
     })
     .catch((error: string): void => createError(error))
 }

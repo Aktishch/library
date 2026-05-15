@@ -2,7 +2,7 @@ import { formatColor, parseColor } from 'tailwindcss/lib/util/color'
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette'
 import plugin from 'tailwindcss/plugin'
 import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
-import { Color, getRgba } from './color'
+import { Color, getRgba, TailwindPlugin } from './plugin'
 
 interface ColorOpacity {
   fade: string
@@ -14,7 +14,7 @@ const colorOpacity: ColorOpacity = {
   focus: '0.4',
 }
 
-module.exports = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
+export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
   addComponents({
     '.btn': {
       '*': {

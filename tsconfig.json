@@ -16,7 +16,7 @@
     "noImplicitAny": false,
     "typeRoots": ["./node_modules/@types"],
     "paths": {
-      "@plugins/*": ["./plugins/*"],
+      "@plugins": ["./plugins"],
       "@ts/*": ["./src/ts/*"],
       "@utils": ["./src/ts/utils"],
       "@utils/*": ["./src/ts/utils/*"],

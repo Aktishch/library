@@ -1,8 +1,7 @@
-import { setCookies } from '@utils'
+import { html, setCookies } from '@utils'
 
 export default (): void => {
-  const html = document.documentElement as HTMLHtmlElement
-  const toggles = html.querySelectorAll('*[data-theme-toggle]') as NodeListOf<HTMLInputElement>
+  const toggles = document.querySelectorAll('*[data-theme-toggle]') as NodeListOf<HTMLInputElement>
   const value: string = 'cookie_theme_active'
 
   const checkToggles = (check: boolean): void => {

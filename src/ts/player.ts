@@ -1,4 +1,4 @@
-import { createError, getEn, getSource, getTimeFormat, hideScrollbar, showScrollbar } from '@utils'
+import { createError, getTimeFormat, hideScrollbar, isEn, isSource, showScrollbar } from '@utils'
 
 interface Composition {
   artist: string
@@ -31,19 +31,19 @@ const playlist: Composition[] = [
     song: 'Snuff',
     audio:
       'https://mp3minusovki.com/music/fhvndfjwserjgt/247bab1c312b2335afe3f5c9b496a3d3/01d63b016f64e0739a9e3d2599b6521f.mp3',
-    poster: `${getSource()}/img/pictures/town.jpg`,
+    poster: `${isSource}/img/pictures/town.jpg`,
   },
   {
     artist: 'System of a down',
     song: 'Lonely Day',
     audio: 'https://cdn1.shadam.net/uploads/files/2018-09/1536003683_system-of-a-down-lonely-day.mp3',
-    poster: `${getSource()}/img/pictures/town.jpg`,
+    poster: `${isSource}/img/pictures/town.jpg`,
   },
   {
     artist: 'Scorpions',
     song: 'Slave Me',
     audio: 'https://ruo.morsmusic.org/load/941771577/Scorpions_-_Slave_Me_(musmore.com).mp3',
-    poster: `${getSource()}/img/pictures/town.jpg`,
+    poster: `${isSource}/img/pictures/town.jpg`,
   },
 ]
 
@@ -64,10 +64,10 @@ const createComposition = (composition: Composition): HTMLLIElement => {
   item.innerHTML = `
     <button class="btn btn-primary btn-fade text-4xl rounded-full shrink-0 size-10" data-player-composition data-waved="dark">
       <svg class="loading icon hidden" data-player-loading>
-        <use href="${getSource()}/img/icons.svg#loading"></use>
+        <use href="${isSource}/img/icons.svg#loading"></use>
       </svg>
       <svg class="icon" data-player-status>
-        <use href="${getSource()}/img/icons.svg#play"></use>
+        <use href="${isSource}/img/icons.svg#play"></use>
       </svg>
     </button>
     <div class="flex flex-col">
@@ -136,7 +136,7 @@ const initPlayer = ({ id, playlist }: Player): void => {
               loader.classList.add('hidden')
             } else {
               loader.classList.remove('hidden')
-              createError(getEn() ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
+              createError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
             }
           })
           .catch((error: string): void => createError(error))
@@ -168,21 +168,21 @@ const initPlayer = ({ id, playlist }: Player): void => {
           if (audio.played)
             use.setAttribute(
               'href',
-              key === condition.index ? `${getSource()}/img/icons.svg#pause` : `${getSource()}/img/icons.svg#play`
+              key === condition.index ? `${isSource}/img/icons.svg#pause` : `${isSource}/img/icons.svg#play`
             )
-          if (audio.paused) use.setAttribute('href', `${getSource()}/img/icons.svg#play`)
+          if (audio.paused) use.setAttribute('href', `${isSource}/img/icons.svg#play`)
         })
       }
 
       const setStatusComposition = (): void => {
         if (audio.paused) {
           audio.play()
-          use.setAttribute('href', `${getSource()}/img/icons.svg#pause`)
+          use.setAttribute('href', `${isSource}/img/icons.svg#pause`)
           setCurrentComposition()
           condition.status = true
         } else {
           audio.pause()
-          use.setAttribute('href', `${getSource()}/img/icons.svg#play`)
+          use.setAttribute('href', `${isSource}/img/icons.svg#play`)
           setCurrentComposition()
           condition.status = false
         }
@@ -322,12 +322,12 @@ const initPlayer = ({ id, playlist }: Player): void => {
       }
 
       const pauseAudio = (): void => {
-        use.setAttribute('href', `${getSource()}/img/icons.svg#play`)
+        use.setAttribute('href', `${isSource}/img/icons.svg#play`)
         setCurrentComposition()
       }
 
       const setError = (): void => {
-        createError(getEn() ? 'Failed to load audio' : 'Не удалось загрузить аудио')
+        createError(isEn ? 'Failed to load audio' : 'Не удалось загрузить аудио')
       }
 
       const setVolume = (): void => {
@@ -336,10 +336,10 @@ const initPlayer = ({ id, playlist }: Player): void => {
 
         if (condition.muted) {
           status.classList.add('opacity-50')
-          use.setAttribute('href', `${getSource()}/img/icons.svg#volume-off`)
+          use.setAttribute('href', `${isSource}/img/icons.svg#volume-off`)
         } else {
           status.classList.remove('opacity-50')
-          use.setAttribute('href', `${getSource()}/img/icons.svg#volume-on`)
+          use.setAttribute('href', `${isSource}/img/icons.svg#volume-on`)
         }
 
         audio.muted = condition.muted

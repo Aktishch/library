@@ -1,4 +1,4 @@
-import { getEn } from '@utils/get-en'
+import { isEn } from '@utils/is-en'
 
 interface UploadedFile {
   file: File
@@ -11,7 +11,7 @@ type Reject = (reason?: string) => void
 export const uploadFile = (file: File): Promise<UploadedFile> => {
   return new Promise<UploadedFile>((resolve: Resolve, reject: Reject): void => {
     const reader: FileReader = new FileReader()
-    const setReject = (): void => reject(getEn() ? 'File upload error' : 'Ошибка при загрузке файла')
+    const setReject = (): void => reject(isEn ? 'File upload error' : 'Ошибка при загрузке файла')
 
     reader.readAsDataURL(file)
 

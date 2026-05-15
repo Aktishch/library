@@ -1,10 +1,9 @@
 import type { Config } from 'tailwindcss'
-import { getColor } from './plugins/color'
-import { media } from './plugins/media'
+import { animation, button, getColor, input, media, pack, pointer } from './plugins'
 
 const { xs, sm, md, lg, xl, xxl } = media
 
-module.exports = {
+export default {
   content: ['./src/**/*.html', './src/ts/**/*.ts'],
   darkMode: ['class', '[data-theme="dark"]'],
   corePlugins: {
@@ -109,11 +108,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('./plugins/pack'),
-    require('./plugins/input'),
-    require('./plugins/button'),
-    require('./plugins/animation'),
-    require('./plugins/pointer'),
-  ],
+  plugins: [pack, input, button, animation, pointer],
 } satisfies Config

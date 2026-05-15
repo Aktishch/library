@@ -1,4 +1,4 @@
-import { media } from '@plugins/media'
+import { media } from '@plugins'
 import { checkQuizSlide } from '@ts/quiz'
 import { Container } from '@utils'
 import Swiper from 'swiper'
@@ -20,7 +20,7 @@ window.Swiper = Swiper
 
 const { sm, md, lg, xl } = media
 
-const initGallerySlider = (container: Container = document): void => {
+const initGallerySlider = (container: Container): void => {
   const slider = container.querySelector('*[data-slider="gallery"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -63,7 +63,7 @@ const initGallerySlider = (container: Container = document): void => {
   }) as Swiper
 }
 
-const initProductsSlider = (container: Container = document): void => {
+const initProductsSlider = (container: Container): void => {
   const slider = container.querySelector('*[data-slider="products"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -102,7 +102,7 @@ const initProductsSlider = (container: Container = document): void => {
   }) as Swiper
 }
 
-const initQuizSlider = (container: Container = document): void => {
+const initQuizSlider = (container: Container): void => {
   const slider = container.querySelector('*[data-slider="quiz"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -148,7 +148,7 @@ const initQuizSlider = (container: Container = document): void => {
   }) as Swiper
 }
 
-const initThumbsSlider = (container: Container = document): Swiper | undefined => {
+const initThumbsSlider = (container: Container): Swiper | undefined => {
   const slider = container.querySelector('*[data-slider="thumbs"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -170,7 +170,7 @@ const initThumbsSlider = (container: Container = document): Swiper | undefined =
   }) as Swiper
 }
 
-const initBgSlider = (container: Container = document): Swiper | undefined => {
+const initBgSlider = (container: Container): Swiper | undefined => {
   const slider = container.querySelector('*[data-slider="bg"]') as HTMLDivElement
 
   if (!slider || !slider.dataset.slider) return
@@ -187,7 +187,7 @@ const initBgSlider = (container: Container = document): Swiper | undefined => {
   }) as Swiper
 }
 
-const initDescriptionSlider = (container: Container = document): void => {
+const initDescriptionSlider = (container: Container): void => {
   const description = container.querySelector('*[data-description]') as HTMLElement
 
   if (!description) return
@@ -218,9 +218,9 @@ const initDescriptionSlider = (container: Container = document): void => {
   }) as Swiper
 }
 
-export default (): void => {
-  initGallerySlider()
-  initProductsSlider()
-  initQuizSlider()
-  initDescriptionSlider()
+export default (container: Container = document): void => {
+  initGallerySlider(container)
+  initProductsSlider(container)
+  initQuizSlider(container)
+  initDescriptionSlider(container)
 }

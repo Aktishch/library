@@ -1,4 +1,4 @@
-import { Container, getSource } from '@utils'
+import { Container, isSource } from '@utils'
 
 const className: string[] = ['invisible', 'opacity-0']
 
@@ -33,7 +33,7 @@ export default (container: Container = document): void => {
     map.appendChild(image)
     map.appendChild(rect)
     map.appendChild(text)
-    image.setAttribute('href', `${getSource()}/img/pictures/flag.svg`)
+    image.setAttribute('href', `${isSource}/img/pictures/flag.svg`)
     image.setAttribute('y', String(positionY - (image.getBoundingClientRect().height * ratio) / 1.2))
     image.setAttribute('x', String(positionX))
 

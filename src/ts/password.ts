@@ -1,4 +1,4 @@
-import { getSource } from '@utils'
+import { isSource } from '@utils'
 
 export default (): void => {
   document.addEventListener('click', ((event: Event): void => {
@@ -13,7 +13,7 @@ export default (): void => {
       input.type = status ? 'text' : 'password'
       use.setAttribute(
         'href',
-        status ? `${getSource()}/img/icons.svg#eye-hidden` : `${getSource()}/img/icons.svg#eye-visible`
+        status ? `${isSource}/img/icons.svg#eye-hidden` : `${isSource}/img/icons.svg#eye-visible`
       )
     }
   }) as EventListener)

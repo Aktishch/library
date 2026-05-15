@@ -4,46 +4,43 @@ import fs from 'fs'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
+import TerserPlugin from 'terser-webpack-plugin'
 import { Configuration } from 'webpack'
 
-interface GeneratePlugins {
+interface HtmlPlugin {
   templateDir: string
   script: 'body' | 'head' | boolean
   src: string
 }
 
-type TemplateFile = HtmlWebpackPlugin | undefined
+const generatePlugins = ({ templateDir, script, src }: HtmlPlugin): HtmlWebpackPlugin[] => {
+  const fullPath: string = path.resolve(__dirname, templateDir)
 
-const generatePlugins = ({ templateDir, script, src }: GeneratePlugins): TemplateFile[] => {
-  const templateFiles: string[] = fs.readdirSync(path.resolve(__dirname, templateDir))
+  if (!fs.existsSync(fullPath)) return []
+
+  const templateFiles: string[] = fs.readdirSync(fullPath)
 
   return templateFiles
-    .map((templateFile: string): TemplateFile => {
-      const parts: string[] = templateFile.split('.')
-      const name: string = parts[0]
-      const extension: string = parts[1]
+    .filter((file: string): boolean => path.extname(file).toLowerCase() === '.html')
+    .map((templateFile: string): HtmlWebpackPlugin => {
+      const name: string = path.parse(templateFile).name
 
-      if (extension === 'html') {
-        return new HtmlWebpackPlugin({
-          inject: script,
-          scriptLoading: 'blocking',
-          filename: `${src}${name}.html`,
-          template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
-          minify: {
-            collapseWhitespace: false,
-          },
-        }) as HtmlWebpackPlugin
-      }
+      return new HtmlWebpackPlugin({
+        inject: script,
+        scriptLoading: 'blocking',
+        filename: `${src}${name}.html`,
+        template: path.resolve(fullPath, templateFile),
+        minify: {
+          collapseWhitespace: false,
+        },
+      })
     })
-    .filter((templateFile: TemplateFile): boolean => templateFile !== null)
 }
 
-module.exports = {
+export default {
   mode: 'production',
   devtool: 'source-map',
-  entry: {
-    filename: path.resolve(__dirname, 'src/webpack.ts'),
-  },
+  entry: path.resolve(__dirname, 'src/webpack.ts'),
   resolve: {
     extensions: ['.js', '.ts'],
     alias: {
@@ -57,8 +54,11 @@ module.exports = {
     filename: 'js/application.js',
     clean: true,
   },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
+  },
   plugins: [
-    new CssMinimizerPlugin(),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     ...generatePlugins({ templateDir: 'src', script: 'head', src: '' }),
     ...generatePlugins({
@@ -71,6 +71,7 @@ module.exports = {
         {
           from: 'src/img/',
           to: 'img/',
+          noErrorOnMissing: true,
         },
       ],
     }),
@@ -92,7 +93,7 @@ module.exports = {
       },
       {
         test: /\.m?[jt]s$/i,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
