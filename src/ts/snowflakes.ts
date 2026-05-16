@@ -16,7 +16,7 @@ export default (): void => {
     const size: number = Math.random() * 60
     const coordinates: Coordinates = {
       top: event.clientY,
-      left: event.clientX,
+      left: event.clientX
     }
 
     snowflake.classList.add('snowflake')

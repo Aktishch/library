@@ -14,8 +14,8 @@
 
     &-checkbox {
       &::after {
-        transition: opacity 100ms linear;
         mask      : url("data:image/svg+xml,%3Csvg viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.7489 0.234315C12.0837 0.546734 12.0837 1.05327 11.7489 1.36569L4.89181 7.76569C4.55707 8.0781 4.01436 8.0781 3.67962 7.76569L0.251051 4.56569C-0.0836838 4.25327 -0.0836838 3.74673 0.251051 3.43431C0.585786 3.1219 1.1285 3.1219 1.46323 3.43431L4.28571 6.06863L10.5368 0.234315C10.8715 -0.0781049 11.4142 -0.0781049 11.7489 0.234315Z'/%3E %3C/svg%3E") no-repeat center / 1rem;
+        transition: opacity 100ms linear;
 
         @apply content-auto block bg-white rounded-inherit opacity-0 size-full;
       }

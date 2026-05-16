@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 
 export default defineConfig([
   {
-    ignores: ['node_modules/', 'dist/'],
+    ignores: ['node_modules/', 'dist/']
   },
   {
     files: ['**/*.js', '**/*.ts'],
@@ -15,16 +15,16 @@ export default defineConfig([
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: './tsconfig.json',
-      },
+        project: './tsconfig.json'
+      }
     },
     plugins: {
-      prettier: prettierPlugin,
+      prettier: prettierPlugin
     },
     rules: {
-      ...tsPlugin.configs.recommended.rules,
-    },
+      ...tsPlugin.configs.recommended.rules
+    }
   },
   eslintPluginPrettierRecommended,
-  tseslint.configs.recommended,
-]) as Config
+  tseslint.configs.recommended
+]) satisfies Config[]

@@ -19,7 +19,7 @@ export default (container: Container = document): void => {
     const inputs: Input[] = [
       ...form.querySelectorAll('input'),
       ...form.querySelectorAll('select'),
-      ...form.querySelectorAll('textarea'),
+      ...form.querySelectorAll('textarea')
     ]
     const dataSave: DataSave = JSON.parse(sessionStorage.getItem(value) || '{}')
 

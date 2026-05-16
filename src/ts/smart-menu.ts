@@ -6,7 +6,11 @@ interface CheckedItem {
 const className: string[] = ['hidden']
 
 const checkItem = ({ condition, item }: CheckedItem): void => {
-  condition ? item.classList.add(...className) : item.classList.remove(...className)
+  if (condition) {
+    item.classList.add(...className)
+  } else {
+    item.classList.remove(...className)
+  }
 }
 
 export default (): void => {

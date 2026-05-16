@@ -12,7 +12,7 @@ const className: string[] = [
   'pointer-events-none',
   '-translate-y-1/2',
   '-translate-x-1/2',
-  'size-10',
+  'size-10'
 ]
 
 export default (): void => {
@@ -42,7 +42,7 @@ export default (): void => {
     const div = document.createElement('div') as HTMLDivElement
     const coordinates: Coordinates = {
       top: event.clientY,
-      left: event.clientX,
+      left: event.clientX
     }
 
     div.classList.add(...className)

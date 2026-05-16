@@ -26,7 +26,7 @@ export default (container: Container = document): void => {
       Math.floor(distance / day),
       Math.floor((distance % day) / hour),
       Math.floor((distance % hour) / minute),
-      Math.floor((distance % minute) / 1000),
+      Math.floor((distance % minute) / 1000)
     ]
 
     units.forEach((unit: HTMLSpanElement, index: number): void => {

@@ -22,7 +22,7 @@ export default (): void => {
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      infinite: false,
-    },
+      infinite: false
+    }
   })
 }

@@ -11,25 +11,25 @@ export const pack: TailwindPlugin = plugin(({ addComponents, matchComponents, th
       '&::before': {
         content: theme('content.auto'),
         display: 'block',
-        paddingTop: 'var(--tw-pack-size)',
+        paddingTop: 'var(--tw-pack-size)'
       },
       '&-image': {
         transitionProperty: 'transform',
         transitionDuration: '300ms',
-        transitionTimingFunction: 'linear',
+        transitionTimingFunction: 'linear'
       },
       '@media (hover)': {
         '&:hover &-image': {
-          transform: 'scale(1.1)',
-        },
-      },
-    },
+          transform: 'scale(1.1)'
+        }
+      }
+    }
   })
   matchComponents(
     {
       pack: (size: string | number): CSSRuleObject => {
         return { '--tw-pack-size': `${size}%` }
-      },
+      }
     },
     {
       values: {
@@ -39,8 +39,8 @@ export const pack: TailwindPlugin = plugin(({ addComponents, matchComponents, th
         md: 75,
         lg: 90,
         xl: 100,
-        xxl: 125,
-      },
+        xxl: 125
+      }
     }
   )
 })

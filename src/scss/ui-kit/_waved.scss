@@ -13,9 +13,9 @@
 
     &-circle {
       background-color: var(--waved-color);
-      animation       : waved 1000ms ease forwards;
-      translate       : -50% -50%;
       scale           : 0;
+      translate       : -50% -50%;
+      animation       : waved 1000ms ease forwards;
 
       @apply block absolute rounded-full size-10;
     }

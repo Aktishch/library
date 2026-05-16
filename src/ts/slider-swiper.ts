@@ -34,11 +34,11 @@ const initGallerySlider = (container: Container): void => {
   new window.Swiper(swiper, {
     pagination: {
       el: pagination,
-      clickable: true,
+      clickable: true
     },
     navigation: {
       prevEl: prev,
-      nextEl: next,
+      nextEl: next
     },
     effect: 'coverflow',
     slidesPerView: 1.3,
@@ -49,17 +49,17 @@ const initGallerySlider = (container: Container): void => {
     freeMode: true,
     breakpoints: {
       [sm]: {
-        slidesPerView: 2,
+        slidesPerView: 2
       },
       [lg]: {
-        slidesPerView: 3,
-      },
+        slidesPerView: 3
+      }
     },
     autoplay: {
       delay: 3000,
       stopOnLastSlide: false,
-      disableOnInteraction: false,
-    },
+      disableOnInteraction: false
+    }
   }) as Swiper
 }
 
@@ -77,11 +77,11 @@ const initProductsSlider = (container: Container): void => {
   new window.Swiper(swiper, {
     pagination: {
       el: pagination,
-      clickable: true,
+      clickable: true
     },
     navigation: {
       prevEl: prev,
-      nextEl: next,
+      nextEl: next
     },
     slidesPerView: 1.3,
     slidesPerGroup: 1,
@@ -90,15 +90,15 @@ const initProductsSlider = (container: Container): void => {
     watchSlidesProgress: true,
     breakpoints: {
       [sm]: {
-        slidesPerView: 2,
+        slidesPerView: 2
       },
       [lg]: {
-        slidesPerView: 3,
+        slidesPerView: 3
       },
       [xl]: {
-        slidesPerView: 4,
-      },
-    },
+        slidesPerView: 4
+      }
+    }
   }) as Swiper
 }
 
@@ -119,9 +119,11 @@ const initQuizSlider = (container: Container): void => {
 
     checkQuizSlide(visibleSlide)
 
-    visibleSlide === swiper.slides[swiper.slides.length - 1]
-      ? quiz.setAttribute('data-quiz-end', '')
-      : quiz.removeAttribute('data-quiz-end')
+    if (visibleSlide === swiper.slides[swiper.slides.length - 1]) {
+      quiz.setAttribute('data-quiz-end', '')
+    } else {
+      quiz.removeAttribute('data-quiz-end')
+    }
   }
 
   new window.Swiper(swiper, {
@@ -130,11 +132,11 @@ const initQuizSlider = (container: Container): void => {
       type: 'custom',
       renderCustom: (_, current: number, total: number): string => {
         return String(total - current)
-      },
+      }
     },
     navigation: {
       prevEl: prev,
-      nextEl: next,
+      nextEl: next
     },
     slidesPerView: 1,
     slidesPerGroup: 1,
@@ -143,8 +145,8 @@ const initQuizSlider = (container: Container): void => {
     watchSlidesProgress: true,
     on: {
       init: (swiper: Swiper): void => checkSwiperSlide(swiper as QuizSwiper),
-      slideChange: (swiper: Swiper): void => checkSwiperSlide(swiper as QuizSwiper),
-    },
+      slideChange: (swiper: Swiper): void => checkSwiperSlide(swiper as QuizSwiper)
+    }
   }) as Swiper
 }
 
@@ -164,9 +166,9 @@ const initThumbsSlider = (container: Container): Swiper | undefined => {
     grabCursor: true,
     breakpoints: {
       [md]: {
-        slidesPerView: 4,
-      },
-    },
+        slidesPerView: 4
+      }
+    }
   }) as Swiper
 }
 
@@ -183,7 +185,7 @@ const initBgSlider = (container: Container): Swiper | undefined => {
     slidesPerGroup: 1,
     spaceBetween: 16,
     speed: 1000,
-    allowTouchMove: false,
+    allowTouchMove: false
   }) as Swiper
 }
 
@@ -208,13 +210,13 @@ const initDescriptionSlider = (container: Container): void => {
     speed: 1000,
     grabCursor: true,
     thumbs: {
-      swiper: thumbs,
+      swiper: thumbs
     },
     on: {
       slideChange: (swiper: Swiper): void => {
         if (bg !== undefined) bg.slideTo(swiper.activeIndex)
-      },
-    },
+      }
+    }
   }) as Swiper
 }
 

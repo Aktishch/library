@@ -38,14 +38,14 @@ export const dialog: Dialog = {
       [
         {
           src: src,
-          type: 'ajax',
-        },
+          type: 'ajax'
+        }
       ],
       {
         dragToClose: false,
         on: {
-          'Carousel.contentReady': (): void => updateLoad(),
-        },
+          'Carousel.contentReady': (): void => updateLoad()
+        }
       }
     )
   },
@@ -54,20 +54,20 @@ export const dialog: Dialog = {
       [
         {
           src: src,
-          type: 'ajax',
-        },
+          type: 'ajax'
+        }
       ],
       {
         dragToClose: false,
         closeButton: false,
         backdropClick: false,
         on: {
-          'Carousel.contentReady': (): void => updateLoad(),
-        },
+          'Carousel.contentReady': (): void => updateLoad()
+        }
       }
     )
   },
-  close: (): void => window.Fancybox.close(),
+  close: (): void => window.Fancybox.close()
 }
 
 window.dialog = dialog
@@ -78,8 +78,8 @@ export default (): void => {
   window.Fancybox.bind('[data-fancybox-dialog]', {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (): void => updateLoad(),
-    },
+      'Carousel.contentReady': (): void => updateLoad()
+    }
   })
 
   window.Fancybox.bind('[data-fancybox-form]', {
@@ -88,8 +88,8 @@ export default (): void => {
       'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
         updateLoad()
         setStateSubmitBtn(slide.el)
-      },
-    },
+      }
+    }
   })
 
   window.Fancybox.bind('[data-fancybox-avatar]', {
@@ -98,8 +98,8 @@ export default (): void => {
       'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
         updateLoad()
         imagePreview(slide.el)
-      },
-    },
+      }
+    }
   })
 
   window.Fancybox.bind('[data-fancybox-calendar]', {
@@ -108,7 +108,7 @@ export default (): void => {
       'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
         updateLoad()
         initCalendar(slide.el)
-      },
-    },
+      }
+    }
   })
 }

@@ -11,14 +11,14 @@ interface ColorOpacity {
 
 const colorOpacity: ColorOpacity = {
   fade: '0.3',
-  focus: '0.4',
+  focus: '0.4'
 }
 
 export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
   addComponents({
     '.btn': {
       '*': {
-        pointerEvents: 'none',
+        pointerEvents: 'none'
       },
       '--tw-btn-color': getRgba(theme('colors.black.DEFAULT')),
       '--tw-btn-fade': getRgba(theme('colors.black.DEFAULT'), colorOpacity.fade),
@@ -41,46 +41,46 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
       cursor: 'pointer',
       '&:disabled': {
         pointerEvents: 'none',
-        opacity: '0.5',
+        opacity: '0.5'
       },
       '&:focus-visible': {
         boxShadow: '0 0 0 4px var(--tw-btn-focus)',
-        backgroundColor: 'var(--tw-btn-fade)',
+        backgroundColor: 'var(--tw-btn-fade)'
       },
       '@media (hover)': {
         '&:hover': {
-          backgroundColor: 'var(--tw-btn-fade)',
+          backgroundColor: 'var(--tw-btn-fade)'
         },
         '&:active': {
           boxShadow: `inset 0 4px 4px ${getRgba(theme('colors.black.DEFAULT'), colorOpacity.fade)}`,
-          transform: 'translateY(0.25rem)',
-        },
+          transform: 'translateY(0.25rem)'
+        }
       },
       '&-fill': {
         color: 'var(--tw-btn-accent)',
         backgroundColor: 'var(--tw-btn-color)',
         '&:focus-visible': {
-          backgroundColor: 'var(--tw-btn-fill)',
+          backgroundColor: 'var(--tw-btn-fill)'
         },
         '@media (hover)': {
           '&:hover': {
-            backgroundColor: 'var(--tw-btn-fill)',
-          },
-        },
+            backgroundColor: 'var(--tw-btn-fill)'
+          }
+        }
       },
       '&-fade': {
         color: 'var(--tw-btn-color)',
         backgroundColor: 'var(--tw-btn-fade)',
         '&:focus-visible': {
           color: 'var(--tw-btn-accent)',
-          backgroundColor: 'var(--tw-btn-color)',
+          backgroundColor: 'var(--tw-btn-color)'
         },
         '@media (hover)': {
           '&:hover': {
             color: 'var(--tw-btn-accent)',
-            backgroundColor: 'var(--tw-btn-color)',
-          },
-        },
+            backgroundColor: 'var(--tw-btn-color)'
+          }
+        }
       },
       '&-text': {
         color: 'var(--tw-btn-color)',
@@ -88,20 +88,20 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
         border: `1px solid ${theme('colors.transparent')}`,
         '&:focus-visible': {
           backgroundColor: 'var(--tw-btn-accent)',
-          borderColor: 'var(--tw-btn-color)',
+          borderColor: 'var(--tw-btn-color)'
         },
         '@media (hover)': {
           '&:hover': {
             backgroundColor: 'var(--tw-btn-accent)',
-            borderColor: 'var(--tw-btn-color)',
-          },
-        },
+            borderColor: 'var(--tw-btn-color)'
+          }
+        }
       },
       '&-contur': {
-        border: '1px solid var(--tw-btn-color)',
+        border: '1px solid var(--tw-btn-color)'
       },
       '&-light': {
-        '--tw-btn-hovered': getRgba(theme('colors.white.DEFAULT')),
+        '--tw-btn-hovered': getRgba(theme('colors.white.DEFAULT'))
       },
       '&-swipe': {
         zIndex: '1',
@@ -116,7 +116,7 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
           left: 'auto',
           width: '0',
           transition: 'width 200ms ease-in-out',
-          backgroundColor: 'var(--tw-btn-color)',
+          backgroundColor: 'var(--tw-btn-color)'
         },
         '@media (hover)': {
           '&:hover': {
@@ -124,12 +124,12 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
             backgroundColor: theme('colors.transparent'),
             '&::before': {
               left: '0',
-              width: '100%',
-            },
-          },
-        },
-      },
-    },
+              width: '100%'
+            }
+          }
+        }
+      }
+    }
   })
   matchComponents(
     {
@@ -143,22 +143,22 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
             '--tw-btn-fade': formatColor({
               mode: 'rgba',
               color: parsed.color,
-              alpha: colorOpacity.fade,
+              alpha: colorOpacity.fade
             } as Color),
             '--tw-btn-focus': formatColor({
               mode: 'rgba',
               color: parsed.color,
-              alpha: colorOpacity.focus,
-            } as Color),
+              alpha: colorOpacity.focus
+            } as Color)
           }
         }
 
         return null
-      },
+      }
     },
     {
       values: flattenColorPalette(theme('colors')),
-      type: 'color',
+      type: 'color'
     }
   )
   matchComponents(
@@ -168,12 +168,12 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
           '--tw-btn-size': `${Number(constant) / 16}rem`,
           borderRadius: theme('borderRadius.md'),
           height: 'var(--tw-btn-size)',
-          paddingInline: `calc(var(--tw-btn-size) / 2)`,
+          paddingInline: `calc(var(--tw-btn-size) / 2)`
         }
-      },
+      }
     },
     {
-      values: theme('constants'),
+      values: theme('constants')
     }
   )
 })

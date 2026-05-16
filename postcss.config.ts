@@ -8,7 +8,7 @@ export default {
     autoprefixer({
       grid: 'autoplace',
       flexbox: 'no-2009',
-      supports: false,
-    }),
-  ],
-} as Config
+      supports: false
+    })
+  ]
+} satisfies Config

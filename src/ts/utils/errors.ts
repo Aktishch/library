@@ -26,6 +26,6 @@ export const errors: Errors = {
   file: {
     default: isEn ? 'Upload the file' : 'Загрузите файл',
     type: isEn ? 'jpg or png only' : 'Только jpg или png',
-    size: isEn ? 'The size is not more than 2 MB' : 'Размер не более 2 мб',
-  },
+    size: isEn ? 'The size is not more than 2 MB' : 'Размер не более 2 мб'
+  }
 }

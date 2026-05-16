@@ -15,7 +15,7 @@ const setWaved = (event: Event): void => {
     const createWavedCircle = ({ positionY, positionX }: CirclePoisition): void => {
       const coordinates: Coordinates = {
         top: positionY - item.getBoundingClientRect().top,
-        left: positionX - item.getBoundingClientRect().left,
+        left: positionX - item.getBoundingClientRect().left
       }
 
       circle.classList.add('waved-circle')
@@ -33,7 +33,7 @@ const setWaved = (event: Event): void => {
 
         createWavedCircle({
           positionY: (event as TouchEvent).touches[0].clientY,
-          positionX: (event as TouchEvent).touches[0].clientX,
+          positionX: (event as TouchEvent).touches[0].clientX
         })
 
         break
@@ -44,7 +44,7 @@ const setWaved = (event: Event): void => {
 
         createWavedCircle({
           positionY: (event as MouseEvent).clientY,
-          positionX: (event as MouseEvent).clientX,
+          positionX: (event as MouseEvent).clientX
         })
 
         break

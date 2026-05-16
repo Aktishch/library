@@ -37,7 +37,12 @@ export const getValidate = (form: HTMLFormElement): boolean => {
     }
 
     error.innerText = errors.default
-    input.value.length === 0 ? showError() : hideError()
+
+    if (input.value.length === 0) {
+      showError()
+    } else {
+      hideError()
+    }
 
     switch (input.dataset.input) {
       case 'text': {

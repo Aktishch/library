@@ -41,7 +41,7 @@ export default (container: Container = document): void => {
         const width: number = parallax.offsetWidth
         const coordinates: Coordinates = {
           top: event.clientY - height / 2,
-          left: event.clientX - width / 2,
+          left: event.clientX - width / 2
         }
 
         currentY = (coordinates.top / height) * 100
@@ -72,7 +72,7 @@ export default (container: Container = document): void => {
         const rect: DOMRect = (event.target as HTMLElement).getBoundingClientRect()
         const coordinates: Coordinates = {
           top: (event.clientY - rect.top) / rect.height,
-          left: (event.clientX - rect.left) / rect.width,
+          left: (event.clientX - rect.left) / rect.width
         }
 
         positionY = coordinates.left * (depth * 2) - depth

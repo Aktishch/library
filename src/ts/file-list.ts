@@ -24,7 +24,7 @@ export default (container: Container = document): void => {
     const message: Message = {
       default: isEn ? 'Upload files' : 'Загрузить файлы',
       more: isEn ? 'Upload more' : 'Загрузить ещё',
-      limit: isEn ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`,
+      limit: isEn ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`
     }
     let data: DataTransfer = new DataTransfer()
 

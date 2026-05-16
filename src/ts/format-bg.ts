@@ -24,9 +24,11 @@ const handleBackground = async ({ item, requestUrl }: BackgroundHandler): Promis
       return response.ok
     })
     .then((response: boolean): void => {
-      response
-        ? (item.style.backgroundImage = `url('${requestUrl}')`)
-        : createError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
+      if (response) {
+        item.style.backgroundImage = `url('${requestUrl}')`
+      } else {
+        createError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
+      }
     })
     .catch((error: string): void => createError(error))
 }

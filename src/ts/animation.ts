@@ -5,7 +5,7 @@ const repeat: boolean = true
 const getOffset = (item: HTMLElement): Coordinates => {
   return {
     top: item.getBoundingClientRect().top + getScrollPosition().top,
-    left: item.getBoundingClientRect().left + getScrollPosition().left,
+    left: item.getBoundingClientRect().left + getScrollPosition().left
   } as Coordinates
 }
 

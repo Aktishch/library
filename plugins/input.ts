@@ -27,18 +27,18 @@ export const input: TailwindPlugin = plugin(({ addComponents, matchComponents, t
       transitionTimingFunction: 'ease',
       userSelect: 'initial',
       '&:focus': {
-        boxShadow: '0 0 0 1px var(--tw-input-color)',
+        boxShadow: '0 0 0 1px var(--tw-input-color)'
       },
       '&:disabled': {
         pointerEvents: 'none',
-        opacity: '0.5',
+        opacity: '0.5'
       },
       '&-fade': {
         '--tw-input-text': getRgba(theme('colors.white.DEFAULT')),
-        backgroundColor: theme('colors.transparent'),
+        backgroundColor: theme('colors.transparent')
       },
       '&&-error': {
-        '--tw-input-color': getRgba(theme('colors.red.DEFAULT')),
+        '--tw-input-color': getRgba(theme('colors.red.DEFAULT'))
       },
       '&:-webkit-autofill': {
         color: 'var(--tw-input-text) !important',
@@ -47,14 +47,14 @@ export const input: TailwindPlugin = plugin(({ addComponents, matchComponents, t
         appearance: 'none',
         transition: 'background-color 1000000ms ease-in-out 0ms',
         '-webkit-text-fill-color': 'var(--tw-input-text) !important',
-        '-webkit-text-stroke-color': 'var(--tw-input-text) !important',
+        '-webkit-text-stroke-color': 'var(--tw-input-text) !important'
       },
       '@media (hover)': {
         '&:hover': {
-          backgroundColor: 'var(--tw-input-hovered)',
-        },
-      },
-    },
+          backgroundColor: 'var(--tw-input-hovered)'
+        }
+      }
+    }
   })
   matchComponents(
     {
@@ -68,27 +68,27 @@ export const input: TailwindPlugin = plugin(({ addComponents, matchComponents, t
             '--tw-input-hovered': formatColor({
               mode: 'rgba',
               color: parsed.color,
-              alpha: hovered,
-            } as Color),
+              alpha: hovered
+            } as Color)
           }
         }
 
         return null
-      },
+      }
     },
     {
       values: flattenColorPalette(theme('colors')),
-      type: 'color',
+      type: 'color'
     }
   )
   matchComponents(
     {
       input: (constant: string | number): CSSRuleObject => {
         return { '--tw-input-size': `${Number(constant) / 16}rem` }
-      },
+      }
     },
     {
-      values: theme('constants'),
+      values: theme('constants')
     }
   )
 })

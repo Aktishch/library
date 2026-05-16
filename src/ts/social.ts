@@ -31,7 +31,7 @@ export default (container: Container = document): void => {
 
       const coordinates: Coordinates = {
         top: Math.round(height / 2 + radius * Math.sin(angle) - link.offsetHeight / 2),
-        left: Math.round(width / 2 + radius * Math.cos(angle) - link.offsetWidth / 2),
+        left: Math.round(width / 2 + radius * Math.cos(angle) - link.offsetWidth / 2)
       }
 
       link.style.top = `${coordinates.top}px`

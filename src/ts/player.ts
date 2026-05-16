@@ -31,20 +31,20 @@ const playlist: Composition[] = [
     song: 'Snuff',
     audio:
       'https://mp3minusovki.com/music/fhvndfjwserjgt/247bab1c312b2335afe3f5c9b496a3d3/01d63b016f64e0739a9e3d2599b6521f.mp3',
-    poster: `${isSource}/img/pictures/town.jpg`,
+    poster: `${isSource}/img/pictures/town.jpg`
   },
   {
     artist: 'System of a down',
     song: 'Lonely Day',
     audio: 'https://cdn1.shadam.net/uploads/files/2018-09/1536003683_system-of-a-down-lonely-day.mp3',
-    poster: `${isSource}/img/pictures/town.jpg`,
+    poster: `${isSource}/img/pictures/town.jpg`
   },
   {
     artist: 'Scorpions',
     song: 'Slave Me',
     audio: 'https://ruo.morsmusic.org/load/941771577/Scorpions_-_Slave_Me_(musmore.com).mp3',
-    poster: `${isSource}/img/pictures/town.jpg`,
-  },
+    poster: `${isSource}/img/pictures/town.jpg`
+  }
 ]
 
 const playOnlyOne = (event: Event): void => {
@@ -120,7 +120,7 @@ const initPlayer = ({ id, playlist }: Player): void => {
             time: 0,
             status: false,
             muted: false,
-            active: false,
+            active: false
           })
       )
 

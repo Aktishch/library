@@ -53,7 +53,7 @@ export const initCalendar = (container: Container = document): void => {
       const attrs: CalendarAttrs = {
         'data-filtering-category': 'calendar',
         'data-filtering-value': `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`,
-        'data-waved': 'light',
+        'data-waved': 'light'
       }
 
       if (condition) dates.push(+date)
@@ -71,7 +71,7 @@ export const initCalendar = (container: Container = document): void => {
   new window.AirDatepicker(calendar, {
     locale: localeRu,
     onRenderCell: renderCalendarCell,
-    selectedDates: [new Date()],
+    selectedDates: [new Date()]
   }) as AirDatepicker<HTMLDivElement>
 
   filtering(container)
@@ -89,27 +89,27 @@ export default (container: Container = document): void => {
     const min = new window.AirDatepicker(inputMin, {
       onSelect({ date }: Dates) {
         max.update({
-          minDate: String(date),
+          minDate: String(date)
         })
       },
       locale: localeRu,
       isMobile: getTouchDevice(),
       autoClose: true,
       minDate: new Date(),
-      position: (inputMin.dataset.position as AirDatepickerPosition) || 'bottom left',
+      position: (inputMin.dataset.position as AirDatepickerPosition) || 'bottom left'
     }) as AirDatepicker<HTMLInputElement>
 
     const max = new window.AirDatepicker(inputMax, {
       onSelect({ date }: Dates) {
         min.update({
-          maxDate: String(date),
+          maxDate: String(date)
         })
       },
       locale: localeRu,
       isMobile: getTouchDevice(),
       autoClose: true,
       minDate: new Date(),
-      position: (inputMax.dataset.position as AirDatepickerPosition) || 'bottom left',
+      position: (inputMax.dataset.position as AirDatepickerPosition) || 'bottom left'
     }) as AirDatepicker<HTMLInputElement>
   })
 }

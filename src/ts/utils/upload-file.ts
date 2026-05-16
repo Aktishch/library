@@ -16,7 +16,11 @@ export const uploadFile = (file: File): Promise<UploadedFile> => {
     reader.readAsDataURL(file)
 
     reader.addEventListener('loadend', ((): void => {
-      reader.result ? resolve({ file, url: reader.result.toString() }) : setReject()
+      if (reader.result) {
+        resolve({ file, url: reader.result.toString() })
+      } else {
+        setReject()
+      }
     }) as EventListener)
 
     reader.addEventListener('error', setReject as EventListener)

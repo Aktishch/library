@@ -13,7 +13,11 @@ export default (): void => {
     const currentOffsetTop: number = getScrollPosition().top
 
     if (header.offsetHeight < currentOffsetTop) {
-      prevOffsetTop > currentOffsetTop ? header.classList.remove(...className) : header.classList.add(...className)
+      if (prevOffsetTop > currentOffsetTop) {
+        header.classList.remove(...className)
+      } else {
+        header.classList.add(...className)
+      }
     }
 
     prevOffsetTop = currentOffsetTop

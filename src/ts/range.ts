@@ -92,14 +92,14 @@ export default (container: Container = document): void => {
             number: first,
             input: firstInput,
             progress: firstProgress,
-            bubble: firstBubble,
+            bubble: firstBubble
           })
           setBubblePosition({
             size,
             number: last,
             input: lastInput,
             progress: lastProgress,
-            bubble: lastBubble,
+            bubble: lastBubble
           })
         }
 

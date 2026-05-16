@@ -54,7 +54,7 @@ const submitHandler = async (event: Event): Promise<void> => {
 
           await fetch(requestUrl, {
             method: 'POST',
-            body: formData,
+            body: formData
           })
             .then((response: Response): Promise<{ status: boolean }> => {
               return response.json()
@@ -75,7 +75,7 @@ const submitHandler = async (event: Event): Promise<void> => {
 
           await fetch(requestUrl, {
             method: 'POST',
-            body: formData,
+            body: formData
           })
             .then((response: Response): void => {
               response.text()

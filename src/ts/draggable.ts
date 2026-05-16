@@ -28,7 +28,7 @@ export default (container: Container = document): void => {
       setTranslate({
         item: (draggable.closest(`[data-draggable-parent=${value}]`) as HTMLElement) || draggable,
         positionX: coordinates.left,
-        positionY: coordinates.top,
+        positionY: coordinates.top
       })
     }
 

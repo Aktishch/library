@@ -5,7 +5,7 @@ export const checkQuizSlide = (slide: HTMLElement): void => {
   const inputs: Input[] = [
     ...slide.querySelectorAll('input'),
     ...slide.querySelectorAll('select'),
-    ...slide.querySelectorAll('textarea'),
+    ...slide.querySelectorAll('textarea')
   ]
   let active: boolean = false
 

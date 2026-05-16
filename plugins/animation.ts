@@ -18,16 +18,16 @@ export const animation: TailwindPlugin = plugin(
       '.anim': {
         transitionProperty: 'transform, opacity, visibility',
         transitionDuration: '300ms',
-        transitionTimingFunction: 'ease',
-      },
+        transitionTimingFunction: 'ease'
+      }
     }
     let clipPath: Animation = {
       '.clip-path': {
         transitionProperty: 'clip-path',
         transitionDuration: '300ms',
         transitionTimingFunction: 'ease',
-        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-      },
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'
+      }
     }
     Object.entries(theme('anim') as AnimationTheme).map(([key, value]: AnimationElement): void => {
       anim = {
@@ -35,16 +35,16 @@ export const animation: TailwindPlugin = plugin(
         [`.anim-${key}:not([data-anim="show"])`]: {
           transform: value,
           visibility: 'hidden',
-          opacity: '0',
-        },
+          opacity: '0'
+        }
       }
     })
     Object.entries(theme('clipPath') as AnimationTheme).map(([key, value]: AnimationElement): void => {
       clipPath = {
         ...clipPath,
         [`.clip-path-${key}:not([data-anim="show"])`]: {
-          clipPath: value,
-        },
+          clipPath: value
+        }
       }
     })
     addComponents(anim)
@@ -60,14 +60,14 @@ export const animation: TailwindPlugin = plugin(
         up: 'translateY(3.5rem)',
         down: 'translateY(-3.5rem)',
         left: 'translateX(3.5rem)',
-        right: 'translateX(-3.5rem)',
+        right: 'translateX(-3.5rem)'
       },
       clipPath: {
         up: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
         down: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)',
         left: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)',
-        right: 'polygon(0 0, 0 0, 0 100%, 0 100%)',
-      },
-    },
+        right: 'polygon(0 0, 0 0, 0 100%, 0 100%)'
+      }
+    }
   }
 )

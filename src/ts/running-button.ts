@@ -19,7 +19,7 @@ export default (container: Container = document): void => {
   running.addEventListener('mouseenter', ((): void => {
     const coordinates: Coordinates = {
       top: getRandomPosition({ min: 0, max: 90 }),
-      left: getRandomPosition({ min: 0, max: 90 }),
+      left: getRandomPosition({ min: 0, max: 90 })
     }
 
     running.style.top = `${coordinates.top}%`

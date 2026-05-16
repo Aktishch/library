@@ -12,8 +12,8 @@
 
       @media(hover) {
         &:hover {
-          transform: translateZ(100px) rotateX(20deg);
           z-index  : 1;
+          transform: translateZ(100px) rotateX(20deg);
 
           .postcards-particle {
             filter: grayscale(0);
@@ -52,9 +52,9 @@
 
     &-particle {
       background-size    : 300% 300%;
+      filter             : grayscale(0.9);
       backface-visibility: hidden;
       transition         : transform 300ms ease, filter 1000ms ease;
-      filter             : grayscale(0.9);
 
       &:nth-child(1) {
         @apply bg-center;

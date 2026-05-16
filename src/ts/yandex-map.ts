@@ -37,7 +37,7 @@ export default (): void => {
       .then((maps: ymaps): void => {
         const map = new maps.Map(yandexMap, {
           center: mark,
-          zoom: 16,
+          zoom: 16
         }) as ymaps.Map
 
         const placemark = new maps.Placemark(
@@ -46,13 +46,13 @@ export default (): void => {
             hintContent: 'Студия К.И.Т.',
             balloonContentHeader: 'Студия К.И.Т.',
             balloonContentBody: 'г. Краснодар',
-            balloonContentFooter: 'ул.Рождественская Набережная 45/1',
+            balloonContentFooter: 'ул.Рождественская Набережная 45/1'
           },
           {
             iconLayout: 'default#image',
             iconImageHref: `${isSource}/img/pictures/point.svg`,
             iconImageSize: pointSize,
-            iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2],
+            iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2]
           }
         ) as ymaps.Placemark
 
@@ -67,12 +67,12 @@ export default (): void => {
         map.geoObjects.add(placemark)
         loader.remove()
 
-        map.geoObjects.events.add<'click'>('click', (event: ymaps.IEvent<PointerEvent, {}>): void => {
+        map.geoObjects.events.add<'click'>('click', (event: ymaps.IEvent<PointerEvent, object>): void => {
           const target: EventTarget | any = event.get('target')
           const hintContent = target.properties._data.hintContent
 
           map.panTo(target.geometry.getCoordinates(), {
-            useMapMargin: true,
+            useMapMargin: true
           })
 
           alert(hintContent)

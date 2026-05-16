@@ -22,14 +22,14 @@
 @keyframes snowflake {
   0% {
     opacity  : 1;
-    translate: -50% 0;
     filter   : hue-rotate(0deg);
+    translate: -50% 0;
   }
 
   100% {
     opacity  : 0;
-    translate: -50% 1000%;
     filter   : hue-rotate(500deg);
+    translate: -50% 1000%;
   }
 }
 

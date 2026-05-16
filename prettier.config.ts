@@ -3,23 +3,17 @@ import type { Config } from 'prettier'
 export default {
   semi: false,
   singleQuote: true,
-  trailingComma: 'es5',
+  trailingComma: 'none',
   printWidth: 120,
   tabWidth: 2,
   endOfLine: 'auto',
   bracketSpacing: true,
   overrides: [
     {
-      files: '*.scss',
+      files: '**/*.json',
       options: {
-        singleQuote: false,
-      },
-    },
-    {
-      files: '*.html',
-      options: {
-        printWidth: 120,
-      },
-    },
-  ],
-} as Config
+        parser: 'json'
+      }
+    }
+  ]
+} satisfies Config

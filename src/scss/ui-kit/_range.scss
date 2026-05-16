@@ -30,9 +30,9 @@
     }
 
     &-bubble {
+      z-index: 2;
       width  : var(--bubble-size);
       height : var(--bubble-size);
-      z-index: 2;
 
       @apply flex items-center justify-center absolute top-0 bottom-0 text-xs rounded-full border-2 border-solid border-grey shadow pointer-events-none my-auto;
     }
