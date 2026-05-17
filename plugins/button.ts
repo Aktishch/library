@@ -1,18 +1,7 @@
-import { formatColor, parseColor } from 'tailwindcss/lib/util/color'
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette'
 import plugin from 'tailwindcss/plugin'
 import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
-import { Color, getRgba, TailwindPlugin } from './plugin'
-
-interface ColorOpacity {
-  fade: string
-  focus: string
-}
-
-const colorOpacity: ColorOpacity = {
-  fade: '0.3',
-  focus: '0.4'
-}
+import { getRgba, TailwindPlugin } from './plugin'
 
 export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
   addComponents({
@@ -21,10 +10,10 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
         pointerEvents: 'none'
       },
       '--tw-btn-color': getRgba(theme('colors.black.DEFAULT')),
-      '--tw-btn-fade': getRgba(theme('colors.black.DEFAULT'), colorOpacity.fade),
-      '--tw-btn-focus': getRgba(theme('colors.black.DEFAULT'), colorOpacity.focus),
       '--tw-btn-accent': getRgba(theme('colors.white.DEFAULT')),
       '--tw-btn-hovered': getRgba(theme('colors.black.DEFAULT')),
+      '--tw-btn-fade': `color-mix(in srgb, var(--tw-btn-color) 30%, ${theme('colors.transparent')})`,
+      '--tw-btn-focus': `color-mix(in srgb, var(--tw-btn-color) 40%, ${theme('colors.transparent')})`,
       '--tw-btn-fill': 'color-mix(in srgb, var(--tw-btn-color) 80%, var(--tw-btn-hovered))',
       color: 'var(--tw-btn-color)',
       fontSize: theme('fontSize.base'),
@@ -52,7 +41,7 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
           backgroundColor: 'var(--tw-btn-fade)'
         },
         '&:active': {
-          boxShadow: `inset 0 4px 4px ${getRgba(theme('colors.black.DEFAULT'), colorOpacity.fade)}`,
+          boxShadow: `inset 0 4px 4px ${getRgba(theme('colors.black.DEFAULT'), '0.3')}`,
           transform: 'translateY(0.25rem)'
         }
       },
@@ -69,7 +58,6 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
         }
       },
       '&-fade': {
-        color: 'var(--tw-btn-color)',
         backgroundColor: 'var(--tw-btn-fade)',
         '&:focus-visible': {
           color: 'var(--tw-btn-accent)',
@@ -83,9 +71,8 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
         }
       },
       '&-text': {
-        color: 'var(--tw-btn-color)',
         backgroundColor: 'var(--tw-btn-accent)',
-        border: `1px solid ${theme('colors.transparent')}`,
+        border: '1px solid var(--tw-btn-accent)',
         '&:focus-visible': {
           backgroundColor: 'var(--tw-btn-accent)',
           borderColor: 'var(--tw-btn-color)'
@@ -133,27 +120,8 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
   })
   matchComponents(
     {
-      btn: (color: string): CSSRuleObject | null => {
-        if (typeof color === 'function') {
-          const value: string = (color as ({}) => string)({})
-          const parsed: Color = parseColor(value)
-
-          return {
-            '--tw-btn-color': value,
-            '--tw-btn-fade': formatColor({
-              mode: 'rgba',
-              color: parsed.color,
-              alpha: colorOpacity.fade
-            } as Color),
-            '--tw-btn-focus': formatColor({
-              mode: 'rgba',
-              color: parsed.color,
-              alpha: colorOpacity.focus
-            } as Color)
-          }
-        }
-
-        return null
+      btn: (color: string): CSSRuleObject => {
+        return { '--tw-btn-color': typeof color === 'function' ? (color as ({}) => string)({}) : color }
       }
     },
     {
@@ -164,8 +132,12 @@ export const button: TailwindPlugin = plugin(({ addComponents, matchComponents, 
   matchComponents(
     {
       btn: (constant: string | number): CSSRuleObject => {
+        const value: string = String(constant)
+        const number: number = parseFloat(value)
+        const size: string = value.endsWith('rem') || value.endsWith('em') ? value : `${number / 16}rem`
+
         return {
-          '--tw-btn-size': `${Number(constant) / 16}rem`,
+          '--tw-btn-size': size,
           borderRadius: theme('borderRadius.md'),
           height: 'var(--tw-btn-size)',
           paddingInline: `calc(var(--tw-btn-size) / 2)`

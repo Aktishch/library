@@ -5,12 +5,6 @@ export interface TailwindPlugin {
   config?: Partial<Config>
 }
 
-export interface Color {
-  mode: 'rgba'
-  color: string[]
-  alpha: string
-}
-
 const value: string = '<alpha-value>'
 
 export const getColor = (variable: string): string => {

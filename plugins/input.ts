@@ -1,17 +1,14 @@
-import { formatColor, parseColor } from 'tailwindcss/lib/util/color'
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette'
 import plugin from 'tailwindcss/plugin'
 import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
-import { Color, getRgba, TailwindPlugin } from './plugin'
-
-const hovered: string = '0.1'
+import { getRgba, TailwindPlugin } from './plugin'
 
 export const input: TailwindPlugin = plugin(({ addComponents, matchComponents, theme }: PluginAPI): void => {
   addComponents({
     '.input': {
-      '--tw-input-text': getRgba(theme('colors.black.DEFAULT')),
       '--tw-input-color': getRgba(theme('colors.black.DEFAULT')),
-      '--tw-input-hovered': getRgba(theme('colors.black.DEFAULT'), hovered),
+      '--tw-input-text': getRgba(theme('colors.black.DEFAULT')),
+      '--tw-input-hovered': `color-mix(in srgb, var(--tw-input-color) 10%, ${theme('colors.transparent')})`,
       display: 'block',
       width: '100%',
       height: 'var(--tw-input-size)',
@@ -58,22 +55,8 @@ export const input: TailwindPlugin = plugin(({ addComponents, matchComponents, t
   })
   matchComponents(
     {
-      input: (color: string): CSSRuleObject | null => {
-        if (typeof color === 'function') {
-          const value: string = (color as ({}) => string)({})
-          const parsed: Color = parseColor(value)
-
-          return {
-            '--tw-input-color': value,
-            '--tw-input-hovered': formatColor({
-              mode: 'rgba',
-              color: parsed.color,
-              alpha: hovered
-            } as Color)
-          }
-        }
-
-        return null
+      input: (color: string): CSSRuleObject => {
+        return { '--tw-input-color': typeof color === 'function' ? (color as ({}) => string)({}) : color }
       }
     },
     {
@@ -84,7 +67,11 @@ export const input: TailwindPlugin = plugin(({ addComponents, matchComponents, t
   matchComponents(
     {
       input: (constant: string | number): CSSRuleObject => {
-        return { '--tw-input-size': `${Number(constant) / 16}rem` }
+        const value: string = String(constant)
+        const number: number = parseFloat(value)
+        const size: string = value.endsWith('rem') || value.endsWith('em') ? value : `${number / 16}rem`
+
+        return { '--tw-input-size': size }
       }
     },
     {

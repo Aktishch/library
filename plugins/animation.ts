@@ -1,27 +1,19 @@
 import plugin from 'tailwindcss/plugin'
-import { PluginAPI } from 'tailwindcss/types/config'
+import type { PluginAPI } from 'tailwindcss/types/config'
 import { TailwindPlugin } from './plugin'
 
-interface AnimationTheme {
-  [index: string]: string
-}
-
-interface Animation {
-  [index: string]: AnimationTheme
-}
-
-type AnimationElement = [string, string]
+type CSSRuleObject = Record<string, Record<string, string>>
 
 export const animation: TailwindPlugin = plugin(
   ({ addComponents, theme }: PluginAPI): void => {
-    let anim: Animation = {
+    const animComponents: CSSRuleObject = {
       '.anim': {
         transitionProperty: 'transform, opacity, visibility',
         transitionDuration: '300ms',
         transitionTimingFunction: 'ease'
       }
     }
-    let clipPath: Animation = {
+    const clipPathComponents: CSSRuleObject = {
       '.clip-path': {
         transitionProperty: 'clip-path',
         transitionDuration: '300ms',
@@ -29,26 +21,23 @@ export const animation: TailwindPlugin = plugin(
         clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'
       }
     }
-    Object.entries(theme('anim') as AnimationTheme).map(([key, value]: AnimationElement): void => {
-      anim = {
-        ...anim,
-        [`.anim-${key}:not([data-anim="show"])`]: {
-          transform: value,
-          visibility: 'hidden',
-          opacity: '0'
-        }
+
+    Object.entries(theme('anim', {}) as Record<string, string>).forEach(([key, value]): void => {
+      animComponents[`.anim-${key}:not([data-anim="show"])`] = {
+        transform: value,
+        visibility: 'hidden',
+        opacity: '0'
       }
     })
-    Object.entries(theme('clipPath') as AnimationTheme).map(([key, value]: AnimationElement): void => {
-      clipPath = {
-        ...clipPath,
-        [`.clip-path-${key}:not([data-anim="show"])`]: {
-          clipPath: value
-        }
+
+    Object.entries(theme('clipPath', {}) as Record<string, string>).forEach(([key, value]): void => {
+      clipPathComponents[`.clip-path-${key}:not([data-anim="show"])`] = {
+        clipPath: value
       }
     })
-    addComponents(anim)
-    addComponents(clipPath)
+
+    addComponents(animComponents)
+    addComponents(clipPathComponents)
   },
   {
     theme: {
