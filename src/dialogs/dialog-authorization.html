@@ -1,6 +1,6 @@
 <%
-  var icon = _.template(require('../components/icon.html').default)
-  var error =require('../components/error.html').default
+  const icon = include('components/icon.html')
+  const error = include('components/error.html')({})
 %>
 
 <div class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-96 max-w-full px-5 py-10">

@@ -1,3 +1,9 @@
+<%
+  const icon = include('components/icon.html')
+  const picture = include('components/picture.html')
+  const loader = include('components/loader.html')
+%>
+
 <section class="container container-xs bg-grey dark:bg-dark" data-player="random" id="player">
   <div id="playlist" style="display: none;">
     <div class="bg-white dark:bg-black text-black dark:text-white rounded-xl p-5 md:p-10 max-w-sm">
@@ -9,7 +15,7 @@
   </div>
   <div class="flex flex-col items-center justify-center bg-white dark:bg-black rounded-3xl shadow-md w-full max-w-lg py-6 px-2 md:px-6 mx-auto anim anim-up" data-anim data-player-controls>
     <div class="pack pack-xl bg-grey dark:bg-dark rounded-full w-full max-w-64 mb-5 md:md-8">
-      <%= loader({className: null, icon}) %>
+      <%= loader({className: null}) %>
       <%= picture({src: '', format: '', className: 'image rounded-inherit', data: 'data-player-poster'}) %>
     </div>
     <h3 class="font-alt font-bold text-center text-2xl/normal md:text-3xl/normal" data-player-artist></h3>

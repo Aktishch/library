@@ -3,9 +3,9 @@
     <div class="flex items-center gap-1 absolute top-5 left-0 text-sm">
       <a class="underline-offset-4 hover:underline" draggable="false" href="/">Main</a>
       >
-      <span class="opacity-60 pointer-events-none"><%= data.title %></span>
+      <span class="opacity-60 pointer-events-none"><%= props.title %></span>
     </div>
-    <h1 class="font-alt font-bold text-center text-3xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend"><%= data.title %></h1>
+    <h1 class="font-alt font-bold text-center text-3xl/tight lg:text-5xl/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend"><%= props.title %></h1>
     <a class="btn btn-primary btn-fill btn-lg btn-glow w-full max-w-48 mx-auto" data-waved="light" data-scroll-to draggable="false" href="#content">Show more</a>
   </div>
 </section>

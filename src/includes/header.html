@@ -1,3 +1,9 @@
+<%
+  const icon = include('components/icon.html')
+  const picture = include('components/picture.html')
+  const preloader = include('components/preloader.html')({})
+%>
+
 <!DOCTYPE html>
 <html data-domain="localhost" data-en data-source="http://localhost:9000" lang="ru">
 
@@ -6,7 +12,7 @@
   <meta http-equiv="autor" content="//STDKIT">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="/img/favicon/favicon.ico" type="image/x-icon">
-  <title><%= data.title %></title>
+  <title><%= props.title %></title>
 </head>
 
 <body class="dark:bg-black dark:text-white">
@@ -23,7 +29,7 @@
 
   <!-- Шапка документа -->
 
-  <% var nav = {
+  <% const nav = {
     pages: [
       {
         link: 'index.html',
@@ -87,9 +93,9 @@
 
   <!-- Меню -->
 
-  <% var social = ['ok', 'yt', 'inst', 'tw', 'fb', 'vk'] %>
+  <% const social = ['ok', 'yt', 'inst', 'tw', 'fb', 'vk'] %>
 
-  <% var pallete = [
+  <% const pallete = [
     {
       text: 'Первичный',
       name: 'primary',
@@ -251,13 +257,13 @@
 
   <!-- Умное меню -->
 
-  <nav class="container relative z-10 py-4 duration-500 anim anim-down <%= data.status ? null : 'hidden' %>" data-anim>
+  <nav class="container relative z-10 py-4 duration-500 anim anim-down <%= props.status ? null : 'hidden' %>" data-anim>
     <div class="flex items-center justify-between w-full max-w-full" data-smart>
       <h2 class="font-alt font-bold text-lg" data-smart-title>
         Smart-menu items
       </h2>
       <ul class="flex justify-between gap-3" data-smart-length>
-        <% for (var i = 1; i < 9; i++) { %>
+        <% for (let i = 1; i < 9; i++) { %>
         <li>
           <button class="btn btn-primary btn-text btn-lg dark:bg-dark font-semibold shadow-md min-w-max" data-waved="dark">Smart-menu item <%= i %></button>
         </li>

@@ -1,18 +1,17 @@
 <%
-  var data = {
+  const props = {
     title: 'Second page',
     status: false
   }
 
-  var icon = _.template(require('./components/icon.html').default)
-  var picture = _.template(require('./components/picture.html').default)
-  var loader = _.template(require('./components/loader.html').default)
-  var preloader = require('./components/preloader.html').default
-  var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
-  var heading = _.template(require('./includes/heading.html').default)({data})
-  var worldMap = require('./includes/world-map.html').default
-  var player = _.template(require('./includes/player.html').default)({icon, picture, loader})
-  var footer = _.template(require('./includes/footer.html').default)({icon, picture, loader})
+  const icon = include('components/icon.html')
+  const picture = include('components/picture.html')
+  const loader = include('components/loader.html')
+  const header = include('includes/header.html')({props})
+  const heading = include('includes/heading.html')({props})
+  const worldMap = include('includes/world-map.html')({})
+  const player = include('includes/player.html')({})
+  const footer = include('includes/footer.html')({})
 %>
 
 <%= header %>
@@ -34,7 +33,7 @@
     <% ['lg:row-5', 'lg:row-4', 'lg:row-5', 'lg:row-5', 'lg:row-4', 'lg:row-4'].forEach((item) => { %>
     <div class="duration-1000 anim anim-circle <%= item %>" data-anim>
       <a class="pack pack-xl bg-grey dark:bg-dark rounded-xl shadow-md h-full" data-media data-movement="light" data-fancybox="grid" draggable="false" href="/img/pictures/town-grey.jpg">
-        <%= loader({className: null, icon}) %>
+        <%= loader({className: null}) %>
         <%= picture({src: '/', format: '', className: 'pack-image image rounded-inherit', data: 'data-lazy data-src="/img/pictures/town-grey.jpg"'}) %>
       </a>
     </div>
@@ -50,11 +49,11 @@
   </h2>
   <div class="relative bg-grey dark:bg-dark rounded-2xl overflow-hidden w-full duration-500 anim anim-fade" data-anim data-compare>
     <div class="pack pack-xs absolute z-10 bg-grey dark:bg-dark w-1/2 h-full" data-compare-before data-media>
-      <%= loader({className: null, icon}) %>
+      <%= loader({className: null}) %>
       <%= picture({src: '/', format: '', className: 'image', data: 'data-lazy data-compare-image data-src="/img/pictures/town-grey.jpg"'}) %>
     </div>
     <div class="relative bg-grey dark:bg-dark rounded-inherit overflow-hidden" data-media>
-      <%= loader({className: null, icon}) %>
+      <%= loader({className: null}) %>
       <%= picture({src: '/', format: '', className: 'block relative rounded-inherit w-full', data: 'data-compare-image data-lazy data-src="/img/pictures/town.jpg"'}) %>
     </div>
     <div class="flex items-center justify-center absolute top-0 bottom-0 left-2/4 z-20 bg-white dark:bg-black -translate-x-1/2 w-1 h-[95%] my-auto" data-compare-change>
@@ -79,7 +78,7 @@
       <span class="hidden absolute bottom-0 left-0 md:block bg-primary rounded-t-lg transition-[left,_width] ease-linear h-1" data-filtering-line="sorting"></span>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-10">
-      <% for (var i = 0; i < 3; i++) { %>
+      <% for (let i = 0; i < 3; i++) { %>
       <div class="bg-primary py-10" data-filtering-card="sorting" data-filtering-value="primary mix"></div>
       <div class="bg-second py-10" data-filtering-card="sorting" data-filtering-value="second"></div>
       <div class="bg-green py-10" data-filtering-card="sorting" data-filtering-value="green mix"></div>
@@ -145,9 +144,9 @@
     Postcards
   </h2>
   <div class="postcards flex flex-wrap items-center justify-center gap-10 w-full">
-    <% for (var i = 0; i < 3; i++) { %>
+    <% for (let i = 0; i < 3; i++) { %>
     <ul class="postcards-item">
-      <% for (var j = 0; j < 9; j++) { %>
+      <% for (let j = 0; j < 9; j++) { %>
       <li class="postcards-particle" data-bg="/img/pictures/town.jpg"></li>
       <% } %>
     </ul>

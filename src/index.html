@@ -1,22 +1,21 @@
 <%
-  var data = {
+  const props = {
     title: 'My library',
     status: true
   }
 
-  var icon = _.template(require('./components/icon.html').default)
-  var picture = _.template(require('./components/picture.html').default)
-  var loader = _.template(require('./components/loader.html').default)
-  var preloader = require('./components/preloader.html').default
-  var error = require('./components/error.html').default
-  var header = _.template(require('./includes/header.html').default)({data, icon, picture, preloader})
-  var player = _.template(require('./includes/player.html').default)({icon, picture, loader})
-  var footer = _.template(require('./includes/footer.html').default)({icon, picture, loader})
+  const icon = include('components/icon.html')
+  const picture = include('components/picture.html')
+  const loader = include('components/loader.html')
+  const error = include('components/error.html')({})
+  const header = include('includes/header.html')({props})
+  const player = include('includes/player.html')({})
+  const footer = include('includes/footer.html')({})
 %>
 
 <%= header %>
 
-<!-- <%= data.title %> -->
+<!-- <%= props.title %> -->
 
 <section class="container flex flex-col items-center justify-center bg-white dark:bg-black min-h-[500px] xl:min-h-[600px]" id="header">
   <%= picture({src: '/img/pictures/logo', format: 'svg', className: 'block mb-10 duration-1000 anim anim-up', data: 'data-anim'}) %>
@@ -30,7 +29,7 @@
 
 <!-- Статьи -->
 
-<% var articles = [
+<% const articles = [
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam repudiandae maxime quia culpa, est voluptatum hic at ipsa error officiis magni dolores molestiae inventore ipsum perferendis reiciendis sunt nesciunt possimus?',
   'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam repudiandae maxime quia culpa, est voluptatum hic at ipsa error officiis magni dolores molestiae inventore ipsum perferendis reiciendis sunt nesciunt possimus? Lorem ipsum dolor sit amet consectetur adipisicing elit.',
@@ -47,11 +46,11 @@
     Construction and effect
   </h3>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full mb-5 md:md-10">
-    <% for (var i = 0; i < 3; i++) { %>
+    <% for (let i = 0; i < 3; i++) { %>
     <div class="duration-500 anim anim-up" data-anim>
       <article class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
         <div class="pack pack-md bg-grey dark:bg-dark rounded-t-inherit" data-media data-movement="light">
-          <%= loader({className: null, icon}) %>
+          <%= loader({className: null}) %>
           <%= picture({src: '/', format: '', className: 'pack-image image rounded-t-inherit', data: 'data-lazy data-src="/img/pictures/town.jpg"'}) %>
         </div>
         <div class="card-content py-5 px-3 md:px-5">
@@ -66,13 +65,13 @@
     <% } %>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full">
-    <% for (var i = 3; i < articles.length; i++) { %>
+    <% for (let i = 3; i < articles.length; i++) { %>
     <div class="sm:block duration-500 anim anim-up" data-anim data-listing-item>
       <article class="inverted h-full">
         <div class="inverted-before">
           <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
             <div class="pack pack-xs bg-grey dark:bg-dark rounded-t-inherit" data-media>
-              <%= loader({className: null, icon}) %>
+              <%= loader({className: null}) %>
               <%= picture({src: '/', format: '', className: 'image rounded-t-inherit', data: 'data-lazy data-src="/img/pictures/town-grey.jpg"'}) %>
             </div>
             <div class="card-content py-5 px-3 md:px-5">
@@ -104,7 +103,7 @@
 
 <!-- Кнопки -->
 
-<% var buttons = ['', 'btn-contur', 'btn-fade', 'btn-contur btn-fade', 'btn-fill', 'btn-text', 'btn-contur btn-swipe', 'btn-xxl', 'btn-xl', 'btn-lg', 'btn-md', 'btn-sm', 'btn-xs', 'btn-fill btn-glow', 'data-waved="light"', 'data-waved="dark"', 'btn-bubbles', 'btn-rect', 'btn-frame', 'btn-lines'] %>
+<% const buttons = ['', 'btn-contur', 'btn-fade', 'btn-contur btn-fade', 'btn-fill', 'btn-text', 'btn-contur btn-swipe', 'btn-xxl', 'btn-xl', 'btn-lg', 'btn-md', 'btn-sm', 'btn-xs', 'btn-fill btn-glow', 'data-waved="light"', 'data-waved="dark"', 'btn-bubbles', 'btn-rect', 'btn-frame', 'btn-lines'] %>
 
 <section class="container container-xs flex flex-col items-center justify-center bg-white dark:bg-black">
   <h2 class="font-alt font-bold text-center text-4xl/tight lg:text-5xl/tight mb-3 duration-500 anim anim-up" data-anim data-movement="blend">
@@ -114,7 +113,7 @@
     Buttons standard
   </h3>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 md:mb-10">
-    <% for (var i = 0; i < 7; i++) { %>
+    <% for (let i = 0; i < 7; i++) { %>
     <button class="btn btn-primary btn-lg <%= buttons[i] %>">btn <%= buttons[i] %></button>
     <% } %>
   </div>
@@ -122,7 +121,7 @@
     Buttons size
   </h3>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 md:mb-10">
-    <% for (var i = 7; i < 13; i++) { %>
+    <% for (let i = 7; i < 13; i++) { %>
     <button class="btn btn-primary btn-fill btn-light <%= buttons[i] %>">btn-light <%= buttons[i] %></button>
     <% } %>
   </div>
@@ -130,7 +129,7 @@
     Buttons effects
   </h3>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 md:mb-10">
-    <% for (var i = 13; i < 14; i++) { %>
+    <% for (let i = 13; i < 14; i++) { %>
     <button class="btn btn-primary btn-lg <%= buttons[i] %>"><%= buttons[i] %></button>
     <% } %>
   </div>
@@ -138,7 +137,7 @@
     Buttons waved
   </h3>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 md:mb-10">
-    <% for (var i = 14; i < 16; i++) { %>
+    <% for (let i = 14; i < 16; i++) { %>
     <button class="btn btn-primary btn-fill btn-lg" <%= buttons[i] %> data-waved-reverse><%= buttons[i] %></button>
     <% } %>
   </div>
@@ -146,7 +145,7 @@
     Buttons click
   </h3>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
-    <% for (var i = 16; i < buttons.length; i++) { %>
+    <% for (let i = 16; i < buttons.length; i++) { %>
     <button class="btn btn-primary btn-lg <%= buttons[i] %>"><%= buttons[i] %></button>
     <% } %>
   </div>
@@ -162,7 +161,7 @@
     Drop-down list
   </h3>
   <div class="flex flex-col gap-5 w-full">
-    <% for (var i = 0; i < 3; i++) { %>
+    <% for (let i = 0; i < 3; i++) { %>
     <div class="group/accordion relative bg-second/10 rounded-2xl overflow-hidden shadow-md py-4 px-4 md:py-6 duration-500 anim anim-up" data-anim data-accordion="<%= i === 0 ? 'active' : null %>" data-close-click>
       <div class="flex items-center justify-between gap-4">
         <h4 class="font-alt font-semibold text-xl/tight">
@@ -174,7 +173,7 @@
       </div>
       <div data-accordion-content>
         <div class="flex flex-col gap-3 pt-4">
-          <% for (var j = 0; j < 4; j++) { %>
+          <% for (let j = 0; j < 4; j++) { %>
           <a class="flex items-center gap-4 relative bg-white dark:bg-black rounded-lg underline-offset-4 hover:underline p-3" data-waved="dark" draggable="false" href="javascript: ;">
             <div class="flex items-center justify-center bg-primary/10 rounded-lg shrink-0 size-12">
               <%= icon({id: 'file', className: 'icon text-primary text-2xl', data: null}) %>
@@ -193,7 +192,7 @@
 
 <!-- Фильтр -->
 
-<% var numbers = [
+<% const numbers = [
   {
     text: 'text-4xl',
     value: '36'
@@ -396,7 +395,7 @@
             Rating:
           </h4>
           <div class="flex flex-row-reverse items-center gap-3 bg-gray/40 rounded-full w-max p-3">
-            <% for (var i = 5; i > 0; i--) { %>
+            <% for (let i = 5; i > 0; i--) { %>
             <input class="peer/rating" id="rating-<%= i %>" hidden type="radio" value="<%= i %>" name="rating">
             <label class="peer/star text-second text-2xl text-opacity-50 cursor-pointer transition hover:text-opacity-100 peer-hover/star:text-opacity-100 peer-checked/rating:text-opacity-100" for="rating-<%= i %>">
               <%= icon({id: 'star', className: 'icon', data: null}) %>
@@ -497,7 +496,7 @@
 
 <!-- Параллакс -->
 
-<% var parallax = [
+<% const parallax = [
   {
     bg: 'https://i.ibb.co/JpJVJxq/Background',
     img: 'https://i.ibb.co/Dw3q3tZ/cutout'
@@ -520,7 +519,7 @@
     <% parallax.forEach((item) => { %>
     <div class="w-72" data-parallax-hovered="600">
       <div class="pack pack-xxl bg-grey dark:bg-dark transition-transform ease-linear" data-parallax-item="10" data-media>
-        <%= loader({className: null, icon}) %>
+        <%= loader({className: null}) %>
         <%= picture({src: '/', format: '', className: 'image', data: `data-lazy data-src="${item.bg}.png"`}) %>
         <div class="absolute inset-5 border-8 border-solid border-second transition-transform ease-linear" data-parallax-item="100"></div>
         <%= picture({src: '/', format: '', className: 'image transition-transform ease-linear', data: `data-parallax-item="80" data-lazy data-src="${item.img}.png"`}) %>
