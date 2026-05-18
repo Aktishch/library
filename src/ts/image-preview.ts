@@ -1,4 +1,4 @@
-import { Container, createError, getValidate, handleFile, uploadFile } from '@utils'
+import { Container, getValidate, handleFile, logError, uploadFile } from '@utils'
 
 const dragEvents: string[] = ['dragenter', 'dragover', 'dragleave', 'drop']
 const dragClassName: string[] = ['bg-opacity-50']
@@ -58,7 +58,7 @@ export default (container: Container = document): void => {
               }
             }
           })
-          .catch((error: string): void => createError(error))
+          .catch((error: string): void => logError(error))
       }
 
       uploadFilesList()
@@ -81,7 +81,7 @@ export default (container: Container = document): void => {
             setDefaultState()
           }
         })
-        .catch((error: string): void => createError(error))
+        .catch((error: string): void => logError(error))
     }
 
     handleImage().finally((): void => setPreview(input.files as FileList))

@@ -1,4 +1,4 @@
-import { Container, createError, getValidate, handleFile, isEn, isSource, uploadFile } from '@utils'
+import { Container, getValidate, handleFile, isEn, isSource, logError, uploadFile } from '@utils'
 
 interface Message {
   default: string
@@ -65,7 +65,7 @@ export default (container: Container = document): void => {
                 text.textContent = message.limit
               }
             })
-            .catch((error: string): void => createError(error))
+            .catch((error: string): void => logError(error))
         }
       }
 

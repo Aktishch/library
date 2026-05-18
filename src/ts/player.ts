@@ -1,4 +1,4 @@
-import { createError, getTimeFormat, hideScrollbar, isEn, isSource, showScrollbar } from '@utils'
+import { getTimeFormat, hideScrollbar, isEn, isSource, logError, showScrollbar } from '@utils'
 
 interface Composition {
   artist: string
@@ -136,10 +136,10 @@ const initPlayer = ({ id, playlist }: Player): void => {
               loader.classList.add('hidden')
             } else {
               loader.classList.remove('hidden')
-              createError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
+              logError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
             }
           })
-          .catch((error: string): void => createError(error))
+          .catch((error: string): void => logError(error))
       }
 
       const setComposition = (index: number): void => {
@@ -154,7 +154,7 @@ const initPlayer = ({ id, playlist }: Player): void => {
             .finally((): void => {
               poster.src = composition.poster
             })
-            .catch((error: string): void => createError(error))
+            .catch((error: string): void => logError(error))
         }
       }
 
@@ -327,7 +327,7 @@ const initPlayer = ({ id, playlist }: Player): void => {
       }
 
       const setError = (): void => {
-        createError(isEn ? 'Failed to load audio' : 'Не удалось загрузить аудио')
+        logError(isEn ? 'Failed to load audio' : 'Не удалось загрузить аудио')
       }
 
       const setVolume = (): void => {
@@ -401,7 +401,7 @@ const initPlayer = ({ id, playlist }: Player): void => {
       audio.addEventListener('error', setError as EventListener)
       volume.addEventListener('click', setMuted as EventListener)
     })
-    .catch((error: string): void => createError(error))
+    .catch((error: string): void => logError(error))
 }
 
 export default (): void => {

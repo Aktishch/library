@@ -1,5 +1,5 @@
 import { dialog } from '@ts/fancybox'
-import { Container, createError, getValidate } from '@utils'
+import { Container, getValidate, logError } from '@utils'
 
 export const setStateSubmitBtn = (container: Container = document): void => {
   const forms = container.querySelectorAll('*[data-form]') as NodeListOf<HTMLFormElement>
@@ -65,7 +65,7 @@ const submitHandler = async (event: Event): Promise<void> => {
               form.reset()
               submitBtn.disabled = false
             })
-            .catch((error: string): void => createError(error))
+            .catch((error: string): void => logError(error))
 
           break
         }
@@ -83,7 +83,7 @@ const submitHandler = async (event: Event): Promise<void> => {
             .then((): void => {
               dialog.close()
             })
-            .catch((error: string): void => createError(error))
+            .catch((error: string): void => logError(error))
 
           break
         }

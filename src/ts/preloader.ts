@@ -1,4 +1,4 @@
-import { createError, hideScrollbar, isEn, showScrollbar } from '@utils'
+import { hideScrollbar, isEn, logError, showScrollbar } from '@utils'
 
 type Resolve = (value: HTMLDivElement | PromiseLike<HTMLDivElement>) => void
 type Reject = (reason?: string) => void
@@ -26,5 +26,5 @@ export default async (): Promise<void> => {
       showScrollbar()
       preloader.remove()
     })
-    .catch((error: string): void => createError(error))
+    .catch((error: string): void => logError(error))
 }

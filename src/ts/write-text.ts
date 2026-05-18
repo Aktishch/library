@@ -1,31 +1,43 @@
 import { Container } from '@utils'
 
 export default (container: Container = document): void => {
-  const writeText = (): void => {
-    const texts = container.querySelectorAll('*[data-text]') as NodeListOf<HTMLElement>
+  const texts = container.querySelectorAll('*[data-text]') as NodeListOf<HTMLElement>
 
-    if (texts.length !== 0) {
-      texts.forEach((text: HTMLElement): void => {
-        if (!text || !text.dataset.text) return
+  if (texts.length === 0) return
+
+  const options: IntersectionObserverInit = {
+    root: container === document ? null : container,
+    rootMargin: '0px',
+    threshold: 0.1
+  }
+
+  const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+    entries.forEach((entry: IntersectionObserverEntry): void => {
+      if (entry.isIntersecting) {
+        const text = entry.target as HTMLElement
+
+        if (!text.dataset.text) return
 
         const value: string = text.dataset.text
         const speed: number = Number(text.dataset.speed) || 100
-        const letters: string[] = [value].join('').split('')
+        const letters: string[] = value.split('')
 
-        if (window.screen.height >= text.getBoundingClientRect().top) {
-          const interval = setInterval((): void => {
-            if (!letters[0]) return clearInterval(interval)
+        observer.unobserve(text)
 
-            text.innerHTML += letters.shift()
-          }, speed)
+        const interval: NodeJS.Timeout = setInterval((): void => {
+          if (letters.length === 0) {
+            return clearInterval(interval)
+          }
 
-          text.removeAttribute('data-text')
-        }
-      })
-    } else {
-      container.removeEventListener('scroll', writeText as EventListener)
-    }
+          text.innerHTML += letters.shift()
+        }, speed)
+      }
+    })
   }
 
-  container.addEventListener('scroll', writeText as EventListener, { passive: true })
+  const observer: IntersectionObserver = new IntersectionObserver(callback, options)
+
+  texts.forEach((text: HTMLElement): void => {
+    if (text) observer.observe(text)
+  })
 }

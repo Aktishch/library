@@ -1,4 +1,4 @@
-import { createError, isEn, isSource } from '@utils'
+import { isEn, isSource, logError } from '@utils'
 import ymaps from 'ymaps'
 
 type ymaps = typeof ymaps
@@ -78,6 +78,6 @@ export default (): void => {
           alert(hintContent)
         })
       })
-      .catch((error: string) => createError(error))
+      .catch((error: string) => logError(error))
   }
 }

@@ -1,47 +1,42 @@
-import { Coordinates, getScrollPosition } from '@utils'
+import { Container } from '@utils'
 
-const repeat: boolean = true
+export default (container: Container = document): void => {
+  const items = container.querySelectorAll('*[data-anim]') as NodeListOf<HTMLElement>
 
-const getOffset = (item: HTMLElement): Coordinates => {
-  return {
-    top: item.getBoundingClientRect().top + getScrollPosition().top,
-    left: item.getBoundingClientRect().left + getScrollPosition().left
-  } as Coordinates
-}
+  if (items.length === 0) return
 
-const initAnimation = (): void => {
-  const items = document.querySelectorAll('*[data-anim]') as NodeListOf<HTMLElement>
+  const repeat: boolean = true
+  const options: IntersectionObserverInit = {
+    root: container === document ? null : container,
+    rootMargin: '0px 0px -20% 0px',
+    threshold: 0
+  }
 
-  const allShow: boolean = ([...items] as HTMLElement[]).every(
-    (item: HTMLElement): boolean => item.dataset.anim === 'show'
-  )
+  const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+    entries.forEach((entry: IntersectionObserverEntry): void => {
+      const item = entry.target as HTMLElement
 
-  if (repeat || !allShow) {
-    items.forEach((item: HTMLElement): void => {
-      if (!item) return
-
-      const height: number = item.offsetHeight
-      const offsetTop: number = getOffset(item).top
-      const innerHeight: number = window.innerHeight
-      const screenPosition: number = 3
-      let point: number = innerHeight - height / screenPosition
-
-      if (point > innerHeight) point = innerHeight - innerHeight / screenPosition
-
-      const state: boolean = getScrollPosition().top > offsetTop - point && getScrollPosition().top < offsetTop + height
-
-      if (state) {
+      if (entry.isIntersecting) {
         item.dataset.anim = 'show'
+
+        if (!repeat) observer.unobserve(item)
       } else {
         if (repeat) item.dataset.anim = ''
       }
     })
-  } else {
-    document.removeEventListener('scroll', initAnimation as EventListener)
-  }
-}
 
-export default (): void => {
-  initAnimation()
-  document.addEventListener('scroll', initAnimation as EventListener, { passive: true })
+    if (!repeat) {
+      const allShow: boolean = ([...items] as HTMLElement[]).every(
+        (item: HTMLElement): boolean => item.dataset.anim === 'show'
+      )
+
+      if (allShow) observer.disconnect()
+    }
+  }
+
+  const observer: IntersectionObserver = new IntersectionObserver(callback, options)
+
+  items.forEach((item: HTMLElement): void => {
+    if (item) observer.observe(item)
+  })
 }
