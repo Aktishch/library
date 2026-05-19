@@ -5,21 +5,23 @@ interface FileHandler {
   file: File
 }
 
-const className: string[] = ['invisible', 'opacity-0']
-const types: string[] = ['image/jpeg', 'image/png']
-const size: number = 2 * Math.pow(1024, 2)
+const ERROR_VISIBLE_CLASSNAME: string[] = ['invisible', 'opacity-0']
+const ALLOWED_TYPES: string[] = ['image/jpeg', 'image/png']
+const MAX_FILE_SIZE: number = 2 * Math.pow(1024, 2)
 
 export const handleFile = ({ error, file }: FileHandler): boolean => {
-  if (!types.includes(file.type)) {
-    error.classList.remove(...className)
+  if (!ALLOWED_TYPES.includes(file.type)) {
+    error.classList.remove(...ERROR_VISIBLE_CLASSNAME)
     error.innerText = errors.file.type
     return false
-  } else if (file.size > size) {
-    error.classList.remove(...className)
+  }
+
+  if (file.size > MAX_FILE_SIZE) {
+    error.classList.remove(...ERROR_VISIBLE_CLASSNAME)
     error.innerText = errors.file.size
     return false
-  } else {
-    error.classList.add(...className)
-    return true
   }
+
+  error.classList.add(...ERROR_VISIBLE_CLASSNAME)
+  return true
 }

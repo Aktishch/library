@@ -1,15 +1,16 @@
-import { Container, setCookies } from '@utils'
+import { checkCookie, Container, setCookies } from '@utils'
 
 export default (container: Container = document): void => {
   const cookies = container.querySelectorAll('*[data-cookie]') as NodeListOf<HTMLElement>
 
   cookies.forEach((cookie: HTMLElement): void => {
-    if (!cookie) return
+    if (!cookie || !cookie.id) return
 
     const id: string = cookie.id
-    const value: string = `cookie_${id}_active`
+    const name: string = `cookie_${id}`
+    const hasCookie: boolean = checkCookie(`${name}=`)
 
-    if (document.cookie.indexOf(value) !== -1) {
+    if (hasCookie) {
       cookie.remove()
     } else {
       const button = cookie.querySelector('*[data-cookie-button]') as HTMLButtonElement
@@ -17,7 +18,7 @@ export default (container: Container = document): void => {
       const path: string = cookie.dataset.cookie || '/'
 
       button.addEventListener('click', ((): void => {
-        setCookies({ value, path, expires })
+        setCookies({ name, value: 'true', path, expires })
         cookie.remove()
       }) as EventListener)
     }

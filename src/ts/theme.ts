@@ -1,33 +1,41 @@
-import { html, setCookies } from '@utils'
+import { checkCookie, html, setCookies } from '@utils'
 
 export default (): void => {
   const toggles = document.querySelectorAll('*[data-theme-toggle]') as NodeListOf<HTMLInputElement>
-  const value: string = 'cookie_theme_active'
+  const name: string = 'current_theme'
+  const hasCookie: boolean = checkCookie(`${name}=dark`)
 
-  const checkToggles = (check: boolean): void => {
+  const checkToggles = (isChecked: boolean): void => {
     toggles.forEach((toggle: HTMLInputElement): void => {
-      if (toggle) toggle.checked = check
+      if (!toggle) return
+
+      toggle.checked = isChecked
     })
   }
 
   const setTheme = (): void => {
-    const status: boolean = html.dataset.theme === 'dark'
+    const isDark: boolean = html.dataset.theme === 'dark'
+    const value: string = isDark ? '' : 'dark'
 
-    html.dataset.theme = status ? '' : 'dark'
-    checkToggles(!status)
-    setCookies({ value, path: '/', expires: !status ? 31 : -1 })
+    html.dataset.theme = value
+    checkToggles(!isDark)
+    setCookies({ name, value, path: '/', expires: !isDark ? 31 : -1 })
   }
 
-  if (document.cookie.indexOf(value) !== -1) {
+  if (hasCookie) {
     html.dataset.theme = 'dark'
-    checkToggles(html.dataset.theme === 'dark')
+    checkToggles(hasCookie)
   }
 
   toggles.forEach((toggle: HTMLInputElement): void => {
+    if (!toggle) return
+
     toggle.addEventListener('change', setTheme as EventListener)
   })
 
   document.addEventListener('keyup', ((event: KeyboardEvent): void => {
-    if (event.altKey && event.code === 'Digit5') setTheme()
+    if (event.altKey && event.code === 'Digit5') {
+      setTheme()
+    }
   }) as EventListener)
 }

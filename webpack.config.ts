@@ -60,6 +60,7 @@ const generatePlugins = ({ templateDir, script, src, isProd }: HtmlPlugin): Html
         filename: `${src}${name}.html`,
         template: path.resolve(fullPath, templateFile),
         minify: isProd ? { collapseWhitespace: false } : false,
+        cache: isProd,
         templateParameters: (
           compilation: Compilation,
           assets: HtmlWebpackPlugin.TemplateParameter['htmlWebpackPlugin']['files'],
@@ -71,8 +72,12 @@ const generatePlugins = ({ templateDir, script, src, isProd }: HtmlPlugin): Html
 
             if (!fileSystem) return
 
+            const absolutePath: string = path.resolve(dirName, 'src', targetPath)
+
+            compilation.fileDependencies.add(absolutePath)
+
             const readFileSync: typeof fileSystem.readFileSync = fileSystem.readFileSync
-            const source: string = readFileSync ? readFileSync(path.resolve(dirName, 'src', targetPath), 'utf8') : ''
+            const source: string = readFileSync ? readFileSync(absolutePath, 'utf8') : ''
 
             return lodash.template(source)
           }
@@ -97,9 +102,7 @@ export default (env: WebpackEnv, argv: WebpackArgv): Configuration => {
     mode: isProd ? 'production' : 'development',
     devtool: isProd ? 'source-map' : 'eval-cheap-module-source-map',
     entry: path.resolve(dirName, 'src/webpack.ts'),
-    cache: {
-      type: 'filesystem'
-    },
+    cache: isProd ? { type: 'filesystem' } : true,
     resolve: {
       extensions: ['.js', '.ts'],
       alias: {
@@ -191,7 +194,7 @@ export default (env: WebpackEnv, argv: WebpackArgv): Configuration => {
       compress: true,
       hot: true,
       historyApiFallback: true,
-      watchFiles: ['src/**/*.html'],
+      watchFiles: ['src/**/*.html', 'src/includes/**/*.html', 'src/components/**/*.html'],
       static: {
         directory: path.join(dirName, 'dist')
       }

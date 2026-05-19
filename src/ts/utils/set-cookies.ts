@@ -1,18 +1,22 @@
 import { html } from '@utils/html'
 
-interface Cookies {
+interface CookieOptions {
+  name: string
   value: string
   path: string
   expires: number
 }
 
-export const setCookies = ({ value, path, expires }: Cookies): void => {
+export const setCookies = ({ name, value, path, expires }: CookieOptions): void => {
   const domain: string = html.dataset.domain || window.location.hostname
-  const date: string = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    new Date().getDate() + expires
-  ).toUTCString()
+  const cookieName: string = encodeURIComponent(name)
+  const cookieValue: string = encodeURIComponent(value)
+  const date: Date = new Date()
 
-  document.cookie = `${value}=1; path=${path}; expires=${date}; domain=.${domain}`
+  date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1000)
+  document.cookie = `${cookieName}=${cookieValue}; path=${path}; expires=${date.toUTCString()}; domain=.${domain}; SameSite=Lax`
+}
+
+export const checkCookie = (value: string): boolean => {
+  return new RegExp(`(?:^|; )${value}`).test(document.cookie)
 }

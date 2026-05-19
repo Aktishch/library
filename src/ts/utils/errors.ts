@@ -7,7 +7,7 @@ interface Errors {
   login: string
   password: string
   select: string
-  text: string
+  description: string
   file: {
     default: string
     type: string
@@ -22,7 +22,7 @@ export const errors: Errors = {
   login: isEn ? 'Invalid username' : 'Неверный логин',
   password: isEn ? 'Invalid password' : 'Неверный пароль',
   select: isEn ? 'Choose an option' : 'Выберите вариант',
-  text: isEn ? 'Enter at least 10 characters' : 'Введите не менее 10 символов',
+  description: isEn ? 'Enter at least 10 characters' : 'Введите не менее 10 символов',
   file: {
     default: isEn ? 'Upload the file' : 'Загрузите файл',
     type: isEn ? 'jpg or png only' : 'Только jpg или png',

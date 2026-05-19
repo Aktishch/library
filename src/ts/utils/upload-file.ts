@@ -13,9 +13,7 @@ export const uploadFile = (file: File): Promise<UploadedFile> => {
     const reader: FileReader = new FileReader()
     const setReject = (): void => reject(isEn ? 'File upload error' : 'Ошибка при загрузке файла')
 
-    reader.readAsDataURL(file)
-
-    reader.addEventListener('loadend', ((): void => {
+    reader.addEventListener('load', ((): void => {
       if (reader.result) {
         resolve({ file, url: reader.result.toString() })
       } else {
@@ -24,5 +22,7 @@ export const uploadFile = (file: File): Promise<UploadedFile> => {
     }) as EventListener)
 
     reader.addEventListener('error', setReject as EventListener)
+
+    reader.readAsDataURL(file)
   })
 }

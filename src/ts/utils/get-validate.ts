@@ -2,12 +2,13 @@ import { errors } from '@utils/errors'
 
 type Label = HTMLLabelElement | HTMLDivElement
 
-const inputClassName: string[] = ['input-error']
-const errorClassName: string[] = ['invisible', 'opacity-0']
+const INPUT_ERROR_CLASSNAME: string[] = ['input-error']
+const ERROR_VISIBLE_CLASSNAME: string[] = ['invisible', 'opacity-0']
 
 export const getValidate = (form: HTMLFormElement): boolean => {
   const labels = form.querySelectorAll('*[data-label]') as NodeListOf<Label>
-  let validate: boolean = true
+  let isValid: boolean = true
+  let firstInvalidInput: HTMLInputElement | null = null
 
   labels.forEach((label: Label): void => {
     if (!label) return
@@ -17,36 +18,54 @@ export const getValidate = (form: HTMLFormElement): boolean => {
 
     if (!input || !error) return
 
-    const showError = (): void => {
-      input.focus()
-      input.classList.add(...inputClassName)
-      error.classList.remove(...errorClassName)
-      validate = false
+    let invalidInput: boolean = false
+
+    const showError = (message: string = errors.default): void => {
+      invalidInput = true
+      input.classList.add(...INPUT_ERROR_CLASSNAME)
+      error.classList.remove(...ERROR_VISIBLE_CLASSNAME)
+      error.innerText = message
+      isValid = false
+
+      if (!firstInvalidInput) {
+        firstInvalidInput = input
+      }
     }
 
     const hideError = (): void => {
-      input.classList.remove(...inputClassName)
-      error.classList.add(...errorClassName)
+      input.classList.remove(...INPUT_ERROR_CLASSNAME)
+      error.classList.add(...ERROR_VISIBLE_CLASSNAME)
     }
 
     const setMaxLengthTel = (value: number): void => {
       if (input.value.length > 0 && input.value.length < value) {
-        error.innerText = errors.tel
-        showError()
+        showError(errors.tel)
       }
     }
 
-    error.innerText = errors.default
+    const handleInput = (): void => {
+      if (input.value.length > 0) {
+        hideError()
+        input.removeEventListener('input', handleInput as EventListener)
+      }
+    }
+
+    input.removeEventListener('input', handleInput as EventListener)
 
     if (input.value.length === 0) {
       showError()
-    } else {
-      hideError()
+      input.addEventListener('input', handleInput as EventListener)
+      return
     }
+
+    hideError()
 
     switch (input.dataset.input) {
       case 'text': {
-        if (input.value.length === 1) showError()
+        if (input.value.length === 1) {
+          showError()
+        }
+
         break
       }
 
@@ -67,27 +86,30 @@ export const getValidate = (form: HTMLFormElement): boolean => {
       }
 
       case 'email': {
-        if (!/^\s*([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,8})+\s*$/.test(input.value)) {
-          error.innerText = errors.email
-          showError()
+        const regExp: RegExp = /^\s*([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,8})+\s*$/
+
+        if (!regExp.test(input.value)) {
+          showError(errors.email)
         }
 
         break
       }
 
       case 'login': {
-        if (!/^[a-zA-Z0-9]+$/.test(input.value)) {
-          error.innerText = errors.login
-          showError()
+        const regExp: RegExp = /^[a-zA-Z0-9]+$/
+
+        if (!regExp.test(input.value)) {
+          showError(errors.login)
         }
 
         break
       }
 
       case 'password': {
-        if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(input.value)) {
-          error.innerText = errors.password
-          showError()
+        const regExp: RegExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+
+        if (!regExp.test(input.value)) {
+          showError(errors.password)
         }
 
         break
@@ -95,17 +117,15 @@ export const getValidate = (form: HTMLFormElement): boolean => {
 
       case 'select': {
         if (input.value === 'empty') {
-          error.innerText = errors.select
-          showError()
+          showError(errors.select)
         }
 
         break
       }
 
       case 'description': {
-        if (input.value.length > 0 && input.value.length < 10) {
-          error.innerText = errors.text
-          showError()
+        if (input.value.length < 10) {
+          showError(errors.description)
         }
 
         break
@@ -113,22 +133,21 @@ export const getValidate = (form: HTMLFormElement): boolean => {
 
       case 'file': {
         if ((input.files as FileList).length === 0) {
-          error.innerText = errors.file.default
-          showError()
+          showError(errors.file.default)
         }
 
         break
       }
     }
 
-    input.addEventListener(
-      'input',
-      ((): void => {
-        if (input.value.length > 0) hideError()
-      }) as EventListener,
-      { once: true }
-    )
+    if (invalidInput) {
+      input.addEventListener('input', handleInput as EventListener)
+    }
   })
 
-  return validate
+  if (firstInvalidInput) {
+    ;(firstInvalidInput as HTMLInputElement).focus()
+  }
+
+  return isValid
 }
