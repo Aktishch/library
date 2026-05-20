@@ -6,16 +6,20 @@ export default (): void => {
   if (!title) return
 
   const text: string = title.textContent
-  let timer: NodeJS.Timeout
+  let timeOut: NodeJS.Timeout
 
   window.addEventListener('blur', ((): void => {
-    timer = setTimeout((): void => {
+    if (timeOut) {
+      clearTimeout(timeOut)
+    }
+
+    timeOut = setTimeout((): void => {
       title.innerText = isEn ? 'You have left the page' : 'Вы покинули страницу'
     }, 5000)
   }) as EventListener)
 
   window.addEventListener('focus', ((): void => {
-    clearTimeout(timer)
+    clearTimeout(timeOut)
     title.innerText = text
   }) as EventListener)
 }

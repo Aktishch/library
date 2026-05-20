@@ -30,12 +30,13 @@ interface Dates {
   date: Date | Date[]
 }
 
-const excludeDates: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +new Date(2026, 5, 10)]
+const DATA_DATEPICKER: string = 'data-datepicker'
+const EXCLUDE_DATES: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +new Date(2026, 5, 10)]
 
 window.AirDatepicker = AirDatepicker
 
 export const initCalendar = (container: Container = document): void => {
-  const calendar = container.querySelector('*[data-calendar]') as HTMLDivElement
+  const calendar = container.querySelector(`*[${DATA_DATEPICKER}-calendar]`) as HTMLDivElement
 
   if (!calendar) return
 
@@ -44,9 +45,11 @@ export const initCalendar = (container: Container = document): void => {
 
   const renderCalendarCell = ({ date, cellType }: Calendar): CalendarCell | undefined => {
     if (cellType === 'day') {
-      if (timeOut) clearTimeout(timeOut)
+      if (timeOut) {
+        clearTimeout(timeOut)
+      }
 
-      const condition: boolean = excludeDates.includes(+date)
+      const condition: boolean = EXCLUDE_DATES.includes(+date)
       const classes: string = condition
         ? 'btn btn-primary btn-fill text-sm [&[data-active]]:opacity-50 [&[data-active]]:pointer-events-none'
         : 'pointer-events-none'
@@ -56,8 +59,13 @@ export const initCalendar = (container: Container = document): void => {
         'data-waved': 'light'
       }
 
-      if (condition) dates.push(+date)
-      if (dates.length !== 0 && dates[0] === +date) attrs['data-active'] = ''
+      if (condition) {
+        dates.push(+date)
+      }
+
+      if (dates.length !== 0 && dates[0] === +date) {
+        attrs['data-active'] = ''
+      }
 
       timeOut = setTimeout((): void => {
         dates.length = 0
@@ -78,15 +86,15 @@ export const initCalendar = (container: Container = document): void => {
 }
 
 export default (container: Container = document): void => {
-  const datepickers = container.querySelectorAll('*[data-datepicker]') as NodeListOf<HTMLFormElement>
+  const datepickers = container.querySelectorAll(`*[${DATA_DATEPICKER}]`) as NodeListOf<HTMLFormElement>
 
   datepickers.forEach((datepicker: HTMLFormElement): void => {
     if (!datepicker) return
 
-    const inputMin = datepicker.querySelector('*[data-datepicker-min]') as HTMLInputElement
-    const inputMax = datepicker.querySelector('*[data-datepicker-max]') as HTMLInputElement
+    const inputMin = datepicker.querySelector(`*[${DATA_DATEPICKER}-min]`) as HTMLInputElement
+    const inputMax = datepicker.querySelector(`*[${DATA_DATEPICKER}-max]`) as HTMLInputElement
 
-    const min = new window.AirDatepicker(inputMin, {
+    const min: AirDatepicker<HTMLInputElement> = new window.AirDatepicker(inputMin, {
       onSelect({ date }: Dates) {
         max.update({
           minDate: String(date)
@@ -97,9 +105,9 @@ export default (container: Container = document): void => {
       autoClose: true,
       minDate: new Date(),
       position: (inputMin.dataset.position as AirDatepickerPosition) || 'bottom left'
-    }) as AirDatepicker<HTMLInputElement>
+    })
 
-    const max = new window.AirDatepicker(inputMax, {
+    const max: AirDatepicker<HTMLInputElement> = new window.AirDatepicker(inputMax, {
       onSelect({ date }: Dates) {
         min.update({
           maxDate: String(date)
@@ -110,6 +118,6 @@ export default (container: Container = document): void => {
       autoClose: true,
       minDate: new Date(),
       position: (inputMax.dataset.position as AirDatepickerPosition) || 'bottom left'
-    }) as AirDatepicker<HTMLInputElement>
+    })
   })
 }

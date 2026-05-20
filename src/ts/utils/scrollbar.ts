@@ -1,14 +1,14 @@
 import { getTouchDevice } from '@utils/get-touch-device'
 import { html } from '@utils/html'
 
-const SCROLLBAR_HIDDEN_CLASSNAME: string[] = ['overflow-hidden']
+const SCROLLBAR_HIDDEN_CLASSNAME: string = 'overflow-hidden'
 
 export const showScrollbar = (): void => {
   if (!getTouchDevice()) {
     html.style.removeProperty('margin-right')
   }
 
-  html.classList.remove(...SCROLLBAR_HIDDEN_CLASSNAME)
+  html.classList.remove(SCROLLBAR_HIDDEN_CLASSNAME)
 }
 
 export const hideScrollbar = (): void => {
@@ -20,5 +20,5 @@ export const hideScrollbar = (): void => {
     }
   }
 
-  html.classList.add(...SCROLLBAR_HIDDEN_CLASSNAME)
+  html.classList.add(SCROLLBAR_HIDDEN_CLASSNAME)
 }

@@ -1,69 +1,71 @@
 import { Container, hideScrollbar, showScrollbar } from '@utils'
 
+const DATA_COMPARE: string = 'data-compare'
+
 export default (container: Container = document): void => {
-  const compares = container.querySelectorAll('*[data-compare]') as NodeListOf<HTMLDivElement>
+  const compares = container.querySelectorAll(`*[${DATA_COMPARE}]`) as NodeListOf<HTMLDivElement>
+
+  if (compares.length === 0) return
+
+  const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+    entries.forEach((entry: ResizeObserverEntry): void => {
+      const compare = entry.target as HTMLDivElement
+      const image = compare.querySelector(`*[${DATA_COMPARE}-image]`) as HTMLImageElement
+
+      if (image) {
+        image.style.width = `${entry.contentRect.width}px`
+      }
+    })
+  })
 
   compares.forEach((compare: HTMLDivElement): void => {
     if (!compare) return
 
-    const before = compare.querySelector('*[data-compare-before]') as HTMLDivElement
-    const image = compare.querySelector('*[data-compare-image]') as HTMLImageElement
-    const change = compare.querySelector('*[data-compare-change]') as HTMLDivElement
-    let active: boolean = false
-    let value: number
-    let position: number
+    const before = compare.querySelector(`*[${DATA_COMPARE}-before]`) as HTMLDivElement
+    const change = compare.querySelector(`*[${DATA_COMPARE}-change]`) as HTMLDivElement
+    let isActive: boolean = false
 
-    const setWidthImage = (): void => {
-      image.style.width = `${compare.offsetWidth}px`
-    }
+    const updatePosition = (pageX: number): void => {
+      const rect: DOMRect = compare.getBoundingClientRect()
+      const position: number = pageX - rect.left
+      const value: number = Math.max(0, Math.min(position, rect.width))
 
-    const onStart = (event: Event): void => {
-      if ((event.target as HTMLElement).closest('[data-compare-change]')) {
-        hideScrollbar()
-        active = true
-      }
-    }
-
-    const onEnd = (): void => {
-      showScrollbar()
-      active = false
-    }
-
-    const onMove = (event: Event): void => {
-      event.stopPropagation()
-
-      if (!active) return
-
-      switch (event.type) {
-        case 'mousemove': {
-          position = (event as MouseEvent).pageX
-          break
-        }
-
-        case 'touchmove': {
-          for (let i: number = 0; i < (event as TouchEvent).changedTouches.length; i++) {
-            position = (event as TouchEvent).changedTouches[i].pageX
-          }
-
-          break
-        }
-      }
-
-      position -= compare.getBoundingClientRect().left
-      value = Math.max(0, Math.min(position, compare.offsetWidth))
       before.style.width = `${value}px`
       change.style.left = `${value}px`
     }
 
-    setWidthImage()
-    window.addEventListener('resize', setWidthImage as EventListener)
+    const onStart = (event: Event): void => {
+      if ((event.target as HTMLElement).closest(`[${DATA_COMPARE}-change]`)) {
+        hideScrollbar()
+        isActive = true
+      }
+    }
+
+    const onMove = (event: MouseEvent | TouchEvent): void => {
+      if (!isActive) return
+
+      if (event.cancelable) {
+        event.preventDefault()
+      }
+
+      updatePosition('touches' in event ? event.touches[0].pageX : event.pageX)
+    }
+
+    const onEnd = (): void => {
+      if (!isActive) return
+
+      showScrollbar()
+      isActive = false
+    }
+
+    resizeObserver.observe(compare)
+
     compare.addEventListener('mousedown', onStart as EventListener)
-    compare.addEventListener('mouseup', onEnd as EventListener)
-    compare.addEventListener('mouseleave', onEnd as EventListener)
-    compare.addEventListener('mousemove', onMove as EventListener)
-    compare.addEventListener('touchstart', onStart as EventListener, { passive: true })
-    compare.addEventListener('touchend', onEnd as EventListener, { passive: true })
-    compare.addEventListener('touchcancel', onEnd as EventListener, { passive: true })
-    compare.addEventListener('touchmove', onMove as EventListener, { passive: true })
+    compare.addEventListener('touchstart', onStart as EventListener, { passive: false })
+    window.addEventListener('mousemove', onMove as EventListener)
+    window.addEventListener('touchmove', onMove as EventListener, { passive: false })
+    window.addEventListener('mouseup', onEnd as EventListener)
+    window.addEventListener('touchend', onEnd as EventListener)
+    window.addEventListener('touchcancel', onEnd as EventListener)
   })
 }

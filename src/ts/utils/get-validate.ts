@@ -2,8 +2,8 @@ import { errors } from '@utils/errors'
 
 type Label = HTMLLabelElement | HTMLDivElement
 
-const INPUT_ERROR_CLASSNAME: string[] = ['input-error']
-const ERROR_VISIBLE_CLASSNAME: string[] = ['invisible', 'opacity-0']
+const INPUT_ERROR_CLASSNAME: string = 'input-error'
+const ERROR_VISIBLE_CLASSNAMES: string[] = ['invisible', 'opacity-0']
 
 export const getValidate = (form: HTMLFormElement): boolean => {
   const labels = form.querySelectorAll('*[data-label]') as NodeListOf<Label>
@@ -22,8 +22,8 @@ export const getValidate = (form: HTMLFormElement): boolean => {
 
     const showError = (message: string = errors.default): void => {
       invalidInput = true
-      input.classList.add(...INPUT_ERROR_CLASSNAME)
-      error.classList.remove(...ERROR_VISIBLE_CLASSNAME)
+      input.classList.add(INPUT_ERROR_CLASSNAME)
+      error.classList.remove(...ERROR_VISIBLE_CLASSNAMES)
       error.innerText = message
       isValid = false
 
@@ -33,8 +33,8 @@ export const getValidate = (form: HTMLFormElement): boolean => {
     }
 
     const hideError = (): void => {
-      input.classList.remove(...INPUT_ERROR_CLASSNAME)
-      error.classList.add(...ERROR_VISIBLE_CLASSNAME)
+      input.classList.remove(INPUT_ERROR_CLASSNAME)
+      error.classList.add(...ERROR_VISIBLE_CLASSNAMES)
     }
 
     const setMaxLengthTel = (value: number): void => {

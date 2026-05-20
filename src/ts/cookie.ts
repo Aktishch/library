@@ -1,7 +1,9 @@
 import { checkCookie, Container, setCookies } from '@utils'
 
+const DATA_COOKIE: string = 'data-cookie'
+
 export default (container: Container = document): void => {
-  const cookies = container.querySelectorAll('*[data-cookie]') as NodeListOf<HTMLElement>
+  const cookies = container.querySelectorAll(`*[${DATA_COOKIE}]`) as NodeListOf<HTMLElement>
 
   cookies.forEach((cookie: HTMLElement): void => {
     if (!cookie || !cookie.id) return
@@ -13,7 +15,7 @@ export default (container: Container = document): void => {
     if (hasCookie) {
       cookie.remove()
     } else {
-      const button = cookie.querySelector('*[data-cookie-button]') as HTMLButtonElement
+      const button = cookie.querySelector(`*[${DATA_COOKIE}-button]`) as HTMLButtonElement
       const expires: number = Number(cookie.dataset.expires) || 7
       const path: string = cookie.dataset.cookie || '/'
 
