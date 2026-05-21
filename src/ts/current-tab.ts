@@ -8,10 +8,14 @@ export default (): void => {
   const text: string = title.textContent
   let timeOut: NodeJS.Timeout
 
-  window.addEventListener('blur', ((): void => {
+  const clearTimer = (): void => {
     if (timeOut) {
       clearTimeout(timeOut)
     }
+  }
+
+  window.addEventListener('blur', ((): void => {
+    clearTimer()
 
     timeOut = setTimeout((): void => {
       title.innerText = isEn ? 'You have left the page' : 'Вы покинули страницу'
@@ -19,7 +23,7 @@ export default (): void => {
   }) as EventListener)
 
   window.addEventListener('focus', ((): void => {
-    clearTimeout(timeOut)
+    clearTimer()
     title.innerText = text
   }) as EventListener)
 }

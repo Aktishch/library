@@ -18,13 +18,20 @@ declare global {
   }
 }
 
+type FancyboxProos = [unknown, unknown, CarouselSlide]
+
+const DATA_FANCYBOX: string = 'data-fancybox'
+
 Fancybox.getDefaults().placeFocusBack = false
 
 if (!getTouchDevice()) {
-  Fancybox.getDefaults().on.ready = (fancyboxRef): void => {
-    const container = fancyboxRef.getContainer() as HTMLElement
+  Fancybox.getDefaults().on = {
+    ...Fancybox.getDefaults().on,
+    ready: (fancyboxRef): void => {
+      const container = fancyboxRef.getContainer() as HTMLElement
 
-    container.setAttribute('data-lenis-prevent', '')
+      container.setAttribute('data-lenis-prevent', '')
+    }
   }
 }
 
@@ -73,39 +80,39 @@ export const dialog: Dialog = {
 window.dialog = dialog
 
 export default (): void => {
-  window.Fancybox.bind('[data-fancybox]')
+  window.Fancybox.bind(`[${DATA_FANCYBOX}]`)
 
-  window.Fancybox.bind('[data-fancybox-dialog]', {
+  window.Fancybox.bind(`[${DATA_FANCYBOX}-dialog]`, {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (): void => updateLoad()
     }
   })
 
-  window.Fancybox.bind('[data-fancybox-form]', {
+  window.Fancybox.bind(`[${DATA_FANCYBOX}-form]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
+      'Carousel.contentReady': (...[, , slide]: FancyboxProos): void => {
         updateLoad()
         setStateSubmitBtn(slide.el)
       }
     }
   })
 
-  window.Fancybox.bind('[data-fancybox-avatar]', {
+  window.Fancybox.bind(`[${DATA_FANCYBOX}-avatar]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
+      'Carousel.contentReady': (...[, , slide]: FancyboxProos): void => {
         updateLoad()
         imagePreview(slide.el)
       }
     }
   })
 
-  window.Fancybox.bind('[data-fancybox-calendar]', {
+  window.Fancybox.bind(`[${DATA_FANCYBOX}-calendar]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (_, __, slide: CarouselSlide): void => {
+      'Carousel.contentReady': (...[, , slide]: FancyboxProos): void => {
         updateLoad()
         initCalendar(slide.el)
       }

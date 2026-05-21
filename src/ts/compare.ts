@@ -60,12 +60,13 @@ export default (container: Container = document): void => {
 
     resizeObserver.observe(compare)
 
-    compare.addEventListener('mousedown', onStart as EventListener)
-    compare.addEventListener('touchstart', onStart as EventListener, { passive: false })
-    window.addEventListener('mousemove', onMove as EventListener)
-    window.addEventListener('touchmove', onMove as EventListener, { passive: false })
-    window.addEventListener('mouseup', onEnd as EventListener)
-    window.addEventListener('touchend', onEnd as EventListener)
-    window.addEventListener('touchcancel', onEnd as EventListener)
+    container.addEventListener('mousedown', onStart as EventListener)
+    container.addEventListener('touchstart', onStart as EventListener, { passive: false })
+    container.addEventListener('mousemove', onMove as EventListener)
+    container.addEventListener('touchmove', onMove as EventListener, { passive: false })
+    container.addEventListener('mouseup', onEnd as EventListener)
+    container.addEventListener('mouseleave', onEnd as EventListener)
+    container.addEventListener('touchend', onEnd as EventListener)
+    container.addEventListener('touchcancel', onEnd as EventListener)
   })
 }

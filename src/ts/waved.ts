@@ -6,9 +6,9 @@ interface CirclePoisition {
 }
 
 const setWaved = (event: Event): void => {
-  const item = event.target as HTMLElement
+  const item = (event.target as HTMLElement).closest('[data-waved]') as HTMLElement
 
-  if (item.closest('[data-waved]')) {
+  if (item) {
     const waved = document.createElement('div') as HTMLDivElement
     const circle = document.createElement('div') as HTMLDivElement
 
@@ -24,7 +24,14 @@ const setWaved = (event: Event): void => {
       waved.classList.add('waved')
       waved.appendChild(circle)
       item.appendChild(waved)
-      setTimeout((): void => waved.remove(), 1000)
+
+      circle.addEventListener(
+        'animationend',
+        ((): void => {
+          waved.remove()
+        }) as EventListener,
+        { once: true }
+      )
     }
 
     switch (event.type) {

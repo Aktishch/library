@@ -6,20 +6,21 @@ interface Message {
   limit: string
 }
 
-const className: string[] = ['pointer-events-none', 'opacity-50']
+const DATA_FILELIST: string = 'data-filelist'
+const LABEL_DISABLED_CLASSNAMES: string[] = ['pointer-events-none', 'opacity-50']
 
 export default (container: Container = document): void => {
-  const filelists = container.querySelectorAll('*[data-filelist]') as NodeListOf<HTMLDivElement>
+  const filelists = container.querySelectorAll(`*[${DATA_FILELIST}]`) as NodeListOf<HTMLDivElement>
 
   filelists.forEach((filelist: HTMLDivElement): void => {
     if (!filelist) return
 
     const form = filelist.closest('[data-form]') as HTMLFormElement
-    const label = filelist.querySelector('*[data-filelist-label]') as HTMLLabelElement
-    const input = label.querySelector('*[data-filelist-input]') as HTMLInputElement
+    const label = filelist.querySelector(`*[${DATA_FILELIST}-label]`) as HTMLLabelElement
+    const input = label.querySelector(`*[${DATA_FILELIST}-input]`) as HTMLInputElement
     const error = filelist.querySelector('*[data-error]') as HTMLSpanElement
-    const text = label.querySelector('*[data-filelist-text]') as HTMLSpanElement
-    const items = filelist.querySelector('*[data-filelist-items]') as HTMLUListElement
+    const text = label.querySelector(`*[${DATA_FILELIST}-text]`) as HTMLSpanElement
+    const items = filelist.querySelector(`*[${DATA_FILELIST}-items]`) as HTMLUListElement
     const maxLength: number = Number(items.dataset.filelistItems) || 3
     const message: Message = {
       default: isEn ? 'Upload files' : 'Загрузить файлы',
@@ -34,12 +35,12 @@ export default (container: Container = document): void => {
 
     text.textContent = message.default
 
-    input.addEventListener('change', ((): void => {
+    input.addEventListener('change', (async (): Promise<void> => {
       const files = input.files as FileList
 
       if (files.length !== 0) {
         for (let i: number = 0; i < files.length; i++) {
-          uploadFile(files[i] as File)
+          await uploadFile(files[i] as File)
             .then(({ file }): void => {
               if (!handleFile({ error, file })) return
 
@@ -47,21 +48,22 @@ export default (container: Container = document): void => {
                 const item = document.createElement('li') as HTMLLIElement
 
                 item.classList.add('flex', 'items-center', 'justify-between', 'gap-5')
-                item.setAttribute('data-filelist-item', '')
+                item.setAttribute(`${DATA_FILELIST}-item`, '')
                 item.innerHTML = `
-                <span class="truncate">${file.name}</span>
-                <button class="btn btn-gray text-sm p-1" data-filelist-remove="${file.name}" data-waved="dark" type="button">
-                  <svg class="icon">
-                    <use href="${isSource}/img/icons.svg#close"></use>
-                  </svg>
-                </button>`
+                  <span class="truncate">${file.name}</span>
+                  <button class="btn btn-gray text-sm p-1" ${DATA_FILELIST}-remove="${file.name}-${file.size}" data-waved="dark" type="button">
+                    <svg class="icon">
+                      <use href="${isSource}/img/icons.svg#close"></use>
+                    </svg>
+                  </button>
+                `
                 items.appendChild(item)
                 text.textContent = message.more
                 data.items.add(file)
               }
 
               if ((data.files as FileList).length === maxLength) {
-                label.classList.add(...className)
+                label.classList.add(...LABEL_DISABLED_CLASSNAMES)
                 text.textContent = message.limit
               }
             })
@@ -73,18 +75,19 @@ export default (container: Container = document): void => {
     }) as EventListener)
 
     filelist.addEventListener('click', ((event: Event): void => {
-      const remove = event.target as HTMLButtonElement
+      const remove = (event.target as HTMLElement).closest(`[${DATA_FILELIST}-remove]`) as HTMLButtonElement
 
-      if (remove.closest('[data-filelist-remove]')) {
-        const item = remove.closest('[data-filelist-item]') as HTMLLIElement
+      if (remove) {
+        const item = remove.closest(`[${DATA_FILELIST}-item]`) as HTMLLIElement
         const files: FileList = data.files
 
         data = new DataTransfer()
 
         for (let i: number = 0; i < files.length; i++) {
           const file: File = files[i]
+          const id: string = `${file.name}-${file.size}`
 
-          if (remove.dataset.filelistRemove === file.name) {
+          if (remove.dataset.filelistRemove === id) {
             item.remove()
           } else {
             data.items.add(file)
@@ -99,7 +102,7 @@ export default (container: Container = document): void => {
           text.textContent = message.more
         }
 
-        label.classList.remove(...className)
+        label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
       }
     }) as EventListener)
 
@@ -107,7 +110,7 @@ export default (container: Container = document): void => {
       event.preventDefault()
 
       if (getValidate(form)) {
-        label.classList.remove(...className)
+        label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
         text.textContent = message.default
         items.innerHTML = ''
         data = new DataTransfer()
