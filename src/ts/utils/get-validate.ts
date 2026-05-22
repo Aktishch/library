@@ -1,18 +1,39 @@
-import { errors } from '@utils/errors'
+import { isEn } from '@utils/is-en'
+
+interface ErrorMessage {
+  default: string
+  tel: string
+  email: string
+  login: string
+  password: string
+  select: string
+  description: string
+  file: string
+}
 
 type Label = HTMLLabelElement | HTMLDivElement
 
 const INPUT_ERROR_CLASSNAME: string = 'input-error'
 const ERROR_VISIBLE_CLASSNAMES: string[] = ['invisible', 'opacity-0']
+const ERROR_MESSAGE: ErrorMessage = {
+  default: isEn ? 'Fill in this field' : 'Заполните это поле',
+  tel: isEn ? 'Enter the correct number' : 'Введите корректный номер',
+  email: isEn ? 'Enter the correct address' : 'Введите корректный адрес',
+  login: isEn ? 'Invalid username' : 'Неверный логин',
+  password: isEn ? 'Invalid password' : 'Неверный пароль',
+  select: isEn ? 'Choose an option' : 'Выберите вариант',
+  description: isEn ? 'Enter at least 10 characters' : 'Введите не менее 10 символов',
+  file: isEn ? 'Upload the file' : 'Загрузите файл'
+}
 
 export const getValidate = (form: HTMLFormElement): boolean => {
   const labels = form.querySelectorAll('*[data-label]') as NodeListOf<Label>
   let isValid: boolean = true
   let firstInvalidInput: HTMLInputElement | null = null
 
-  labels.forEach((label: Label): void => {
-    if (!label) return
+  if (!labels.length) return isValid
 
+  labels.forEach((label: Label): void => {
     const input = label.querySelector('*[data-input]') as HTMLInputElement
     const error = label.querySelector('*[data-error]') as HTMLSpanElement
 
@@ -20,7 +41,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
 
     let invalidInput: boolean = false
 
-    const showError = (message: string = errors.default): void => {
+    const showError = (message: string = ERROR_MESSAGE.default): void => {
       invalidInput = true
       input.classList.add(INPUT_ERROR_CLASSNAME)
       error.classList.remove(...ERROR_VISIBLE_CLASSNAMES)
@@ -39,7 +60,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
 
     const setMaxLengthTel = (value: number): void => {
       if (input.value.length > 0 && input.value.length < value) {
-        showError(errors.tel)
+        showError(ERROR_MESSAGE.tel)
       }
     }
 
@@ -52,7 +73,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
 
     input.removeEventListener('input', handleInput as EventListener)
 
-    if (input.value.length === 0) {
+    if (input.type !== 'file' && !input.value.length) {
       showError()
       input.addEventListener('input', handleInput as EventListener)
       return
@@ -89,7 +110,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
         const regExp: RegExp = /^\s*([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,8})+\s*$/
 
         if (!regExp.test(input.value)) {
-          showError(errors.email)
+          showError(ERROR_MESSAGE.email)
         }
 
         break
@@ -99,7 +120,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
         const regExp: RegExp = /^[a-zA-Z0-9]+$/
 
         if (!regExp.test(input.value)) {
-          showError(errors.login)
+          showError(ERROR_MESSAGE.login)
         }
 
         break
@@ -109,7 +130,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
         const regExp: RegExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
 
         if (!regExp.test(input.value)) {
-          showError(errors.password)
+          showError(ERROR_MESSAGE.password)
         }
 
         break
@@ -117,7 +138,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
 
       case 'select': {
         if (input.value === 'empty') {
-          showError(errors.select)
+          showError(ERROR_MESSAGE.select)
         }
 
         break
@@ -125,15 +146,17 @@ export const getValidate = (form: HTMLFormElement): boolean => {
 
       case 'description': {
         if (input.value.length < 10) {
-          showError(errors.description)
+          showError(ERROR_MESSAGE.description)
         }
 
         break
       }
 
       case 'file': {
-        if ((input.files as FileList).length === 0) {
-          showError(errors.file.default)
+        const files: FileList | null = input.files
+
+        if (!files || !files.length) {
+          showError(ERROR_MESSAGE.file)
         }
 
         break

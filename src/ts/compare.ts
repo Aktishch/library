@@ -5,7 +5,7 @@ const DATA_COMPARE: string = 'data-compare'
 export default (container: Container = document): void => {
   const compares = container.querySelectorAll(`*[${DATA_COMPARE}]`) as NodeListOf<HTMLDivElement>
 
-  if (compares.length === 0) return
+  if (!compares.length) return
 
   const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
     entries.forEach((entry: ResizeObserverEntry): void => {
@@ -19,16 +19,13 @@ export default (container: Container = document): void => {
   })
 
   compares.forEach((compare: HTMLDivElement): void => {
-    if (!compare) return
-
     const before = compare.querySelector(`*[${DATA_COMPARE}-before]`) as HTMLDivElement
     const change = compare.querySelector(`*[${DATA_COMPARE}-change]`) as HTMLDivElement
     let isActive: boolean = false
 
     const updatePosition = (pageX: number): void => {
       const rect: DOMRect = compare.getBoundingClientRect()
-      const position: number = pageX - rect.left
-      const value: number = Math.max(0, Math.min(position, rect.width))
+      const value: number = Math.max(0, Math.min(pageX - rect.left, rect.width))
 
       before.style.width = `${value}px`
       change.style.left = `${value}px`
@@ -59,7 +56,6 @@ export default (container: Container = document): void => {
     }
 
     resizeObserver.observe(compare)
-
     container.addEventListener('mousedown', onStart as EventListener)
     container.addEventListener('touchstart', onStart as EventListener, { passive: false })
     container.addEventListener('mousemove', onMove as EventListener)

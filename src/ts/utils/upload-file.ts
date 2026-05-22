@@ -6,7 +6,7 @@ interface UploadedFile {
 }
 
 type Resolve = (value: UploadedFile | PromiseLike<UploadedFile>) => void
-type Reject = (reason?: string) => void
+type Reject = (reason: string) => void
 
 export const uploadFile = (file: File): Promise<UploadedFile> => {
   return new Promise<UploadedFile>((resolve: Resolve, reject: Reject): void => {
@@ -22,7 +22,6 @@ export const uploadFile = (file: File): Promise<UploadedFile> => {
     }) as EventListener)
 
     reader.addEventListener('error', setReject as EventListener)
-
     reader.readAsDataURL(file)
   })
 }

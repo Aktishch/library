@@ -5,9 +5,11 @@ import lazyLoad from '@ts/lazy-load'
 import { setStateSubmitBtn } from '@ts/submit-handler'
 import { getTouchDevice } from '@utils'
 
+type Callback = ((container: HTMLElement | undefined) => void) | undefined
+
 interface Dialog {
-  open: (src: string) => void
-  notClosing: (src: string) => void
+  open: (src: string, callback?: Callback) => void
+  notClosing: (src: string, callback?: Callback) => void
   close: () => void
 }
 
@@ -18,7 +20,7 @@ declare global {
   }
 }
 
-type FancyboxProos = [unknown, unknown, CarouselSlide]
+type Properties = [unknown, unknown, CarouselSlide]
 
 const DATA_FANCYBOX: string = 'data-fancybox'
 
@@ -40,7 +42,7 @@ window.Fancybox = Fancybox
 const updateLoad = (): void => lazyLoad().update()
 
 export const dialog: Dialog = {
-  open: (src: string): void => {
+  open: (src: string, callback: Callback): void => {
     window.Fancybox.show(
       [
         {
@@ -51,12 +53,15 @@ export const dialog: Dialog = {
       {
         dragToClose: false,
         on: {
-          'Carousel.contentReady': (): void => updateLoad()
+          'Carousel.contentReady': (...[, , slide]: Properties): void => {
+            updateLoad()
+            callback?.(slide.el)
+          }
         }
       }
     )
   },
-  notClosing: (src: string): void => {
+  notClosing: (src: string, callback: Callback): void => {
     window.Fancybox.show(
       [
         {
@@ -69,12 +74,17 @@ export const dialog: Dialog = {
         closeButton: false,
         backdropClick: false,
         on: {
-          'Carousel.contentReady': (): void => updateLoad()
+          'Carousel.contentReady': (...[, , slide]: Properties): void => {
+            updateLoad()
+            callback?.(slide.el)
+          }
         }
       }
     )
   },
-  close: (): void => window.Fancybox.close()
+  close: (): void => {
+    window.Fancybox.close()
+  }
 }
 
 window.dialog = dialog
@@ -85,14 +95,16 @@ export default (): void => {
   window.Fancybox.bind(`[${DATA_FANCYBOX}-dialog]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (): void => updateLoad()
+      'Carousel.contentReady': (): void => {
+        updateLoad()
+      }
     }
   })
 
   window.Fancybox.bind(`[${DATA_FANCYBOX}-form]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (...[, , slide]: FancyboxProos): void => {
+      'Carousel.contentReady': (...[, , slide]: Properties): void => {
         updateLoad()
         setStateSubmitBtn(slide.el)
       }
@@ -102,7 +114,7 @@ export default (): void => {
   window.Fancybox.bind(`[${DATA_FANCYBOX}-avatar]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (...[, , slide]: FancyboxProos): void => {
+      'Carousel.contentReady': (...[, , slide]: Properties): void => {
         updateLoad()
         imagePreview(slide.el)
       }
@@ -112,7 +124,7 @@ export default (): void => {
   window.Fancybox.bind(`[${DATA_FANCYBOX}-calendar]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (...[, , slide]: FancyboxProos): void => {
+      'Carousel.contentReady': (...[, , slide]: Properties): void => {
         updateLoad()
         initCalendar(slide.el)
       }

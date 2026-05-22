@@ -9,9 +9,9 @@ const OVERFLOW_CLASSNAME: string = 'overflow-hidden'
 export default (container: Container = document): void => {
   const accordions = container.querySelectorAll(`*[${DATA_ACCORDION}]`) as NodeListOf<HTMLDivElement>
 
-  accordions.forEach((accordion: HTMLDivElement): void => {
-    if (!accordion) return
+  if (!accordions.length) return
 
+  accordions.forEach((accordion: HTMLDivElement): void => {
     const toggle = accordion.querySelector(`*[${DATA_ACCORDION}-toggle]`) as HTMLDivElement | HTMLButtonElement
     const content = accordion.querySelector(`*[${DATA_ACCORDION}-content]`) as HTMLDivElement
     const items = accordion.querySelectorAll(`*[${DATA_ACCORDION}-item]`) as NodeListOf<AccordionElement>
@@ -46,6 +46,22 @@ export default (container: Container = document): void => {
       setHeightContent()
     }
 
+    const closeOnClick = (event: Event): void => {
+      if (
+        (event.target as HTMLElement).closest(`[${DATA_CLOSE}-click]`) !== accordion &&
+        accordion.dataset.accordion === 'active' &&
+        accordion.hasAttribute(`${DATA_CLOSE}-click`)
+      ) {
+        closeContent()
+      }
+    }
+
+    const closeOnScroll = (): void => {
+      if (accordion.hasAttribute(`${DATA_CLOSE}-scroll`) && accordion.dataset.accordion === 'active') {
+        closeContent()
+      }
+    }
+
     toggle.classList.add('cursor-pointer')
     content.style.transitionProperty = 'height'
     setHeightContent(false)
@@ -61,24 +77,7 @@ export default (container: Container = document): void => {
       item.addEventListener('click', closeContent as EventListener)
     })
 
-    container.addEventListener('click', ((event: Event): void => {
-      if (
-        (event.target as HTMLElement).closest(`[${DATA_CLOSE}-click]`) !== accordion &&
-        accordion.dataset.accordion === 'active' &&
-        accordion.hasAttribute(`${DATA_CLOSE}-click`)
-      ) {
-        closeContent()
-      }
-    }) as EventListener)
-
-    container.addEventListener(
-      'scroll',
-      ((): void => {
-        if (accordion.hasAttribute(`${DATA_CLOSE}-scroll`) && accordion.dataset.accordion === 'active') {
-          closeContent()
-        }
-      }) as EventListener,
-      { passive: true }
-    )
+    container.addEventListener('click', closeOnClick as EventListener)
+    container.addEventListener('scroll', closeOnScroll as EventListener, { passive: true })
   })
 }

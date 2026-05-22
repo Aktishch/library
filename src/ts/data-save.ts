@@ -13,10 +13,13 @@ const handleInput = (input: Input): boolean => {
 export default (container: Container = document): void => {
   const forms = container.querySelectorAll('*[data-save]') as NodeListOf<HTMLFormElement>
 
-  forms.forEach((form: HTMLFormElement): void => {
-    if (!form || !form.dataset.save) return
+  if (!forms.length) return
 
-    const value: string = form.dataset.save
+  forms.forEach((form: HTMLFormElement): void => {
+    const value: string | undefined = form.dataset.save
+
+    if (!value) return
+
     const dataSave: DataSave = JSON.parse(sessionStorage.getItem(value) || '{}')
     const inputs: Input[] = [
       ...form.querySelectorAll('input'),

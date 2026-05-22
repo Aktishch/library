@@ -1,4 +1,4 @@
-import { Container, getValidate, handleFile, isEn, isSource, logError, uploadFile } from '@utils'
+import { Container, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
 
 interface Message {
   default: string
@@ -53,7 +53,7 @@ export default (container: Container = document): void => {
                   <span class="truncate">${file.name}</span>
                   <button class="btn btn-gray text-sm p-1" ${DATA_FILELIST}-remove="${file.name}-${file.size}" data-waved="dark" type="button">
                     <svg class="icon">
-                      <use href="${isSource}/img/icons.svg#close"></use>
+                      <use href="${source}/img/icons.svg#close"></use>
                     </svg>
                   </button>
                 `

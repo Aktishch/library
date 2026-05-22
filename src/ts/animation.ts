@@ -5,7 +5,7 @@ const REPEAT_ANIMATION: boolean = true
 export default (container: Container = document): void => {
   const items = container.querySelectorAll('*[data-anim]') as NodeListOf<HTMLElement>
 
-  if (items.length === 0) return
+  if (!items.length) return
 
   const options: IntersectionObserverInit = {
     root: container === document ? null : container,
@@ -44,8 +44,6 @@ export default (container: Container = document): void => {
   const observer: IntersectionObserver = new IntersectionObserver(callback, options)
 
   items.forEach((item: HTMLElement): void => {
-    if (!item) return
-
     observer.observe(item)
   })
 }

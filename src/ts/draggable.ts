@@ -20,10 +20,13 @@ const setTranslate = ({ item, positionX, positionY }: Translate): void => {
 export default (container: Container = document): void => {
   const draggables = container.querySelectorAll(`*[${DATA_DRAGGABLE}]`) as NodeListOf<HTMLElement>
 
-  draggables.forEach((draggable: HTMLElement): void => {
-    if (!draggable || !draggable.dataset.draggable) return
+  if (!draggables.length) return
 
-    const value: string = draggable.dataset.draggable
+  draggables.forEach((draggable: HTMLElement): void => {
+    const value: string | undefined = draggable.dataset.draggable
+
+    if (!value) return
+
     const coordinates: Coordinates = JSON.parse(sessionStorage.getItem(value) || JSON.stringify({ top: 0, left: 0 }))
     let isActive: boolean = false
     let currentY: number
@@ -80,7 +83,6 @@ export default (container: Container = document): void => {
     }
 
     setPosition()
-
     container.addEventListener('mousedown', onStart as EventListener)
     container.addEventListener('touchstart', onStart as EventListener, { passive: false })
     container.addEventListener('mousemove', onMove as EventListener)

@@ -5,10 +5,13 @@ const DATA_COOKIE: string = 'data-cookie'
 export default (container: Container = document): void => {
   const cookies = container.querySelectorAll(`*[${DATA_COOKIE}]`) as NodeListOf<HTMLElement>
 
-  cookies.forEach((cookie: HTMLElement): void => {
-    if (!cookie || !cookie.id) return
+  if (!cookies.length) return
 
+  cookies.forEach((cookie: HTMLElement): void => {
     const id: string = cookie.id
+
+    if (cookie.id === '') return
+
     const name: string = `cookie_${id}`
     const hasCookie: boolean = checkCookie(`${name}=`)
 

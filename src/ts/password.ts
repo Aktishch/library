@@ -1,4 +1,4 @@
-import { isSource } from '@utils'
+import { source } from '@utils'
 
 export default (): void => {
   document.addEventListener('click', ((event: Event): void => {
@@ -11,10 +11,7 @@ export default (): void => {
       const status: boolean = input.type === 'password'
 
       input.type = status ? 'text' : 'password'
-      use.setAttribute(
-        'href',
-        status ? `${isSource}/img/icons.svg#eye-hidden` : `${isSource}/img/icons.svg#eye-visible`
-      )
+      use.setAttribute('href', status ? `${source}/img/icons.svg#eye-hidden` : `${source}/img/icons.svg#eye-visible`)
     }
   }) as EventListener)
 }

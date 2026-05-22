@@ -1,4 +1,4 @@
-import { isEn, isSource, logError } from '@utils'
+import { isEn, logError, source } from '@utils'
 import ymaps from 'ymaps'
 
 type ymaps = typeof ymaps
@@ -50,7 +50,7 @@ export default (): void => {
           },
           {
             iconLayout: 'default#image',
-            iconImageHref: `${isSource}/img/pictures/point.svg`,
+            iconImageHref: `${source}/img/pictures/point.svg`,
             iconImageSize: pointSize,
             iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2]
           }

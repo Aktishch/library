@@ -88,11 +88,13 @@ export const initCalendar = (container: Container = document): void => {
 export default (container: Container = document): void => {
   const datepickers = container.querySelectorAll(`*[${DATA_DATEPICKER}]`) as NodeListOf<HTMLFormElement>
 
-  datepickers.forEach((datepicker: HTMLFormElement): void => {
-    if (!datepicker) return
+  if (!datepickers.length) return
 
+  datepickers.forEach((datepicker: HTMLFormElement): void => {
     const inputMin = datepicker.querySelector(`*[${DATA_DATEPICKER}-min]`) as HTMLInputElement
     const inputMax = datepicker.querySelector(`*[${DATA_DATEPICKER}-max]`) as HTMLInputElement
+
+    if (!inputMin || !inputMax) return
 
     const min: AirDatepicker<HTMLInputElement> = new window.AirDatepicker(inputMin, {
       onSelect({ date }: Dates) {
