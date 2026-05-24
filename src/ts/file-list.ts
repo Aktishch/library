@@ -1,4 +1,4 @@
-import { Container, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
+import { Container, getData, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
 
 interface Message {
   default: string
@@ -6,15 +6,15 @@ interface Message {
   limit: string
 }
 
-const DATA_FILELIST: string = 'data-filelist'
+const DATA_FILELIST: string = getData('filelist')
 const LABEL_DISABLED_CLASSNAMES: string[] = ['pointer-events-none', 'opacity-50']
 
 export default (container: Container = document): void => {
   const filelists = container.querySelectorAll(`*[${DATA_FILELIST}]`) as NodeListOf<HTMLDivElement>
 
-  filelists.forEach((filelist: HTMLDivElement): void => {
-    if (!filelist) return
+  if (!filelists.length) return
 
+  filelists.forEach((filelist: HTMLDivElement): void => {
     const form = filelist.closest('[data-form]') as HTMLFormElement
     const label = filelist.querySelector(`*[${DATA_FILELIST}-label]`) as HTMLLabelElement
     const input = label.querySelector(`*[${DATA_FILELIST}-input]`) as HTMLInputElement
@@ -40,34 +40,39 @@ export default (container: Container = document): void => {
 
       if (files.length !== 0) {
         for (let i: number = 0; i < files.length; i++) {
-          await uploadFile(files[i] as File)
-            .then(({ file }): void => {
-              if (!handleFile({ error, file })) return
+          try {
+            const { file } = await uploadFile(files[i] as File)
 
-              if ((data.files as FileList).length < maxLength) {
-                const item = document.createElement('li') as HTMLLIElement
+            if (!handleFile({ error, file })) {
+              throw isEn ? 'File validation failed' : 'Файл не прошёл валидацию'
+            }
 
-                item.classList.add('flex', 'items-center', 'justify-between', 'gap-5')
-                item.setAttribute(`${DATA_FILELIST}-item`, '')
-                item.innerHTML = `
-                  <span class="truncate">${file.name}</span>
-                  <button class="btn btn-gray text-sm p-1" ${DATA_FILELIST}-remove="${file.name}-${file.size}" data-waved="dark" type="button">
-                    <svg class="icon">
-                      <use href="${source}/img/icons.svg#close"></use>
-                    </svg>
-                  </button>
-                `
-                items.appendChild(item)
-                text.textContent = message.more
-                data.items.add(file)
-              }
+            if ((data.files as FileList).length < maxLength) {
+              const item = document.createElement('li') as HTMLLIElement
 
-              if ((data.files as FileList).length === maxLength) {
-                label.classList.add(...LABEL_DISABLED_CLASSNAMES)
-                text.textContent = message.limit
-              }
-            })
-            .catch((error: string): void => logError(error))
+              item.classList.add('flex', 'items-center', 'justify-between', 'gap-5')
+              item.setAttribute(`${DATA_FILELIST}-item`, '')
+              item.innerHTML = `
+                <span class="truncate">${file.name}</span>
+                <button class="btn btn-gray text-sm p-1" ${DATA_FILELIST}-remove="${file.name}-${file.size}" data-waved="dark" type="button">
+                  <svg class="icon">
+                    <use href="${source}/img/icons.svg#close"></use>
+                  </svg>
+                </button>
+              `
+              items.appendChild(item)
+              text.textContent = message.more
+              data.items.add(file)
+            }
+
+            if ((data.files as FileList).length === maxLength) {
+              label.classList.add(...LABEL_DISABLED_CLASSNAMES)
+              text.textContent = message.limit
+              break
+            }
+          } catch (error: unknown) {
+            logError(error as string)
+          }
         }
       }
 
@@ -77,33 +82,27 @@ export default (container: Container = document): void => {
     filelist.addEventListener('click', ((event: Event): void => {
       const remove = (event.target as HTMLElement).closest(`[${DATA_FILELIST}-remove]`) as HTMLButtonElement
 
-      if (remove) {
-        const item = remove.closest(`[${DATA_FILELIST}-item]`) as HTMLLIElement
-        const files: FileList = data.files
+      if (!remove) return
 
-        data = new DataTransfer()
+      const item = remove.closest(`[${DATA_FILELIST}-item]`) as HTMLLIElement
+      const files: FileList = data.files
 
-        for (let i: number = 0; i < files.length; i++) {
-          const file: File = files[i]
-          const id: string = `${file.name}-${file.size}`
+      data = new DataTransfer()
 
-          if (remove.dataset.filelistRemove === id) {
-            item.remove()
-          } else {
-            data.items.add(file)
-            uploadFilesList()
-          }
-        }
+      for (let i: number = 0; i < files.length; i++) {
+        const file: File = files[i]
+        const id: string = `${file.name}-${file.size}`
 
-        if ((data.files as FileList).length === 0) {
-          input.value = ''
-          text.textContent = message.default
+        if (remove.dataset.filelistRemove === id) {
+          item.remove()
         } else {
-          text.textContent = message.more
+          data.items.add(file)
         }
-
-        label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
       }
+
+      text.textContent = (data.files as FileList).length === 0 ? message.default : message.more
+      uploadFilesList()
+      label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
     }) as EventListener)
 
     form.addEventListener('submit', ((event: Event): void => {
@@ -114,6 +113,7 @@ export default (container: Container = document): void => {
         text.textContent = message.default
         items.innerHTML = ''
         data = new DataTransfer()
+        uploadFilesList()
       }
     }) as EventListener)
   })

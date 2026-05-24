@@ -1,5 +1,5 @@
 import { targetId } from '@ts/scroll-to'
-import { Container } from '@utils'
+import { Container, getData } from '@utils'
 
 interface CheckedItem {
   condition: boolean
@@ -14,6 +14,14 @@ interface CheckedValue {
 
 type Category = HTMLButtonElement | HTMLAnchorElement
 
+interface LinePosition {
+  line: HTMLSpanElement
+  category: Category
+}
+
+const DATA_FILTER: string = getData('filtering')
+const DATA_ACTIVE: string = getData('active')
+
 const addTransition = (item: HTMLDivElement): void => {
   item.classList.add('transition', 'ease-linear')
 }
@@ -23,7 +31,12 @@ const checkItem = ({ condition, item }: CheckedItem): void => {
     item.classList.add('hidden', 'translate-y-10', 'opacity-0')
   } else {
     item.classList.remove('hidden')
-    setTimeout((): void => item.classList.remove('translate-y-10', 'opacity-0'), 50)
+
+    window.requestAnimationFrame((): void => {
+      window.requestAnimationFrame((): void => {
+        item.classList.remove('translate-y-10', 'opacity-0')
+      })
+    })
   }
 }
 
@@ -39,30 +52,65 @@ const checkValue = ({ name, cards, plug }: CheckedValue): void => {
     checkItem({ condition: absence && !showAll, item: card })
   })
 
-  const allHidden: boolean = ([...cards] as HTMLDivElement[]).every((card: HTMLDivElement): boolean =>
-    card.classList.contains('hidden')
-  )
+  const allHidden: boolean = ([...cards] as HTMLDivElement[]).every((card: HTMLDivElement): boolean => {
+    return card.classList.contains('hidden')
+  })
 
-  if (plug) checkItem({ condition: !allHidden, item: plug })
+  if (plug) {
+    checkItem({ condition: !allHidden, item: plug })
+  }
+}
+
+const updateLinePosition = ({ line, category }: LinePosition): void => {
+  if (!line) return
+
+  line.style.width = `${category.offsetWidth}px`
+  line.style.left = `${category.offsetLeft}px`
 }
 
 export default (container: Container = document): void => {
-  const filters = container.querySelectorAll('*[data-filtering]') as NodeListOf<HTMLDivElement>
+  const filters = container.querySelectorAll(`*[${DATA_FILTER}]`) as NodeListOf<HTMLDivElement>
+
+  if (!filters.length) return
+
+  const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+    entries.forEach((entry: ResizeObserverEntry): void => {
+      const category = entry.target as Category
+      const filter = category.closest(`[${DATA_FILTER}]`) as HTMLDivElement
+
+      if (!filter) return
+
+      const value: string | undefined = filter.dataset.filtering
+
+      if (!value) return
+
+      const line = container.querySelector(`*[${DATA_FILTER}-line="${value}"]`) as HTMLSpanElement
+
+      if (line && category.hasAttribute(DATA_ACTIVE)) {
+        updateLinePosition({ line, category })
+      }
+    })
+  })
 
   filters.forEach((filter: HTMLDivElement): void => {
-    if (!filter || !filter.dataset.filtering) return
+    const value: string | undefined = filter.dataset.filtering
 
-    const value: string = filter.dataset.filtering
-    const categories = container.querySelectorAll(`*[data-filtering-category="${value}"]`) as NodeListOf<Category>
-    const cards = container.querySelectorAll(`*[data-filtering-card="${value}"]`) as NodeListOf<HTMLDivElement>
-    const plug = container.querySelector(`*[data-filtering-plug="${value}"]`) as HTMLDivElement
-    const line = container.querySelector(`*[data-filtering-line="${value}"]`) as HTMLSpanElement
+    if (!value) return
+
+    const categories = container.querySelectorAll(`*[${DATA_FILTER}-category="${value}"]`) as NodeListOf<Category>
+    const cards = container.querySelectorAll(`*[${DATA_FILTER}-card="${value}"]`) as NodeListOf<HTMLDivElement>
+    const plug = container.querySelector(`*[${DATA_FILTER}-plug="${value}"]`) as HTMLDivElement
+    const line = container.querySelector(`*[${DATA_FILTER}-line="${value}"]`) as HTMLSpanElement
 
     const getCurrentCategory = (): Category => {
       let active = categories[0] as Category
 
       categories.forEach((category: Category): void => {
-        if (category.hasAttribute('data-active')) active = category
+        if (!category) return
+
+        if (category.hasAttribute(DATA_ACTIVE)) {
+          active = category
+        }
       })
 
       return active
@@ -74,27 +122,29 @@ export default (container: Container = document): void => {
 
       if (!name) return
 
-      active.removeAttribute('data-active')
-      category.setAttribute('data-active', '')
+      active.removeAttribute(DATA_ACTIVE)
+      category.setAttribute(DATA_ACTIVE, '')
 
-      if (line) {
-        line.style.width = `${category.offsetWidth}px`
-        line.style.left = `${category.offsetLeft}px`
-      }
-
+      updateLinePosition({ line, category })
       checkValue({ name, cards, plug })
     }
 
     cards.forEach((card: HTMLDivElement): void => {
-      if (card) addTransition(card)
+      if (!card) return
+
+      addTransition(card)
     })
 
-    if (plug) addTransition(plug)
+    if (plug) {
+      addTransition(plug)
+    }
 
     setCurrentCard(getCurrentCategory())
 
     categories.forEach((category: Category): void => {
       if (!category) return
+
+      resizeObserver.observe(category)
 
       category.addEventListener('click', ((): void => {
         setCurrentCard(category)
@@ -106,7 +156,9 @@ export default (container: Container = document): void => {
         if (card.querySelector(`#${targetId}`)) {
           const category = categories[index] as Category
 
-          if (category) setCurrentCard(category)
+          if (!category) return
+
+          setCurrentCard(category)
         }
       }
     }

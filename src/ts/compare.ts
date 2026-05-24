@@ -1,6 +1,6 @@
-import { Container, hideScrollbar, showScrollbar } from '@utils'
+import { Container, getData, hideScrollbar, showScrollbar } from '@utils'
 
-const DATA_COMPARE: string = 'data-compare'
+const DATA_COMPARE: string = getData('compare')
 
 export default (container: Container = document): void => {
   const compares = container.querySelectorAll(`*[${DATA_COMPARE}]`) as NodeListOf<HTMLDivElement>

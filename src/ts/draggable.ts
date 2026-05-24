@@ -1,4 +1,4 @@
-import { Container, Coordinates, hideScrollbar, showScrollbar } from '@utils'
+import { Container, Coordinates, getData, hideScrollbar, showScrollbar } from '@utils'
 
 interface Translate {
   item: HTMLElement
@@ -11,7 +11,7 @@ interface ClientCoordinates {
   x: number
 }
 
-const DATA_DRAGGABLE: string = 'data-draggable'
+const DATA_DRAGGABLE: string = getData('draggable')
 
 const setTranslate = ({ item, positionX, positionY }: Translate): void => {
   item.style.transform = `translate(${positionX}px, ${positionY}px)`

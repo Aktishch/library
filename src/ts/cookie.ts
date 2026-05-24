@@ -1,6 +1,6 @@
-import { checkCookie, Container, setCookies } from '@utils'
+import { checkCookie, Container, getData, setCookies } from '@utils'
 
-const DATA_COOKIE: string = 'data-cookie'
+const DATA_COOKIE: string = getData('cookie')
 
 export default (container: Container = document): void => {
   const cookies = container.querySelectorAll(`*[${DATA_COOKIE}]`) as NodeListOf<HTMLElement>

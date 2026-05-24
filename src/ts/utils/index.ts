@@ -1,3 +1,4 @@
+export * from '@utils/get-data'
 export * from '@utils/get-scroll-position'
 export * from '@utils/get-time-format'
 export * from '@utils/get-touch-device'

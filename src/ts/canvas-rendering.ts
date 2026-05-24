@@ -1,6 +1,6 @@
-import { Container, isEn, logError } from '@utils'
+import { Container, getData, isEn, logError } from '@utils'
 
-const DATA_RENDERING: string = 'data-rendering'
+const DATA_RENDERING: string = getData('rendering')
 
 export default (container: Container = document): void => {
   const renderings = container.querySelectorAll(`*[${DATA_RENDERING}]`) as NodeListOf<HTMLDivElement>

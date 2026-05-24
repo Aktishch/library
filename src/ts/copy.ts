@@ -1,10 +1,10 @@
-import { logError } from '@utils'
+import { Container, getData, isEn, logError } from '@utils'
 
-const DATA_COPY: string = 'data-copy'
+const DATA_COPY: string = getData('copy')
 const HIDDEN_CLASSNAMES: string[] = ['invisible', 'opacity-0']
 
-export default (): void => {
-  document.addEventListener('click', (async (event: Event): Promise<void> => {
+export default (container: Container = document): void => {
+  container.addEventListener('click', (async (event: Event): Promise<void> => {
     const button = (event.target as HTMLElement).closest(`[${DATA_COPY}-button]`) as HTMLButtonElement
 
     if (!button) return
@@ -15,8 +15,16 @@ export default (): void => {
 
     if (!text) return
 
+    const clipboard: Clipboard = window.navigator.clipboard
+
     try {
-      await window.navigator.clipboard.writeText(text)
+      if (!clipboard) {
+        throw isEn
+          ? 'Clipboard API not supported or secure context (HTTPS) is missing'
+          : 'API буфера обмена не поддерживается или отсутствует защищенный контекст (HTTPS)'
+      }
+
+      await clipboard.writeText(text)
       button.disabled = true
       result.classList.remove(...HIDDEN_CLASSNAMES)
     } catch (error: unknown) {

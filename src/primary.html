@@ -167,7 +167,7 @@
 
 <!-- Горизорнтальный скролл -->
 
-<section class="bg-white dark:bg-black md:h-[var(--scroll-height)]" data-scrolling>
+<section class="bg-white dark:bg-black" data-scrolling data-breakpoint="md">
   <div class="container flex flex-col items-start pb-0 mb-5 md:md-10">
     <h2 class="font-alt font-bold text-4xl/tight lg:text-5xl/tight duration-500 anim anim-up" data-anim data-movement="blend">
       Horizontal scroll
@@ -177,7 +177,7 @@
     <% for (let i = 0; i < 6; i++) { %>
     <a class="pack pack-xs bg-grey dark:bg-dark rounded-3xl shadow-md shrink-0 w-80 md:w-[800px]" data-media data-movement="light" data-fancybox="horizontal" draggable="false" href="/img/pictures/town.jpg">
       <%= loader({className: null}) %>
-      <%= picture({src: '/', format: '', className: 'image rounded-inherit md:translate-x-[var(--scroll-moving)] md:scale-150 transition-transform ease-in-out duration-300', data: 'data-scrolling-image data-lazy data-src="/img/pictures/town.jpg"'}) %>
+      <%= picture({src: '/', format: '', className: 'image rounded-inherit transition-transform ease-in-out duration-300', data: 'data-scrolling-image data-lazy data-src="/img/pictures/town.jpg"'}) %>
     </a>
     <% } %>
   </div>

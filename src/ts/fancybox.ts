@@ -3,9 +3,9 @@ import { initCalendar } from '@ts/air-datepicker'
 import imagePreview from '@ts/image-preview'
 import lazyLoad from '@ts/lazy-load'
 import { setStateSubmitBtn } from '@ts/submit-handler'
-import { getTouchDevice } from '@utils'
+import { Container, getData, getTouchDevice } from '@utils'
 
-type Callback = ((container: HTMLElement | undefined) => void) | undefined
+type Callback = ((container: Container | undefined) => void) | undefined
 
 interface Dialog {
   open: (src: string, callback?: Callback) => void
@@ -22,7 +22,11 @@ declare global {
 
 type Properties = [unknown, unknown, CarouselSlide]
 
-const DATA_FANCYBOX: string = 'data-fancybox'
+const DATA_FANCYBOX: string = getData('fancybox')
+
+const updateLoad = (): void => {
+  lazyLoad().update()
+}
 
 Fancybox.getDefaults().placeFocusBack = false
 
@@ -38,8 +42,6 @@ if (!getTouchDevice()) {
 }
 
 window.Fancybox = Fancybox
-
-const updateLoad = (): void => lazyLoad().update()
 
 export const dialog: Dialog = {
   open: (src: string, callback: Callback): void => {

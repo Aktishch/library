@@ -1,5 +1,5 @@
 import filtering from '@ts/filtering'
-import { Container, getTouchDevice } from '@utils'
+import { Container, getData, getTouchDevice } from '@utils'
 import AirDatepicker, { AirDatepickerPosition, AirDatepickerViewsSingle } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
 
@@ -30,7 +30,7 @@ interface Dates {
   date: Date | Date[]
 }
 
-const DATA_DATEPICKER: string = 'data-datepicker'
+const DATA_DATEPICKER: string = getData('datepicker')
 const EXCLUDE_DATES: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +new Date(2026, 5, 10)]
 
 window.AirDatepicker = AirDatepicker

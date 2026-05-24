@@ -5,51 +5,41 @@ interface BackgroundHandler {
   requestUrl: string
 }
 
-interface BackgroundInitialization {
-  data: string
-  container: Container
-}
-
 const getFormatWebp = (): boolean => {
   const canvas = document.createElement('canvas') as HTMLCanvasElement
 
-  return canvas.getContext && canvas.getContext('2d')
-    ? canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
-    : false
+  return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
 }
 
 const handleBackground = async ({ item, requestUrl }: BackgroundHandler): Promise<void> => {
-  await fetch(requestUrl)
-    .then((response: Response): boolean => {
-      return response.ok
-    })
-    .then((response: boolean): void => {
-      if (response) {
-        item.style.backgroundImage = `url('${requestUrl}')`
-      } else {
-        logError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
-      }
-    })
-    .catch((error: string): void => logError(error))
-}
+  try {
+    const response: Response = await fetch(requestUrl, { method: 'HEAD' })
 
-const initBackground = ({ data, container }: BackgroundInitialization): void => {
-  const items = container.querySelectorAll(`*[${data}]`) as NodeListOf<HTMLElement>
+    if (!response.ok) {
+      throw isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно'
+    }
 
-  items.forEach((item: HTMLElement): void => {
-    if (!item) return
-
-    const requestUrl: string | null = item.getAttribute(data)
-
-    if (requestUrl) handleBackground({ item, requestUrl })
-  })
+    item.style.backgroundImage = `url('${requestUrl}')`
+  } catch (error: unknown) {
+    logError(error as string)
+  }
 }
 
 export default (container: Container = document): void => {
-  const firefox: RegExpMatchArray | null = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./)
-  const firefoxVersion: number = firefox ? Number(firefox[1]) : 0
+  const items = container.querySelectorAll('*[data-bg], *[data-webp]') as NodeListOf<HTMLElement>
 
-  initBackground({ data: 'data-bg', container })
+  if (!items.length) return
 
-  if (getFormatWebp() || firefoxVersion >= 65) initBackground({ data: 'data-webp', container })
+  items.forEach((item: HTMLElement): void => {
+    const webpUrl: string | undefined = item.dataset.webp
+    const bgUrl: string | undefined = item.dataset.bg
+
+    if (!webpUrl || !bgUrl) return
+
+    handleBackground({ item, requestUrl: getFormatWebp() && webpUrl ? webpUrl : bgUrl }).catch(
+      (error: string): void => {
+        logError(error)
+      }
+    )
+  })
 }

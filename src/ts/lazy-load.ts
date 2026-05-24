@@ -20,7 +20,9 @@ export default (): ILazyLoadInstance => {
 
       const loader = media.querySelector('*[data-loader]') as HTMLDivElement
 
-      if (loader) loader.remove()
+      if (loader) {
+        loader.remove()
+      }
     }
   }) as ILazyLoadInstance
 }

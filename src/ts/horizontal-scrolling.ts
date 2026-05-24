@@ -1,51 +1,77 @@
 import { media } from '@plugins'
-import { getScrollPosition, html } from '@utils'
+import { Breakpoint, Container, getData, html } from '@utils'
 
-const setScrollingHeight = (): void => {
-  const scrollings = document.querySelectorAll('*[data-scrolling]') as NodeListOf<HTMLElement>
+const DATA_SCROLLING: string = getData('scrolling')
 
-  scrollings.forEach((scrolling: HTMLElement): void => {
-    if (!scrolling) return
+export default (container: Container = document): void => {
+  const scrollings = container.querySelectorAll(`*[${DATA_SCROLLING}]`) as NodeListOf<HTMLElement>
 
-    const horizontal = scrolling.querySelector('*[data-scrolling-horizontal]') as HTMLDivElement
-    const height: number = horizontal.scrollWidth - horizontal.clientWidth
+  if (!scrollings.length) return
 
-    scrolling.style.setProperty('--scroll-height', `${height}px`)
-  })
-}
-
-const initHorizontalScroll = (): void => {
-  const scrollings = document.querySelectorAll('*[data-scrolling]') as NodeListOf<HTMLElement>
-
-  scrollings.forEach((scrolling: HTMLElement): void => {
-    if (!scrolling) return
-
-    const horizontal = scrolling.querySelector('*[data-scrolling-horizontal]') as HTMLElement
-    const images = scrolling.querySelectorAll('*[data-scrolling-image]') as NodeListOf<HTMLImageElement>
-    const moving: number = (horizontal.scrollLeft / (horizontal.scrollWidth - horizontal.clientWidth)) * 20
-
-    horizontal.scrollLeft = getScrollPosition().top + horizontal.offsetHeight - scrolling.offsetTop
-
-    images.forEach((image: HTMLImageElement): void => {
-      if (image) image.style.setProperty('--scroll-moving', `-${moving}%`)
-    })
-  })
-}
-
-const setBreakpoint = (): void => {
-  if (html.clientWidth < media.md) {
-    document.removeEventListener('wheel', initHorizontalScroll as EventListener)
-    document.removeEventListener('scroll', initHorizontalScroll as EventListener)
-  } else {
-    document.addEventListener('wheel', initHorizontalScroll as EventListener, { passive: true })
-    document.addEventListener('scroll', initHorizontalScroll as EventListener, { passive: true })
+  const options: IntersectionObserverInit = {
+    root: container === document ? null : container,
+    rootMargin: '0px',
+    threshold: 0
   }
-}
 
-export default (): void => {
-  setScrollingHeight()
-  initHorizontalScroll()
-  setBreakpoint()
-  window.addEventListener('resize', setScrollingHeight as EventListener)
-  window.addEventListener('resize', setBreakpoint as EventListener)
+  scrollings.forEach((scrolling: HTMLElement): void => {
+    const horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`) as HTMLDivElement
+    const images = scrolling.querySelectorAll(`*[${DATA_SCROLLING}-image]`) as NodeListOf<HTMLImageElement>
+    let isIntersecting: boolean = false
+
+    const getBreakpoint = (): boolean => {
+      return (
+        html.clientWidth <
+        (scrolling.hasAttribute('data-breakpoint') ? media[scrolling.dataset.breakpoint as Breakpoint] : media.md)
+      )
+    }
+
+    const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+      entries.forEach((entry: ResizeObserverEntry): void => {
+        const scrolling = entry.target as HTMLElement
+        const horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`) as HTMLDivElement
+        const height: number = horizontal.scrollWidth - horizontal.clientWidth
+
+        window.requestAnimationFrame((): void => {
+          if (getBreakpoint()) {
+            scrolling.style.removeProperty('height')
+          } else {
+            scrolling.style.height = `${height + window.innerHeight}px`
+          }
+        })
+      })
+    })
+
+    const handleScroll = (): void => {
+      if (!isIntersecting || getBreakpoint()) return
+
+      const maxScroll: number = horizontal.scrollWidth - horizontal.clientWidth
+
+      window.requestAnimationFrame((): void => {
+        horizontal.scrollLeft = -scrolling.getBoundingClientRect().top
+
+        if (maxScroll > 0) {
+          const moving: number = (horizontal.scrollLeft / maxScroll) * 10
+
+          images.forEach((image: HTMLImageElement): void => {
+            if (!image) return
+
+            image.style.transform = `scale(1.5) translateX(-${moving}%)`
+          })
+        }
+      })
+    }
+
+    const callback = (entries: IntersectionObserverEntry[]): void => {
+      entries.forEach((entry: IntersectionObserverEntry): void => {
+        isIntersecting = entry.isIntersecting
+      })
+    }
+
+    const observer: IntersectionObserver = new IntersectionObserver(callback, options)
+
+    resizeObserver.observe(scrolling)
+    observer.observe(scrolling)
+    container.addEventListener('scroll', handleScroll as EventListener, { passive: true })
+  })
 }

@@ -6,31 +6,46 @@ export default (container: Container = document): void => {
   if (!game) return
 
   const cells: HTMLButtonElement[] = []
-  let player: string = 'X'
+  const combinations: number[][] = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ]
+  let player: 'X' | '0' = 'X'
   let over: boolean = false
 
   const checkWin = (player: string): boolean => {
-    const combinations: number[][] = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ]
-
     return combinations.some((combination: number[]): boolean => {
-      return combination.every((index: number): boolean => cells[index].textContent === player)
+      return combination.every((index: number): boolean => {
+        return cells[index].textContent === player
+      })
     })
   }
 
-  const checkDraw = (): boolean => cells.every((cell: HTMLButtonElement): boolean => cell.textContent !== '')
+  const checkDraw = (): boolean => {
+    return cells.every((cell: HTMLButtonElement): boolean => {
+      return cell.textContent !== ''
+    })
+  }
 
   const checkCell = (cell: HTMLButtonElement): void => {
     cell.textContent = player
     cell.disabled = true
+  }
+
+  const endGame = (message: string): void => {
+    over = true
+
+    window.requestAnimationFrame((): void => {
+      window.requestAnimationFrame((): void => {
+        alert(message)
+      })
+    })
   }
 
   const makeBotMove = (): void => {
@@ -43,10 +58,10 @@ export default (container: Container = document): void => {
       checkCell(cell)
 
       if (checkWin(player)) {
-        alert('Проигрыш!')
+        endGame('Проигрыш!')
         over = true
       } else if (checkDraw()) {
-        alert('Ничья!')
+        endGame('Ничья!')
         over = true
       } else {
         player = 'X'
@@ -62,19 +77,19 @@ export default (container: Container = document): void => {
     game.appendChild(cell)
 
     cell.addEventListener('click', ((): void => {
-      if (cell.textContent === '' && player === 'X' && !over) {
-        checkCell(cell)
+      if (over || cell.textContent !== '' || player !== 'X') return
 
-        if (checkWin(player)) {
-          alert('Победа!')
-          over = true
-        } else if (checkDraw()) {
-          alert('Ничья!')
-          over = true
-        } else {
-          player = '0'
-          setTimeout(makeBotMove, 500)
-        }
+      checkCell(cell)
+
+      if (checkWin(player)) {
+        endGame('Победа!')
+        over = true
+      } else if (checkDraw()) {
+        endGame('Ничья!')
+        over = true
+      } else {
+        player = '0'
+        setTimeout(makeBotMove, 500)
       }
     }) as EventListener)
   }

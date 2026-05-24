@@ -31,9 +31,9 @@ export default (container: Container = document): void => {
     })
 
     if (!REPEAT_ANIMATION) {
-      const allShow: boolean = ([...items] as HTMLElement[]).every(
-        (item: HTMLElement): boolean => item.dataset.anim === 'show'
-      )
+      const allShow: boolean = ([...items] as HTMLElement[]).every((item: HTMLElement): boolean => {
+        return item.dataset.anim === 'show'
+      })
 
       if (allShow) {
         observer.disconnect()

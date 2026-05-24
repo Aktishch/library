@@ -1,8 +1,8 @@
-import { Container } from '@utils'
+import { Container, getData } from '@utils'
 
 type AccordionElement = HTMLButtonElement | HTMLAnchorElement
 
-const DATA_ACCORDION: string = 'data-accordion'
+const DATA_ACCORDION: string = getData('accordion')
 const DATA_CLOSE: string = 'data-close'
 const OVERFLOW_CLASSNAME: string = 'overflow-hidden'
 

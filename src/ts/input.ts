@@ -1,7 +1,9 @@
 const onInputText = (input: HTMLInputElement): void => {
-  const regExp: RegExp = /[0-9.,!@№#$%^&*()-=_+`~{}[\]\\/?<>|'"]/
+  const regExp: RegExp = /[0-9.,!@№#$%^&*()\-=_+`~{}[\]\\/?<>|'"]/g
 
-  if (input.value.match(regExp)) input.value = input.value.replace(regExp, '')
+  if (input.value.match(regExp)) {
+    input.value = input.value.replace(regExp, '')
+  }
 }
 
 const onInputNumber = (input: HTMLInputElement): void => {
@@ -9,7 +11,20 @@ const onInputNumber = (input: HTMLInputElement): void => {
 }
 
 const onInputFloat = (input: HTMLInputElement): void => {
-  input.value = input.value.replace(/^\.|[^\d.]|\.(?=.*\.)|^0+(?=\d)/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+  const selection: number | null = input.selectionStart
+  const length: number = input.value.length
+  const formatted: string = input.value
+    .replace(/^\.|[^\d.]|\.(?=.*\.)|^0+(?=\d)/g, '')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+
+  input.value = formatted
+
+  if (selection) {
+    const newLength: number = formatted.length
+    const cursorPosition: number = selection + (newLength - length)
+
+    input.setSelectionRange(cursorPosition, cursorPosition)
+  }
 }
 
 export default (): void => {

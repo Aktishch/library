@@ -1,7 +1,6 @@
 import { media } from '@plugins'
-import { hideScrollbar, html, showScrollbar } from '@utils'
+import { Breakpoint, hideScrollbar, html, showScrollbar } from '@utils'
 
-type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 type SidebarButton = HTMLButtonElement | HTMLAnchorElement
 
 const getSidebar = (value: string): HTMLDivElement => {
