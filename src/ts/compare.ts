@@ -62,7 +62,7 @@ export default (container: Container = document): void => {
     container.addEventListener('touchmove', onMove as EventListener, { passive: false })
     container.addEventListener('mouseup', onEnd as EventListener)
     container.addEventListener('mouseleave', onEnd as EventListener)
-    container.addEventListener('touchend', onEnd as EventListener)
-    container.addEventListener('touchcancel', onEnd as EventListener)
+    container.addEventListener('touchend', onEnd as EventListener, { passive: true })
+    container.addEventListener('touchcancel', onEnd as EventListener, { passive: true })
   })
 }

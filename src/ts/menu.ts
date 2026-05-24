@@ -1,41 +1,58 @@
 import { closeSidebar, openSidebar } from '@ts/sidebar'
-import { getTouchDevice } from '@utils'
+import { Container, getData, getTouchDevice } from '@utils'
 
-export default (): void => {
+const DATA_MENU: string = getData('menu')
+
+export default (container: Container = document): void => {
   if (!getTouchDevice()) return
 
-  const menu = document.querySelector('*[data-menu]') as HTMLDivElement
+  const menu = container.querySelector(`*[${DATA_MENU}]`) as HTMLDivElement
 
   if (!menu) return
 
-  const value: number = 100
-  let initialX: number
-  let currentX: number
-  let active: boolean = false
+  const threshold: number = 70
+  let initialY: number = 0
+  let initialX: number = 0
+  let currentY: number = 0
+  let currentX: number = 0
+  let isActive: boolean = false
 
   const onStart = (event: TouchEvent): void => {
-    initialX = event.touches[0].clientX
-  }
+    const touch: Touch = event.touches[0]
 
-  const onEnd = (event: TouchEvent): void => {
-    if (!active) return
-
-    if ((event.target as HTMLElement).closest('[data-menu]')) {
-      if (initialX - currentX > value) closeSidebar(menu)
-    } else {
-      if (initialX <= 32 && initialX - currentX < -value) openSidebar(menu)
-    }
-
-    active = false
+    initialY = touch.clientY
+    initialX = touch.clientX
+    currentY = touch.clientY
+    currentX = touch.clientX
+    isActive = !!(event.target as HTMLElement).closest(`[${DATA_MENU}]`)
   }
 
   const onMove = (event: TouchEvent): void => {
-    active = true
-    currentX = event.touches[0].clientX
+    const touch: Touch = event.touches[0]
+
+    currentY = touch.clientY
+    currentX = touch.clientX
   }
 
-  document.addEventListener('touchstart', onStart as EventListener, { passive: true })
-  document.addEventListener('touchend', onEnd as EventListener, { passive: true })
-  document.addEventListener('touchcancel', onEnd as EventListener, { passive: true })
-  document.addEventListener('touchmove', onMove as EventListener, { passive: true })
+  const onEnd = (): void => {
+    const deltaY: number = initialY - currentY
+    const deltaX: number = initialX - currentX
+
+    if (Math.abs(deltaY) > Math.abs(deltaX)) return
+
+    if (isActive) {
+      if (deltaX > threshold) {
+        closeSidebar(menu)
+      }
+    } else {
+      if (initialX <= 32 && deltaX < -threshold) {
+        openSidebar(menu)
+      }
+    }
+  }
+
+  container.addEventListener('touchstart', onStart as EventListener, { passive: true })
+  container.addEventListener('touchmove', onMove as EventListener, { passive: true })
+  container.addEventListener('touchend', onEnd as EventListener, { passive: true })
+  container.addEventListener('touchcancel', onEnd as EventListener, { passive: true })
 }

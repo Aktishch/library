@@ -3,9 +3,9 @@ import { initCalendar } from '@ts/air-datepicker'
 import imagePreview from '@ts/image-preview'
 import lazyLoad from '@ts/lazy-load'
 import { setStateSubmitBtn } from '@ts/submit-handler'
-import { Container, getData, getTouchDevice } from '@utils'
+import { getData, getTouchDevice } from '@utils'
 
-type Callback = ((container: Container | undefined) => void) | undefined
+type Callback = ((container: HTMLElement | undefined) => void) | undefined
 
 interface Dialog {
   open: (src: string, callback?: Callback) => void

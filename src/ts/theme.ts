@@ -1,4 +1,4 @@
-import { checkCookie, html, setCookies } from '@utils'
+import { checkCookie, COOKIE_EXPIRES_DAYS, html, setCookies } from '@utils'
 
 export default (): void => {
   const toggles = document.querySelectorAll('*[data-theme-toggle]') as NodeListOf<HTMLInputElement>
@@ -19,7 +19,7 @@ export default (): void => {
 
     html.dataset.theme = value
     checkToggles(!isDark)
-    setCookies({ name, value, path: '/', expires: !isDark ? 31 : -1 })
+    setCookies({ name, value, path: '/', expires: !isDark ? COOKIE_EXPIRES_DAYS : -1 })
   }
 
   if (hasCookie) {

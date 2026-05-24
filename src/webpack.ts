@@ -25,7 +25,7 @@ import locomotiveScroll from '@ts/locomotive-scroll'
 import menu from '@ts/menu'
 import movement from '@ts/movement'
 import outNumbers from '@ts/out-numbers'
-import pallete from '@ts/pallete'
+import palette from '@ts/palette'
 import parallax from '@ts/parallax'
 import password from '@ts/password'
 import phoneMask from '@ts/phone-mask'
@@ -85,7 +85,7 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   listing()
   menu()
   movement()
-  pallete()
+  palette()
   parallax()
   password()
   phoneMask()

@@ -95,7 +95,7 @@
 
   <% const social = ['ok', 'yt', 'inst', 'tw', 'fb', 'vk'] %>
 
-  <% const pallete = [
+  <% const palette = [
     {
       text: 'Первичный',
       name: 'primary',
@@ -173,17 +173,17 @@
         </div>
       </div>
       <div class="transition-[opacity,_visibility,_transform] duration-500 delay-1000 px-4 pt-4 pb-10 mt-auto group-[:not([data-open])]/menu:invisible group-[:not([data-open])]/menu:opacity-0 group-[:not([data-open])]/menu:translate-y-1/4">
-        <div class="text-white mb-7" data-pallete>
+        <div class="text-white mb-7" data-palette>
           <ul class="flex flex-col gap-4 mb-8">
-            <% pallete.forEach((item) => { %>
-            <li class="flex items-center justify-between gap-5" data-pallete-item>
+            <% palette.forEach((item) => { %>
+            <li class="flex items-center justify-between gap-5" data-palette-item>
               <span><%= item.text %></span>
-              <input class="bg-transparent cursor-pointer shrink-0 size-7 ml-auto" data-pallete-input="<%= item.name %>" type="color" value="<%= item.value %>">
-              <button class="btn btn-white text-second rounded" data-pallete-button="<%= item.value %>" data-waved="dark">Сбросить</button>
+              <input class="bg-transparent cursor-pointer shrink-0 size-7 ml-auto" data-palette-input="<%= item.name %>" type="color" value="<%= item.value %>">
+              <button class="btn btn-white text-second rounded" data-palette-button="<%= item.value %>" data-waved="dark">Сбросить</button>
             </li>
             <% }) %>
           </ul>
-          <button class="btn btn-second btn-fill btn-lg w-full" data-pallete-reset data-waved="dark">Сбросить всё</button>
+          <button class="btn btn-second btn-fill btn-lg w-full" data-palette-reset data-waved="dark">Сбросить всё</button>
         </div>
         <div class="flex items-center justify-center gap-4">
           <% social.forEach((item) => {  %>

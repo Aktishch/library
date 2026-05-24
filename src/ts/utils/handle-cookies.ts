@@ -7,6 +7,8 @@ interface CookieOptions {
   expires: number
 }
 
+export const COOKIE_EXPIRES_DAYS: number = 365
+
 export const setCookies = ({ name, value, path, expires }: CookieOptions): void => {
   const domain: string = html.dataset.domain || window.location.hostname
   const cookieName: string = encodeURIComponent(name)

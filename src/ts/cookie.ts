@@ -1,4 +1,4 @@
-import { checkCookie, Container, getData, setCookies } from '@utils'
+import { checkCookie, Container, COOKIE_EXPIRES_DAYS, getData, setCookies } from '@utils'
 
 const DATA_COOKIE: string = getData('cookie')
 
@@ -19,7 +19,7 @@ export default (container: Container = document): void => {
       cookie.remove()
     } else {
       const button = cookie.querySelector(`*[${DATA_COOKIE}-button]`) as HTMLButtonElement
-      const expires: number = Number(cookie.dataset.expires) || 7
+      const expires: number = Number(cookie.dataset.expires) || Math.floor(COOKIE_EXPIRES_DAYS / 12 / 4)
       const path: string = cookie.dataset.cookie || '/'
 
       button.addEventListener('click', ((): void => {

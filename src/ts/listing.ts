@@ -1,35 +1,42 @@
-import { Container } from '@utils'
+import { Container, getData } from '@utils'
 
-const className: string[] = ['hidden']
+const DATA_LISTING: string = getData('listing')
+const ITEM_HIDDEN_CLASSNAME: string = 'hidden'
 
 export default (container: Container = document): void => {
-  const listings = container.querySelectorAll('*[data-listing]') as NodeListOf<HTMLElement>
+  const listings = container.querySelectorAll(`*[${DATA_LISTING}]`) as NodeListOf<HTMLElement>
+
+  if (!listings.length) return
 
   listings.forEach((listing: HTMLElement): void => {
-    if (!listing) return
-
-    const show = listing.querySelector('*[data-listing-show]') as HTMLButtonElement
-    const items = listing.querySelectorAll('*[data-listing-item]') as NodeListOf<HTMLDivElement>
+    const show = listing.querySelector(`*[${DATA_LISTING}-show]`) as HTMLButtonElement
+    const items = listing.querySelectorAll(`*[${DATA_LISTING}-item]`) as NodeListOf<HTMLDivElement>
 
     items.forEach((item: HTMLDivElement): void => {
-      if (item) item.classList.add(...className)
+      if (!item) return
+
+      item.classList.add(ITEM_HIDDEN_CLASSNAME)
     })
 
     show.addEventListener('click', ((): void => {
-      const items = listing.querySelectorAll('*[data-listing-item]') as NodeListOf<HTMLDivElement>
+      const items = listing.querySelectorAll(`*[${DATA_LISTING}-item]`) as NodeListOf<HTMLDivElement>
       const count: number = Number(listing.dataset.listing) || items.length
 
       for (let i: number = 0; i < count; i++) {
         const item = items[i] as HTMLDivElement
 
         if (item) {
-          if (item.hasAttribute('data-anim')) item.dataset.anim = 'show'
+          if (item.hasAttribute('data-anim')) {
+            item.dataset.anim = 'show'
+          }
 
-          item.removeAttribute('data-listing-item')
-          item.classList.remove(...className)
+          item.removeAttribute(`${DATA_LISTING}-item`)
+          item.classList.remove(ITEM_HIDDEN_CLASSNAME)
         }
 
-        if (!item || items.length === count) show.remove()
+        if (!item || items.length === count) {
+          show.remove()
+        }
       }
     }) as EventListener)
   })
