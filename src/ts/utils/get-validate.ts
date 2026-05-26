@@ -12,6 +12,7 @@ interface ErrorMessage {
 }
 
 type Label = HTMLLabelElement | HTMLDivElement
+type Input = HTMLInputElement | null
 
 const INPUT_ERROR_CLASSNAME: string = 'input-error'
 const ERROR_VISIBLE_CLASSNAMES: string[] = ['invisible', 'opacity-0']
@@ -27,15 +28,15 @@ const ERROR_MESSAGE: ErrorMessage = {
 }
 
 export const getValidate = (form: HTMLFormElement): boolean => {
-  const labels = form.querySelectorAll('*[data-label]') as NodeListOf<Label>
+  const labels: NodeListOf<Label> = form.querySelectorAll('*[data-label]')
   let isValid: boolean = true
-  let firstInvalidInput: HTMLInputElement | null = null
+  let firstInvalidInput: Input = null
 
   if (!labels.length) return isValid
 
   labels.forEach((label: Label): void => {
-    const input = label.querySelector('*[data-input]') as HTMLInputElement
-    const error = label.querySelector('*[data-error]') as HTMLSpanElement
+    const input: Input = label.querySelector('*[data-input]')
+    const error: HTMLSpanElement | null = label.querySelector('*[data-error]')
 
     if (!input || !error) return
 
@@ -67,15 +68,15 @@ export const getValidate = (form: HTMLFormElement): boolean => {
     const handleInput = (): void => {
       if (input.value.length > 0) {
         hideError()
-        input.removeEventListener('input', handleInput as EventListener)
+        input.removeEventListener('input', handleInput)
       }
     }
 
-    input.removeEventListener('input', handleInput as EventListener)
+    input.removeEventListener('input', handleInput)
 
     if (input.type !== 'file' && !input.value.length) {
       showError()
-      input.addEventListener('input', handleInput as EventListener)
+      input.addEventListener('input', handleInput)
       return
     }
 
@@ -164,7 +165,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
     }
 
     if (invalidInput) {
-      input.addEventListener('input', handleInput as EventListener)
+      input.addEventListener('input', handleInput)
     }
   })
 

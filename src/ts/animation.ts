@@ -3,7 +3,7 @@ import { Container } from '@utils'
 const REPEAT_ANIMATION: boolean = true
 
 export default (container: Container = document): void => {
-  const items = container.querySelectorAll('*[data-anim]') as NodeListOf<HTMLElement>
+  const items: NodeListOf<HTMLElement> = container.querySelectorAll('*[data-anim]')
 
   if (!items.length) return
 
@@ -15,7 +15,7 @@ export default (container: Container = document): void => {
 
   const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
     entries.forEach((entry: IntersectionObserverEntry): void => {
-      const item = entry.target as HTMLElement
+      const item: HTMLElement = entry.target as HTMLElement
 
       if (entry.isIntersecting) {
         item.dataset.anim = 'show'

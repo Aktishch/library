@@ -1,1 +1,1 @@
-export const html = document.documentElement as HTMLHtmlElement
+export const html: HTMLElement = document.documentElement

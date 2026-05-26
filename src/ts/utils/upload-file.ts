@@ -11,17 +11,21 @@ type Reject = (reason: string) => void
 export const uploadFile = (file: File): Promise<UploadedFile> => {
   return new Promise<UploadedFile>((resolve: Resolve, reject: Reject): void => {
     const reader: FileReader = new FileReader()
-    const setReject = (): void => reject(isEn ? 'File upload error' : 'Ошибка при загрузке файла')
 
-    reader.addEventListener('load', ((): void => {
+    const setError = (): void => {
+      reject(isEn ? 'File upload error' : 'Ошибка при загрузке файла')
+    }
+
+    const readFile = (): void => {
       if (reader.result) {
         resolve({ file, url: reader.result.toString() })
       } else {
-        setReject()
+        setError()
       }
-    }) as EventListener)
+    }
 
-    reader.addEventListener('error', setReject as EventListener)
+    reader.addEventListener('load', readFile)
+    reader.addEventListener('error', setError)
     reader.readAsDataURL(file)
   })
 }

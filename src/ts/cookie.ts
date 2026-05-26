@@ -22,10 +22,12 @@ export default (container: Container = document): void => {
       const expires: number = Number(cookie.dataset.expires) || Math.floor(COOKIE_EXPIRES_DAYS / 12 / 4)
       const path: string = cookie.dataset.cookie || '/'
 
-      button.addEventListener('click', ((): void => {
+      const addCookie = (): void => {
         setCookies({ name, value: 'true', path, expires })
         cookie.remove()
-      }) as EventListener)
+      }
+
+      button.addEventListener('click', addCookie as EventListener)
     }
   })
 }

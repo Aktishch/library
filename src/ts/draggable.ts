@@ -11,6 +11,8 @@ interface ClientCoordinates {
   x: number
 }
 
+type DraggableEvent = TouchEvent | MouseEvent
+
 const DATA_DRAGGABLE: string = getData('draggable')
 
 const setTranslate = ({ item, positionX, positionY }: Translate): void => {
@@ -42,14 +44,14 @@ export default (container: Container = document): void => {
       })
     }
 
-    const getClientCoordinates = (event: Event): ClientCoordinates => {
+    const getClientCoordinates = (event: DraggableEvent): ClientCoordinates => {
       return {
-        y: 'touches' in event ? (event as TouchEvent).touches[0].clientY : (event as MouseEvent).clientY,
-        x: 'touches' in event ? (event as TouchEvent).touches[0].clientX : (event as MouseEvent).clientX
+        y: 'touches' in event ? event.touches[0].clientY : event.clientY,
+        x: 'touches' in event ? event.touches[0].clientX : event.clientX
       }
     }
 
-    const onStart = (event: Event): void => {
+    const onStart = (event: DraggableEvent): void => {
       if (event.target === draggable) {
         hideScrollbar()
         isActive = true
@@ -58,7 +60,7 @@ export default (container: Container = document): void => {
       }
     }
 
-    const onMove = (event: Event): void => {
+    const onMove = (event: DraggableEvent): void => {
       if (!isActive) return
 
       if (event.cancelable) {

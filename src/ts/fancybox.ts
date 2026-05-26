@@ -34,9 +34,11 @@ if (!getTouchDevice()) {
   Fancybox.getDefaults().on = {
     ...Fancybox.getDefaults().on,
     ready: (fancyboxRef): void => {
-      const container = fancyboxRef.getContainer() as HTMLElement
+      const container = fancyboxRef.getContainer()
 
-      container.setAttribute('data-lenis-prevent', '')
+      if (container) {
+        container.setAttribute('data-lenis-prevent', '')
+      }
     }
   }
 }

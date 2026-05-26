@@ -36,7 +36,7 @@ const EXCLUDE_DATES: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +
 window.AirDatepicker = AirDatepicker
 
 export const initCalendar = (container: Container = document): void => {
-  const calendar = container.querySelector(`*[${DATA_DATEPICKER}-calendar]`) as HTMLDivElement
+  const calendar: HTMLDivElement | null = container.querySelector(`*[${DATA_DATEPICKER}-calendar]`)
 
   if (!calendar) return
 
@@ -80,19 +80,19 @@ export const initCalendar = (container: Container = document): void => {
     locale: localeRu,
     onRenderCell: renderCalendarCell,
     selectedDates: [new Date()]
-  }) as AirDatepicker<HTMLDivElement>
+  })
 
   filtering(container)
 }
 
 export default (container: Container = document): void => {
-  const datepickers = container.querySelectorAll(`*[${DATA_DATEPICKER}]`) as NodeListOf<HTMLFormElement>
+  const datepickers: NodeListOf<HTMLFormElement> = container.querySelectorAll(`*[${DATA_DATEPICKER}]`)
 
   if (!datepickers.length) return
 
   datepickers.forEach((datepicker: HTMLFormElement): void => {
-    const inputMin = datepicker.querySelector(`*[${DATA_DATEPICKER}-min]`) as HTMLInputElement
-    const inputMax = datepicker.querySelector(`*[${DATA_DATEPICKER}-max]`) as HTMLInputElement
+    const inputMin: HTMLInputElement | null = datepicker.querySelector(`*[${DATA_DATEPICKER}-min]`)
+    const inputMax: HTMLInputElement | null = datepicker.querySelector(`*[${DATA_DATEPICKER}-max]`)
 
     if (!inputMin || !inputMax) return
 

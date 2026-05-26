@@ -3,14 +3,14 @@ import { Container, getData, hideScrollbar, showScrollbar } from '@utils'
 const DATA_COMPARE: string = getData('compare')
 
 export default (container: Container = document): void => {
-  const compares = container.querySelectorAll(`*[${DATA_COMPARE}]`) as NodeListOf<HTMLDivElement>
+  const compares: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_COMPARE}]`)
 
   if (!compares.length) return
 
   const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
     entries.forEach((entry: ResizeObserverEntry): void => {
-      const compare = entry.target as HTMLDivElement
-      const image = compare.querySelector(`*[${DATA_COMPARE}-image]`) as HTMLImageElement
+      const compare: HTMLDivElement = entry.target as HTMLDivElement
+      const image: HTMLImageElement | null = compare.querySelector(`*[${DATA_COMPARE}-image]`)
 
       if (image) {
         image.style.width = `${entry.contentRect.width}px`
@@ -19,8 +19,11 @@ export default (container: Container = document): void => {
   })
 
   compares.forEach((compare: HTMLDivElement): void => {
-    const before = compare.querySelector(`*[${DATA_COMPARE}-before]`) as HTMLDivElement
-    const change = compare.querySelector(`*[${DATA_COMPARE}-change]`) as HTMLDivElement
+    const before: HTMLDivElement | null = compare.querySelector(`*[${DATA_COMPARE}-before]`)
+    const change: HTMLDivElement | null = compare.querySelector(`*[${DATA_COMPARE}-change]`)
+
+    if (!before || !change) return
+
     let isActive: boolean = false
 
     const updatePosition = (pageX: number): void => {
@@ -38,7 +41,7 @@ export default (container: Container = document): void => {
       }
     }
 
-    const onMove = (event: MouseEvent | TouchEvent): void => {
+    const onMove = (event: TouchEvent | MouseEvent): void => {
       if (!isActive) return
 
       if (event.cancelable) {

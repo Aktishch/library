@@ -40,17 +40,19 @@ interface TemplateParameters extends HtmlWebpackPlugin.TemplateParameter {
   include: Include
 }
 
-const dirName: string = path.dirname(fileURLToPath(import.meta.url))
+const DIR_NAME: string = path.dirname(fileURLToPath(import.meta.url))
 
 const generatePlugins = ({ templateDir, script, src, isProd }: HtmlPlugin): HtmlWebpackPlugin[] => {
-  const fullPath: string = path.resolve(dirName, templateDir)
+  const fullPath: string = path.resolve(DIR_NAME, templateDir)
 
   if (!fs.existsSync(fullPath)) return []
 
   const templateFiles: string[] = fs.readdirSync(fullPath)
 
   return templateFiles
-    .filter((file: string): boolean => path.extname(file).toLowerCase() === '.html')
+    .filter((file: string): boolean => {
+      return path.extname(file).toLowerCase() === '.html'
+    })
     .map((templateFile: string): HtmlWebpackPlugin => {
       const name: string = path.parse(templateFile).name
 
@@ -72,7 +74,7 @@ const generatePlugins = ({ templateDir, script, src, isProd }: HtmlPlugin): Html
 
             if (!fileSystem) return
 
-            const absolutePath: string = path.resolve(dirName, 'src', targetPath)
+            const absolutePath: string = path.resolve(DIR_NAME, 'src', targetPath)
 
             compilation.fileDependencies.add(absolutePath)
 
@@ -101,18 +103,18 @@ export default (env: WebpackEnv, argv: WebpackArgv): Configuration => {
   return {
     mode: isProd ? 'production' : 'development',
     devtool: isProd ? 'source-map' : 'eval-cheap-module-source-map',
-    entry: path.resolve(dirName, 'src/webpack.ts'),
+    entry: path.resolve(DIR_NAME, 'src/webpack.ts'),
     cache: isProd ? { type: 'filesystem' } : true,
     resolve: {
       extensions: ['.js', '.ts'],
       alias: {
-        '@plugins': path.resolve(dirName, 'plugins'),
-        '@ts': path.resolve(dirName, 'src/ts'),
-        '@utils': path.resolve(dirName, 'src/ts/utils')
+        '@plugins': path.resolve(DIR_NAME, 'plugins'),
+        '@ts': path.resolve(DIR_NAME, 'src/ts'),
+        '@utils': path.resolve(DIR_NAME, 'src/ts/utils')
       }
     },
     output: {
-      path: path.resolve(dirName, 'dist'),
+      path: path.resolve(DIR_NAME, 'dist'),
       filename: 'js/application.js',
       clean: true
     },
@@ -143,7 +145,7 @@ export default (env: WebpackEnv, argv: WebpackArgv): Configuration => {
       rules: [
         {
           test: /\.html$/i,
-          include: [path.resolve(dirName, 'src/includes'), path.resolve(dirName, 'src/components')],
+          include: [path.resolve(DIR_NAME, 'src/includes'), path.resolve(DIR_NAME, 'src/components')],
           use: [
             {
               loader: 'html-loader',
@@ -196,7 +198,7 @@ export default (env: WebpackEnv, argv: WebpackArgv): Configuration => {
       historyApiFallback: true,
       watchFiles: ['src/**/*.html', 'src/includes/**/*.html', 'src/components/**/*.html'],
       static: {
-        directory: path.join(dirName, 'dist')
+        directory: path.join(DIR_NAME, 'dist')
       }
     }
   } satisfies Configuration
