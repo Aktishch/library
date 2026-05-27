@@ -1,28 +1,58 @@
+import { Container, getData } from '@utils'
+
+type Quantity = HTMLDivElement | null
+type Input = HTMLInputElement | null
+type Button = HTMLButtonElement | null
+
+const DATA_QUANTITY: string = getData('quantity')
+const DATA_INPUT: string = getData('input')
+
 const decreaseQuantity = (button: HTMLButtonElement): void => {
-  const quantity = button.closest('[data-quantity]') as HTMLDivElement
-  const input = quantity.querySelector('*[data-input]') as HTMLInputElement
-  let value: number = Number(input.value)
+  const quantity: Quantity = button.closest(`[${DATA_QUANTITY}]`)
 
-  --value
-  input.value = String(value)
+  if (!quantity) return
 
-  if (value < 1) input.value = '1'
+  const input: Input = quantity.querySelector(`*[${DATA_INPUT}]`)
+
+  if (input) {
+    let value: number = Number(input.value)
+
+    --value
+    input.value = String(value)
+
+    if (value < 1) {
+      input.value = '1'
+    }
+  }
 }
 
 const increaseQuantity = (button: HTMLButtonElement): void => {
-  const quantity = button.closest('[data-quantity]') as HTMLDivElement
-  const input = quantity.querySelector('*[data-input]') as HTMLInputElement
-  let value: number = Number(input.value)
+  const quantity: Quantity = button.closest(`[${DATA_QUANTITY}]`)
 
-  ++value
-  input.value = String(value)
+  if (!quantity) return
+
+  const input: Input = quantity.querySelector(`*[${DATA_INPUT}]`)
+
+  if (input) {
+    let value: number = Number(input.value)
+
+    ++value
+    input.value = String(value)
+  }
 }
 
-export default (): void => {
-  document.addEventListener('click', ((event: Event): void => {
-    const button = event.target as HTMLButtonElement
+export default (container: Container = document): void => {
+  container.addEventListener('click', ((event: Event): void => {
+    const target: HTMLElement = event.target as HTMLElement
+    const decrease: Button = target.closest(`[${DATA_QUANTITY}-decrease]`)
+    const increase: Button = target.closest(`[${DATA_QUANTITY}-increase]`)
 
-    if (button.closest('[data-quantity-decrease]')) decreaseQuantity(button)
-    if (button.closest('[data-quantity-increase]')) increaseQuantity(button)
+    if (decrease) {
+      decreaseQuantity(decrease)
+    }
+
+    if (increase) {
+      increaseQuantity(increase)
+    }
   }) as EventListener)
 }

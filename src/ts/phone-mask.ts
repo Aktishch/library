@@ -1,14 +1,20 @@
-const phoneEvents: string[] = ['input', 'keyup', 'keydown']
+import { Container } from '@utils'
 
-const getPhoneValue = (input: HTMLInputElement): string => input.value.replace(/\D/g, '')
+const PHONE_EVENTS: string[] = ['input', 'keyup', 'keydown']
+
+const getPhoneValue = (input: HTMLInputElement): string => {
+  return input.value.replace(/\D/g, '')
+}
 
 const getFormatValue = (value: string): string => {
-  if (!['7', '8'].includes(value[0])) value = '7' + value
+  if (!['7', '8'].includes(value[0])) {
+    value = '7' + value
+  }
 
-  const firstVal: string = value[0] === '8' ? '8' : '+7'
+  const firstValue: string = value[0] === '8' ? '8' : '+7'
   let formatted: string
 
-  formatted = firstVal + ' '
+  formatted = firstValue + ' '
 
   if (value.length > 1) formatted += '(' + value.substring(1, 4)
   if (value.length >= 5) formatted += ') ' + value.substring(4, 7)
@@ -19,14 +25,19 @@ const getFormatValue = (value: string): string => {
 }
 
 const onInput = (event: InputEvent): '' | undefined => {
-  const input = event.target as HTMLInputElement
+  const input: HTMLInputElement = event.target as HTMLInputElement
   const selection: number | null = input.selectionStart
   const value: string = getPhoneValue(input)
 
-  if (!value) return (input.value = '')
+  if (!value) {
+    return (input.value = '')
+  }
 
   if (input.value.length !== selection) {
-    if (event.data) input.value = getFormatValue(value)
+    if (event.data) {
+      input.value = getFormatValue(value)
+    }
+
     return
   }
 
@@ -34,21 +45,23 @@ const onInput = (event: InputEvent): '' | undefined => {
 }
 
 const onKeyUp = (event: KeyboardEvent): void => {
-  const input = event.target as HTMLInputElement
+  const input: HTMLInputElement = event.target as HTMLInputElement
 
   input.maxLength = input.value[0] === '8' ? 17 : 18
 }
 
 const onKeyDown = (event: KeyboardEvent): void => {
-  const input = event.target as HTMLInputElement
+  const input: HTMLInputElement = event.target as HTMLInputElement
   const value: string = getPhoneValue(input)
 
-  if (event.code === 'Backspace' && value.length === 1) input.value = ''
+  if (event.code === 'Backspace' && value.length === 1) {
+    input.value = ''
+  }
 }
 
-export default (): void => {
-  phoneEvents.forEach((phoneEvent: string): void => {
-    document.addEventListener(phoneEvent, ((event: Event): void => {
+export default (container: Container = document): void => {
+  PHONE_EVENTS.forEach((phoneEvent: string): void => {
+    container.addEventListener(phoneEvent, ((event: Event): void => {
       if ((event.target as HTMLInputElement).getAttribute('type') === 'tel') {
         switch (event.type) {
           case 'input': {
