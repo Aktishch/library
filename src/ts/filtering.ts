@@ -1,6 +1,10 @@
 import { targetId } from '@ts/scroll-to'
 import { Container, getData } from '@utils'
 
+type Category = HTMLButtonElement | HTMLAnchorElement
+type Plug = HTMLDivElement | null
+type Line = HTMLSpanElement | null
+
 interface CheckedItem {
   condition: boolean
   item: HTMLDivElement
@@ -9,13 +13,11 @@ interface CheckedItem {
 interface CheckedValue {
   name: string
   cards: NodeListOf<HTMLDivElement>
-  plug: HTMLDivElement
+  plug: Plug
 }
 
-type Category = HTMLButtonElement | HTMLAnchorElement
-
 interface LinePosition {
-  line: HTMLSpanElement
+  line: Line
   category: Category
 }
 
@@ -69,14 +71,14 @@ const updateLinePosition = ({ line, category }: LinePosition): void => {
 }
 
 export default (container: Container = document): void => {
-  const filters = container.querySelectorAll(`*[${DATA_FILTER}]`) as NodeListOf<HTMLDivElement>
+  const filters: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_FILTER}]`)
 
   if (!filters.length) return
 
   const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
     entries.forEach((entry: ResizeObserverEntry): void => {
-      const category = entry.target as Category
-      const filter = category.closest(`[${DATA_FILTER}]`) as HTMLDivElement
+      const category: Category = entry.target as Category
+      const filter: HTMLDivElement | null = category.closest(`[${DATA_FILTER}]`)
 
       if (!filter) return
 
@@ -84,7 +86,7 @@ export default (container: Container = document): void => {
 
       if (!value) return
 
-      const line = container.querySelector(`*[${DATA_FILTER}-line="${value}"]`) as HTMLSpanElement
+      const line: Line = container.querySelector(`*[${DATA_FILTER}-line="${value}"]`)
 
       if (line && category.hasAttribute(DATA_ACTIVE)) {
         updateLinePosition({ line, category })
@@ -97,18 +99,16 @@ export default (container: Container = document): void => {
 
     if (!value) return
 
-    const categories = container.querySelectorAll(`*[${DATA_FILTER}-category="${value}"]`) as NodeListOf<Category>
-    const cards = container.querySelectorAll(`*[${DATA_FILTER}-card="${value}"]`) as NodeListOf<HTMLDivElement>
-    const plug = container.querySelector(`*[${DATA_FILTER}-plug="${value}"]`) as HTMLDivElement
-    const line = container.querySelector(`*[${DATA_FILTER}-line="${value}"]`) as HTMLSpanElement
+    const categories: NodeListOf<Category> = container.querySelectorAll(`*[${DATA_FILTER}-category="${value}"]`)
+    const cards: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_FILTER}-card="${value}"]`)
+    const plug: Plug = container.querySelector(`*[${DATA_FILTER}-plug="${value}"]`)
+    const line: Line = container.querySelector(`*[${DATA_FILTER}-line="${value}"]`)
 
     const getCurrentCategory = (): Category => {
-      let active = categories[0] as Category
+      let active: Category = categories[0]
 
       categories.forEach((category: Category): void => {
-        if (!category) return
-
-        if (category.hasAttribute(DATA_ACTIVE)) {
+        if (category && category.hasAttribute(DATA_ACTIVE)) {
           active = category
         }
       })
@@ -117,7 +117,7 @@ export default (container: Container = document): void => {
     }
 
     const setCurrentCard = (category: Category): void => {
-      const active = getCurrentCategory() as Category
+      const active: Category = getCurrentCategory()
       const name: string | undefined = category.dataset.filteringValue
 
       if (!name) return
@@ -130,9 +130,9 @@ export default (container: Container = document): void => {
     }
 
     cards.forEach((card: HTMLDivElement): void => {
-      if (!card) return
-
-      addTransition(card)
+      if (card) {
+        addTransition(card)
+      }
     })
 
     if (plug) {
@@ -151,14 +151,14 @@ export default (container: Container = document): void => {
       }) as EventListener)
     })
 
-    if (targetId && targetId !== '') {
+    if (targetId) {
       for (const [index, card] of cards.entries()) {
         if (card.querySelector(`#${targetId}`)) {
-          const category = categories[index] as Category
+          const category: Category = categories[index]
 
-          if (!category) return
-
-          setCurrentCard(category)
+          if (category) {
+            setCurrentCard(category)
+          }
         }
       }
     }

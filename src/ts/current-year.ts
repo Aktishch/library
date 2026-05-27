@@ -1,7 +1,7 @@
 import { Container } from '@utils'
 
 export default (container: Container = document): void => {
-  const years = container.querySelectorAll('*[data-current-year]') as NodeListOf<HTMLSpanElement>
+  const years: NodeListOf<HTMLSpanElement> = container.querySelectorAll('*[data-current-year]')
 
   if (!years.length) return
 

@@ -1,26 +1,26 @@
-import { Container } from '@utils'
-
-interface DataSave {
-  [index: string]: string | boolean
-}
+import { Container, getData, isEn, logError } from '@utils'
 
 type Input = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+
+const DATA_SAVE: string = getData('save')
 
 const handleInput = (input: Input): boolean => {
   return !input || input.hasAttribute('hidden') || input.type === 'hidden' || input.type === 'file'
 }
 
 export default (container: Container = document): void => {
-  const forms = container.querySelectorAll('*[data-save]') as NodeListOf<HTMLFormElement>
+  const forms: NodeListOf<HTMLFormElement> = container.querySelectorAll(`*[${DATA_SAVE}]`)
 
   if (!forms.length) return
 
   forms.forEach((form: HTMLFormElement): void => {
     const value: string | undefined = form.dataset.save
 
-    if (!value) return
+    if (!value) {
+      return logError(isEn ? `${DATA_SAVE} is missing a value` : `У ${DATA_SAVE} отсутствует значение`)
+    }
 
-    const dataSave: DataSave = JSON.parse(sessionStorage.getItem(value) || '{}')
+    const dataSave: Record<string, string | boolean> = JSON.parse(sessionStorage.getItem(value) || '{}')
     const inputs: Input[] = [
       ...form.querySelectorAll('input'),
       ...form.querySelectorAll('select'),

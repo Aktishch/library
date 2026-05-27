@@ -1,4 +1,4 @@
-import { Container, getData, hideScrollbar, showScrollbar } from '@utils'
+import { Container, getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
 
 const DATA_COMPARE: string = getData('compare')
 
@@ -22,7 +22,13 @@ export default (container: Container = document): void => {
     const before: HTMLDivElement | null = compare.querySelector(`*[${DATA_COMPARE}-before]`)
     const change: HTMLDivElement | null = compare.querySelector(`*[${DATA_COMPARE}-change]`)
 
-    if (!before || !change) return
+    if (!before || !change) {
+      return logError(
+        isEn
+          ? `The ${DATA_COMPARE} does not have a ${DATA_COMPARE}-(before, change) child element`
+          : `У ${DATA_COMPARE} отсутствует дочерний элемент ${DATA_COMPARE}-(before, change)`
+      )
+    }
 
     let isActive: boolean = false
 

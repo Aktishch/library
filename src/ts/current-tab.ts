@@ -1,7 +1,7 @@
 import { Container, isEn } from '@utils'
 
 export default (container: Container = document): void => {
-  const title = container.querySelector('title') as HTMLTitleElement
+  const title: HTMLTitleElement | null = container.querySelector('title')
 
   if (!title) return
 

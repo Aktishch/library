@@ -24,8 +24,8 @@ export const uploadFile = (file: File): Promise<UploadedFile> => {
       }
     }
 
-    reader.addEventListener('load', readFile)
-    reader.addEventListener('error', setError)
+    reader.addEventListener('load', readFile as EventListener)
+    reader.addEventListener('error', setError as EventListener)
     reader.readAsDataURL(file)
   })
 }

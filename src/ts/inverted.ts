@@ -1,6 +1,10 @@
-export default (): void => {
-  document.addEventListener('click', ((event: Event): void => {
-    const toggle = (event.target as HTMLElement).closest('[data-inverted-toggle]') as HTMLButtonElement
+import { Container, getData } from '@utils'
+
+const DATA_INVERTED: string = getData('inverted')
+
+export default (container: Container = document): void => {
+  container.addEventListener('click', ((event: Event): void => {
+    const toggle: HTMLButtonElement | null = (event.target as HTMLElement).closest(`[${DATA_INVERTED}-toggle]`)
 
     if (!toggle) return
 
@@ -8,8 +12,10 @@ export default (): void => {
 
     if (!value) return
 
-    const inverted = toggle.closest('[data-inverted]') as HTMLDivElement
+    const inverted: HTMLDivElement | null = toggle.closest(`[${DATA_INVERTED}]`)
 
-    inverted.dataset.inverted = value
+    if (inverted) {
+      inverted.dataset.inverted = value
+    }
   }) as EventListener)
 }

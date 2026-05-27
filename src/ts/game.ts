@@ -1,7 +1,7 @@
 import { Container } from '@utils'
 
 export default (container: Container = document): void => {
-  const game = container.querySelector('*[data-game]') as HTMLDivElement
+  const game: HTMLDivElement | null = container.querySelector('*[data-game]')
 
   if (!game) return
 
@@ -49,11 +49,13 @@ export default (container: Container = document): void => {
   }
 
   const makeBotMove = (): void => {
-    const emptyCells: HTMLButtonElement[] = cells.filter((cell: HTMLButtonElement): boolean => cell.textContent === '')
+    const emptyCells: HTMLButtonElement[] = cells.filter((cell: HTMLButtonElement): boolean => {
+      return cell.textContent === ''
+    })
 
     if (emptyCells.length > 0 && player === '0') {
       const randomIndex: number = Math.floor(Math.random() * emptyCells.length)
-      const cell = emptyCells[randomIndex] as HTMLButtonElement
+      const cell: HTMLButtonElement = emptyCells[randomIndex]
 
       checkCell(cell)
 
@@ -70,7 +72,7 @@ export default (container: Container = document): void => {
   }
 
   for (let i: number = 0; i < 9; i++) {
-    const cell = document.createElement('button') as HTMLButtonElement
+    const cell: HTMLButtonElement = document.createElement('button')
 
     cell.classList.add('pack', 'pack-xl', 'btn', 'btn-contur', 'active:transform-none')
     cells.push(cell)

@@ -10,17 +10,26 @@ const DATA_FILELIST: string = getData('filelist')
 const LABEL_DISABLED_CLASSNAMES: string[] = ['pointer-events-none', 'opacity-50']
 
 export default (container: Container = document): void => {
-  const filelists = container.querySelectorAll(`*[${DATA_FILELIST}]`) as NodeListOf<HTMLDivElement>
+  const filelists: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_FILELIST}]`)
 
   if (!filelists.length) return
 
   filelists.forEach((filelist: HTMLDivElement): void => {
-    const form = filelist.closest('[data-form]') as HTMLFormElement
-    const label = filelist.querySelector(`*[${DATA_FILELIST}-label]`) as HTMLLabelElement
-    const input = label.querySelector(`*[${DATA_FILELIST}-input]`) as HTMLInputElement
-    const error = filelist.querySelector('*[data-error]') as HTMLSpanElement
-    const text = label.querySelector(`*[${DATA_FILELIST}-text]`) as HTMLSpanElement
-    const items = filelist.querySelector(`*[${DATA_FILELIST}-items]`) as HTMLUListElement
+    const form: HTMLFormElement | null = filelist.closest('[data-form]')
+    const label: HTMLLabelElement | null = filelist.querySelector(`*[${DATA_FILELIST}-label]`)
+    const input: HTMLInputElement | null = filelist.querySelector(`*[${DATA_FILELIST}-input]`)
+    const error: HTMLSpanElement | null = filelist.querySelector('*[data-error]')
+    const text: HTMLSpanElement | null = filelist.querySelector(`*[${DATA_FILELIST}-text]`)
+    const items: HTMLUListElement | null = filelist.querySelector(`*[${DATA_FILELIST}-items]`)
+
+    if (!label || !input || !error || !text || !items) {
+      return logError(
+        isEn
+          ? `The ${DATA_FILELIST} does not have a ${DATA_FILELIST}-(label, input, error, text, items) child element`
+          : `У ${DATA_FILELIST} отсутствует дочерний элемент ${DATA_FILELIST}-(label, input, error, text, items)`
+      )
+    }
+
     const maxLength: number = Number(items.dataset.filelistItems) || 3
     const message: Message = {
       default: isEn ? 'Upload files' : 'Загрузить файлы',
@@ -36,9 +45,9 @@ export default (container: Container = document): void => {
     text.textContent = message.default
 
     input.addEventListener('change', (async (): Promise<void> => {
-      const files = input.files as FileList
+      const files: FileList | null = input.files
 
-      if (files.length !== 0) {
+      if (files && files.length) {
         for (let i: number = 0; i < files.length; i++) {
           try {
             const { file } = await uploadFile(files[i] as File)
@@ -48,7 +57,7 @@ export default (container: Container = document): void => {
             }
 
             if ((data.files as FileList).length < maxLength) {
-              const item = document.createElement('li') as HTMLLIElement
+              const item: HTMLLIElement = document.createElement('li')
 
               item.classList.add('flex', 'items-center', 'justify-between', 'gap-5')
               item.setAttribute(`${DATA_FILELIST}-item`, '')
@@ -80,11 +89,11 @@ export default (container: Container = document): void => {
     }) as EventListener)
 
     filelist.addEventListener('click', ((event: Event): void => {
-      const remove = (event.target as HTMLElement).closest(`[${DATA_FILELIST}-remove]`) as HTMLButtonElement
+      const remove: HTMLButtonElement | null = (event.target as HTMLElement).closest(`[${DATA_FILELIST}-remove]`)
 
       if (!remove) return
 
-      const item = remove.closest(`[${DATA_FILELIST}-item]`) as HTMLLIElement
+      const item: HTMLLIElement | null = remove.closest(`[${DATA_FILELIST}-item]`)
       const files: FileList = data.files
 
       data = new DataTransfer()
@@ -94,7 +103,7 @@ export default (container: Container = document): void => {
         const id: string = `${file.name}-${file.size}`
 
         if (remove.dataset.filelistRemove === id) {
-          item.remove()
+          item?.remove()
         } else {
           data.items.add(file)
         }
@@ -105,7 +114,7 @@ export default (container: Container = document): void => {
       label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
     }) as EventListener)
 
-    form.addEventListener('submit', ((event: Event): void => {
+    form?.addEventListener('submit', ((event: Event): void => {
       event.preventDefault()
 
       if (getValidate(form)) {

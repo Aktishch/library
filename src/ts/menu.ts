@@ -6,7 +6,7 @@ const DATA_MENU: string = getData('menu')
 export default (container: Container = document): void => {
   if (!getTouchDevice()) return
 
-  const menu = container.querySelector(`*[${DATA_MENU}]`) as HTMLDivElement
+  const menu: HTMLDivElement | null = container.querySelector(`*[${DATA_MENU}]`)
 
   if (!menu) return
 

@@ -18,34 +18,34 @@ export default (container: Container = document): void => {
     let timeOut: NodeJS.Timeout | undefined
 
     const setHeightContent = (duration: boolean = true): void => {
-      if (content) {
-        if (timeOut) {
-          clearTimeout(timeOut)
-        }
-
-        const scrollHeight: number = content.scrollHeight
-        const transitionDuration: number = duration ? Math.max(scrollHeight / 2, 150) : 0
-
-        content.style.height = `${scrollHeight}px`
-        content.style.transitionDuration = `${transitionDuration}ms`
-
-        if (accordion.dataset.accordion === 'active') {
-          timeOut = setTimeout((): void => {
-            content.style.height = ''
-            content.classList.remove(OVERFLOW_CLASSNAME)
-          }, transitionDuration)
-        } else {
-          content.classList.add(OVERFLOW_CLASSNAME)
-          void content.offsetHeight
-          content.style.height = '0'
-          timeOut = undefined
-        }
-      } else {
-        logError(
+      if (!content) {
+        return logError(
           isEn
             ? `The ${DATA_ACCORDION} does not have a ${DATA_ACCORDION}-content child element`
             : `У ${DATA_ACCORDION} отсутствует дочерний элемент ${DATA_ACCORDION}-content`
         )
+      }
+
+      if (timeOut) {
+        clearTimeout(timeOut)
+      }
+
+      const scrollHeight: number = content.scrollHeight
+      const transitionDuration: number = duration ? Math.max(scrollHeight / 2, 150) : 0
+
+      content.style.height = `${scrollHeight}px`
+      content.style.transitionDuration = `${transitionDuration}ms`
+
+      if (accordion.dataset.accordion === 'active') {
+        timeOut = setTimeout((): void => {
+          content.style.height = ''
+          content.classList.remove(OVERFLOW_CLASSNAME)
+        }, transitionDuration)
+      } else {
+        content.classList.add(OVERFLOW_CLASSNAME)
+        void content.offsetHeight
+        content.style.height = '0'
+        timeOut = undefined
       }
     }
 
@@ -85,11 +85,11 @@ export default (container: Container = document): void => {
     items.forEach((item: AccordionElement): void => {
       if (!item) return
 
-      item.addEventListener('click', closeContent)
+      item.addEventListener('click', closeContent as EventListener)
     })
 
-    toggle?.addEventListener('click', onClickToggle)
-    container.addEventListener('click', closeOnClick)
-    container.addEventListener('scroll', closeOnScroll, { passive: true })
+    toggle?.addEventListener('click', onClickToggle as EventListener)
+    container.addEventListener('click', closeOnClick as EventListener)
+    container.addEventListener('scroll', closeOnScroll as EventListener, { passive: true })
   })
 }

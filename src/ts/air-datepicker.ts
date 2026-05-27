@@ -1,5 +1,5 @@
 import filtering from '@ts/filtering'
-import { Container, getData, getTouchDevice } from '@utils'
+import { Container, getData, getTouchDevice, isEn, logError } from '@utils'
 import AirDatepicker, { AirDatepickerPosition, AirDatepickerViewsSingle } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
 
@@ -29,6 +29,8 @@ interface CalendarCell {
 interface Dates {
   date: Date | Date[]
 }
+
+type Input = HTMLInputElement | null
 
 const DATA_DATEPICKER: string = getData('datepicker')
 const EXCLUDE_DATES: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +new Date(2026, 5, 10)]
@@ -91,10 +93,16 @@ export default (container: Container = document): void => {
   if (!datepickers.length) return
 
   datepickers.forEach((datepicker: HTMLFormElement): void => {
-    const inputMin: HTMLInputElement | null = datepicker.querySelector(`*[${DATA_DATEPICKER}-min]`)
-    const inputMax: HTMLInputElement | null = datepicker.querySelector(`*[${DATA_DATEPICKER}-max]`)
+    const inputMin: Input = datepicker.querySelector(`*[${DATA_DATEPICKER}-min]`)
+    const inputMax: Input = datepicker.querySelector(`*[${DATA_DATEPICKER}-max]`)
 
-    if (!inputMin || !inputMax) return
+    if (!inputMin || !inputMax) {
+      return logError(
+        isEn
+          ? `The ${DATA_DATEPICKER} does not have a ${DATA_DATEPICKER}-(min, max) child element`
+          : `У ${DATA_DATEPICKER} отсутствует дочерний элемент ${DATA_DATEPICKER}-(min, max)`
+      )
+    }
 
     const min: AirDatepicker<HTMLInputElement> = new window.AirDatepicker(inputMin, {
       onSelect({ date }: Dates) {

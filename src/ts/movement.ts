@@ -3,7 +3,10 @@ import { Container, Coordinates, getData, getTouchDevice } from '@utils'
 const DATA_MOVEMENT: string = getData('movement')
 
 const setMovement = (event: MouseEvent): void => {
-  const movement = (event.target as HTMLElement).closest(`[${DATA_MOVEMENT}]`) as HTMLElement
+  const movement: HTMLElement | null = (event.target as HTMLElement).closest(`[${DATA_MOVEMENT}]`)
+
+  if (!movement) return
+
   const coordinates: Coordinates = {
     top: event.clientY - movement.getBoundingClientRect().top,
     left: event.clientX - movement.getBoundingClientRect().left
@@ -16,7 +19,7 @@ const setMovement = (event: MouseEvent): void => {
 export default (container: Container = document): void => {
   if (getTouchDevice()) return
 
-  const movements = container.querySelectorAll(`*[${DATA_MOVEMENT}]`) as NodeListOf<HTMLElement>
+  const movements: NodeListOf<HTMLElement> = container.querySelectorAll(`*[${DATA_MOVEMENT}]`)
 
   if (!movements.length) return
 

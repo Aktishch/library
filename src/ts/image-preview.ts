@@ -7,18 +7,27 @@ const DRAG_POINTER_CLASSNAME: string = 'pointer-events-none'
 const LABEL_DISABLED_CLASSNAMES: string[] = ['pointer-events-none', 'opacity-50']
 
 export default (container: Container = document): void => {
-  const previews = container.querySelectorAll(`*[${DATA_PREVIEW}]`) as NodeListOf<HTMLDivElement>
+  const previews: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_PREVIEW}]`)
 
   if (!previews.length) return
 
   previews.forEach((preview: HTMLDivElement): void => {
-    const form = preview.closest('[data-form]') as HTMLFormElement
-    const drag = preview.querySelector(`*[${DATA_PREVIEW}-drag]`) as HTMLDivElement
-    const image = drag.querySelector(`*[${DATA_PREVIEW}-image]`) as HTMLImageElement
-    const remove = preview.querySelector(`*[${DATA_PREVIEW}-remove]`) as HTMLButtonElement
-    const label = preview.querySelector(`*[${DATA_PREVIEW}-label]`) as HTMLLabelElement
-    const input = label.querySelector(`*[${DATA_PREVIEW}-input]`) as HTMLInputElement
-    const error = preview.querySelector('*[data-error]') as HTMLSpanElement
+    const form: HTMLFormElement | null = preview.closest('[data-form]')
+    const drag: HTMLDivElement | null = preview.querySelector(`*[${DATA_PREVIEW}-drag]`)
+    const image: HTMLImageElement | null = preview.querySelector(`*[${DATA_PREVIEW}-image]`)
+    const remove: HTMLButtonElement | null = preview.querySelector(`*[${DATA_PREVIEW}-remove]`)
+    const label: HTMLLabelElement | null = preview.querySelector(`*[${DATA_PREVIEW}-label]`)
+    const input: HTMLInputElement | null = preview.querySelector(`*[${DATA_PREVIEW}-input]`)
+    const error: HTMLSpanElement | null = preview.querySelector('*[data-error]')
+
+    if (!drag || !image || !remove || !label || !input || !error) {
+      return logError(
+        isEn
+          ? `The ${DATA_PREVIEW} does not have a ${DATA_PREVIEW}-(drag, image, remove, label, input, error) child element`
+          : `У ${DATA_PREVIEW} отсутствует дочерний элемент ${DATA_PREVIEW}-(drag, image, remove, label, input, error)`
+      )
+    }
+
     const requestUrl: string | undefined = image.dataset.previewImage
     let data: DataTransfer = new DataTransfer()
 
@@ -39,7 +48,7 @@ export default (container: Container = document): void => {
     }
 
     const setPreview = async (files: FileList): Promise<void> => {
-      if (files.length !== 0) {
+      if (files.length) {
         try {
           const { file, url } = await uploadFile(files[0] as File)
 
@@ -54,14 +63,18 @@ export default (container: Container = document): void => {
           data.items.add(file)
 
           if (form && form.dataset.form === 'avatar') {
-            const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
+            const submitBtn: HTMLButtonElement | null = form.querySelector('button[type="submit"]')
 
-            submitBtn.click()
+            submitBtn?.click()
 
             if (preview.dataset.preview) {
-              const avatar = document.querySelector(`*[data-avatar="${preview.dataset.preview}"]`) as HTMLImageElement
+              const avatar: HTMLImageElement | null = document.querySelector(
+                `*[data-avatar="${preview.dataset.preview}"]`
+              )
 
-              avatar.src = url
+              if (avatar) {
+                avatar.src = url
+              }
             }
           }
         } catch (error: unknown) {
@@ -140,7 +153,7 @@ export default (container: Container = document): void => {
       setDefaultState()
     }) as EventListener)
 
-    form.addEventListener('submit', ((event: Event): void => {
+    form?.addEventListener('submit', ((event: Event): void => {
       event.preventDefault()
 
       if (getValidate(form) && form.dataset.form !== 'avatar') {

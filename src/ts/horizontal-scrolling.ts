@@ -1,10 +1,18 @@
 import { media } from '@plugins'
-import { Breakpoint, Container, getData, html } from '@utils'
+import { Breakpoint, Container, getData, html, isEn, logError } from '@utils'
 
 const DATA_SCROLLING: string = getData('scrolling')
 
+const setError = (): void => {
+  return logError(
+    isEn
+      ? `The ${DATA_SCROLLING} does not have a ${DATA_SCROLLING}-horizontal child element`
+      : `У ${DATA_SCROLLING} отсутствует дочерний элемент ${DATA_SCROLLING}-horizontal`
+  )
+}
+
 export default (container: Container = document): void => {
-  const scrollings = container.querySelectorAll(`*[${DATA_SCROLLING}]`) as NodeListOf<HTMLElement>
+  const scrollings: NodeListOf<HTMLElement> = container.querySelectorAll(`*[${DATA_SCROLLING}]`)
 
   if (!scrollings.length) return
 
@@ -15,8 +23,13 @@ export default (container: Container = document): void => {
   }
 
   scrollings.forEach((scrolling: HTMLElement): void => {
-    const horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`) as HTMLDivElement
-    const images = scrolling.querySelectorAll(`*[${DATA_SCROLLING}-image]`) as NodeListOf<HTMLImageElement>
+    const horizontal: HTMLDivElement | null = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)
+
+    if (!horizontal) {
+      return setError()
+    }
+
+    const images: NodeListOf<HTMLImageElement> = scrolling.querySelectorAll(`*[${DATA_SCROLLING}-image]`)
     let isIntersecting: boolean = false
 
     const getBreakpoint = (): boolean => {
@@ -28,15 +41,18 @@ export default (container: Container = document): void => {
 
     const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
       entries.forEach((entry: ResizeObserverEntry): void => {
-        const scrolling = entry.target as HTMLElement
-        const horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`) as HTMLDivElement
-        const height: number = horizontal.scrollWidth - horizontal.clientWidth
+        const scrolling: HTMLElement = entry.target as HTMLElement
+        const horizontal: HTMLDivElement | null = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)
+
+        if (!horizontal) {
+          return setError()
+        }
 
         window.requestAnimationFrame((): void => {
           if (getBreakpoint()) {
             scrolling.style.removeProperty('height')
           } else {
-            scrolling.style.height = `${height + window.innerHeight}px`
+            scrolling.style.height = `${horizontal.scrollWidth - horizontal.clientWidth + window.innerHeight}px`
           }
         })
       })

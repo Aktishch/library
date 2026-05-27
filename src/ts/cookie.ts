@@ -1,16 +1,18 @@
-import { checkCookie, Container, COOKIE_EXPIRES_DAYS, getData, setCookies } from '@utils'
+import { checkCookie, Container, COOKIE_EXPIRES_DAYS, getData, isEn, logError, setCookies } from '@utils'
 
 const DATA_COOKIE: string = getData('cookie')
 
 export default (container: Container = document): void => {
-  const cookies = container.querySelectorAll(`*[${DATA_COOKIE}]`) as NodeListOf<HTMLElement>
+  const cookies: NodeListOf<HTMLElement> = container.querySelectorAll(`*[${DATA_COOKIE}]`)
 
   if (!cookies.length) return
 
   cookies.forEach((cookie: HTMLElement): void => {
     const id: string = cookie.id
 
-    if (cookie.id === '') return
+    if (cookie.id === '') {
+      return logError(isEn ? `The ${DATA_COOKIE} has no id` : `У ${DATA_COOKIE} отсутствует id`)
+    }
 
     const name: string = `cookie_${id}`
     const hasCookie: boolean = checkCookie(`${name}=`)
@@ -18,7 +20,7 @@ export default (container: Container = document): void => {
     if (hasCookie) {
       cookie.remove()
     } else {
-      const button = cookie.querySelector(`*[${DATA_COOKIE}-button]`) as HTMLButtonElement
+      const button: HTMLButtonElement | null = cookie.querySelector(`*[${DATA_COOKIE}-button]`)
       const expires: number = Number(cookie.dataset.expires) || Math.floor(COOKIE_EXPIRES_DAYS / 12 / 4)
       const path: string = cookie.dataset.cookie || '/'
 
@@ -27,7 +29,7 @@ export default (container: Container = document): void => {
         cookie.remove()
       }
 
-      button.addEventListener('click', addCookie as EventListener)
+      button?.addEventListener('click', addCookie as EventListener)
     }
   })
 }

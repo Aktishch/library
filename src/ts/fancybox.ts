@@ -22,19 +22,13 @@ declare global {
 
 type Properties = [unknown, unknown, CarouselSlide]
 
-const DATA_FANCYBOX: string = getData('fancybox')
-
-const updateLoad = (): void => {
-  lazyLoad().update()
-}
-
 Fancybox.getDefaults().placeFocusBack = false
 
 if (!getTouchDevice()) {
   Fancybox.getDefaults().on = {
     ...Fancybox.getDefaults().on,
     ready: (fancyboxRef): void => {
-      const container = fancyboxRef.getContainer()
+      const container: HTMLElement | undefined = fancyboxRef.getContainer()
 
       if (container) {
         container.setAttribute('data-lenis-prevent', '')
@@ -44,6 +38,12 @@ if (!getTouchDevice()) {
 }
 
 window.Fancybox = Fancybox
+
+const DATA_FANCYBOX: string = getData('fancybox')
+
+const updateLoad = (): void => {
+  lazyLoad().update()
+}
 
 export const dialog: Dialog = {
   open: (src: string, callback: Callback): void => {

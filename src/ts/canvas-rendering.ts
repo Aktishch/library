@@ -15,7 +15,13 @@ export default (container: Container = document): void => {
     const context: CanvasRenderingContext2D | null = canvas.getContext('2d')
     const src: string | undefined = canvas.dataset.renderingCanvas
 
-    if (!context || !src) return
+    if (!context || !src) {
+      return logError(
+        isEn
+          ? 'Failed to provide a rendering context for the element'
+          : 'Не удалось представить контекст рендеринга для элемента'
+      )
+    }
 
     const download: HTMLAnchorElement | null = rendering.querySelector(`*[${DATA_RENDERING}-download]`)
     const image: HTMLImageElement = new Image()

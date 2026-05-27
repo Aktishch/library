@@ -1,7 +1,7 @@
 import { Container } from '@utils'
 
 export default (container: Container = document): void => {
-  const items = container.querySelectorAll('*[data-number]') as NodeListOf<HTMLSpanElement>
+  const items: NodeListOf<HTMLSpanElement> = container.querySelectorAll('*[data-number]')
 
   if (!items.length) return
 
@@ -14,7 +14,7 @@ export default (container: Container = document): void => {
   const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
     entries.forEach((entry: IntersectionObserverEntry): void => {
       if (entry.isIntersecting) {
-        const item = entry.target as HTMLSpanElement
+        const item: HTMLSpanElement = entry.target as HTMLSpanElement
         const value: string | undefined = item.dataset.number
 
         if (!value) return

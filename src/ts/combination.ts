@@ -1,17 +1,18 @@
 import { Container } from '@utils'
 
+const COMBINATION_KEYS: string[] = ['s', 't', 'a', 'r', 't']
+
 export default (container: Container = document): void => {
-  const keys: string[] = ['s', 't', 'a', 'r', 't']
   let status: boolean = true
   let index: number = 0
 
   container.addEventListener('keyup', ((event: KeyboardEvent): void => {
-    if (event.key === keys[index]) {
+    if (event.key === COMBINATION_KEYS[index]) {
       if (!status) return
 
       index++
 
-      if (index === keys.length) {
+      if (index === COMBINATION_KEYS.length) {
         alert('Start')
         status = false
         index = 0

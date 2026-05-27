@@ -6,7 +6,7 @@ interface BackgroundHandler {
 }
 
 const getFormatWebp = (): boolean => {
-  const canvas = document.createElement('canvas') as HTMLCanvasElement
+  const canvas: HTMLCanvasElement = document.createElement('canvas')
 
   return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
 }
@@ -26,7 +26,7 @@ const handleBackground = async ({ item, requestUrl }: BackgroundHandler): Promis
 }
 
 export default (container: Container = document): void => {
-  const items = container.querySelectorAll('*[data-bg], *[data-webp]') as NodeListOf<HTMLElement>
+  const items: NodeListOf<HTMLElement> = container.querySelectorAll('*[data-bg], *[data-webp]')
 
   if (!items.length) return
 

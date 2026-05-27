@@ -1,16 +1,31 @@
-import { Container, COOKIE_EXPIRES_DAYS, getCookie, getData, getTouchDevice, html, setCookies } from '@utils'
+import {
+  Container,
+  COOKIE_EXPIRES_DAYS,
+  getCookie,
+  getData,
+  getTouchDevice,
+  html,
+  isEn,
+  logError,
+  setCookies
+} from '@utils'
 
-interface Colors {
-  [index: string]: string
+const PALETTE_NAME: string = 'palette'
+const DATA_PALETTE: string = getData(PALETTE_NAME)
+const COOKIE_VALUE: string = getCookie(PALETTE_NAME)
+const PALETTE_COLORS: Record<string, string> = JSON.parse(COOKIE_VALUE || '{}')
+
+const setError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_PALETTE} does not have a ${DATA_PALETTE}-(input, button) child element`
+      : `У ${DATA_PALETTE} отсутствует дочерний элемент ${DATA_PALETTE}-(input, button)`
+  )
 }
-
-const COOKIE_VALUE: string = getCookie('palette')
-const DATA_PALETTE: string = getData('palette')
-const PALETTE_COLORS: Colors = JSON.parse(COOKIE_VALUE || '{}')
 
 const savePaletteCookie = (add: boolean = true): void => {
   setCookies({
-    name: 'palette',
+    name: PALETTE_NAME,
     value: JSON.stringify(PALETTE_COLORS),
     path: '/',
     expires: add ? COOKIE_EXPIRES_DAYS : -1
@@ -20,12 +35,12 @@ const savePaletteCookie = (add: boolean = true): void => {
 export default (container: Container = document): void => {
   if (getTouchDevice()) return
 
-  const palette = container.querySelector(`*[${DATA_PALETTE}]`) as HTMLDivElement
+  const palette: HTMLDivElement | null = container.querySelector(`*[${DATA_PALETTE}]`)
 
   if (!palette) return
 
-  const items = palette.querySelectorAll(`*[${DATA_PALETTE}-item]`) as NodeListOf<HTMLLIElement>
-  const reset = palette.querySelector(`*[${DATA_PALETTE}-reset]`) as HTMLButtonElement
+  const items: NodeListOf<HTMLLIElement> = palette.querySelectorAll(`*[${DATA_PALETTE}-item]`)
+  const reset: HTMLButtonElement | null = palette.querySelector(`*[${DATA_PALETTE}-reset]`)
 
   const getRgb = (hex: string): string => {
     hex = hex.replace(/^#/, '')
@@ -42,8 +57,13 @@ export default (container: Container = document): void => {
   items.forEach((item: HTMLLIElement): void => {
     if (!item) return
 
-    const input = item.querySelector(`*[${DATA_PALETTE}-input]`) as HTMLInputElement
-    const button = item.querySelector(`*[${DATA_PALETTE}-button]`) as HTMLButtonElement
+    const input: HTMLInputElement | null = item.querySelector(`*[${DATA_PALETTE}-input]`)
+    const button: HTMLButtonElement | null = item.querySelector(`*[${DATA_PALETTE}-button]`)
+
+    if (!input || !button) {
+      return setError()
+    }
+
     const name: string | undefined = input.dataset.paletteInput
     const value: string | undefined = button.dataset.paletteButton
 
@@ -75,13 +95,18 @@ export default (container: Container = document): void => {
     button.addEventListener('click', removeColor as EventListener)
   })
 
-  reset.addEventListener('click', ((): void => {
+  reset?.addEventListener('click', ((): void => {
     if (Object.keys(PALETTE_COLORS).length !== 0) {
       items.forEach((item: HTMLLIElement): void => {
         if (!item) return
 
-        const input = item.querySelector(`*[${DATA_PALETTE}-input]`) as HTMLInputElement
-        const button = item.querySelector(`*[${DATA_PALETTE}-button]`) as HTMLButtonElement
+        const input: HTMLInputElement | null = item.querySelector(`*[${DATA_PALETTE}-input]`)
+        const button: HTMLButtonElement | null = item.querySelector(`*[${DATA_PALETTE}-button]`)
+
+        if (!input || !button) {
+          return setError()
+        }
+
         const name: string | undefined = input.dataset.paletteInput
         const value: string | undefined = button.dataset.paletteButton
 

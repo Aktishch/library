@@ -68,15 +68,15 @@ export const getValidate = (form: HTMLFormElement): boolean => {
     const handleInput = (): void => {
       if (input.value.length > 0) {
         hideError()
-        input.removeEventListener('input', handleInput)
+        input.removeEventListener('input', handleInput as EventListener)
       }
     }
 
-    input.removeEventListener('input', handleInput)
+    input.removeEventListener('input', handleInput as EventListener)
 
     if (input.type !== 'file' && !input.value.length) {
       showError()
-      input.addEventListener('input', handleInput)
+      input.addEventListener('input', handleInput as EventListener)
       return
     }
 
@@ -165,7 +165,7 @@ export const getValidate = (form: HTMLFormElement): boolean => {
     }
 
     if (invalidInput) {
-      input.addEventListener('input', handleInput)
+      input.addEventListener('input', handleInput as EventListener)
     }
   })
 

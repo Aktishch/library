@@ -1,4 +1,4 @@
-import { Container, Coordinates, getData, hideScrollbar, showScrollbar } from '@utils'
+import { Container, Coordinates, getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
 
 interface Translate {
   item: HTMLElement
@@ -20,14 +20,16 @@ const setTranslate = ({ item, positionX, positionY }: Translate): void => {
 }
 
 export default (container: Container = document): void => {
-  const draggables = container.querySelectorAll(`*[${DATA_DRAGGABLE}]`) as NodeListOf<HTMLElement>
+  const draggables: NodeListOf<HTMLElement> = container.querySelectorAll(`*[${DATA_DRAGGABLE}]`)
 
   if (!draggables.length) return
 
   draggables.forEach((draggable: HTMLElement): void => {
     const value: string | undefined = draggable.dataset.draggable
 
-    if (!value) return
+    if (!value) {
+      return logError(isEn ? `${DATA_DRAGGABLE} is missing a value` : `У ${DATA_DRAGGABLE} отсутствует значение`)
+    }
 
     const coordinates: Coordinates = JSON.parse(sessionStorage.getItem(value) || JSON.stringify({ top: 0, left: 0 }))
     let isActive: boolean = false
