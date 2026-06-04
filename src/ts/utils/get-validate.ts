@@ -1,3 +1,4 @@
+import { DATA_ERROR, DATA_INPUT, DATA_LABEL } from '@utils/get-data'
 import { isEn } from '@utils/is-en'
 
 interface ErrorMessage {
@@ -13,6 +14,7 @@ interface ErrorMessage {
 
 type Label = HTMLLabelElement | HTMLDivElement
 type Input = HTMLInputElement | null
+type Error = HTMLSpanElement | null
 
 const INPUT_ERROR_CLASSNAME: string = 'input-error'
 const ERROR_VISIBLE_CLASSNAMES: string[] = ['invisible', 'opacity-0']
@@ -28,15 +30,15 @@ const ERROR_MESSAGE: ErrorMessage = {
 }
 
 export const getValidate = (form: HTMLFormElement): boolean => {
-  const labels: NodeListOf<Label> = form.querySelectorAll('*[data-label]')
+  const labels: NodeListOf<Label> = form.querySelectorAll(`*[${DATA_LABEL}]`)
   let isValid: boolean = true
   let firstInvalidInput: Input = null
 
   if (!labels.length) return isValid
 
   labels.forEach((label: Label): void => {
-    const input: Input = label.querySelector('*[data-input]')
-    const error: HTMLSpanElement | null = label.querySelector('*[data-error]')
+    const input: Input = label.querySelector(`*[${DATA_INPUT}]`)
+    const error: Error = label.querySelector(`*[${DATA_ERROR}]`)
 
     if (!input || !error) return
 

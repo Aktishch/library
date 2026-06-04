@@ -1,41 +1,46 @@
-import { checkCookie, COOKIE_EXPIRES_DAYS, html, setCookies } from '@utils'
+import { Container, COOKIE_EXPIRES_DAYS, getCookie, html, setCookies } from '@utils'
 
-export default (): void => {
-  const toggles = document.querySelectorAll('*[data-theme-toggle]') as NodeListOf<HTMLInputElement>
-  const name: string = 'current_theme'
-  const hasCookie: boolean = checkCookie(`${name}=dark`)
+const THEME_NAME: string = 'current_theme'
+const THEME_VALUE: string = 'dark'
+const THEME_COOKIE: boolean = getCookie(THEME_NAME) === THEME_VALUE
+
+export default (container: Container = document): void => {
+  const toggles: NodeListOf<HTMLInputElement> = container.querySelectorAll('*[data-theme-toggle]')
+  const length: number = toggles.length
 
   const checkToggles = (isChecked: boolean): void => {
-    toggles.forEach((toggle: HTMLInputElement): void => {
-      if (!toggle) return
-
-      toggle.checked = isChecked
-    })
+    if (length) {
+      toggles.forEach((toggle: HTMLInputElement): void => {
+        toggle.checked = isChecked
+      })
+    }
   }
 
   const setTheme = (): void => {
-    const isDark: boolean = html.dataset.theme === 'dark'
-    const value: string = isDark ? '' : 'dark'
+    const isDark: boolean = html.dataset.theme === THEME_VALUE
+    const value: string = isDark ? '' : THEME_VALUE
 
     html.dataset.theme = value
     checkToggles(!isDark)
-    setCookies({ name, value, path: '/', expires: !isDark ? COOKIE_EXPIRES_DAYS : -1 })
+    setCookies({ name: THEME_NAME, value, path: '/', expires: !isDark ? COOKIE_EXPIRES_DAYS : -1 })
   }
 
-  if (hasCookie) {
-    html.dataset.theme = 'dark'
-    checkToggles(hasCookie)
-  }
-
-  toggles.forEach((toggle: HTMLInputElement): void => {
-    if (!toggle) return
-
-    toggle.addEventListener('change', setTheme as EventListener)
-  })
-
-  document.addEventListener('keyup', ((event: KeyboardEvent): void => {
+  const onKeyUp = (event: KeyboardEvent): void => {
     if (event.altKey && event.code === 'Digit5') {
       setTheme()
     }
-  }) as EventListener)
+  }
+
+  if (THEME_COOKIE) {
+    html.dataset.theme = THEME_VALUE
+    checkToggles(THEME_COOKIE)
+  }
+
+  if (length) {
+    toggles.forEach((toggle: HTMLInputElement): void => {
+      toggle.addEventListener('change', setTheme as EventListener)
+    })
+  }
+
+  container.addEventListener('keyup', onKeyUp as EventListener)
 }

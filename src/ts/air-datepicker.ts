@@ -1,5 +1,5 @@
 import filtering from '@ts/filtering'
-import { Container, getData, getTouchDevice, isEn, logError } from '@utils'
+import { Container, getData, getTouchDevice, isEn, logError, TimeOut } from '@utils'
 import AirDatepicker, { AirDatepickerPosition, AirDatepickerViewsSingle } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
 
@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-interface Calendar {
+interface CalendarOptions {
   date: Date
   cellType: AirDatepickerViewsSingle
 }
@@ -30,6 +30,9 @@ interface Dates {
   date: Date | Date[]
 }
 
+type Wrapper = HTMLElement | ''
+type Dialog = HTMLDivElement | null
+type Calendar = HTMLDivElement | null
 type Input = HTMLInputElement | null
 
 const DATA_DATEPICKER: string = getData('datepicker')
@@ -37,15 +40,21 @@ const EXCLUDE_DATES: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +
 
 window.AirDatepicker = AirDatepicker
 
+const getFancybox = (container: Container): Wrapper => {
+  const dialog: Dialog = container.querySelector('.f-html')
+
+  return container !== document && dialog ? dialog : ''
+}
+
 export const initCalendar = (container: Container = document): void => {
-  const calendar: HTMLDivElement | null = container.querySelector(`*[${DATA_DATEPICKER}-calendar]`)
+  const calendar: Calendar = container.querySelector(`*[${DATA_DATEPICKER}-calendar]`)
 
   if (!calendar) return
 
   const dates: number[] = []
-  let timeOut: NodeJS.Timeout
+  let timeOut: TimeOut
 
-  const renderCalendarCell = ({ date, cellType }: Calendar): CalendarCell | undefined => {
+  const renderCalendarCell = ({ date, cellType }: CalendarOptions): CalendarCell | undefined => {
     if (cellType === 'day') {
       if (timeOut) {
         clearTimeout(timeOut)
@@ -65,7 +74,7 @@ export const initCalendar = (container: Container = document): void => {
         dates.push(+date)
       }
 
-      if (dates.length !== 0 && dates[0] === +date) {
+      if (dates.length && dates[0] === +date) {
         attrs['data-active'] = ''
       }
 
@@ -92,6 +101,9 @@ export default (container: Container = document): void => {
 
   if (!datepickers.length) return
 
+  const wrapper: Wrapper = getFancybox(container)
+  const isMobile: boolean = wrapper === '' ? getTouchDevice() : false
+
   datepickers.forEach((datepicker: HTMLFormElement): void => {
     const inputMin: Input = datepicker.querySelector(`*[${DATA_DATEPICKER}-min]`)
     const inputMax: Input = datepicker.querySelector(`*[${DATA_DATEPICKER}-max]`)
@@ -111,7 +123,8 @@ export default (container: Container = document): void => {
         })
       },
       locale: localeRu,
-      isMobile: getTouchDevice(),
+      container: wrapper,
+      isMobile,
       autoClose: true,
       minDate: new Date(),
       position: (inputMin.dataset.position as AirDatepickerPosition) || 'bottom left'
@@ -123,8 +136,8 @@ export default (container: Container = document): void => {
           maxDate: String(date)
         })
       },
-      locale: localeRu,
-      isMobile: getTouchDevice(),
+      container: wrapper,
+      isMobile,
       autoClose: true,
       minDate: new Date(),
       position: (inputMax.dataset.position as AirDatepickerPosition) || 'bottom left'

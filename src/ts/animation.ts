@@ -1,6 +1,7 @@
 import { Container } from '@utils'
 
 const REPEAT_ANIMATION: boolean = true
+const SHOW_VALUE: string = 'show'
 
 export default (container: Container = document): void => {
   const items: NodeListOf<HTMLElement> = container.querySelectorAll('*[data-anim]')
@@ -9,7 +10,7 @@ export default (container: Container = document): void => {
 
   const options: IntersectionObserverInit = {
     root: container === document ? null : container,
-    rootMargin: '0px 0px -20% 0px',
+    rootMargin: '0px',
     threshold: 0
   }
 
@@ -18,7 +19,7 @@ export default (container: Container = document): void => {
       const item: HTMLElement = entry.target as HTMLElement
 
       if (entry.isIntersecting) {
-        item.dataset.anim = 'show'
+        item.dataset.anim = SHOW_VALUE
 
         if (!REPEAT_ANIMATION) {
           observer.unobserve(item)
@@ -32,7 +33,7 @@ export default (container: Container = document): void => {
 
     if (!REPEAT_ANIMATION) {
       const allShow: boolean = ([...items] as HTMLElement[]).every((item: HTMLElement): boolean => {
-        return item.dataset.anim === 'show'
+        return item.dataset.anim === SHOW_VALUE
       })
 
       if (allShow) {

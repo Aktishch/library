@@ -1,17 +1,22 @@
 import { Container, getData, isEn, logError } from '@utils'
 
+type Copy = HTMLDivElement | null
+type Button = HTMLButtonElement | null
+type Result = HTMLSpanElement | null | undefined
+type Text = string | undefined
+
 const DATA_COPY: string = getData('copy')
 const HIDDEN_CLASSNAMES: string[] = ['invisible', 'opacity-0']
 
 export default (container: Container = document): void => {
   container.addEventListener('click', (async (event: Event): Promise<void> => {
-    const button: HTMLButtonElement | null = (event.target as HTMLElement).closest(`[${DATA_COPY}-button]`)
+    const button: Button = (event.target as HTMLElement).closest(`[${DATA_COPY}-button]`)
 
     if (!button) return
 
-    const copy: HTMLDivElement | null = button.closest(`[${DATA_COPY}]`)
-    const result: HTMLSpanElement | null | undefined = copy?.querySelector(`[${DATA_COPY}-result]`)
-    const text: string | undefined = copy?.dataset.copy
+    const copy: Copy = button.closest(`[${DATA_COPY}]`)
+    const result: Result = copy?.querySelector(`[${DATA_COPY}-result]`)
+    const text: Text = copy?.dataset.copy
 
     if (!text) return
 

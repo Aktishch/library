@@ -14,7 +14,7 @@ const ERROR_VISIBLE_CLASSNAMES: string[] = ['invisible', 'opacity-0']
 const ALLOWED_TYPES: string[] = ['image/jpeg', 'image/png']
 const MAX_FILE_SIZE: number = 2 * Math.pow(1024, 2)
 const ERROR_MESSAGE: ErrorMessage = {
-  type: isEn ? 'jpg or png only' : 'Только jpg или png',
+  type: isEn ? 'Only jpg or png' : 'Только jpg или png',
   size: isEn ? 'The size is not more than 2 MB' : 'Размер не более 2 мб'
 }
 

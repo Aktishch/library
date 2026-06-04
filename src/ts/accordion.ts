@@ -1,10 +1,13 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { Container, getData, isEn, logError, TimeOut } from '@utils'
 
-type AccordionElement = HTMLButtonElement | HTMLAnchorElement
+type Toggle = HTMLButtonElement | null
+type Content = HTMLDivElement | null
+type Item = HTMLButtonElement | HTMLAnchorElement
 
 const DATA_ACCORDION: string = getData('accordion')
-const DATA_CLOSE: string = 'data-close'
+const DATA_CLOSE: string = getData('close')
 const OVERFLOW_CLASSNAME: string = 'overflow-hidden'
+const ACTIVE_VALUE: string = 'active'
 
 export default (container: Container = document): void => {
   const accordions: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_ACCORDION}]`)
@@ -12,10 +15,10 @@ export default (container: Container = document): void => {
   if (!accordions.length) return
 
   accordions.forEach((accordion: HTMLDivElement): void => {
-    const toggle: HTMLButtonElement | null = accordion.querySelector(`*[${DATA_ACCORDION}-toggle]`)
-    const content: HTMLDivElement | null = accordion.querySelector(`*[${DATA_ACCORDION}-content]`)
-    const items: NodeListOf<AccordionElement> = accordion.querySelectorAll(`*[${DATA_ACCORDION}-item]`)
-    let timeOut: NodeJS.Timeout | undefined
+    const toggle: Toggle = accordion.querySelector(`*[${DATA_ACCORDION}-toggle]`)
+    const content: Content = accordion.querySelector(`*[${DATA_ACCORDION}-content]`)
+    const items: NodeListOf<Item> = accordion.querySelectorAll(`*[${DATA_ACCORDION}-item]`)
+    let timeOut: TimeOut
 
     const setHeightContent = (duration: boolean = true): void => {
       if (!content) {
@@ -36,7 +39,7 @@ export default (container: Container = document): void => {
       content.style.height = `${scrollHeight}px`
       content.style.transitionDuration = `${transitionDuration}ms`
 
-      if (accordion.dataset.accordion === 'active') {
+      if (accordion.dataset.accordion === ACTIVE_VALUE) {
         timeOut = setTimeout((): void => {
           content.style.height = ''
           content.classList.remove(OVERFLOW_CLASSNAME)
@@ -55,14 +58,14 @@ export default (container: Container = document): void => {
     }
 
     const onClickToggle = (): void => {
-      accordion.dataset.accordion = accordion.dataset.accordion === 'active' ? '' : 'active'
+      accordion.dataset.accordion = accordion.dataset.accordion === ACTIVE_VALUE ? '' : ACTIVE_VALUE
       setHeightContent()
     }
 
     const closeOnClick = (event: Event): void => {
       if (
         (event.target as HTMLElement).closest(`[${DATA_CLOSE}-click]`) !== accordion &&
-        accordion.dataset.accordion === 'active' &&
+        accordion.dataset.accordion === ACTIVE_VALUE &&
         accordion.hasAttribute(`${DATA_CLOSE}-click`)
       ) {
         closeContent()
@@ -70,7 +73,7 @@ export default (container: Container = document): void => {
     }
 
     const closeOnScroll = (): void => {
-      if (accordion.hasAttribute(`${DATA_CLOSE}-scroll`) && accordion.dataset.accordion === 'active') {
+      if (accordion.hasAttribute(`${DATA_CLOSE}-scroll`) && accordion.dataset.accordion === ACTIVE_VALUE) {
         closeContent()
       }
     }
@@ -82,11 +85,11 @@ export default (container: Container = document): void => {
       content.style.transitionProperty = 'height'
     }
 
-    items.forEach((item: AccordionElement): void => {
-      if (!item) return
-
-      item.addEventListener('click', closeContent as EventListener)
-    })
+    if (items.length) {
+      items.forEach((item: Item): void => {
+        item.addEventListener('click', closeContent as EventListener)
+      })
+    }
 
     toggle?.addEventListener('click', onClickToggle as EventListener)
     container.addEventListener('click', closeOnClick as EventListener)

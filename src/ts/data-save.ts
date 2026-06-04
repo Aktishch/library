@@ -1,5 +1,6 @@
 import { Container, getData, isEn, logError } from '@utils'
 
+type Value = string | undefined
 type Input = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 
 const DATA_SAVE: string = getData('save')
@@ -14,7 +15,7 @@ export default (container: Container = document): void => {
   if (!forms.length) return
 
   forms.forEach((form: HTMLFormElement): void => {
-    const value: string | undefined = form.dataset.save
+    const value: Value = form.dataset.save
 
     if (!value) {
       return logError(isEn ? `${DATA_SAVE} is missing a value` : `У ${DATA_SAVE} отсутствует значение`)
@@ -33,7 +34,7 @@ export default (container: Container = document): void => {
 
         if (input.type === 'checkbox' || input.type === 'radio') {
           dataSave[input.name] = (input as HTMLInputElement).checked
-        } else if (input.value.length !== 0) {
+        } else if (input.value.length) {
           dataSave[input.name] = input.value
         }
       })
@@ -41,7 +42,7 @@ export default (container: Container = document): void => {
       sessionStorage.setItem(value, JSON.stringify(dataSave))
     }
 
-    if (Object.keys(dataSave).length !== 0) {
+    if (Object.keys(dataSave).length) {
       inputs.forEach((input: Input): void => {
         if (handleInput(input)) return
 

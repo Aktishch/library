@@ -5,7 +5,9 @@ import lazyLoad from '@ts/lazy-load'
 import { setStateSubmitBtn } from '@ts/submit-handler'
 import { getData, getTouchDevice } from '@utils'
 
-type Callback = ((container: HTMLElement | undefined) => void) | undefined
+type Container = HTMLElement | undefined
+type Callback = ((container: Container) => void) | undefined
+type Properties = [unknown, unknown, CarouselSlide]
 
 interface Dialog {
   open: (src: string, callback?: Callback) => void
@@ -20,15 +22,13 @@ declare global {
   }
 }
 
-type Properties = [unknown, unknown, CarouselSlide]
-
 Fancybox.getDefaults().placeFocusBack = false
 
 if (!getTouchDevice()) {
   Fancybox.getDefaults().on = {
     ...Fancybox.getDefaults().on,
     ready: (fancyboxRef): void => {
-      const container: HTMLElement | undefined = fancyboxRef.getContainer()
+      const container: Container = fancyboxRef.getContainer()
 
       if (container) {
         container.setAttribute('data-lenis-prevent', '')
@@ -58,8 +58,12 @@ export const dialog: Dialog = {
         dragToClose: false,
         on: {
           'Carousel.contentReady': (...[, , slide]: Properties): void => {
-            updateLoad()
-            callback?.(slide.el)
+            const container: Container = slide.el
+
+            if (container) {
+              updateLoad()
+              callback?.(container)
+            }
           }
         }
       }
@@ -79,8 +83,12 @@ export const dialog: Dialog = {
         backdropClick: false,
         on: {
           'Carousel.contentReady': (...[, , slide]: Properties): void => {
-            updateLoad()
-            callback?.(slide.el)
+            const container: Container = slide.el
+
+            if (container) {
+              updateLoad()
+              callback?.(slide.el)
+            }
           }
         }
       }
@@ -99,8 +107,12 @@ export default (): void => {
   window.Fancybox.bind(`[${DATA_FANCYBOX}-dialog]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (): void => {
-        updateLoad()
+      'Carousel.contentReady': (...[, , slide]: Properties): void => {
+        const container: Container = slide.el
+
+        if (container) {
+          updateLoad()
+        }
       }
     }
   })
@@ -109,8 +121,12 @@ export default (): void => {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (...[, , slide]: Properties): void => {
-        updateLoad()
-        setStateSubmitBtn(slide.el)
+        const container: Container = slide.el
+
+        if (container) {
+          updateLoad()
+          setStateSubmitBtn(slide.el)
+        }
       }
     }
   })
@@ -119,8 +135,12 @@ export default (): void => {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (...[, , slide]: Properties): void => {
-        updateLoad()
-        imagePreview(slide.el)
+        const container: Container = slide.el
+
+        if (container) {
+          updateLoad()
+          imagePreview(slide.el)
+        }
       }
     }
   })
@@ -129,8 +149,12 @@ export default (): void => {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (...[, , slide]: Properties): void => {
-        updateLoad()
-        initCalendar(slide.el)
+        const container: Container = slide.el
+
+        if (container) {
+          updateLoad()
+          initCalendar(slide.el)
+        }
       }
     }
   })

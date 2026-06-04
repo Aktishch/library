@@ -1,6 +1,9 @@
-import { checkCookie, Container, COOKIE_EXPIRES_DAYS, getData, isEn, logError, setCookies } from '@utils'
+import { Container, COOKIE_EXPIRES_DAYS, getCookie, getData, isEn, logError, setCookies } from '@utils'
+
+type Button = HTMLButtonElement | null
 
 const DATA_COOKIE: string = getData('cookie')
+const COOKIE_VALUE: string = 'active'
 
 export default (container: Container = document): void => {
   const cookies: NodeListOf<HTMLElement> = container.querySelectorAll(`*[${DATA_COOKIE}]`)
@@ -15,17 +18,16 @@ export default (container: Container = document): void => {
     }
 
     const name: string = `cookie_${id}`
-    const hasCookie: boolean = checkCookie(`${name}=`)
 
-    if (hasCookie) {
+    if (getCookie(name) === COOKIE_VALUE) {
       cookie.remove()
     } else {
-      const button: HTMLButtonElement | null = cookie.querySelector(`*[${DATA_COOKIE}-button]`)
+      const button: Button = cookie.querySelector(`*[${DATA_COOKIE}-button]`)
       const expires: number = Number(cookie.dataset.expires) || Math.floor(COOKIE_EXPIRES_DAYS / 12 / 4)
       const path: string = cookie.dataset.cookie || '/'
 
       const addCookie = (): void => {
-        setCookies({ name, value: 'true', path, expires })
+        setCookies({ name, value: COOKIE_VALUE, path, expires })
         cookie.remove()
       }
 

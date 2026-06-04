@@ -12,6 +12,7 @@ interface ClientCoordinates {
 }
 
 type DraggableEvent = TouchEvent | MouseEvent
+type Value = string | undefined
 
 const DATA_DRAGGABLE: string = getData('draggable')
 
@@ -25,7 +26,7 @@ export default (container: Container = document): void => {
   if (!draggables.length) return
 
   draggables.forEach((draggable: HTMLElement): void => {
-    const value: string | undefined = draggable.dataset.draggable
+    const value: Value = draggable.dataset.draggable
 
     if (!value) {
       return logError(isEn ? `${DATA_DRAGGABLE} is missing a value` : `У ${DATA_DRAGGABLE} отсутствует значение`)

@@ -1,5 +1,11 @@
 import { Container, getData, isEn, logError } from '@utils'
 
+type Canvas = HTMLCanvasElement | null
+type Context = CanvasRenderingContext2D | null
+type Src = string | undefined
+type Link = HTMLAnchorElement | null
+type Text = string | undefined
+
 const DATA_RENDERING: string = getData('rendering')
 
 export default (container: Container = document): void => {
@@ -8,12 +14,12 @@ export default (container: Container = document): void => {
   if (!renderings.length) return
 
   renderings.forEach((rendering: HTMLDivElement): void => {
-    const canvas: HTMLCanvasElement | null = rendering.querySelector(`*[${DATA_RENDERING}-canvas]`)
+    const canvas: Canvas = rendering.querySelector(`*[${DATA_RENDERING}-canvas]`)
 
     if (!canvas) return
 
-    const context: CanvasRenderingContext2D | null = canvas.getContext('2d')
-    const src: string | undefined = canvas.dataset.renderingCanvas
+    const context: Context = canvas.getContext('2d')
+    const src: Src = canvas.dataset.renderingCanvas
 
     if (!context || !src) {
       return logError(
@@ -23,9 +29,9 @@ export default (container: Container = document): void => {
       )
     }
 
-    const download: HTMLAnchorElement | null = rendering.querySelector(`*[${DATA_RENDERING}-download]`)
+    const link: Link = rendering.querySelector(`*[${DATA_RENDERING}-link]`)
     const image: HTMLImageElement = new Image()
-    const text: string | undefined = rendering.dataset.rendering
+    const text: Text = rendering.dataset.rendering
 
     image.crossOrigin = 'anonymous'
 
@@ -42,8 +48,8 @@ export default (container: Container = document): void => {
         context.fillText(text, canvas.width / 2, canvas.height / 1.5)
       }
 
-      if (download) {
-        download.href = canvas.toDataURL('image/png')
+      if (link) {
+        link.href = canvas.toDataURL('image/png')
       }
     }
 

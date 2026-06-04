@@ -6,7 +6,7 @@ interface UploadedFile {
 }
 
 type Resolve = (value: UploadedFile | PromiseLike<UploadedFile>) => void
-type Reject = (reason: string) => void
+type Reject = (reason?: string) => void
 
 export const uploadFile = (file: File): Promise<UploadedFile> => {
   return new Promise<UploadedFile>((resolve: Resolve, reject: Reject): void => {

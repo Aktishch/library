@@ -1,3 +1,3 @@
 import { html } from '@utils/html'
 
-export const isEn: boolean = html.hasAttribute('data-en')
+export const isEn: boolean = html.lang === 'en'

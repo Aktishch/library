@@ -1,12 +1,14 @@
-import { Container, isEn } from '@utils'
+import { Container, isEn, TimeOut } from '@utils'
+
+type Title = HTMLTitleElement | null
 
 export default (container: Container = document): void => {
-  const title: HTMLTitleElement | null = container.querySelector('title')
+  const title: Title = container.querySelector('title')
 
   if (!title) return
 
   const text: string = title.textContent
-  let timeOut: NodeJS.Timeout
+  let timeOut: TimeOut
 
   const clearTimer = (): void => {
     if (timeOut) {

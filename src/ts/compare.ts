@@ -1,5 +1,9 @@
 import { Container, getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
 
+type Image = HTMLImageElement | null
+type Before = HTMLDivElement | null
+type Change = HTMLDivElement | null
+
 const DATA_COMPARE: string = getData('compare')
 
 export default (container: Container = document): void => {
@@ -10,7 +14,7 @@ export default (container: Container = document): void => {
   const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
     entries.forEach((entry: ResizeObserverEntry): void => {
       const compare: HTMLDivElement = entry.target as HTMLDivElement
-      const image: HTMLImageElement | null = compare.querySelector(`*[${DATA_COMPARE}-image]`)
+      const image: Image = compare.querySelector(`*[${DATA_COMPARE}-image]`)
 
       if (image) {
         image.style.width = `${entry.contentRect.width}px`
@@ -19,8 +23,8 @@ export default (container: Container = document): void => {
   })
 
   compares.forEach((compare: HTMLDivElement): void => {
-    const before: HTMLDivElement | null = compare.querySelector(`*[${DATA_COMPARE}-before]`)
-    const change: HTMLDivElement | null = compare.querySelector(`*[${DATA_COMPARE}-change]`)
+    const before: Before = compare.querySelector(`*[${DATA_COMPARE}-before]`)
+    const change: Change = compare.querySelector(`*[${DATA_COMPARE}-change]`)
 
     if (!before || !change) {
       return logError(
