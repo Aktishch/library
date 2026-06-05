@@ -1,5 +1,7 @@
 import { html } from '@utils/html'
 
+type Matches = RegExpMatchArray | null
+
 interface CookieOptions {
   name: string
   value: string
@@ -20,7 +22,7 @@ export const setCookies = ({ name, value, path, expires }: CookieOptions): void 
 }
 
 export const getCookie = (name: string): string => {
-  const matches: RegExpMatchArray | null = document.cookie.match(
+  const matches: Matches = document.cookie.match(
     new RegExp(`(?:^|; )${encodeURIComponent(name).replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')}=([^;]*)`)
   )
 

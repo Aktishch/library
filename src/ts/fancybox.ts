@@ -87,7 +87,7 @@ export const dialog: Dialog = {
 
             if (container) {
               updateLoad()
-              callback?.(slide.el)
+              callback?.(container)
             }
           }
         }
@@ -125,7 +125,7 @@ export default (): void => {
 
         if (container) {
           updateLoad()
-          setStateSubmitBtn(slide.el)
+          setStateSubmitBtn(container)
         }
       }
     }
@@ -139,7 +139,7 @@ export default (): void => {
 
         if (container) {
           updateLoad()
-          imagePreview(slide.el)
+          imagePreview(container)
         }
       }
     }
@@ -153,7 +153,7 @@ export default (): void => {
 
         if (container) {
           updateLoad()
-          initCalendar(slide.el)
+          initCalendar(container)
         }
       }
     }

@@ -1,6 +1,10 @@
 import { DATA_ERROR, DATA_INPUT, DATA_LABEL } from '@utils/get-data'
 import { isEn } from '@utils/is-en'
 
+type Label = HTMLLabelElement | HTMLDivElement
+type Input = HTMLInputElement | null
+type Error = HTMLSpanElement | null
+
 interface ErrorMessage {
   default: string
   tel: string
@@ -11,10 +15,6 @@ interface ErrorMessage {
   description: string
   file: string
 }
-
-type Label = HTMLLabelElement | HTMLDivElement
-type Input = HTMLInputElement | null
-type Error = HTMLSpanElement | null
 
 const INPUT_ERROR_CLASSNAME: string = 'input-error'
 const ERROR_VISIBLE_CLASSNAMES: string[] = ['invisible', 'opacity-0']

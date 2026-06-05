@@ -11,12 +11,6 @@ import {
   uploadFile
 } from '@utils'
 
-interface Message {
-  default: string
-  more: string
-  limit: string
-}
-
 type Form = HTMLFormElement | null
 type Label = HTMLLabelElement | null
 type Input = HTMLInputElement | null
@@ -27,8 +21,22 @@ type Files = FileList | null
 type Remove = HTMLButtonElement | null
 type Li = HTMLLIElement | null
 
+interface Message {
+  default: string
+  more: string
+  limit: string
+}
+
 const DATA_FILELIST: string = getData('filelist')
 const LABEL_DISABLED_CLASSNAMES: string[] = ['pointer-events-none', 'opacity-50']
+
+const handleElementsError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_FILELIST} does not have a ${DATA_FILELIST}-(label, input, error, text, listing) child element`
+      : `У ${DATA_FILELIST} отсутствует дочерний элемент ${DATA_FILELIST}-(label, input, error, text, listing)`
+  )
+}
 
 export default (container: Container = document): void => {
   const filelists: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_FILELIST}]`)
@@ -44,11 +52,7 @@ export default (container: Container = document): void => {
     const listing: Listing = filelist.querySelector(`*[${DATA_FILELIST}-listing]`)
 
     if (!label || !input || !error || !text || !listing) {
-      return logError(
-        isEn
-          ? `The ${DATA_FILELIST} does not have a ${DATA_FILELIST}-(label, input, error, text, listing) child element`
-          : `У ${DATA_FILELIST} отсутствует дочерний элемент ${DATA_FILELIST}-(label, input, error, text, listing)`
-      )
+      return handleElementsError()
     }
 
     const maxLength: number = Number(listing.dataset.filelistListing) || 3
@@ -59,14 +63,12 @@ export default (container: Container = document): void => {
     }
     let data: DataTransfer = new DataTransfer()
 
-    const uploadFilesList = (): void => {
+    const assignFileList = (): void => {
       input.files = data.files
     }
 
-    text.textContent = message.default
-
-    input.addEventListener('change', (async (): Promise<void> => {
-      const files: Files = input.files
+    const uploadFileList = async (event: Event): Promise<void> => {
+      const files: Files = (event.target as HTMLInputElement).files
 
       if (files && files.length) {
         for (let i: number = 0; i < files.length; i++) {
@@ -106,10 +108,10 @@ export default (container: Container = document): void => {
         }
       }
 
-      uploadFilesList()
-    }) as EventListener)
+      assignFileList()
+    }
 
-    filelist.addEventListener('click', ((event: Event): void => {
+    const removeFileInList = (event: Event): void => {
       const remove: Remove = (event.target as HTMLElement).closest(`[${DATA_FILELIST}-remove]`)
 
       if (!remove) return
@@ -131,20 +133,24 @@ export default (container: Container = document): void => {
       }
 
       text.textContent = data.files.length === 0 ? message.default : message.more
-      uploadFilesList()
+      assignFileList()
       label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
-    }) as EventListener)
+    }
 
-    form?.addEventListener('submit', ((event: Event): void => {
+    const resetFileList = (event: Event): void => {
       event.preventDefault()
 
-      if (getValidate(form)) {
+      if (getValidate(event.target as HTMLFormElement)) {
         label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
         text.textContent = message.default
         listing.innerHTML = ''
         data = new DataTransfer()
-        uploadFilesList()
       }
-    }) as EventListener)
+    }
+
+    text.textContent = message.default
+    input.addEventListener('change', uploadFileList as EventListener)
+    filelist.addEventListener('click', removeFileInList as EventListener)
+    form?.addEventListener('submit', resetFileList as EventListener)
   })
 }

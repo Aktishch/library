@@ -1,24 +1,33 @@
 import { Container } from '@utils'
 
-const COMBINATION_KEYS: string[] = ['s', 't', 'a', 'r', 't']
+interface CombinationOptions {
+  keys: string[]
+  status: boolean
+  index: number
+}
+
+const COMBINATION_OPTIONS: CombinationOptions = {
+  keys: ['s', 't', 'a', 'r', 't'],
+  status: true,
+  index: 0
+}
+
+const setCombination = (event: KeyboardEvent): void => {
+  if (event.key === COMBINATION_OPTIONS.keys[COMBINATION_OPTIONS.index]) {
+    if (!COMBINATION_OPTIONS.status) return
+
+    COMBINATION_OPTIONS.index++
+
+    if (COMBINATION_OPTIONS.index === COMBINATION_OPTIONS.keys.length) {
+      alert('Start')
+      COMBINATION_OPTIONS.status = false
+      COMBINATION_OPTIONS.index = 0
+    }
+  } else {
+    COMBINATION_OPTIONS.index = 0
+  }
+}
 
 export default (container: Container = document): void => {
-  let status: boolean = true
-  let index: number = 0
-
-  container.addEventListener('keyup', ((event: KeyboardEvent): void => {
-    if (event.key === COMBINATION_KEYS[index]) {
-      if (!status) return
-
-      index++
-
-      if (index === COMBINATION_KEYS.length) {
-        alert('Start')
-        status = false
-        index = 0
-      }
-    } else {
-      index = 0
-    }
-  }) as EventListener)
+  container.addEventListener('keyup', setCombination as EventListener)
 }

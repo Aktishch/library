@@ -1,7 +1,10 @@
 import { Container } from '@utils'
 
+type Game = HTMLDivElement | null
+type Player = 'X' | '0'
+
 export default (container: Container = document): void => {
-  const game: HTMLDivElement | null = container.querySelector('*[data-game]')
+  const game: Game = container.querySelector('*[data-game]')
 
   if (!game) return
 
@@ -16,7 +19,7 @@ export default (container: Container = document): void => {
     [0, 4, 8],
     [2, 4, 6]
   ]
-  let player: 'X' | '0' = 'X'
+  let player: Player = 'X'
   let over: boolean = false
 
   const checkWin = (player: string): boolean => {
@@ -74,11 +77,7 @@ export default (container: Container = document): void => {
   for (let i: number = 0; i < 9; i++) {
     const cell: HTMLButtonElement = document.createElement('button')
 
-    cell.classList.add('pack', 'pack-xl', 'btn', 'btn-contur', 'active:transform-none')
-    cells.push(cell)
-    game.appendChild(cell)
-
-    cell.addEventListener('click', ((): void => {
+    const onClickCell = (): void => {
       if (over || cell.textContent !== '' || player !== 'X') return
 
       checkCell(cell)
@@ -93,6 +92,11 @@ export default (container: Container = document): void => {
         player = '0'
         setTimeout(makeBotMove, 500)
       }
-    }) as EventListener)
+    }
+
+    cell.classList.add('pack', 'pack-xl', 'btn', 'btn-contur', 'active:transform-none')
+    cells.push(cell)
+    game.appendChild(cell)
+    cell.addEventListener('click', onClickCell as EventListener)
   }
 }

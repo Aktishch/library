@@ -1,11 +1,10 @@
-import { Container, getData } from '@utils'
+import { Container, DATA_INPUT, getData } from '@utils'
 
 type Quantity = HTMLDivElement | null
 type Input = HTMLInputElement | null
 type Button = HTMLButtonElement | null
 
 const DATA_QUANTITY: string = getData('quantity')
-const DATA_INPUT: string = getData('input')
 
 const decreaseQuantity = (button: HTMLButtonElement): void => {
   const quantity: Quantity = button.closest(`[${DATA_QUANTITY}]`)

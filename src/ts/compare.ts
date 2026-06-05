@@ -6,6 +6,14 @@ type Change = HTMLDivElement | null
 
 const DATA_COMPARE: string = getData('compare')
 
+const handleElementsError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_COMPARE} does not have a ${DATA_COMPARE}-(before, change) child element`
+      : `У ${DATA_COMPARE} отсутствует дочерний элемент ${DATA_COMPARE}-(before, change)`
+  )
+}
+
 export default (container: Container = document): void => {
   const compares: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_COMPARE}]`)
 
@@ -27,11 +35,7 @@ export default (container: Container = document): void => {
     const change: Change = compare.querySelector(`*[${DATA_COMPARE}-change]`)
 
     if (!before || !change) {
-      return logError(
-        isEn
-          ? `The ${DATA_COMPARE} does not have a ${DATA_COMPARE}-(before, change) child element`
-          : `У ${DATA_COMPARE} отсутствует дочерний элемент ${DATA_COMPARE}-(before, change)`
-      )
+      return handleElementsError()
     }
 
     let isActive: boolean = false

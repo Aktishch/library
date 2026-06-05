@@ -9,6 +9,14 @@ const DATA_CLOSE: string = getData('close')
 const OVERFLOW_CLASSNAME: string = 'overflow-hidden'
 const ACTIVE_VALUE: string = 'active'
 
+const handleContentError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_ACCORDION} does not have a ${DATA_ACCORDION}-content child element`
+      : `У ${DATA_ACCORDION} отсутствует дочерний элемент ${DATA_ACCORDION}-content`
+  )
+}
+
 export default (container: Container = document): void => {
   const accordions: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_ACCORDION}]`)
 
@@ -22,11 +30,7 @@ export default (container: Container = document): void => {
 
     const setHeightContent = (duration: boolean = true): void => {
       if (!content) {
-        return logError(
-          isEn
-            ? `The ${DATA_ACCORDION} does not have a ${DATA_ACCORDION}-content child element`
-            : `У ${DATA_ACCORDION} отсутствует дочерний элемент ${DATA_ACCORDION}-content`
-        )
+        return handleContentError()
       }
 
       if (timeOut) {

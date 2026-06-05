@@ -1,5 +1,8 @@
 import { Container, Coordinates, getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
 
+type DraggableEvent = TouchEvent | MouseEvent
+type Value = string | undefined
+
 interface Translate {
   item: HTMLElement
   positionX: number
@@ -11,10 +14,11 @@ interface ClientCoordinates {
   x: number
 }
 
-type DraggableEvent = TouchEvent | MouseEvent
-type Value = string | undefined
-
 const DATA_DRAGGABLE: string = getData('draggable')
+
+const handleValueError = (): void => {
+  logError(isEn ? `${DATA_DRAGGABLE} is missing a value` : `У ${DATA_DRAGGABLE} отсутствует значение`)
+}
 
 const setTranslate = ({ item, positionX, positionY }: Translate): void => {
   item.style.transform = `translate(${positionX}px, ${positionY}px)`
@@ -29,7 +33,7 @@ export default (container: Container = document): void => {
     const value: Value = draggable.dataset.draggable
 
     if (!value) {
-      return logError(isEn ? `${DATA_DRAGGABLE} is missing a value` : `У ${DATA_DRAGGABLE} отсутствует значение`)
+      return handleValueError()
     }
 
     const coordinates: Coordinates = JSON.parse(sessionStorage.getItem(value) || JSON.stringify({ top: 0, left: 0 }))

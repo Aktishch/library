@@ -1,13 +1,13 @@
 import { isEn } from '@utils/is-en'
 
-interface FileHandler {
-  error: HTMLSpanElement
-  file: File
-}
-
 interface ErrorMessage {
   type: string
   size: string
+}
+
+interface FileHandler {
+  error: HTMLSpanElement
+  file: File
 }
 
 const ERROR_VISIBLE_CLASSNAMES: string[] = ['invisible', 'opacity-0']

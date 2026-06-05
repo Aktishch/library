@@ -1,5 +1,7 @@
 import { Container, isEn, logError } from '@utils'
 
+type BackgroundUrl = string | undefined
+
 interface BackgroundHandler {
   item: HTMLElement
   requestUrl: string
@@ -31,15 +33,11 @@ export default (container: Container = document): void => {
   if (!items.length) return
 
   items.forEach((item: HTMLElement): void => {
-    const webpUrl: string | undefined = item.dataset.webp
-    const bgUrl: string | undefined = item.dataset.bg
+    const webpUrl: BackgroundUrl = item.dataset.webp
+    const bgUrl: BackgroundUrl = item.dataset.bg
 
     if (!webpUrl || !bgUrl) return
 
-    handleBackground({ item, requestUrl: getFormatWebp() && webpUrl ? webpUrl : bgUrl }).catch(
-      (error: string): void => {
-        logError(error)
-      }
-    )
+    handleBackground({ item, requestUrl: getFormatWebp() && webpUrl ? webpUrl : bgUrl })
   })
 }

@@ -1,9 +1,11 @@
 import { targetId } from '@ts/scroll-to'
-import { Container, getData } from '@utils'
+import { Container, getData, isEn, logError } from '@utils'
 
+type Filter = HTMLDivElement | null
 type Category = HTMLButtonElement | HTMLAnchorElement
 type Plug = HTMLDivElement | null
 type Line = HTMLSpanElement | null
+type Value = string | undefined
 
 interface CheckedItem {
   condition: boolean
@@ -23,6 +25,14 @@ interface LinePosition {
 
 const DATA_FILTER: string = getData('filtering')
 const DATA_ACTIVE: string = getData('active')
+
+const handleCategoriesError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_FILTER} does not have a ${DATA_FILTER}-category child element`
+      : `У ${DATA_FILTER} отсутствует дочерний элемент ${DATA_FILTER}-category`
+  )
+}
 
 const addTransition = (item: HTMLDivElement): void => {
   item.classList.add('transition', 'ease-linear')
@@ -44,7 +54,7 @@ const checkItem = ({ condition, item }: CheckedItem): void => {
 
 const checkValue = ({ name, cards, plug }: CheckedValue): void => {
   cards.forEach((card: HTMLDivElement): void => {
-    const value: string | undefined = card.dataset.filteringValue
+    const value: Value = card.dataset.filteringValue
 
     if (!value) return
 
@@ -78,11 +88,11 @@ export default (container: Container = document): void => {
   const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
     entries.forEach((entry: ResizeObserverEntry): void => {
       const category: Category = entry.target as Category
-      const filter: HTMLDivElement | null = category.closest(`[${DATA_FILTER}]`)
+      const filter: Filter = category.closest(`[${DATA_FILTER}]`)
 
       if (!filter) return
 
-      const value: string | undefined = filter.dataset.filtering
+      const value: Value = filter.dataset.filtering
 
       if (!value) return
 
@@ -95,11 +105,16 @@ export default (container: Container = document): void => {
   })
 
   filters.forEach((filter: HTMLDivElement): void => {
-    const value: string | undefined = filter.dataset.filtering
+    const value: Value = filter.dataset.filtering
 
     if (!value) return
 
     const categories: NodeListOf<Category> = container.querySelectorAll(`*[${DATA_FILTER}-category="${value}"]`)
+
+    if (!categories.length) {
+      return handleCategoriesError()
+    }
+
     const cards: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_FILTER}-card="${value}"]`)
     const plug: Plug = container.querySelector(`*[${DATA_FILTER}-plug="${value}"]`)
     const line: Line = container.querySelector(`*[${DATA_FILTER}-line="${value}"]`)
@@ -107,49 +122,52 @@ export default (container: Container = document): void => {
     const getCurrentCategory = (): Category => {
       let active: Category = categories[0]
 
-      categories.forEach((category: Category): void => {
-        if (category && category.hasAttribute(DATA_ACTIVE)) {
-          active = category
-        }
-      })
+      if (categories.length) {
+        categories.forEach((category: Category): void => {
+          if (category.hasAttribute(DATA_ACTIVE)) {
+            active = category
+          }
+        })
+      }
 
       return active
     }
 
-    const setCurrentCard = (category: Category): void => {
+    const setCurrentCategory = (category: Category): void => {
       const active: Category = getCurrentCategory()
-      const name: string | undefined = category.dataset.filteringValue
+      const name: Value = category.dataset.filteringValue
 
       if (!name) return
 
       active.removeAttribute(DATA_ACTIVE)
       category.setAttribute(DATA_ACTIVE, '')
-
       updateLinePosition({ line, category })
       checkValue({ name, cards, plug })
     }
 
-    cards.forEach((card: HTMLDivElement): void => {
-      if (card) {
+    if (cards.length) {
+      cards.forEach((card: HTMLDivElement): void => {
         addTransition(card)
-      }
-    })
+      })
+    }
 
     if (plug) {
       addTransition(plug)
     }
 
-    setCurrentCard(getCurrentCategory())
+    setCurrentCategory(getCurrentCategory())
 
-    categories.forEach((category: Category): void => {
-      if (!category) return
+    if (categories.length) {
+      categories.forEach((category: Category): void => {
+        const setCurrentCards = (): void => {
+          setCurrentCategory(category)
+        }
 
-      resizeObserver.observe(category)
+        resizeObserver.observe(category)
 
-      category.addEventListener('click', ((): void => {
-        setCurrentCard(category)
-      }) as EventListener)
-    })
+        category.addEventListener('click', setCurrentCards as EventListener)
+      })
+    }
 
     if (targetId) {
       for (const [index, card] of cards.entries()) {
@@ -157,7 +175,7 @@ export default (container: Container = document): void => {
           const category: Category = categories[index]
 
           if (category) {
-            setCurrentCard(category)
+            setCurrentCategory(category)
           }
         }
       }

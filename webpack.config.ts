@@ -10,6 +10,10 @@ import { fileURLToPath } from 'url'
 import type { Compilation, InputFileSystem, Configuration as WebpackConfiguration } from 'webpack'
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server'
 
+type LodashInclude = lodash.TemplateExecutor | undefined
+type Include = (targetPath: string) => LodashInclude
+type FileSystem = InputFileSystem | null
+
 interface Configuration extends WebpackConfiguration {
   devServer?: DevServerConfiguration
 }
@@ -31,10 +35,6 @@ interface HtmlPlugin {
   src: string
   isProd: boolean
 }
-
-type LodashInclude = lodash.TemplateExecutor | undefined
-
-type Include = (targetPath: string) => LodashInclude
 
 interface TemplateParameters extends HtmlWebpackPlugin.TemplateParameter {
   include: Include
@@ -70,7 +70,7 @@ const generatePlugins = ({ templateDir, script, src, isProd }: HtmlPlugin): Html
           options: ProcessedOptions
         ): TemplateParameters => {
           const include = (targetPath: string): LodashInclude => {
-            const fileSystem: InputFileSystem | null = compilation.compiler.inputFileSystem
+            const fileSystem: FileSystem = compilation.compiler.inputFileSystem
 
             if (!fileSystem) return
 

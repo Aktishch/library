@@ -3,6 +3,18 @@ import { Container, getData, getTouchDevice, isEn, logError, TimeOut } from '@ut
 import AirDatepicker, { AirDatepickerPosition, AirDatepickerViewsSingle } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
 
+type Wrapper = HTMLElement | ''
+type Dialog = HTMLDivElement | null
+type Calendar = HTMLDivElement | null
+type Input = HTMLInputElement | null
+
+type Attrs = {
+  'data-filtering-category': string
+  'data-filtering-value': string
+  'data-waved': string
+  'data-active'?: string
+}
+
 declare global {
   interface Window {
     AirDatepicker: typeof AirDatepicker
@@ -14,31 +26,23 @@ interface CalendarOptions {
   cellType: AirDatepickerViewsSingle
 }
 
-type CalendarAttrs = {
-  'data-filtering-category': string
-  'data-filtering-value': string
-  'data-waved': string
-  'data-active'?: string
-}
-
 interface CalendarCell {
   classes: string
-  attrs: CalendarAttrs
+  attrs: Attrs
 }
-
-interface Dates {
-  date: Date | Date[]
-}
-
-type Wrapper = HTMLElement | ''
-type Dialog = HTMLDivElement | null
-type Calendar = HTMLDivElement | null
-type Input = HTMLInputElement | null
 
 const DATA_DATEPICKER: string = getData('datepicker')
 const EXCLUDE_DATES: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +new Date(2026, 5, 10)]
 
 window.AirDatepicker = AirDatepicker
+
+const handleInputsError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_DATEPICKER} does not have a ${DATA_DATEPICKER}-(min, max) child element`
+      : `У ${DATA_DATEPICKER} отсутствует дочерний элемент ${DATA_DATEPICKER}-(min, max)`
+  )
+}
 
 const getFancybox = (container: Container): Wrapper => {
   const dialog: Dialog = container.querySelector('.f-html')
@@ -64,7 +68,7 @@ export const initCalendar = (container: Container = document): void => {
       const classes: string = condition
         ? 'btn btn-primary btn-fill text-sm [&[data-active]]:opacity-50 [&[data-active]]:pointer-events-none'
         : 'pointer-events-none'
-      const attrs: CalendarAttrs = {
+      const attrs: Attrs = {
         'data-filtering-category': 'calendar',
         'data-filtering-value': `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`,
         'data-waved': 'light'
@@ -109,15 +113,11 @@ export default (container: Container = document): void => {
     const inputMax: Input = datepicker.querySelector(`*[${DATA_DATEPICKER}-max]`)
 
     if (!inputMin || !inputMax) {
-      return logError(
-        isEn
-          ? `The ${DATA_DATEPICKER} does not have a ${DATA_DATEPICKER}-(min, max) child element`
-          : `У ${DATA_DATEPICKER} отсутствует дочерний элемент ${DATA_DATEPICKER}-(min, max)`
-      )
+      return handleInputsError()
     }
 
     const min: AirDatepicker<HTMLInputElement> = new window.AirDatepicker(inputMin, {
-      onSelect({ date }: Dates) {
+      onSelect({ date }) {
         max.update({
           minDate: String(date)
         })
@@ -131,7 +131,7 @@ export default (container: Container = document): void => {
     })
 
     const max: AirDatepicker<HTMLInputElement> = new window.AirDatepicker(inputMax, {
-      onSelect({ date }: Dates) {
+      onSelect({ date }) {
         min.update({
           maxDate: String(date)
         })

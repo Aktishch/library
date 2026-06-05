@@ -1,13 +1,22 @@
 import { media } from '@plugins'
-import { Breakpoint, Container, getData, html, isEn, logError } from '@utils'
+import { Breakpoint, Container, DATA_BREAKPOINT, getData, html, isEn, logError } from '@utils'
+
+type Horizontal = HTMLDivElement | null
 
 const DATA_SCROLLING: string = getData('scrolling')
 
-const setError = (): void => {
-  return logError(
+const handleHorizontalError = (): void => {
+  logError(
     isEn
       ? `The ${DATA_SCROLLING} does not have a ${DATA_SCROLLING}-horizontal child element`
       : `У ${DATA_SCROLLING} отсутствует дочерний элемент ${DATA_SCROLLING}-horizontal`
+  )
+}
+
+const getBreakpoint = (scrolling: HTMLElement): boolean => {
+  return (
+    html.clientWidth <
+    (scrolling.hasAttribute(DATA_BREAKPOINT) ? media[scrolling.dataset.breakpoint as Breakpoint] : media.md)
   )
 }
 
@@ -22,44 +31,37 @@ export default (container: Container = document): void => {
     threshold: 0
   }
 
+  const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+    entries.forEach((entry: ResizeObserverEntry): void => {
+      const scrolling: HTMLElement = entry.target as HTMLElement
+      const horizontal: Horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)
+
+      if (!horizontal) {
+        return handleHorizontalError()
+      }
+
+      window.requestAnimationFrame((): void => {
+        if (getBreakpoint(scrolling)) {
+          scrolling.style.removeProperty('height')
+        } else {
+          scrolling.style.height = `${horizontal.scrollWidth - horizontal.clientWidth + window.innerHeight}px`
+        }
+      })
+    })
+  })
+
   scrollings.forEach((scrolling: HTMLElement): void => {
-    const horizontal: HTMLDivElement | null = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)
+    const horizontal: Horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)
 
     if (!horizontal) {
-      return setError()
+      return handleHorizontalError()
     }
 
     const images: NodeListOf<HTMLImageElement> = scrolling.querySelectorAll(`*[${DATA_SCROLLING}-image]`)
     let isIntersecting: boolean = false
 
-    const getBreakpoint = (): boolean => {
-      return (
-        html.clientWidth <
-        (scrolling.hasAttribute('data-breakpoint') ? media[scrolling.dataset.breakpoint as Breakpoint] : media.md)
-      )
-    }
-
-    const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
-      entries.forEach((entry: ResizeObserverEntry): void => {
-        const scrolling: HTMLElement = entry.target as HTMLElement
-        const horizontal: HTMLDivElement | null = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)
-
-        if (!horizontal) {
-          return setError()
-        }
-
-        window.requestAnimationFrame((): void => {
-          if (getBreakpoint()) {
-            scrolling.style.removeProperty('height')
-          } else {
-            scrolling.style.height = `${horizontal.scrollWidth - horizontal.clientWidth + window.innerHeight}px`
-          }
-        })
-      })
-    })
-
     const handleScroll = (): void => {
-      if (!isIntersecting || getBreakpoint()) return
+      if (!isIntersecting || getBreakpoint(scrolling)) return
 
       const maxScroll: number = horizontal.scrollWidth - horizontal.clientWidth
 
@@ -69,11 +71,11 @@ export default (container: Container = document): void => {
         if (maxScroll > 0) {
           const moving: number = (horizontal.scrollLeft / maxScroll) * 10
 
-          images.forEach((image: HTMLImageElement): void => {
-            if (!image) return
-
-            image.style.transform = `scale(1.5) translateX(-${moving}%)`
-          })
+          if (images.length) {
+            images.forEach((image: HTMLImageElement): void => {
+              image.style.transform = `scale(1.5) translateX(-${moving}%)`
+            })
+          }
         }
       })
     }

@@ -1,6 +1,6 @@
 {
   "name": "library",
-  "version": "6.11",
+  "version": "6.12",
   "description": "application",
   "private": true,
   "type": "module",

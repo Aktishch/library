@@ -1,12 +1,12 @@
 import { isEn } from '@utils/is-en'
 
+type Resolve = (value: UploadedFile | PromiseLike<UploadedFile>) => void
+type Reject = (reason?: string) => void
+
 interface UploadedFile {
   file: File
   url: string
 }
-
-type Resolve = (value: UploadedFile | PromiseLike<UploadedFile>) => void
-type Reject = (reason?: string) => void
 
 export const uploadFile = (file: File): Promise<UploadedFile> => {
   return new Promise<UploadedFile>((resolve: Resolve, reject: Reject): void => {

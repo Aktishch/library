@@ -8,6 +8,18 @@ type Text = string | undefined
 
 const DATA_RENDERING: string = getData('rendering')
 
+const handleContextError = (): void => {
+  logError(
+    isEn
+      ? 'Failed to provide a rendering context for the element'
+      : 'Не удалось представить контекст рендеринга для элемента'
+  )
+}
+
+const handleImageError = (): void => {
+  logError(isEn ? "Couldn't upload image" : 'Не удалось загрузить изображение')
+}
+
 export default (container: Container = document): void => {
   const renderings: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_RENDERING}]`)
 
@@ -22,11 +34,7 @@ export default (container: Container = document): void => {
     const src: Src = canvas.dataset.renderingCanvas
 
     if (!context || !src) {
-      return logError(
-        isEn
-          ? 'Failed to provide a rendering context for the element'
-          : 'Не удалось представить контекст рендеринга для элемента'
-      )
+      return handleContextError()
     }
 
     const link: Link = rendering.querySelector(`*[${DATA_RENDERING}-link]`)
@@ -51,10 +59,6 @@ export default (container: Container = document): void => {
       if (link) {
         link.href = canvas.toDataURL('image/png')
       }
-    }
-
-    const handleImageError = (): void => {
-      logError(isEn ? "Couldn't upload image" : 'Не удалось загрузить изображение')
     }
 
     image.addEventListener('load', handleImageLoad as EventListener)

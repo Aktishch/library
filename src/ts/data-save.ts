@@ -5,6 +5,10 @@ type Input = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 
 const DATA_SAVE: string = getData('save')
 
+const handleValueError = (): void => {
+  logError(isEn ? `${DATA_SAVE} is missing a value` : `У ${DATA_SAVE} отсутствует значение`)
+}
+
 const handleInput = (input: Input): boolean => {
   return !input || input.hasAttribute('hidden') || input.type === 'hidden' || input.type === 'file'
 }
@@ -18,7 +22,7 @@ export default (container: Container = document): void => {
     const value: Value = form.dataset.save
 
     if (!value) {
-      return logError(isEn ? `${DATA_SAVE} is missing a value` : `У ${DATA_SAVE} отсутствует значение`)
+      return handleValueError()
     }
 
     const dataSave: Record<string, string | boolean> = JSON.parse(sessionStorage.getItem(value) || '{}')

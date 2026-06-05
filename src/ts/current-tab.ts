@@ -16,16 +16,19 @@ export default (container: Container = document): void => {
     }
   }
 
-  window.addEventListener('blur', ((): void => {
+  const onBlur = (): void => {
     clearTimer()
 
     timeOut = setTimeout((): void => {
       title.innerText = isEn ? 'You have left the page' : 'Вы покинули страницу'
     }, 5000)
-  }) as EventListener)
+  }
 
-  window.addEventListener('focus', ((): void => {
+  const onFocus = (): void => {
     clearTimer()
     title.innerText = text
-  }) as EventListener)
+  }
+
+  window.addEventListener('blur', onBlur as EventListener)
+  window.addEventListener('focus', onFocus as EventListener)
 }

@@ -5,6 +5,10 @@ type Button = HTMLButtonElement | null
 const DATA_COOKIE: string = getData('cookie')
 const COOKIE_VALUE: string = 'active'
 
+const handleIdError = (): void => {
+  logError(isEn ? `The ${DATA_COOKIE} has no id` : `У ${DATA_COOKIE} отсутствует id`)
+}
+
 export default (container: Container = document): void => {
   const cookies: NodeListOf<HTMLElement> = container.querySelectorAll(`*[${DATA_COOKIE}]`)
 
@@ -14,7 +18,7 @@ export default (container: Container = document): void => {
     const id: string = cookie.id
 
     if (cookie.id === '') {
-      return logError(isEn ? `The ${DATA_COOKIE} has no id` : `У ${DATA_COOKIE} отсутствует id`)
+      return handleIdError()
     }
 
     const name: string = `cookie_${id}`
