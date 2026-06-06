@@ -1,7 +1,11 @@
+import { Container, getData } from '@utils'
+
 type Input = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 
+const DATA_QUIZ: string = getData('quiz')
+
 export const checkQuizSlide = (slide: HTMLElement): void => {
-  const quiz = slide.closest('[data-quiz]') as HTMLElement
+  const quiz: HTMLElement = slide.closest(`[${DATA_QUIZ}]`) as HTMLElement
   const inputs: Input[] = [
     ...slide.querySelectorAll('input'),
     ...slide.querySelectorAll('select'),
@@ -9,12 +13,10 @@ export const checkQuizSlide = (slide: HTMLElement): void => {
   ]
   let active: boolean = false
 
-  if (inputs.length === 0) {
+  if (slide.dataset.quizSlide === 'empty' || inputs.length === 0) {
     active = true
   } else {
     inputs.forEach((input: Input): void => {
-      if (!input) return
-
       if (input.type === 'checkbox' || input.type === 'radio') {
         if ((input as HTMLInputElement).checked !== false) active = true
       } else if (input.value.length !== 0) {
@@ -26,10 +28,14 @@ export const checkQuizSlide = (slide: HTMLElement): void => {
   quiz.dataset.quiz = active ? '' : 'stop'
 }
 
-export default (): void => {
-  document.addEventListener('input', ((event: InputEvent): void => {
-    const slide = (event.target as Input).closest('[data-quiz-slide]') as HTMLElement
+const checkQuizInputs = (event: Event): void => {
+  const slide: HTMLDivElement | null = (event.target as HTMLElement).closest(`[${DATA_QUIZ}-slide]`)
 
-    if (slide) checkQuizSlide(slide)
-  }) as EventListener)
+  if (slide) {
+    checkQuizSlide(slide)
+  }
+}
+
+export default (container: Container = document): void => {
+  container.addEventListener('input', checkQuizInputs as EventListener)
 }

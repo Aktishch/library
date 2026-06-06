@@ -1,15 +1,4 @@
-import {
-  Container,
-  DATA_ERROR,
-  DATA_FORM,
-  getData,
-  getValidate,
-  handleFile,
-  isEn,
-  logError,
-  source,
-  uploadFile
-} from '@utils'
+import { Container, getData, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
 
 type Form = HTMLFormElement | null
 type Label = HTMLLabelElement | null
@@ -44,10 +33,10 @@ export default (container: Container = document): void => {
   if (!filelists.length) return
 
   filelists.forEach((filelist: HTMLDivElement): void => {
-    const form: Form = filelist.closest(`[${DATA_FORM}]`)
+    const form: Form = filelist.closest('[data-form]')
     const label: Label = filelist.querySelector(`*[${DATA_FILELIST}-label]`)
     const input: Input = filelist.querySelector(`*[${DATA_FILELIST}-input]`)
-    const error: Error = filelist.querySelector(`*[${DATA_ERROR}]`)
+    const error: Error = filelist.querySelector('*[data-error]')
     const text: Text = filelist.querySelector(`*[${DATA_FILELIST}-text]`)
     const listing: Listing = filelist.querySelector(`*[${DATA_FILELIST}-listing]`)
 
@@ -132,7 +121,7 @@ export default (container: Container = document): void => {
         }
       }
 
-      text.textContent = data.files.length === 0 ? message.default : message.more
+      text.textContent = !data.files.length ? message.default : message.more
       assignFileList()
       label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
     }

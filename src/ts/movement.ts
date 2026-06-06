@@ -1,9 +1,11 @@
 import { Container, Coordinates, getData, getTouchDevice } from '@utils'
 
+type Movement = HTMLElement | null
+
 const DATA_MOVEMENT: string = getData('movement')
 
 const setMovement = (event: MouseEvent): void => {
-  const movement: HTMLElement | null = (event.target as HTMLElement).closest(`[${DATA_MOVEMENT}]`)
+  const movement: Movement = (event.target as HTMLElement).closest(`[${DATA_MOVEMENT}]`)
 
   if (!movement) return
 

@@ -1,7 +1,9 @@
 import { Container, getScrollPosition, html } from '@utils'
 
+type ProgressLine = HTMLDivElement | null
+
 export default (container: Container = document): void => {
-  const progressLine: HTMLDivElement | null = container.querySelector('*[data-progress-line]')
+  const progressLine: ProgressLine = container.querySelector('*[data-progress-line]')
 
   if (!progressLine) return
 

@@ -1,4 +1,3 @@
-import { DATA_ERROR, DATA_INPUT, DATA_LABEL } from '@utils/get-data'
 import { isEn } from '@utils/is-en'
 
 type Label = HTMLLabelElement | HTMLDivElement
@@ -30,15 +29,15 @@ const ERROR_MESSAGE: ErrorMessage = {
 }
 
 export const getValidate = (form: HTMLFormElement): boolean => {
-  const labels: NodeListOf<Label> = form.querySelectorAll(`*[${DATA_LABEL}]`)
+  const labels: NodeListOf<Label> = form.querySelectorAll('*[data-label]')
   let isValid: boolean = true
   let firstInvalidInput: Input = null
 
   if (!labels.length) return isValid
 
   labels.forEach((label: Label): void => {
-    const input: Input = label.querySelector(`*[${DATA_INPUT}]`)
-    const error: Error = label.querySelector(`*[${DATA_ERROR}]`)
+    const input: Input = label.querySelector('*[data-input]')
+    const error: Error = label.querySelector('*[data-error]')
 
     if (!input || !error) return
 

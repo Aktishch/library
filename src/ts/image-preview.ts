@@ -1,10 +1,29 @@
 import { Container, getData, getValidate, handleFile, isEn, logError, uploadFile } from '@utils'
 
+type Form = HTMLFormElement | null
+type Drag = HTMLDivElement | null
+type Image = HTMLImageElement | null
+type Remove = HTMLButtonElement | null
+type Label = HTMLLabelElement | null
+type Input = HTMLInputElement | null
+type Error = HTMLSpanElement | null
+type Files = FileList | null
+type RequestUrl = string | undefined
+type SubmitBtn = HTMLButtonElement | null
+type Avatar = HTMLImageElement | null
+
 const DATA_PREVIEW: string = getData('preview')
-const DRAG_EVENTS: string[] = ['dragenter', 'dragover', 'dragover', 'dragleave', 'drop']
 const DRAG_OPACITY_CLASSNAME: string = 'bg-opacity-50'
 const DRAG_POINTER_CLASSNAME: string = 'pointer-events-none'
 const LABEL_DISABLED_CLASSNAMES: string[] = ['pointer-events-none', 'opacity-50']
+
+const handleElementsError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_PREVIEW} does not have a ${DATA_PREVIEW}-(drag, image, remove, label, input, error) child element`
+      : `У ${DATA_PREVIEW} отсутствует дочерний элемент ${DATA_PREVIEW}-(drag, image, remove, label, input, error)`
+  )
+}
 
 export default (container: Container = document): void => {
   const previews: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_PREVIEW}]`)
@@ -12,26 +31,22 @@ export default (container: Container = document): void => {
   if (!previews.length) return
 
   previews.forEach((preview: HTMLDivElement): void => {
-    const form: HTMLFormElement | null = preview.closest('[data-form]')
-    const drag: HTMLDivElement | null = preview.querySelector(`*[${DATA_PREVIEW}-drag]`)
-    const image: HTMLImageElement | null = preview.querySelector(`*[${DATA_PREVIEW}-image]`)
-    const remove: HTMLButtonElement | null = preview.querySelector(`*[${DATA_PREVIEW}-remove]`)
-    const label: HTMLLabelElement | null = preview.querySelector(`*[${DATA_PREVIEW}-label]`)
-    const input: HTMLInputElement | null = preview.querySelector(`*[${DATA_PREVIEW}-input]`)
-    const error: HTMLSpanElement | null = preview.querySelector('*[data-error]')
+    const form: Form = preview.closest('[data-form]')
+    const drag: Drag = preview.querySelector(`*[${DATA_PREVIEW}-drag]`)
+    const image: Image = preview.querySelector(`*[${DATA_PREVIEW}-image]`)
+    const remove: Remove = preview.querySelector(`*[${DATA_PREVIEW}-remove]`)
+    const label: Label = preview.querySelector(`*[${DATA_PREVIEW}-label]`)
+    const input: Input = preview.querySelector(`*[${DATA_PREVIEW}-input]`)
+    const error: Error = preview.querySelector('*[data-error]')
 
     if (!drag || !image || !remove || !label || !input || !error) {
-      return logError(
-        isEn
-          ? `The ${DATA_PREVIEW} does not have a ${DATA_PREVIEW}-(drag, image, remove, label, input, error) child element`
-          : `У ${DATA_PREVIEW} отсутствует дочерний элемент ${DATA_PREVIEW}-(drag, image, remove, label, input, error)`
-      )
+      return handleElementsError()
     }
 
-    const requestUrl: string | undefined = image.dataset.previewImage
+    const requestUrl: RequestUrl = image.dataset.previewImage
     let data: DataTransfer = new DataTransfer()
 
-    const uploadFilesList = (): void => {
+    const assignFileList = (): void => {
       input.files = data.files
     }
 
@@ -43,14 +58,14 @@ export default (container: Container = document): void => {
       data = new DataTransfer()
 
       if (reset) {
-        uploadFilesList()
+        assignFileList()
       }
     }
 
-    const setPreview = async (files: FileList): Promise<void> => {
-      if (files.length) {
+    const uploadFileList = async (files: Files): Promise<void> => {
+      if (files && files.length) {
         try {
-          const { file, url } = await uploadFile(files[0] as File)
+          const { file, url } = await uploadFile(files[0])
 
           if (!handleFile({ error, file })) {
             throw isEn ? 'File validation failed' : 'Файл не прошёл валидацию'
@@ -63,14 +78,12 @@ export default (container: Container = document): void => {
           data.items.add(file)
 
           if (form && form.dataset.form === 'avatar') {
-            const submitBtn: HTMLButtonElement | null = form.querySelector('button[type="submit"]')
+            const submitBtn: SubmitBtn = form.querySelector('button[type="submit"]')
 
             submitBtn?.click()
 
             if (preview.dataset.preview) {
-              const avatar: HTMLImageElement | null = document.querySelector(
-                `*[data-avatar="${preview.dataset.preview}"]`
-              )
+              const avatar: Avatar = document.querySelector(`*[data-avatar="${preview.dataset.preview}"]`)
 
               if (avatar) {
                 avatar.src = url
@@ -82,7 +95,7 @@ export default (container: Container = document): void => {
         }
       }
 
-      uploadFilesList()
+      assignFileList()
     }
 
     const handleImage = async (): Promise<void> => {
@@ -103,62 +116,61 @@ export default (container: Container = document): void => {
         const name: string = parts[parts.length - 1]
 
         data.items.add(new File([blob], name, { type: blob.type }))
-        uploadFilesList()
+        assignFileList()
         data = new DataTransfer()
-        await setPreview(input.files as FileList)
+        await uploadFileList(input.files)
       } catch (error: unknown) {
         logError(error as string)
         setDefaultState()
       }
     }
 
-    handleImage()
+    const setFileList = (event: Event): void => {
+      const input: HTMLInputElement = event.target as HTMLInputElement
 
-    DRAG_EVENTS.forEach((dragEvent: string): void => {
-      drag.addEventListener(dragEvent, ((event: DragEvent): void => {
-        event.preventDefault()
+      uploadFileList(input.files)
+    }
 
-        switch (event.type) {
-          case 'dragenter': {
-            drag.classList.add(DRAG_OPACITY_CLASSNAME)
-            break
-          }
-
-          case 'dragover': {
-            drag.classList.add(DRAG_OPACITY_CLASSNAME)
-            break
-          }
-
-          case 'dragleave': {
-            drag.classList.remove(DRAG_OPACITY_CLASSNAME)
-            break
-          }
-
-          case 'drop': {
-            const files: FileList = (event.dataTransfer as DataTransfer).files
-
-            drag.classList.remove(DRAG_OPACITY_CLASSNAME)
-            setPreview(files)
-            break
-          }
-        }
-      }) as EventListener)
-    })
-
-    input.addEventListener('change', ((): void => {
-      setPreview(input.files as FileList)
-    }) as EventListener)
-
-    remove.addEventListener('click', ((): void => {
+    const removeFile = (): void => {
       setDefaultState()
-    }) as EventListener)
+    }
 
-    form?.addEventListener('submit', ((event: Event): void => {
+    const resetFileList = (event: Event): void => {
       event.preventDefault()
+
+      const form: HTMLFormElement = event.target as HTMLFormElement
 
       if (getValidate(form) && form.dataset.form !== 'avatar') {
         setDefaultState(false)
       }
-    }) as EventListener)
+    }
+
+    const onEnter = (event: DragEvent): void => {
+      event.preventDefault()
+      drag.classList.add(DRAG_OPACITY_CLASSNAME)
+    }
+
+    const onLeave = (event: DragEvent): void => {
+      event.preventDefault()
+      drag.classList.remove(DRAG_OPACITY_CLASSNAME)
+    }
+
+    const onDrop = (event: DragEvent): void => {
+      event.preventDefault()
+
+      const files: FileList = (event.dataTransfer as DataTransfer).files
+
+      drag.classList.remove(DRAG_OPACITY_CLASSNAME)
+      uploadFileList(files)
+    }
+
+    handleImage()
+    input.addEventListener('change', setFileList as EventListener)
+    remove.addEventListener('click', removeFile as EventListener)
+    drag.addEventListener('dragenter', onEnter as EventListener)
+    drag.addEventListener('dragover', onEnter as EventListener)
+    drag.addEventListener('dragleave', onLeave as EventListener)
+    drag.addEventListener('drop', onDrop as EventListener)
+    form?.addEventListener('submit', resetFileList as EventListener)
   })
 }

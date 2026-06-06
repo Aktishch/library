@@ -1,4 +1,10 @@
-import { Container } from '@utils'
+import { Container, getData, isEn, logError } from '@utils'
+
+type Wrapper = HTMLDivElement | null
+type Output = HTMLOutputElement | null
+type Input = HTMLInputElement | null
+type Progress = HTMLDivElement | null
+type Bubble = HTMLOutputElement | null
 
 interface BubblePosition {
   size: number
@@ -8,7 +14,15 @@ interface BubblePosition {
   bubble: HTMLOutputElement
 }
 
-type RangeElement = HTMLInputElement | HTMLOutputElement
+const DATA_RANGE: string = getData('range')
+
+const handleElementsError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_RANGE} does not have a ${DATA_RANGE}-(output, input, progress, bubble) child element`
+      : `У ${DATA_RANGE} отсутствует дочерний элемент ${DATA_RANGE}-(output, input, progress, bubble)`
+  )
+}
 
 const setBubblePosition = ({ size, number, input, progress, bubble }: BubblePosition): void => {
   const percent: number = size / 100
@@ -28,7 +42,7 @@ const setBubblePosition = ({ size, number, input, progress, bubble }: BubblePosi
     }
 
     case 1: {
-      step = ((value - max) * 100) / (min - max)
+      step = ((max - value) * 100) / (max - min)
       progress.style.right = '0'
       bubble.style.right = `calc(${step}% - (${step * percent}px))`
       progress.style.width = `calc(${step}% + (${half - step * percent}px))`
@@ -40,13 +54,13 @@ const setBubblePosition = ({ size, number, input, progress, bubble }: BubblePosi
 }
 
 export default (container: Container = document): void => {
-  const ranges = container.querySelectorAll('*[data-range]') as NodeListOf<HTMLDivElement>
+  const ranges: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_RANGE}]`)
+
+  if (!ranges.length) return
 
   ranges.forEach((range: HTMLDivElement): void => {
-    if (!range) return
-
-    const wrappers = range.querySelectorAll('*[data-range-wrapper]') as NodeListOf<HTMLDivElement>
-    const size: number = Number(range.dataset.range) | 28
+    const wrappers: NodeListOf<HTMLDivElement> = range.querySelectorAll(`*[${DATA_RANGE}-wrapper]`)
+    const size: number = Number(range.dataset.range) || 28
     const first: number = 0
     const last: number = 1
 
@@ -54,10 +68,14 @@ export default (container: Container = document): void => {
 
     switch (wrappers.length) {
       case 1: {
-        const output = range.querySelector('*[data-range-output]') as RangeElement
-        const input = range.querySelector('*[data-range-input]') as HTMLInputElement
-        const progress = range.querySelector('*[data-range-progress]') as HTMLDivElement
-        const bubble = range.querySelector('*[data-range-bubble]') as HTMLOutputElement
+        const output: Output = range.querySelector(`*[${DATA_RANGE}-output]`)
+        const input: Input = range.querySelector(`*[${DATA_RANGE}-input]`)
+        const progress: Progress = range.querySelector(`*[${DATA_RANGE}-progress]`)
+        const bubble: Bubble = range.querySelector(`*[${DATA_RANGE}-bubble]`)
+
+        if (!output || !input || !progress || !bubble) {
+          return handleElementsError()
+        }
 
         const onChange = (): void => {
           setBubblePosition({ size, number: first, input, progress, bubble })
@@ -70,21 +88,33 @@ export default (container: Container = document): void => {
       }
 
       case 2: {
-        const outputs = range.querySelectorAll('*[data-range-output]') as NodeListOf<RangeElement>
-        const firstOutput = outputs[first] as RangeElement
-        const firstInput = (wrappers[first] as HTMLDivElement).querySelector('*[data-range-input]') as HTMLInputElement
-        const firstProgress = (wrappers[first] as HTMLDivElement).querySelector(
-          '*[data-range-progress]'
-        ) as HTMLDivElement
-        const firstBubble = (wrappers[first] as HTMLDivElement).querySelector(
-          '*[data-range-bubble]'
-        ) as HTMLOutputElement
-        const lastOutput = outputs[last] as RangeElement
-        const lastInput = (wrappers[last] as HTMLDivElement).querySelector('*[data-range-input]') as HTMLInputElement
-        const lastProgress = (wrappers[last] as HTMLDivElement).querySelector(
-          '*[data-range-progress]'
-        ) as HTMLDivElement
-        const lastBubble = (wrappers[last] as HTMLDivElement).querySelector('*[data-range-bubble]') as HTMLOutputElement
+        const firstWrapper: Wrapper = wrappers[first]
+        const lastWrapper: Wrapper = wrappers[last]
+
+        if (!firstWrapper || !lastWrapper) return
+
+        const outputs: NodeListOf<HTMLInputElement> = range.querySelectorAll(`*[${DATA_RANGE}-output]`)
+        const firstOutput: Input = outputs[first]
+        const lastOutput: Input = outputs[last]
+        const firstInput: Input = firstWrapper.querySelector(`*[${DATA_RANGE}-input]`)
+        const lastInput: Input = lastWrapper.querySelector(`*[${DATA_RANGE}-input]`)
+        const firstProgress: Progress = firstWrapper.querySelector(`*[${DATA_RANGE}-progress]`)
+        const lastProgress: Progress = lastWrapper.querySelector(`*[${DATA_RANGE}-progress]`)
+        const firstBubble: Bubble = firstWrapper.querySelector(`*[${DATA_RANGE}-bubble]`)
+        const lastBubble: Bubble = lastWrapper.querySelector(`*[${DATA_RANGE}-bubble]`)
+
+        if (
+          !firstOutput ||
+          !lastOutput ||
+          !firstInput ||
+          !lastInput ||
+          !firstProgress ||
+          !lastProgress ||
+          !firstBubble ||
+          !lastBubble
+        ) {
+          return handleElementsError()
+        }
 
         const onChange = (): void => {
           setBubblePosition({

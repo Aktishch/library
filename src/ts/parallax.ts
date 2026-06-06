@@ -24,8 +24,6 @@ export default (container: Container = document): void => {
         let hasChanges = false
 
         layers.forEach((layer: HTMLElement): void => {
-          if (!layer) return
-
           const speed: number = Number(layer.dataset.parallaxSpeed) / 100 || 0.05
           const depth: number = Number(layer.dataset.parallaxDepth) || 1
           const reverse: number = layer.dataset.parallaxLayer === 'reverse' ? -1 : 1
@@ -67,43 +65,43 @@ export default (container: Container = document): void => {
       parallax.addEventListener('mousemove', onMouseMove as EventListener)
     }
 
-    hovereds.forEach((hovered: HTMLElement): void => {
-      if (!hovered) return
+    if (hovereds.length) {
+      hovereds.forEach((hovered: HTMLElement): void => {
+        const items: NodeListOf<HTMLElement> = hovered.querySelectorAll(`*[${DATA_PARALLAX}-item]`)
+        const perspective: number = Number(hovered.dataset.parallaxHovered) || 600
+        const depth: number = 10
+        const coordinates: Coordinates = {
+          top: 0,
+          left: 0
+        }
 
-      const items: NodeListOf<HTMLElement> = hovered.querySelectorAll(`*[${DATA_PARALLAX}-item]`)
-      const perspective: number = Number(hovered.dataset.parallaxHovered) || 600
-      const depth: number = 10
-      const coordinates: Coordinates = {
-        top: 0,
-        left: 0
-      }
+        const onMouseMove = (event: MouseEvent): void => {
+          const { top, left, width, height } = (event.target as HTMLElement).getBoundingClientRect()
 
-      const onMouseMove = (event: MouseEvent): void => {
-        const { top, left, width, height } = (event.target as HTMLElement).getBoundingClientRect()
+          coordinates.top = ((event.clientX - left) / width) * (depth * 2) - depth
+          coordinates.left = ((event.clientY - top) / height) * (depth * 2) - depth
+          hovered.style.setProperty('--rotate-y', `${-coordinates.top}deg`)
+          hovered.style.setProperty('--rotate-x', `${coordinates.left}deg`)
+        }
 
-        coordinates.top = ((event.clientX - left) / width) * (depth * 2) - depth
-        coordinates.left = ((event.clientY - top) / height) * (depth * 2) - depth
-        hovered.style.setProperty('--rotate-y', `${-coordinates.top}deg`)
-        hovered.style.setProperty('--rotate-x', `${coordinates.left}deg`)
-      }
+        const onMouseLeave = (): void => {
+          hovered.style.setProperty('--rotate-y', '0')
+          hovered.style.setProperty('--rotate-x', '0')
+        }
 
-      const onMouseLeave = (): void => {
-        hovered.style.setProperty('--rotate-y', '0')
-        hovered.style.setProperty('--rotate-x', '0')
-      }
+        hovered.style.perspective = `${perspective}px`
 
-      hovered.style.perspective = `${perspective}px`
+        if (items.length) {
+          items.forEach((item: HTMLElement): void => {
+            const translateZ: number = Number(item.dataset.parallaxItem) || 100
 
-      items.forEach((item: HTMLElement): void => {
-        if (!item) return
+            item.style.transform = `rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) translateZ(${translateZ}px)`
+          })
+        }
 
-        const translateZ: number = Number(item.dataset.parallaxItem) || 100
-
-        item.style.transform = `rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) translateZ(${translateZ}px)`
+        hovered.addEventListener('mousemove', onMouseMove as EventListener)
+        hovered.addEventListener('mouseleave', onMouseLeave as EventListener)
       })
-
-      hovered.addEventListener('mousemove', onMouseMove as EventListener)
-      hovered.addEventListener('mouseleave', onMouseLeave as EventListener)
-    })
+    }
   })
 }

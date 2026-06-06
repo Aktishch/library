@@ -1,4 +1,8 @@
-import { getScrollPosition } from '@utils'
+import { Container, getScrollPosition } from '@utils'
+
+type TargetId = string | null
+type Header = HTMLElement | null
+type Id = string | null
 
 interface ScrollingPosition {
   block: HTMLElement
@@ -7,36 +11,42 @@ interface ScrollingPosition {
 
 const hash: string = window.location.hash
 
-export const targetId: string | null = hash ? hash.replace('#', '') : null
+export const targetId: TargetId = hash ? hash.replace('#', '') : null
 
-if (hash) window.history.replaceState(null, document.title, window.location.pathname + window.location.search)
-
-const scrollTo = ({ block, behavior }: ScrollingPosition): void => {
-  if (!block) return
-
-  const header = document.querySelector('*[data-header]') as HTMLElement
-  const offsetTop: number =
-    block.getBoundingClientRect().top + getScrollPosition().top - (header ? header.offsetHeight : 0)
-
-  window.scrollTo({ top: offsetTop, behavior })
+if (hash) {
+  window.history.replaceState(null, document.title, window.location.pathname + window.location.search)
 }
 
-export default (): void => {
-  if (targetId) scrollTo({ block: document.querySelector(`#${targetId}`) as HTMLElement, behavior: 'auto' })
+export default (container: Container = document): void => {
+  const scrollTo = ({ block, behavior }: ScrollingPosition): void => {
+    if (!block) return
 
-  document.addEventListener('click', ((event: Event): void => {
-    const link = event.target as HTMLAnchorElement
+    const header: Header = container.querySelector('*[data-header]')
+    const offsetTop: number =
+      block.getBoundingClientRect().top + getScrollPosition().top - (header ? header.offsetHeight : 0)
+
+    window.scrollTo({ top: offsetTop, behavior })
+  }
+
+  const scrollToElement = (event: Event): void => {
+    const link: HTMLAnchorElement = event.target as HTMLAnchorElement
 
     if (link.closest('[data-scroll-to]')) {
       event.preventDefault()
 
-      const id: string | null = link.getAttribute('href')
+      const id: Id = link.getAttribute('href')
 
       if (id) {
         if (id[0] !== '#' || id === '#') return
 
-        scrollTo({ block: document.querySelector(id) as HTMLElement, behavior: 'smooth' })
+        scrollTo({ block: container.querySelector(id) as HTMLElement, behavior: 'smooth' })
       }
     }
-  }) as EventListener)
+  }
+
+  if (targetId) {
+    scrollTo({ block: container.querySelector(`#${targetId}`) as HTMLElement, behavior: 'auto' })
+  }
+
+  container.addEventListener('click', scrollToElement as EventListener)
 }

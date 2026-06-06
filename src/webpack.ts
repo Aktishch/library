@@ -96,7 +96,6 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   range()
   runningButton()
   scrollHeader()
-  scrollTo()
   shop()
   sidebar()
   sliderSwiper()
@@ -112,6 +111,7 @@ window.addEventListener('DOMContentLoaded', ((): void => {
   waved()
   worldMap()
   yandexMap()
+  scrollTo()
   preloader().finally((): void => {
     animation()
     outNumbers()

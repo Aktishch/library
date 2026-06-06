@@ -1,9 +1,11 @@
-import { getScrollPosition } from '@utils'
+import { Container, getScrollPosition } from '@utils'
 
-const className: string[] = ['sm:-translate-y-full']
+type Header = HTMLElement | null
 
-export default (): void => {
-  const header = document.querySelector('*[data-header]') as HTMLElement
+const HEADER_CLASSNAME: string = 'sm:-translate-y-full'
+
+export default (container: Container = document): void => {
+  const header: Header = container.querySelector('*[data-header]')
 
   if (!header) return
 
@@ -12,17 +14,21 @@ export default (): void => {
   const onScroll = (): void => {
     const currentOffsetTop: number = getScrollPosition().top
 
+    if (currentOffsetTop < 0) return
+
     if (header.offsetHeight < currentOffsetTop) {
       if (prevOffsetTop > currentOffsetTop) {
-        header.classList.remove(...className)
+        header.classList.remove(HEADER_CLASSNAME)
       } else {
-        header.classList.add(...className)
+        header.classList.add(HEADER_CLASSNAME)
       }
+    } else {
+      header.classList.remove(HEADER_CLASSNAME)
     }
 
     prevOffsetTop = currentOffsetTop
   }
 
   onScroll()
-  document.addEventListener('scroll', onScroll as EventListener, { passive: true })
+  container.addEventListener('scroll', onScroll as EventListener, { passive: true })
 }

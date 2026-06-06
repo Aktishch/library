@@ -1,12 +1,14 @@
 import { closeSidebar, openSidebar } from '@ts/sidebar'
 import { Container, getData, getTouchDevice } from '@utils'
 
+type Menu = HTMLDivElement | null
+
 const DATA_MENU: string = getData('menu')
 
 export default (container: Container = document): void => {
   if (!getTouchDevice()) return
 
-  const menu: HTMLDivElement | null = container.querySelector(`*[${DATA_MENU}]`)
+  const menu: Menu = container.querySelector(`*[${DATA_MENU}]`)
 
   if (!menu) return
 

@@ -1,5 +1,5 @@
 import { media } from '@plugins'
-import { Breakpoint, Container, DATA_BREAKPOINT, getData, html, isEn, logError } from '@utils'
+import { Breakpoint, Container, getData, html, isEn, logError } from '@utils'
 
 type Horizontal = HTMLDivElement | null
 
@@ -16,7 +16,7 @@ const handleHorizontalError = (): void => {
 const getBreakpoint = (scrolling: HTMLElement): boolean => {
   return (
     html.clientWidth <
-    (scrolling.hasAttribute(DATA_BREAKPOINT) ? media[scrolling.dataset.breakpoint as Breakpoint] : media.md)
+    (scrolling.hasAttribute('data-breakpoint') ? media[scrolling.dataset.breakpoint as Breakpoint] : media.md)
   )
 }
 

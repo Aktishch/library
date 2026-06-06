@@ -1,4 +1,6 @@
-import { Container } from '@utils'
+import { Container, TimeOut } from '@utils'
+
+type Value = string | undefined
 
 export default (container: Container = document): void => {
   const items: NodeListOf<HTMLSpanElement> = container.querySelectorAll('*[data-number]')
@@ -15,7 +17,7 @@ export default (container: Container = document): void => {
     entries.forEach((entry: IntersectionObserverEntry): void => {
       if (entry.isIntersecting) {
         const item: HTMLSpanElement = entry.target as HTMLSpanElement
-        const value: string | undefined = item.dataset.number
+        const value: Value = item.dataset.number
 
         if (!value) return
 
@@ -29,7 +31,7 @@ export default (container: Container = document): void => {
 
         observer.unobserve(item)
 
-        const interval: NodeJS.Timeout = setInterval((): void => {
+        const interval: TimeOut = setInterval((): void => {
           sum += step
 
           if (sum >= number) {
