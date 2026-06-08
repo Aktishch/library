@@ -4,16 +4,8 @@ type LazyElement = HTMLImageElement | HTMLPictureElement | HTMLVideoElement | HT
 type Media = HTMLElement | null
 type Loader = HTMLDivElement | null
 
-declare global {
-  interface Window {
-    LazyLoad: typeof LazyLoad
-  }
-}
-
-window.LazyLoad = LazyLoad
-
 export default (): ILazyLoadInstance => {
-  return new window.LazyLoad({
+  return new LazyLoad({
     elements_selector: '*[data-lazy]',
     callback_loaded: (item: LazyElement): void => {
       const media: Media = item.closest('[data-media]')

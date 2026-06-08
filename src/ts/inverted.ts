@@ -18,7 +18,8 @@ const setInverted = (event: Event): void => {
   const value: Value = toggle.dataset.invertedToggle
 
   if (!value) {
-    return handleValueError()
+    handleValueError()
+    return
   }
 
   const inverted: Inverted = toggle.closest(`[${DATA_INVERTED}]`)

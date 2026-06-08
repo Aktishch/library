@@ -18,7 +18,8 @@ export default (container: Container = document): void => {
     const id: string = cookie.id
 
     if (cookie.id === '') {
-      return handleIdError()
+      handleIdError()
+      return
     }
 
     const name: string = `cookie_${id}`

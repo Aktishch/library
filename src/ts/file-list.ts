@@ -41,7 +41,8 @@ export default (container: Container = document): void => {
     const listing: Listing = filelist.querySelector(`*[${DATA_FILELIST}-listing]`)
 
     if (!label || !input || !error || !text || !listing) {
-      return handleElementsError()
+      handleElementsError()
+      return
     }
 
     const maxLength: number = Number(listing.dataset.filelistListing) || 3

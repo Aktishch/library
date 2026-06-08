@@ -20,6 +20,26 @@ const getBreakpoint = (scrolling: HTMLElement): boolean => {
   )
 }
 
+const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+  entries.forEach((entry: ResizeObserverEntry): void => {
+    const scrolling: HTMLElement = entry.target as HTMLElement
+    const horizontal: Horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)
+
+    if (!horizontal) {
+      handleHorizontalError()
+      return
+    }
+
+    window.requestAnimationFrame((): void => {
+      if (getBreakpoint(scrolling)) {
+        scrolling.style.removeProperty('height')
+      } else {
+        scrolling.style.height = `${horizontal.scrollWidth - horizontal.clientWidth + window.innerHeight}px`
+      }
+    })
+  })
+})
+
 export default (container: Container = document): void => {
   const scrollings: NodeListOf<HTMLElement> = container.querySelectorAll(`*[${DATA_SCROLLING}]`)
 
@@ -30,25 +50,6 @@ export default (container: Container = document): void => {
     rootMargin: '0px',
     threshold: 0
   }
-
-  const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
-    entries.forEach((entry: ResizeObserverEntry): void => {
-      const scrolling: HTMLElement = entry.target as HTMLElement
-      const horizontal: Horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)
-
-      if (!horizontal) {
-        return handleHorizontalError()
-      }
-
-      window.requestAnimationFrame((): void => {
-        if (getBreakpoint(scrolling)) {
-          scrolling.style.removeProperty('height')
-        } else {
-          scrolling.style.height = `${horizontal.scrollWidth - horizontal.clientWidth + window.innerHeight}px`
-        }
-      })
-    })
-  })
 
   scrollings.forEach((scrolling: HTMLElement): void => {
     const horizontal: Horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)

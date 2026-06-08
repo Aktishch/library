@@ -33,7 +33,8 @@ export default (container: Container = document): void => {
     const value: Value = draggable.dataset.draggable
 
     if (!value) {
-      return handleValueError()
+      handleValueError()
+      return
     }
 
     const coordinates: Coordinates = JSON.parse(sessionStorage.getItem(value) || JSON.stringify({ top: 0, left: 0 }))

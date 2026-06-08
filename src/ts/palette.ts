@@ -62,7 +62,8 @@ export default (container: Container = document): void => {
           const button: Button = item.querySelector(`*[${DATA_PALETTE}-button]`)
 
           if (!input || !button) {
-            return handleElementsError()
+            handleElementsError()
+            return
           }
 
           const name: Value = input.dataset.paletteInput
@@ -94,7 +95,8 @@ export default (container: Container = document): void => {
       const button: Button = item.querySelector(`*[${DATA_PALETTE}-button]`)
 
       if (!input || !button) {
-        return handleElementsError()
+        handleElementsError()
+        return
       }
 
       const name: Value = input.dataset.paletteInput

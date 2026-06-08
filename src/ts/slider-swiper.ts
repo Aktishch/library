@@ -1,37 +1,50 @@
 import { media } from '@plugins'
 import { checkQuizSlide } from '@ts/quiz'
-import { Container } from '@utils'
+import { Container, getData, isEn, logError } from '@utils'
 import Swiper from 'swiper'
 import { Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules'
 
-interface QuizSwiper extends Swiper {
-  visibleSlides: HTMLDivElement[]
-}
-
-declare global {
-  interface Window {
-    Swiper: typeof Swiper
-  }
-}
+type SliderItem = HTMLDivElement | null
+type SliderBuilt = Swiper | undefined
+type Button = HTMLButtonElement | null
+type Value = string | undefined
 
 Swiper.use([Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs])
 Swiper.defaults.touchStartPreventDefault = false
-window.Swiper = Swiper
 
+const DATA_SLIDER: string = getData('slider')
+const DATA_QUIZ: string = getData('quiz')
 const { sm, md, lg, xl } = media
 
+const handleValueError = (value: string): void => {
+  logError(
+    isEn
+      ? `The ${DATA_SLIDER}="${value}" does not have a ${DATA_SLIDER}-swiper="${value}" child element`
+      : `У ${DATA_SLIDER}="${value}" отсутствует дочерний элемент ${DATA_SLIDER}-swiper="${value}"`
+  )
+}
+
 const initGallerySlider = (container: Container): void => {
-  const slider = container.querySelector('*[data-slider="gallery"]') as HTMLDivElement
+  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="gallery"]`)
 
-  if (!slider || !slider.dataset.slider) return
+  if (!slider) return
 
-  const value: string = slider.dataset.slider
-  const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
-  const pagination = slider.querySelector(`*[data-slider-pagination="${value}"]`) as HTMLDivElement
-  const prev = slider.querySelector(`*[data-slider-prev="${value}"]`) as HTMLButtonElement
-  const next = slider.querySelector(`*[data-slider-next="${value}"]`) as HTMLButtonElement
+  const value: Value = slider.dataset.slider
 
-  new window.Swiper(swiper, {
+  if (!value) return
+
+  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+
+  if (!swiper) {
+    handleValueError(value)
+    return
+  }
+
+  const pagination: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-pagination="${value}"]`)
+  const prev: Button = slider.querySelector(`*[${DATA_SLIDER}-prev="${value}"]`)
+  const next: Button = slider.querySelector(`*[${DATA_SLIDER}-next="${value}"]`)
+
+  new Swiper(swiper, {
     pagination: {
       el: pagination,
       clickable: true
@@ -60,21 +73,30 @@ const initGallerySlider = (container: Container): void => {
       stopOnLastSlide: false,
       disableOnInteraction: false
     }
-  }) as Swiper
+  })
 }
 
 const initProductsSlider = (container: Container): void => {
-  const slider = container.querySelector('*[data-slider="products"]') as HTMLDivElement
+  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="products"]`)
 
-  if (!slider || !slider.dataset.slider) return
+  if (!slider) return
 
-  const value: string = slider.dataset.slider
-  const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
-  const pagination = slider.querySelector(`*[data-slider-pagination="${value}"]`) as HTMLDivElement
-  const prev = slider.querySelector(`*[data-slider-prev="${value}"]`) as HTMLButtonElement
-  const next = slider.querySelector(`*[data-slider-next="${value}"]`) as HTMLButtonElement
+  const value: Value = slider.dataset.slider
 
-  new window.Swiper(swiper, {
+  if (!value) return
+
+  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+
+  if (!swiper) {
+    handleValueError(value)
+    return
+  }
+
+  const pagination: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-pagination="${value}"]`)
+  const prev: Button = slider.querySelector(`*[${DATA_SLIDER}-prev="${value}"]`)
+  const next: Button = slider.querySelector(`*[${DATA_SLIDER}-next="${value}"]`)
+
+  new Swiper(swiper, {
     pagination: {
       el: pagination,
       clickable: true
@@ -99,38 +121,52 @@ const initProductsSlider = (container: Container): void => {
         slidesPerView: 4
       }
     }
-  }) as Swiper
+  })
 }
 
 const initQuizSlider = (container: Container): void => {
-  const slider = container.querySelector('*[data-slider="quiz"]') as HTMLDivElement
+  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="quiz"]`)
 
-  if (!slider || !slider.dataset.slider) return
+  if (!slider) return
 
-  const value: string = slider.dataset.slider
-  const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
-  const pagination = slider.querySelector(`*[data-slider-pagination="${value}"]`) as HTMLDivElement
-  const prev = slider.querySelector(`*[data-slider-prev="${value}"]`) as HTMLButtonElement
-  const next = slider.querySelector(`*[data-slider-next="${value}"]`) as HTMLButtonElement
+  const value: Value = slider.dataset.slider
 
-  const checkSwiperSlide = (swiper: QuizSwiper): void => {
-    const quiz = swiper.el.closest('[data-quiz]') as HTMLElement
-    const visibleSlide = swiper.visibleSlides[0] as HTMLDivElement
+  if (!value) return
 
-    checkQuizSlide(visibleSlide)
+  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
 
-    if (visibleSlide === swiper.slides[swiper.slides.length - 1]) {
-      quiz.setAttribute('data-quiz-end', '')
-    } else {
-      quiz.removeAttribute('data-quiz-end')
+  if (!swiper) {
+    handleValueError(value)
+    return
+  }
+
+  const pagination: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-pagination="${value}"]`)
+  const prev: Button = slider.querySelector(`*[${DATA_SLIDER}-prev="${value}"]`)
+  const next: Button = slider.querySelector(`*[${DATA_SLIDER}-next="${value}"]`)
+
+  const checkSwiperSlide = (swiper: Swiper): void => {
+    const quiz: SliderItem = swiper.el.closest(`[${DATA_QUIZ}]`)
+
+    if (!quiz) return
+
+    const visibleSlide: SliderItem = quiz.querySelector('.swiper-slide-visible')
+
+    if (visibleSlide) {
+      checkQuizSlide(visibleSlide)
+
+      if (visibleSlide === swiper.slides[swiper.slides.length - 1]) {
+        quiz.setAttribute(`${DATA_QUIZ}-end`, '')
+      } else {
+        quiz.removeAttribute(`${DATA_QUIZ}-end`)
+      }
     }
   }
 
-  new window.Swiper(swiper, {
+  new Swiper(swiper, {
     pagination: {
       el: pagination,
       type: 'custom',
-      renderCustom: (_, current: number, total: number): string => {
+      renderCustom: (...[, current, total]: [Swiper, number, number]): string => {
         return String(total - current)
       }
     },
@@ -144,21 +180,33 @@ const initQuizSlider = (container: Container): void => {
     allowTouchMove: false,
     watchSlidesProgress: true,
     on: {
-      init: (swiper: Swiper): void => checkSwiperSlide(swiper as QuizSwiper),
-      slideChange: (swiper: Swiper): void => checkSwiperSlide(swiper as QuizSwiper)
+      init: (swiper: Swiper): void => {
+        checkSwiperSlide(swiper)
+      },
+      slideChange: (swiper: Swiper): void => {
+        checkSwiperSlide(swiper)
+      }
     }
-  }) as Swiper
+  })
 }
 
-const initThumbsSlider = (container: Container): Swiper | undefined => {
-  const slider = container.querySelector('*[data-slider="thumbs"]') as HTMLDivElement
+const initThumbsSlider = (container: Container): SliderBuilt => {
+  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="thumbs"]`)
 
-  if (!slider || !slider.dataset.slider) return
+  if (!slider) return
 
-  const value: string = slider.dataset.slider
-  const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
+  const value: Value = slider.dataset.slider
 
-  return new window.Swiper(swiper, {
+  if (!value) return
+
+  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+
+  if (!swiper) {
+    handleValueError(value)
+    return
+  }
+
+  return new Swiper(swiper, {
     slidesPerView: 3,
     slidesPerGroup: 1,
     spaceBetween: 16,
@@ -169,24 +217,32 @@ const initThumbsSlider = (container: Container): Swiper | undefined => {
         slidesPerView: 4
       }
     }
-  }) as Swiper
+  })
 }
 
-const initBgSlider = (container: Container): Swiper | undefined => {
-  const slider = container.querySelector('*[data-slider="bg"]') as HTMLDivElement
+const initBgSlider = (container: Container): SliderBuilt => {
+  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="bg"]`)
 
-  if (!slider || !slider.dataset.slider) return
+  if (!slider) return
 
-  const value: string = slider.dataset.slider
-  const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
+  const value: Value = slider.dataset.slider
 
-  return new window.Swiper(swiper, {
+  if (!value) return
+
+  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+
+  if (!swiper) {
+    handleValueError(value)
+    return
+  }
+
+  return new Swiper(swiper, {
     slidesPerView: 1,
     slidesPerGroup: 1,
     spaceBetween: 16,
     speed: 1000,
     allowTouchMove: false
-  }) as Swiper
+  })
 }
 
 const initDescriptionSlider = (container: Container): void => {
@@ -194,16 +250,25 @@ const initDescriptionSlider = (container: Container): void => {
 
   if (!description) return
 
-  const slider = description.querySelector('*[data-slider="description"]') as HTMLDivElement
+  const slider: SliderItem = description.querySelector(`*[${DATA_SLIDER}="bg"]`)
 
-  if (!slider || !slider.dataset.slider) return
+  if (!slider) return
 
-  const value: string = slider.dataset.slider
-  const swiper = slider.querySelector(`*[data-slider-swiper="${value}"]`) as HTMLDivElement
-  const thumbs: Swiper | undefined = initThumbsSlider(description)
-  const bg: Swiper | undefined = initBgSlider(description)
+  const value: Value = slider.dataset.slider
 
-  new window.Swiper(swiper, {
+  if (!value) return
+
+  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+
+  if (!swiper) {
+    handleValueError(value)
+    return
+  }
+
+  const thumbs: SliderBuilt = initThumbsSlider(description)
+  const bg: SliderBuilt = initBgSlider(description)
+
+  new Swiper(swiper, {
     slidesPerView: 1,
     slidesPerGroup: 1,
     spaceBetween: 16,
@@ -214,10 +279,12 @@ const initDescriptionSlider = (container: Container): void => {
     },
     on: {
       slideChange: (swiper: Swiper): void => {
-        if (bg !== undefined) bg.slideTo(swiper.activeIndex)
+        if (!bg) return
+
+        bg.slideTo(swiper.activeIndex)
       }
     }
-  }) as Swiper
+  })
 }
 
 export default (container: Container = document): void => {

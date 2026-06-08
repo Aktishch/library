@@ -30,7 +30,8 @@ export default (container: Container = document): void => {
 
     const setHeightContent = (duration: boolean = true): void => {
       if (!content) {
-        return handleContentError()
+        handleContentError()
+        return
       }
 
       if (timeOut) {

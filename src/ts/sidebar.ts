@@ -1,50 +1,98 @@
 import { media } from '@plugins'
-import { Breakpoint, hideScrollbar, html, showScrollbar } from '@utils'
+import { Breakpoint, Container, getData, hideScrollbar, html, isEn, logError, showScrollbar } from '@utils'
 
-type SidebarButton = HTMLButtonElement | HTMLAnchorElement
+type Sidebar = HTMLDivElement | null
+type Button = HTMLButtonElement | HTMLAnchorElement | null
+type Value = string | undefined
 
-const getSidebar = (value: string): HTMLDivElement => {
-  return document.querySelector(`*[data-sidebar="${value}"]`) as HTMLDivElement
+const DATA_SIDEBAR: string = getData('sidebar')
+const DATA_OPEN: string = getData('open')
+
+const handleValueError = (value: string): void => {
+  logError(isEn ? `${DATA_SIDEBAR}-${value} is missing a value` : `У ${DATA_SIDEBAR}-${value} отсутствует значение`)
 }
 
 export const openSidebar = (sidebar: HTMLElement): void => {
   hideScrollbar()
-  sidebar.setAttribute('data-open', '')
+  sidebar.setAttribute(DATA_OPEN, '')
 }
 
 export const closeSidebar = (sidebar: HTMLElement): void => {
   showScrollbar()
-  sidebar.removeAttribute('data-open')
+  sidebar.removeAttribute(DATA_OPEN)
 }
 
-export default (): void => {
-  document.addEventListener('click', ((event: Event): void => {
-    const toggle = event.target as SidebarButton | HTMLDivElement
+const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+  entries.forEach((entry: ResizeObserverEntry): void => {
+    const sidebar: HTMLElement = entry.target as HTMLElement
+    const value: Breakpoint | Value = sidebar.dataset.breakpoint
 
-    if (toggle.closest('[data-sidebar-open]') && toggle.dataset.sidebarOpen) {
-      const sidebar = getSidebar(toggle.dataset.sidebarOpen) as HTMLDivElement
+    if (!value) return
 
-      if (sidebar) openSidebar(sidebar)
+    const breakpoint: number = media[value]
+
+    if (html.clientWidth > breakpoint) {
+      closeSidebar(sidebar)
     }
+  })
+})
 
-    if (toggle.closest('[data-sidebar-close]') && toggle.dataset.sidebarClose) {
-      const sidebar = getSidebar(toggle.dataset.sidebarClose) as HTMLDivElement
+export default (container: Container = document): void => {
+  const sidebars: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_SIDEBAR}]`)
 
-      if (sidebar) closeSidebar(sidebar)
-    }
+  if (!sidebars.length) return
 
-    if (toggle.hasAttribute('data-sidebar')) closeSidebar(toggle)
-  }) as EventListener)
+  const getSidebar = (value: string): Sidebar => {
+    return container.querySelector(`*[${DATA_SIDEBAR}="${value}"]`)
+  }
 
-  window.addEventListener('resize', ((): void => {
-    const sidebars = document.querySelectorAll('*[data-sidebar]') as NodeListOf<HTMLDivElement>
+  const changeSidebar = (event: Event): void => {
+    const toggle: HTMLElement = event.target as HTMLElement
+    const open: Button = toggle.closest(`[${DATA_SIDEBAR}-open]`)
+    const close: Button = toggle.closest(`[${DATA_SIDEBAR}-close]`)
 
-    sidebars.forEach((sidebar: HTMLDivElement): void => {
-      if (sidebar && sidebar.hasAttribute('data-breakpoint')) {
-        const breakpoint: number = media[sidebar.dataset.breakpoint as Breakpoint]
+    if (open) {
+      const value: Value = open.dataset.sidebarOpen
 
-        if (html.clientWidth > breakpoint) closeSidebar(sidebar)
+      if (!value) {
+        handleValueError('open')
+        return
       }
-    })
-  }) as EventListener)
+
+      const sidebar: Sidebar = getSidebar(value)
+
+      if (sidebar) {
+        openSidebar(sidebar)
+      }
+
+      return
+    }
+
+    if (close) {
+      const value: Value = close.dataset.sidebarClose
+
+      if (!value) {
+        handleValueError('close')
+        return
+      }
+
+      const sidebar: Sidebar = getSidebar(value)
+
+      if (sidebar) {
+        closeSidebar(sidebar)
+      }
+
+      return
+    }
+
+    if (toggle.hasAttribute(`${DATA_SIDEBAR}`)) {
+      closeSidebar(toggle)
+    }
+  }
+
+  sidebars.forEach((sidebar: HTMLDivElement): void => {
+    resizeObserver.observe(sidebar)
+  })
+
+  container.addEventListener('click', changeSidebar as EventListener)
 }

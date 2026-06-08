@@ -22,7 +22,8 @@ export default (container: Container = document): void => {
     const show: Show = listing.querySelector(`*[${DATA_LISTING}-show]`)
 
     if (!show) {
-      return handleShowError()
+      handleShowError()
+      return
     }
 
     const items: NodeListOf<HTMLDivElement> = listing.querySelectorAll(`*[${DATA_LISTING}-item]`)

@@ -40,7 +40,8 @@ export default (container: Container = document): void => {
     const error: Error = preview.querySelector('*[data-error]')
 
     if (!drag || !image || !remove || !label || !input || !error) {
-      return handleElementsError()
+      handleElementsError()
+      return
     }
 
     const requestUrl: RequestUrl = image.dataset.previewImage

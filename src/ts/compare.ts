@@ -14,28 +14,29 @@ const handleElementsError = (): void => {
   )
 }
 
+const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+  entries.forEach((entry: ResizeObserverEntry): void => {
+    const compare: HTMLDivElement = entry.target as HTMLDivElement
+    const image: Image = compare.querySelector(`*[${DATA_COMPARE}-image]`)
+
+    if (image) {
+      image.style.width = `${entry.contentRect.width}px`
+    }
+  })
+})
+
 export default (container: Container = document): void => {
   const compares: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_COMPARE}]`)
 
   if (!compares.length) return
-
-  const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
-    entries.forEach((entry: ResizeObserverEntry): void => {
-      const compare: HTMLDivElement = entry.target as HTMLDivElement
-      const image: Image = compare.querySelector(`*[${DATA_COMPARE}-image]`)
-
-      if (image) {
-        image.style.width = `${entry.contentRect.width}px`
-      }
-    })
-  })
 
   compares.forEach((compare: HTMLDivElement): void => {
     const before: Before = compare.querySelector(`*[${DATA_COMPARE}-before]`)
     const change: Change = compare.querySelector(`*[${DATA_COMPARE}-change]`)
 
     if (!before || !change) {
-      return handleElementsError()
+      handleElementsError()
+      return
     }
 
     let isActive: boolean = false

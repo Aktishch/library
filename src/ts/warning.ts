@@ -1,22 +1,33 @@
 import { dialog } from '@ts/fancybox'
-import { html } from '@utils'
+import { Container, html } from '@utils'
 
-export default (): void => {
-  if (sessionStorage.getItem('warning') !== 'positive')
-    setTimeout((): void => dialog.notClosing('/dialogs/dialog-warning.html'), 2000)
+type Button = HTMLButtonElement | null
+type Value = string | undefined
 
-  document.addEventListener('click', ((event: Event): void => {
-    const button = event.target as HTMLButtonElement
+const WARNING_VALUE: string = 'warning'
+const POSITIVE_VALUE: string = 'positive'
 
-    if (button.hasAttribute('data-warning')) {
-      const value: string | undefined = button.dataset.warning
+const checkWarning = (event: Event): void => {
+  const button: Button = (event.target as HTMLElement).closest('[data-warning]')
 
-      if (value && value === 'positive') {
-        sessionStorage.setItem('warning', value)
-        dialog.close()
-      } else {
-        html.innerHTML = ''
-      }
-    }
-  }) as EventListener)
+  if (!button) return
+
+  const value: Value = button.dataset.warning
+
+  if (value && value === POSITIVE_VALUE) {
+    sessionStorage.setItem(WARNING_VALUE, value)
+    dialog.close()
+  } else {
+    html.innerHTML = ''
+  }
+}
+
+export default (container: Container = document): void => {
+  if (sessionStorage.getItem(WARNING_VALUE) !== POSITIVE_VALUE) {
+    setTimeout((): void => {
+      dialog.notClosing('/dialogs/dialog-warning.html')
+    }, 2000)
+  }
+
+  container.addEventListener('click', checkWarning as EventListener)
 }

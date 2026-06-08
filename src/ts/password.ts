@@ -26,7 +26,8 @@ const changeTypeInput = (event: Event): void => {
   const use: Use = password.querySelector('use')
 
   if (!input || !use) {
-    return handleElementsError()
+    handleElementsError()
+    return
   }
 
   const status: boolean = input.type === 'password'

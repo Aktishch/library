@@ -27,7 +27,8 @@ const changeQuantity = (event: Event): void => {
     const input: Input = quantity.querySelector(`*[${DATA_QUANTITY}-input]`)
 
     if (!input) {
-      return handleInputError()
+      handleInputError()
+      return
     }
 
     const minValue: number = Number(input.dataset.quantityInput) || 0
@@ -49,7 +50,8 @@ const changeQuantity = (event: Event): void => {
     const input: Input = quantity.querySelector(`*[${DATA_QUANTITY}-input]`)
 
     if (!input) {
-      return handleInputError()
+      handleInputError()
+      return
     }
 
     let value: number = Number(input.value)

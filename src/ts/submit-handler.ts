@@ -1,40 +1,51 @@
 import { dialog } from '@ts/fancybox'
-import { Container, getValidate, logError } from '@utils'
+import { Container, getData, getValidate, logError } from '@utils'
 
-export const setStateSubmitBtn = (container: Container = document): void => {
-  const forms = container.querySelectorAll('*[data-form]') as NodeListOf<HTMLFormElement>
+type SubmitBtn = HTMLButtonElement | null
+
+const DATA_FORM: string = getData('form')
+const SUBMIT_BUTTON: string = 'button[type="submit"]'
+const REQUEST_URL: string = '/ajax/submit-handler.php'
+
+export const setStateSubmitBtn = (container: Container): void => {
+  const forms: NodeListOf<HTMLFormElement> = container.querySelectorAll(`*[${DATA_FORM}]`)
+
+  if (!forms.length) return
 
   forms.forEach((form: HTMLFormElement): void => {
-    if (!form) return
+    const submitBtn: SubmitBtn = form.querySelector(SUBMIT_BUTTON)
 
-    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
+    if (!submitBtn) return
 
-    if (submitBtn) {
-      const toggles = form.querySelectorAll('*[data-form-toggle]') as NodeListOf<HTMLInputElement>
+    const toggles: NodeListOf<HTMLInputElement> = form.querySelectorAll(`*[${DATA_FORM}-toggle]`)
 
-      const togglesChecked = (): void => {
-        const allChecked: boolean = ([...toggles] as HTMLInputElement[]).every(
-          (toggle: HTMLInputElement): boolean => toggle.checked
-        )
+    const togglesChecked = (): void => {
+      const allChecked: boolean = ([...toggles] as HTMLInputElement[]).every((toggle: HTMLInputElement): boolean => {
+        return toggle.checked
+      })
 
-        submitBtn.disabled = !allChecked
-      }
+      submitBtn.disabled = !allChecked
+    }
 
-      togglesChecked()
+    togglesChecked()
 
+    if (toggles.length) {
       toggles.forEach((toggle: HTMLInputElement): void => {
-        if (toggle) toggle.addEventListener('change', togglesChecked as EventListener)
+        toggle.addEventListener('change', togglesChecked as EventListener)
       })
     }
   })
 }
 
 const submitHandler = async (event: Event): Promise<void> => {
-  const form = event.target as HTMLFormElement
+  const form: HTMLFormElement = event.target as HTMLFormElement
 
   switch (form.dataset.form) {
     case '': {
-      if (!getValidate(form)) event.preventDefault()
+      if (!getValidate(form)) {
+        event.preventDefault()
+      }
+
       break
     }
 
@@ -44,28 +55,31 @@ const submitHandler = async (event: Event): Promise<void> => {
       if (!getValidate(form)) return
 
       const formData: FormData = new FormData(form)
-      const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
-      const requestUrl: string = '/ajax/submit-handler.php'
+      const submitBtn: SubmitBtn = form.querySelector(SUBMIT_BUTTON)
+
+      if (!submitBtn) return
 
       switch (form.dataset.form) {
         case 'submit': {
           submitBtn.disabled = true
           dialog.notClosing('/dialogs/dialog-preloader.html')
 
-          await fetch(requestUrl, {
+          await fetch(REQUEST_URL, {
             method: 'POST',
             body: formData
           })
             .then((response: Response): Promise<{ status: boolean }> => {
               return response.json()
             })
-            .then((response): void => {
+            .then(({ status }): void => {
               dialog.close()
-              dialog.open(response.status ? '/dialogs/dialog-success.html' : '/dialogs/dialog-error.html')
+              dialog.open(status ? '/dialogs/dialog-success.html' : '/dialogs/dialog-error.html')
               form.reset()
               submitBtn.disabled = false
             })
-            .catch((error: string): void => logError(error))
+            .catch((error: string): void => {
+              logError(error)
+            })
 
           break
         }
@@ -73,7 +87,7 @@ const submitHandler = async (event: Event): Promise<void> => {
         case 'avatar': {
           dialog.notClosing('/dialogs/dialog-preloader.html')
 
-          await fetch(requestUrl, {
+          await fetch(REQUEST_URL, {
             method: 'POST',
             body: formData
           })
@@ -83,7 +97,9 @@ const submitHandler = async (event: Event): Promise<void> => {
             .then((): void => {
               dialog.close()
             })
-            .catch((error: string): void => logError(error))
+            .catch((error: string): void => {
+              logError(error)
+            })
 
           break
         }
@@ -91,12 +107,12 @@ const submitHandler = async (event: Event): Promise<void> => {
         case 'params': {
           const searchParams: URLSearchParams = new URLSearchParams()
 
-          for (const pair of formData.entries()) searchParams.append(pair[0], String(pair[1]))
-
-          const queryString: string = searchParams.toString()
+          for (const pair of formData.entries()) {
+            searchParams.append(pair[0], String(pair[1]))
+          }
 
           dialog.close()
-          dialog.open(`/dialogs/dialog-authorization.html?${queryString}`)
+          dialog.open(`/dialogs/dialog-authorization.html?${searchParams.toString()}`)
           break
         }
       }
@@ -106,16 +122,22 @@ const submitHandler = async (event: Event): Promise<void> => {
   }
 }
 
-export default (): void => {
-  setStateSubmitBtn()
+const onSubmit = (event: Event): void => {
+  if ((event.target as HTMLElement).hasAttribute(DATA_FORM)) {
+    submitHandler(event)
+  }
+}
 
-  document.addEventListener('submit', ((event: Event): void => {
-    if ((event.target as HTMLFormElement).hasAttribute('data-form')) submitHandler(event)
-  }) as EventListener)
-
-  document.addEventListener('keypress', ((event: KeyboardEvent): void => {
-    if ((event.target as HTMLFormElement).closest('[data-form]')) {
-      if (event.code === 'Enter') event.preventDefault()
+const prohibitSubmit = (event: KeyboardEvent): void => {
+  if ((event.target as HTMLElement).closest(`[${DATA_FORM}]`)) {
+    if (event.code === 'Enter') {
+      event.preventDefault()
     }
-  }) as EventListener)
+  }
+}
+
+export default (container: Container = document): void => {
+  setStateSubmitBtn(container)
+  container.addEventListener('submit', onSubmit as EventListener)
+  container.addEventListener('keypress', prohibitSubmit as EventListener)
 }

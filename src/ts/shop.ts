@@ -1,6 +1,15 @@
-import { Coordinates, source } from '@utils'
+import { Container, Coordinates, getData, source, TimeOut } from '@utils'
 
-const className: string[] = [
+type Shop = HTMLDivElement | null
+type Button = HTMLButtonElement | null
+type Image = HTMLImageElement | null
+type Quantity = HTMLInputElement | null
+type ShopItem = HTMLElement | null
+
+const DATA_SHOP: string = getData('shop')
+const DATA_PRODUCT: string = getData('product')
+const SHOW_VALUE: string = 'show'
+const SHOP_CLASSNAMES: string[] = [
   'in-shop',
   'flex',
   'items-center',
@@ -15,23 +24,24 @@ const className: string[] = [
   'size-10'
 ]
 
-export default (): void => {
-  const shop = document.querySelector('*[data-shop]') as HTMLDivElement
+export default (container: Container = document): void => {
+  const shop: Shop = container.querySelector(`*[${DATA_SHOP}]`)
 
   if (!shop) return
 
-  const body = document.body as HTMLBodyElement
-  const close = shop.querySelector('*[data-shop-close]') as HTMLButtonElement
-  const image = shop.querySelector('*[data-shop-image]') as HTMLImageElement
-  const name = shop.querySelector('*[data-shop-name]') as HTMLSpanElement
-  const quantity = shop.querySelector('*[data-shop-quantity]') as HTMLSpanElement
-  const oldPrice = shop.querySelector('*[data-shop-oldprice]') as HTMLSpanElement
-  const price = shop.querySelector('*[data-shop-price]') as HTMLSpanElement
-  const products = document.querySelectorAll('*[data-product]') as NodeListOf<HTMLDivElement>
-  let timeOut: NodeJS.Timeout
+  const body: HTMLElement = document.body
+  const close: Button = shop.querySelector(`*[${DATA_SHOP}-close]`)
+  const image: Image = shop.querySelector(`*[${DATA_SHOP}-image]`)
+  const name: ShopItem = shop.querySelector(`*[${DATA_SHOP}-name]`)
+  const quantity: ShopItem = shop.querySelector(`*[${DATA_SHOP}-quantity]`)
+  const oldPrice: ShopItem = shop.querySelector(`*[${DATA_SHOP}-oldprice]`)
+  const price: ShopItem = shop.querySelector(`*[${DATA_SHOP}-price]`)
+  const products: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_PRODUCT}]`)
+  let closeTimeOut: TimeOut
+  let openTimeOut: TimeOut
 
   const showShop = (): void => {
-    shop.dataset.shop = 'show'
+    shop.dataset.shop = SHOW_VALUE
   }
 
   const hideShop = (): void => {
@@ -39,57 +49,84 @@ export default (): void => {
   }
 
   const createShopItem = (event: MouseEvent): void => {
-    const div = document.createElement('div') as HTMLDivElement
+    const div: HTMLDivElement = document.createElement('div')
     const coordinates: Coordinates = {
       top: event.clientY,
       left: event.clientX
     }
 
-    div.classList.add(...className)
+    const removeItem = (): void => {
+      div.remove()
+    }
+
+    div.classList.add(...SHOP_CLASSNAMES)
     div.style.top = `${coordinates.top}px`
     div.style.left = `${coordinates.left}px`
     div.innerHTML = `
       <svg class="icon text-second">
         <use href="${source}/img/icons.svg#basket"></use>
-      </svg>`
+      </svg>
+    `
     body.appendChild(div)
-    setTimeout((): void => div.remove(), 2000)
+    div.addEventListener('animationend', removeItem as EventListener, { once: true })
   }
 
-  close.addEventListener('click', hideShop as EventListener)
+  close?.addEventListener('click', hideShop as EventListener)
 
-  products.forEach((product: HTMLDivElement): void => {
-    if (!product) return
+  if (products.length) {
+    products.forEach((product: HTMLDivElement): void => {
+      const productImage: Image = product.querySelector(`*[${DATA_PRODUCT}-image]`)
+      const productName: ShopItem = product.querySelector(`*[${DATA_PRODUCT}-name]`)
+      const productOldPrice: ShopItem = product.querySelector(`*[${DATA_PRODUCT}-oldprice]`)
+      const productPrice: ShopItem = product.querySelector(`*[${DATA_PRODUCT}-price]`)
+      const productQuantity: Quantity = product.querySelector(`*[${DATA_PRODUCT}-quantity]`)
+      const productBtn: Button = product.querySelector(`*[${DATA_PRODUCT}-button]`)
 
-    const productImage = product.querySelector('*[data-product-image]') as HTMLImageElement
-    const productName = product.querySelector('*[data-product-name]') as HTMLElement
-    const productOldPrice = product.querySelector('*[data-product-oldprice]') as HTMLSpanElement
-    const productPrice = product.querySelector('*[data-product-price]') as HTMLSpanElement
-    const productQuantity = product.querySelector('*[data-product-quantity]') as HTMLInputElement
-    const productBtn = product.querySelector('*[data-product-button]') as HTMLButtonElement
+      const addInShop = (event: MouseEvent): void => {
+        createShopItem(event)
 
-    const addInShop = (): void => {
-      if (shop.dataset.shop === 'show') hideShop()
+        if (closeTimeOut) {
+          clearTimeout(closeTimeOut)
+        }
 
-      setTimeout((): void => {
-        showShop()
+        if (openTimeOut) {
+          clearTimeout(openTimeOut)
+        }
 
-        if (image && productImage && productImage.dataset.productImage) image.src = productImage.dataset.productImage
-        if (name && productName) name.innerText = productName.textContent
-        if (price && productPrice) price.innerText = productPrice.textContent
+        if (shop.dataset.shop === SHOW_VALUE) {
+          hideShop()
+        }
 
-        quantity.innerText = quantity && productQuantity ? productQuantity.value : '1'
-        oldPrice.innerText = oldPrice && productOldPrice ? productOldPrice.textContent : ''
+        openTimeOut = setTimeout((): void => {
+          showShop()
 
-        if (timeOut) clearTimeout(timeOut)
+          if (image && productImage?.dataset.productImage) {
+            image.src = productImage.dataset.productImage
+          }
 
-        timeOut = setTimeout((): void => hideShop(), 5000)
-      }, 300)
-    }
+          if (name) {
+            name.innerText = productName?.textContent || ''
+          }
 
-    productBtn.addEventListener('click', ((event: MouseEvent): void => {
-      createShopItem(event)
-      addInShop()
-    }) as EventListener)
-  })
+          if (price) {
+            price.innerText = productPrice?.textContent || ''
+          }
+
+          if (oldPrice) {
+            oldPrice.innerText = productOldPrice?.textContent || ''
+          }
+
+          if (quantity) {
+            quantity.innerText = productQuantity ? productQuantity.value : '1'
+          }
+
+          closeTimeOut = setTimeout((): void => {
+            hideShop()
+          }, 5000)
+        }, 300)
+      }
+
+      productBtn?.addEventListener('click', addInShop as EventListener)
+    })
+  }
 }

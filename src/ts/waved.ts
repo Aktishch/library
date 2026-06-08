@@ -1,4 +1,6 @@
-import { Coordinates, getTouchDevice } from '@utils'
+import { Container, Coordinates, getTouchDevice } from '@utils'
+
+type WavedItem = HTMLElement | null
 
 interface CirclePoisition {
   positionY: number
@@ -6,61 +8,58 @@ interface CirclePoisition {
 }
 
 const setWaved = (event: Event): void => {
-  const item = (event.target as HTMLElement).closest('[data-waved]') as HTMLElement
+  const item: WavedItem = (event.target as HTMLElement).closest('[data-waved]')
 
-  if (item) {
-    const waved = document.createElement('div') as HTMLDivElement
-    const circle = document.createElement('div') as HTMLDivElement
+  if (!item) return
 
-    const createWavedCircle = ({ positionY, positionX }: CirclePoisition): void => {
-      const coordinates: Coordinates = {
-        top: positionY - item.getBoundingClientRect().top,
-        left: positionX - item.getBoundingClientRect().left
-      }
+  const waved: HTMLDivElement = document.createElement('div')
+  const circle: HTMLDivElement = document.createElement('div')
 
-      circle.classList.add('waved-circle')
-      circle.style.top = `${coordinates.top}px`
-      circle.style.left = `${coordinates.left}px`
-      waved.classList.add('waved')
-      waved.appendChild(circle)
-      item.appendChild(waved)
-
-      circle.addEventListener(
-        'animationend',
-        ((): void => {
-          waved.remove()
-        }) as EventListener,
-        { once: true }
-      )
+  const createWavedCircle = ({ positionY, positionX }: CirclePoisition): void => {
+    const coordinates: Coordinates = {
+      top: positionY - item.getBoundingClientRect().top,
+      left: positionX - item.getBoundingClientRect().left
     }
 
-    switch (event.type) {
-      case 'touchstart': {
-        if (!getTouchDevice()) return
+    const removeWaved = (): void => {
+      waved.remove()
+    }
 
-        createWavedCircle({
-          positionY: (event as TouchEvent).touches[0].clientY,
-          positionX: (event as TouchEvent).touches[0].clientX
-        })
+    circle.classList.add('waved-circle')
+    circle.style.top = `${coordinates.top}px`
+    circle.style.left = `${coordinates.left}px`
+    waved.classList.add('waved')
+    waved.appendChild(circle)
+    item.appendChild(waved)
+    circle.addEventListener('animationend', removeWaved as EventListener, { once: true })
+  }
 
-        break
-      }
+  switch (event.type) {
+    case 'touchstart': {
+      if (!getTouchDevice()) return
 
-      case 'mousedown': {
-        if (getTouchDevice()) return
+      createWavedCircle({
+        positionY: (event as TouchEvent).touches[0].clientY,
+        positionX: (event as TouchEvent).touches[0].clientX
+      })
 
-        createWavedCircle({
-          positionY: (event as MouseEvent).clientY,
-          positionX: (event as MouseEvent).clientX
-        })
+      break
+    }
 
-        break
-      }
+    case 'mousedown': {
+      if (getTouchDevice()) return
+
+      createWavedCircle({
+        positionY: (event as MouseEvent).clientY,
+        positionX: (event as MouseEvent).clientX
+      })
+
+      break
     }
   }
 }
 
-export default (): void => {
-  document.addEventListener('touchstart', setWaved as EventListener, { passive: true })
-  document.addEventListener('mousedown', setWaved as EventListener)
+export default (container: Container = document): void => {
+  container.addEventListener('touchstart', setWaved as EventListener, { passive: true })
+  container.addEventListener('mousedown', setWaved as EventListener)
 }

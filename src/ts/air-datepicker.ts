@@ -15,12 +15,6 @@ type Attrs = {
   'data-active'?: string
 }
 
-declare global {
-  interface Window {
-    AirDatepicker: typeof AirDatepicker
-  }
-}
-
 interface CalendarOptions {
   date: Date
   cellType: AirDatepickerViewsSingle
@@ -33,8 +27,6 @@ interface CalendarCell {
 
 const DATA_DATEPICKER: string = getData('datepicker')
 const EXCLUDE_DATES: number[] = [+new Date(2026, 4, 5), +new Date(2026, 4, 7), +new Date(2026, 5, 10)]
-
-window.AirDatepicker = AirDatepicker
 
 const handleInputsError = (): void => {
   logError(
@@ -91,7 +83,7 @@ export const initCalendar = (container: Container = document): void => {
     }
   }
 
-  new window.AirDatepicker(calendar, {
+  new AirDatepicker(calendar, {
     locale: localeRu,
     onRenderCell: renderCalendarCell,
     selectedDates: [new Date()]
@@ -113,10 +105,11 @@ export default (container: Container = document): void => {
     const inputMax: Input = datepicker.querySelector(`*[${DATA_DATEPICKER}-max]`)
 
     if (!inputMin || !inputMax) {
-      return handleInputsError()
+      handleInputsError()
+      return
     }
 
-    const min: AirDatepicker<HTMLInputElement> = new window.AirDatepicker(inputMin, {
+    const min: AirDatepicker<HTMLInputElement> = new AirDatepicker(inputMin, {
       onSelect({ date }) {
         max.update({
           minDate: String(date)
@@ -130,7 +123,7 @@ export default (container: Container = document): void => {
       position: (inputMin.dataset.position as AirDatepickerPosition) || 'bottom left'
     })
 
-    const max: AirDatepicker<HTMLInputElement> = new window.AirDatepicker(inputMax, {
+    const max: AirDatepicker<HTMLInputElement> = new AirDatepicker(inputMax, {
       onSelect({ date }) {
         min.update({
           maxDate: String(date)

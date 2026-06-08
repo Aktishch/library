@@ -74,7 +74,8 @@ export default (container: Container = document): void => {
         const bubble: Bubble = range.querySelector(`*[${DATA_RANGE}-bubble]`)
 
         if (!output || !input || !progress || !bubble) {
-          return handleElementsError()
+          handleElementsError()
+          return
         }
 
         const onChange = (): void => {
@@ -113,7 +114,8 @@ export default (container: Container = document): void => {
           !firstBubble ||
           !lastBubble
         ) {
-          return handleElementsError()
+          handleElementsError()
+          return
         }
 
         const onChange = (): void => {

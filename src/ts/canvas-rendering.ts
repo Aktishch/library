@@ -34,7 +34,8 @@ export default (container: Container = document): void => {
     const src: Src = canvas.dataset.renderingCanvas
 
     if (!context || !src) {
-      return handleContextError()
+      handleContextError()
+      return
     }
 
     const link: Link = rendering.querySelector(`*[${DATA_RENDERING}-link]`)

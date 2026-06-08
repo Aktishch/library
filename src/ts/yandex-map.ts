@@ -1,83 +1,78 @@
-import { isEn, logError, source } from '@utils'
+import { Container, getData, isEn, logError, source } from '@utils'
 import ymaps from 'ymaps'
 
 type ymaps = typeof ymaps
+type Yandex = HTMLElement | null
+type YandexMap = HTMLElement | null
+type Value = string | undefined
+type Loader = HTMLDivElement | null
 
-interface YandexMap extends ymaps {
+interface YandexOptions extends ymaps {
   load: (api: string) => Promise<ymaps>
 }
 
-declare global {
-  interface Window {
-    ymaps: YandexMap
-  }
+const DATA_YANDEX: string = getData('yandex')
+const YANDEX_LANGUARE: string = isEn ? 'en_US' : 'ru_RU'
+
+const handleValueError = (): void => {
+  logError(isEn ? `${DATA_YANDEX}-map is missing a value` : `У ${DATA_YANDEX}-map отсутствует значение`)
 }
 
-window.ymaps = ymaps as YandexMap
-
-const lang: string = isEn ? 'en_US' : 'ru_RU'
-
-export default (): void => {
-  const yandex = document.querySelector('*[data-yandex]') as HTMLElement
+export default (container: Container = document): void => {
+  const yandex: Yandex = container.querySelector(`*[${DATA_YANDEX}]`)
 
   if (!yandex) return
 
-  const yandexMap = yandex.querySelector('*[data-yandex-map]') as HTMLDivElement
+  const yandexMap: YandexMap = yandex.querySelector(`*[${DATA_YANDEX}-map]`)
 
-  if (yandexMap.dataset.yandexMap) {
-    const loader = yandex.querySelector('*[data-loader]') as HTMLDivElement
-    const coordinates: string[] = yandexMap.dataset.yandexMap.split(',')
-    const pointSize: number[] = [62, 62]
-    const mark: number[] = []
+  if (!yandexMap) return
 
-    for (let i: number = 0; i < coordinates.length; i++) mark.push(Number(coordinates[i]))
+  const value: Value = yandexMap.dataset.yandexMap
 
-    window.ymaps
-      .load(`https://api-maps.yandex.ru/2.1/?lang=${lang}`)
-      .then((maps: ymaps): void => {
-        const map = new maps.Map(yandexMap, {
-          center: mark,
-          zoom: 16
-        }) as ymaps.Map
-
-        const placemark = new maps.Placemark(
-          mark,
-          {
-            hintContent: 'Студия К.И.Т.',
-            balloonContentHeader: 'Студия К.И.Т.',
-            balloonContentBody: 'г. Краснодар',
-            balloonContentFooter: 'ул.Рождественская Набережная 45/1'
-          },
-          {
-            iconLayout: 'default#image',
-            iconImageHref: `${source}/img/pictures/point.svg`,
-            iconImageSize: pointSize,
-            iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2]
-          }
-        ) as ymaps.Placemark
-
-        map.controls.remove('geolocationControl')
-        map.controls.remove('searchControl')
-        map.controls.remove('trafficControl')
-        map.controls.remove('typeSelector')
-        map.controls.remove('fullscreenControl')
-        map.controls.remove('zoomControl')
-        map.controls.remove('rulerControl')
-        map.behaviors.disable(['scrollZoom'])
-        map.geoObjects.add(placemark)
-        loader.remove()
-
-        map.geoObjects.events.add<'click'>('click', (event: ymaps.IEvent<PointerEvent, object>): void => {
-          const target: EventTarget | any = event.get('target')
-          const hintContent = target.properties._data.hintContent
-
-          map.panTo(target.geometry.getCoordinates(), {
-            useMapMargin: true
-          })
-
-          alert(hintContent)
-        })
-      })
-      .catch((error: string) => logError(error))
+  if (!value) {
+    handleValueError()
+    return
   }
+
+  const loader: Loader = yandex.querySelector('*[data-loader]')
+  const coordinates: string[] = value.split(',')
+  const pointSize: number[] = [62, 62]
+  const mark: number[] = []
+
+  for (let i: number = 0; i < coordinates.length; i++) {
+    mark.push(Number(coordinates[i]))
+  }
+
+  ;(ymaps as YandexOptions)
+    .load(`https://api-maps.yandex.ru/2.1/?lang=${YANDEX_LANGUARE}`)
+    .then((maps: ymaps): void => {
+      const map: ymaps.Map = new maps.Map(yandexMap, {
+        center: mark,
+        zoom: 16
+      })
+      const placemark: ymaps.Placemark = new maps.Placemark(
+        mark,
+        {},
+        {
+          iconLayout: 'default#image',
+          iconImageHref: `${source}/img/pictures/point.svg`,
+          iconImageSize: pointSize,
+          iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2]
+        }
+      )
+
+      map.controls.remove('geolocationControl')
+      map.controls.remove('searchControl')
+      map.controls.remove('trafficControl')
+      map.controls.remove('typeSelector')
+      map.controls.remove('fullscreenControl')
+      map.controls.remove('zoomControl')
+      map.controls.remove('rulerControl')
+      map.behaviors.disable(['scrollZoom'])
+      map.geoObjects.add(placemark)
+      loader?.remove()
+    })
+    .catch((error: string): void => {
+      logError(error)
+    })
 }

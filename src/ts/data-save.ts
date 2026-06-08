@@ -22,7 +22,8 @@ export default (container: Container = document): void => {
     const value: Value = form.dataset.save
 
     if (!value) {
-      return handleValueError()
+      handleValueError()
+      return
     }
 
     const dataSave: Record<string, string | boolean> = JSON.parse(sessionStorage.getItem(value) || '{}')

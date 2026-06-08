@@ -15,13 +15,6 @@ interface Dialog {
   close: () => void
 }
 
-declare global {
-  interface Window {
-    Fancybox: typeof Fancybox
-    dialog: Dialog
-  }
-}
-
 Fancybox.getDefaults().placeFocusBack = false
 
 if (!getTouchDevice()) {
@@ -37,8 +30,6 @@ if (!getTouchDevice()) {
   }
 }
 
-window.Fancybox = Fancybox
-
 const DATA_FANCYBOX: string = getData('fancybox')
 
 const updateLoad = (): void => {
@@ -47,7 +38,7 @@ const updateLoad = (): void => {
 
 export const dialog: Dialog = {
   open: (src: string, callback: Callback): void => {
-    window.Fancybox.show(
+    Fancybox.show(
       [
         {
           src: src,
@@ -70,7 +61,7 @@ export const dialog: Dialog = {
     )
   },
   notClosing: (src: string, callback: Callback): void => {
-    window.Fancybox.show(
+    Fancybox.show(
       [
         {
           src: src,
@@ -95,16 +86,14 @@ export const dialog: Dialog = {
     )
   },
   close: (): void => {
-    window.Fancybox.close()
+    Fancybox.close()
   }
 }
 
-window.dialog = dialog
-
 export default (): void => {
-  window.Fancybox.bind(`[${DATA_FANCYBOX}]`)
+  Fancybox.bind(`[${DATA_FANCYBOX}]`)
 
-  window.Fancybox.bind(`[${DATA_FANCYBOX}-dialog]`, {
+  Fancybox.bind(`[${DATA_FANCYBOX}-dialog]`, {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (...[, , slide]: Properties): void => {
@@ -117,7 +106,7 @@ export default (): void => {
     }
   })
 
-  window.Fancybox.bind(`[${DATA_FANCYBOX}-form]`, {
+  Fancybox.bind(`[${DATA_FANCYBOX}-form]`, {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (...[, , slide]: Properties): void => {
@@ -131,7 +120,7 @@ export default (): void => {
     }
   })
 
-  window.Fancybox.bind(`[${DATA_FANCYBOX}-avatar]`, {
+  Fancybox.bind(`[${DATA_FANCYBOX}-avatar]`, {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (...[, , slide]: Properties): void => {
@@ -145,7 +134,7 @@ export default (): void => {
     }
   })
 
-  window.Fancybox.bind(`[${DATA_FANCYBOX}-calendar]`, {
+  Fancybox.bind(`[${DATA_FANCYBOX}-calendar]`, {
     dragToClose: false,
     on: {
       'Carousel.contentReady': (...[, , slide]: Properties): void => {

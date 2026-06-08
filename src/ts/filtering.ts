@@ -112,7 +112,8 @@ export default (container: Container = document): void => {
     const categories: NodeListOf<Category> = container.querySelectorAll(`*[${DATA_FILTER}-category="${value}"]`)
 
     if (!categories.length) {
-      return handleCategoriesError()
+      handleCategoriesError()
+      return
     }
 
     const cards: NodeListOf<HTMLDivElement> = container.querySelectorAll(`*[${DATA_FILTER}-card="${value}"]`)

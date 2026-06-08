@@ -1,18 +1,10 @@
 import { getTouchDevice, html } from '@utils'
 import LocomotiveScroll from 'locomotive-scroll'
 
-declare global {
-  interface Window {
-    LocomotiveScroll: typeof LocomotiveScroll
-  }
-}
-
-window.LocomotiveScroll = LocomotiveScroll
-
 export default (): void => {
   if (getTouchDevice()) return
 
-  new window.LocomotiveScroll({
+  new LocomotiveScroll({
     lenisOptions: {
       wrapper: window,
       content: html,
