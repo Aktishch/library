@@ -6,7 +6,7 @@
   &__dialog &__slide {
 
     .f-html {
-      @apply bg-transparent p-0 max-w-full;
+      @apply bg-transparent max-w-full p-0;
     }
 
     .f-button.is-close-button {
@@ -32,10 +32,6 @@
 
     &-prev,
     &-next {
-      &::after {
-        @apply hidden;
-      }
-
       svg {
         width    : 1em;
         min-width: 1em;

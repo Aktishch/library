@@ -21,6 +21,8 @@ const getBreakpoint = (scrolling: HTMLElement): boolean => {
 }
 
 const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+  if (!entries.length) return
+
   entries.forEach((entry: ResizeObserverEntry): void => {
     const scrolling: HTMLElement = entry.target as HTMLElement
     const horizontal: Horizontal = scrolling.querySelector(`*[${DATA_SCROLLING}-horizontal]`)

@@ -1,24 +1,49 @@
-import { Container, Coordinates } from '@utils'
+import { Container, Coordinates, getData, isEn, logError } from '@utils'
+
+type Social = HTMLDivElement | null
+type Round = HTMLDivElement | null
+type Button = HTMLButtonElement | null
+
+const DATA_SOCIAL: string = getData('social')
+const SHOW_VALUE: string = 'show'
+
+const handleElementsError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_SOCIAL} does not have a ${DATA_SOCIAL}-(round, button) child element`
+      : `У ${DATA_SOCIAL} отсутствует дочерний элемент ${DATA_SOCIAL}-(round, button)`
+  )
+}
 
 export default (container: Container = document): void => {
-  const social = container.querySelector('*[data-social]') as HTMLDivElement
+  const social: Social = container.querySelector(`*[${DATA_SOCIAL}]`)
 
   if (!social) return
 
-  const round = social.querySelector('*[data-social-round]') as HTMLDivElement
-  const links = social.querySelectorAll('*[data-social-link]') as NodeListOf<HTMLAnchorElement>
-  const btn = social.querySelector('*[data-social-button]') as HTMLButtonElement
+  const round: Round = social.querySelector(`*[${DATA_SOCIAL}-round]`)
+  const button: Button = social.querySelector(`*[${DATA_SOCIAL}-button]`)
+
+  if (!round || !button) {
+    handleElementsError()
+    return
+  }
+
+  const links: NodeListOf<HTMLAnchorElement> = social.querySelectorAll(`*[${DATA_SOCIAL}-link]`)
   let lastTap: number
 
   const checkSocial = (): void => {
     const timeSince: number = new Date().getTime() - lastTap
 
-    if (timeSince < 300 && timeSince > 0) round.dataset.socialRound = round.dataset.socialRound === 'show' ? '' : 'show'
+    if (timeSince < 300 && timeSince > 0) {
+      round.dataset.socialRound = round.dataset.socialRound === SHOW_VALUE ? '' : SHOW_VALUE
+    }
 
     lastTap = new Date().getTime()
   }
 
   const setLinksPosition = (): void => {
+    if (!links.length) return
+
     const radius = Number(social.dataset.social) * 100 || 100
     const width: number = social.offsetWidth
     const height: number = social.offsetHeight
@@ -27,8 +52,6 @@ export default (container: Container = document): void => {
     let angle: number = 0
 
     links.forEach((link: HTMLAnchorElement): void => {
-      if (!link) return
-
       const coordinates: Coordinates = {
         top: Math.round(height / 2 + radius * Math.sin(angle) - link.offsetHeight / 2),
         left: Math.round(width / 2 + radius * Math.cos(angle) - link.offsetWidth / 2)
@@ -40,8 +63,14 @@ export default (container: Container = document): void => {
     })
   }
 
+  const resizeObserver: ResizeObserver = new ResizeObserver((): void => {
+    window.requestAnimationFrame((): void => {
+      setLinksPosition()
+    })
+  })
+
   setLinksPosition()
-  window.addEventListener('resize', setLinksPosition as EventListener)
-  btn.addEventListener('click', checkSocial as EventListener)
-  btn.addEventListener('touchstart', checkSocial as EventListener, { passive: true })
+  resizeObserver.observe(social)
+  button.addEventListener('click', checkSocial as EventListener)
+  button.addEventListener('touchstart', checkSocial as EventListener, { passive: true })
 }

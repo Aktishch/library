@@ -29,24 +29,28 @@
   <h3 class="font-semibold text-base/tight md:text-lg/tight mb-5 md:mb-10 duration-500 anim anim-up" data-anim data-movement="blend">
     Class template for slider
   </h3>
-  <div class="relative w-full" data-slider="gallery">
-    <div class="swiper p-4 -m-4" data-slider-swiper="gallery">
-      <div class="swiper-wrapper">
-        <% for (let i = 0; i < 6; i++) { %>
-        <a class="swiper-slide pack pack-md bg-grey dark:bg-dark rounded-2xl shadow-md" data-media data-movement="light" data-fancybox="gallery" draggable="false" href="/img/pictures/town.jpg">
-          <%= loader({className: null}) %>
-          <%= picture({src: '/', format: '', className: 'pack-image image rounded-inherit', data: 'data-lazy data-src="/img/pictures/town.jpg"'}) %>
-        </a>
-        <% } %>
+  <div class="w-full" data-slider="gallery">
+    <div class="relative">
+      <div>
+        <div class="swiper p-4 -m-4" data-slider-swiper="gallery">
+          <div class="swiper-wrapper">
+            <% for (let i = 0; i < 6; i++) { %>
+            <a class="swiper-slide pack pack-md bg-grey dark:bg-dark rounded-2xl shadow-md" data-media data-movement="light" data-fancybox="gallery" draggable="false" href="/img/pictures/town.jpg">
+              <%= loader({className: null}) %>
+              <%= picture({src: '/', format: '', className: 'pack-image image rounded-inherit', data: 'data-lazy data-src="/img/pictures/town.jpg"'}) %>
+            </a>
+            <% } %>
+          </div>
+        </div>
       </div>
+      <button class="swiper-button-prev btn btn-primary btn-fill hidden md:flex absolute -left-6 rounded-full size-12" data-slider-prev="gallery" data-waved="light">
+        <%= icon({id: 'arrow-left', className: null, data: null}) %>
+      </button>
+      <button class="swiper-button-next btn btn-primary btn-fill hidden md:flex absolute -right-6 rounded-full size-12" data-slider-next="gallery" data-waved="light">
+        <%= icon({id: 'arrow-right', className: null, data: null}) %>
+      </button>
     </div>
     <div class="swiper-pagination md:hidden text-primary mt-10" data-slider-pagination="gallery"></div>
-    <button class="swiper-button-prev btn btn-primary btn-fill hidden md:flex absolute md:-left-6 rounded-full size-12" data-slider-prev="gallery" data-waved="light">
-      <%= icon({id: 'arrow-left', className: null, data: null}) %>
-    </button>
-    <button class="swiper-button-next btn btn-primary btn-fill hidden md:flex absolute md:-right-6 rounded-full size-12" data-slider-next="gallery" data-waved="light">
-      <%= icon({id: 'arrow-right', className: null, data: null}) %>
-    </button>
   </div>
 </section>
 
@@ -111,57 +115,61 @@
       </div>
     </div>
   </div>
-  <div class="relative w-full" data-slider="products">
-    <div class="swiper p-4 -m-4" data-slider-swiper="products">
-      <div class="swiper-wrapper">
-        <% products.forEach((item) => { %>
-        <div class="swiper-slide h-auto">
-          <div class="group/product card dark:bg-black shadow-md hover:shadow-xl transition-shadow cursor-pointer p-1" data-product>
-            <div class="pack pack-md bg-grey dark:bg-dark rounded-inherit" data-media>
-              <%= loader({className: null}) %>
-              <%= picture({src: '/', format: '', className: 'image rounded-inherit', data: 'data-lazy data-product-image="/img/pictures/town-grey.jpg" data-src="/img/pictures/town-grey.jpg"'}) %>
-              <label class="block absolute top-2 right-2 rounded-full opacity-0 invisible overflow-hidden cursor-pointer transition-[opacity,_visibility] pointer-coarse:visible pointer-coarse:opacity-100 group group-hover/product:opacity-100 group-hover/product:visible has-[:checked]:visible has-[:checked]:opacity-100" data-waved="light">
-                <input class="peer hidden" type="checkbox">
-                <div class="flex items-center justify-center bg-white/40 text-2xl text-red text-opacity-50 stroke-red rounded-full transition ease-linear size-10 group-has-[:checked]:text-opacity-100">
-                  <%= icon({id: 'like', className: 'icon', data: null}) %>
+  <div class="w-full" data-slider="products">
+    <div class="relative">
+      <div>
+        <div class="swiper p-4 -m-4" data-slider-swiper="products">
+          <div class="swiper-wrapper">
+            <% products.forEach((item) => { %>
+            <div class="swiper-slide h-auto">
+              <div class="group/product card dark:bg-black shadow-md hover:shadow-xl transition-shadow cursor-pointer p-1" data-product>
+                <div class="pack pack-md bg-grey dark:bg-dark rounded-inherit" data-media>
+                  <%= loader({className: null}) %>
+                  <%= picture({src: '/', format: '', className: 'image rounded-inherit', data: 'data-lazy data-product-image="/img/pictures/town-grey.jpg" data-src="/img/pictures/town-grey.jpg"'}) %>
+                  <label class="block absolute top-2 right-2 rounded-full opacity-0 invisible overflow-hidden cursor-pointer transition-[opacity,_visibility] pointer-coarse:visible pointer-coarse:opacity-100 group group-hover/product:opacity-100 group-hover/product:visible has-[:checked]:visible has-[:checked]:opacity-100" data-waved="light">
+                    <input class="peer hidden" type="checkbox">
+                    <div class="flex items-center justify-center bg-white/40 text-2xl text-red text-opacity-50 stroke-red rounded-full transition ease-linear size-10 group-has-[:checked]:text-opacity-100">
+                      <%= icon({id: 'like', className: 'icon', data: null}) %>
+                    </div>
+                  </label>
                 </div>
-              </label>
-            </div>
-            <div class="card-content items-start p-2 md:p-4">
-              <h4 class="font-alt font-bold text-lg/none md:text-xl/none mb-2" data-product-name>Name</h4>
-              <a class="underline-offset-4 hover:underline mb-3" draggable="false" href="">
-                <p class="opacity-70"><%= item.text %></p>
-              </a>
-              <div class="flex items-end justify-between gap-4 w-full mt-auto mb-5">
-                <div class="flex flex-col w-full md:w-auto">
-                  <% if (item.oldPrice) { %>
-                  <span class="text-sm/none md:text-base/none line-through opacity-60 mb-2" data-product-oldprice><%= item.oldPrice %></span>
-                  <% } %>
-                  <span class="font-semibold text-xl/none md:text-2xl/none" data-product-price><%= item.price %></span>
-                </div>
-                <div class="swiper-no-swiping flex items-center justify-between rounded-full border border-solid border-gray w-max p-1" data-quantity>
-                  <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-decrease data-waved="light">-</button>
-                  <input class="bg-transparent text-center shrink-0 w-10 h-auto" data-product-quantity data-quantity-input="1" data-input="number" type="text" value="1" maxlength="3" name="quantity">
-                  <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-increase data-waved="light">+</button>
+                <div class="card-content items-start p-2 md:p-4">
+                  <h4 class="font-alt font-bold text-lg/none md:text-xl/none mb-2" data-product-name>Name</h4>
+                  <a class="underline-offset-4 hover:underline mb-3" draggable="false" href="">
+                    <p class="opacity-70"><%= item.text %></p>
+                  </a>
+                  <div class="flex items-end justify-between gap-4 w-full mt-auto mb-5">
+                    <div class="flex flex-col w-full md:w-auto">
+                      <% if (item.oldPrice) { %>
+                      <span class="text-sm/none md:text-base/none line-through opacity-60 mb-2" data-product-oldprice><%= item.oldPrice %></span>
+                      <% } %>
+                      <span class="font-semibold text-xl/none md:text-2xl/none" data-product-price><%= item.price %></span>
+                    </div>
+                    <div class="swiper-no-swiping flex items-center justify-between rounded-full border border-solid border-gray w-max p-1" data-quantity>
+                      <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-decrease data-waved="light">-</button>
+                      <input class="bg-transparent text-center shrink-0 w-10 h-auto" data-product-quantity data-quantity-input="1" data-input="number" type="text" value="1" maxlength="3" name="quantity">
+                      <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-increase data-waved="light">+</button>
+                    </div>
+                  </div>
+                  <button class="swiper-no-swiping btn btn-primary btn-fade btn-lg w-full" data-product-button data-waved="light">
+                    <%= icon({id: 'basket', className: 'icon mr-2', data: null}) %>
+                    Basket
+                  </button>
                 </div>
               </div>
-              <button class="swiper-no-swiping btn btn-primary btn-fade btn-lg w-full" data-product-button data-waved="light">
-                <%= icon({id: 'basket', className: 'icon mr-2', data: null}) %>
-                Basket
-              </button>
             </div>
+            <% }) %>
           </div>
         </div>
-        <% }) %>
       </div>
+      <button class="swiper-button-prev btn btn-primary btn-fill hidden md:flex absolute -left-6 rounded-full size-12" data-slider-prev="products" data-waved="light">
+        <%= icon({id: 'arrow-left', className: null, data: null}) %>
+      </button>
+      <button class="swiper-button-next btn btn-primary btn-fill hidden md:flex absolute -right-6 rounded-full size-12" data-slider-next="products" data-waved="light">
+        <%= icon({id: 'arrow-right', className: null, data: null}) %>
+      </button>
     </div>
     <div class="swiper-pagination md:hidden text-primary mt-10" data-slider-pagination="products"></div>
-    <button class="swiper-button-prev btn btn-primary btn-fill hidden md:flex absolute md:-left-6 rounded-full size-12" data-slider-prev="products" data-waved="light">
-      <%= icon({id: 'arrow-left', className: null, data: null}) %>
-    </button>
-    <button class="swiper-button-next btn btn-primary btn-fill hidden md:flex absolute md:-right-6 rounded-full size-12" data-slider-next="products" data-waved="light">
-      <%= icon({id: 'arrow-right', className: null, data: null}) %>
-    </button>
   </div>
 </section>
 
@@ -245,7 +253,7 @@
             <div class="swiper-pagination w-auto ml-1" data-slider-pagination="quiz"></div>
           </div>
           <div class="flex items-center gap-5">
-            <button class="swiper-button-prev btn btn-primary btn-fill btn-lg inset-0 w-auto mt-0" data-slider-prev="quiz" data-waved="light">
+            <button class="swiper-button-prev btn btn-primary btn-fill btn-lg w-auto mt-0" data-slider-prev="quiz" data-waved="light">
               <%= icon({id: 'arrow-left', className: 'mr-2 text-xs', data: null}) %>
               Prev
             </button>

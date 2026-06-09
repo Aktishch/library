@@ -86,6 +86,8 @@ export default (container: Container = document): void => {
   if (!filters.length) return
 
   const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+    if (!entries.length) return
+
     entries.forEach((entry: ResizeObserverEntry): void => {
       const category: Category = entry.target as Category
       const filter: Filter = category.closest(`[${DATA_FILTER}]`)
@@ -99,7 +101,9 @@ export default (container: Container = document): void => {
       const line: Line = container.querySelector(`*[${DATA_FILTER}-line="${value}"]`)
 
       if (line && category.hasAttribute(DATA_ACTIVE)) {
-        updateLinePosition({ line, category })
+        window.requestAnimationFrame((): void => {
+          updateLinePosition({ line, category })
+        })
       }
     })
   })

@@ -23,6 +23,8 @@ export const closeSidebar = (sidebar: HTMLElement): void => {
 }
 
 const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+  if (!entries.length) return
+
   entries.forEach((entry: ResizeObserverEntry): void => {
     const sidebar: HTMLElement = entry.target as HTMLElement
     const value: Breakpoint | Value = sidebar.dataset.breakpoint
@@ -31,9 +33,11 @@ const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserv
 
     const breakpoint: number = media[value]
 
-    if (html.clientWidth > breakpoint) {
-      closeSidebar(sidebar)
-    }
+    window.requestAnimationFrame((): void => {
+      if (html.clientWidth > breakpoint) {
+        closeSidebar(sidebar)
+      }
+    })
   })
 })
 

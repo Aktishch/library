@@ -15,12 +15,16 @@ const handleElementsError = (): void => {
 }
 
 const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]): void => {
+  if (!entries.length) return
+
   entries.forEach((entry: ResizeObserverEntry): void => {
     const compare: HTMLDivElement = entry.target as HTMLDivElement
     const image: Image = compare.querySelector(`*[${DATA_COMPARE}-image]`)
 
     if (image) {
-      image.style.width = `${entry.contentRect.width}px`
+      window.requestAnimationFrame((): void => {
+        image.style.width = `${entry.contentRect.width}px`
+      })
     }
   })
 })
