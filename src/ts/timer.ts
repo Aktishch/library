@@ -1,15 +1,37 @@
-import { Container, getTimeFormat, source } from '@utils'
+import { Container, getData, getTimeFormat, isEn, logError, source } from '@utils'
+
+type Timer = HTMLDivElement | null
+type Stopwatch = HTMLDivElement | null
+type Units = HTMLTimeElement | null
+type Button = HTMLButtonElement | null
+type Icon = SVGUseElement | null
+
+const DATA_TIMER: string = getData('timer')
+
+const handleElementsError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_TIMER} does not have a ${DATA_TIMER}-(stopwatch, units, turn, reset) child element`
+      : `У ${DATA_TIMER} отсутствует дочерний элемент ${DATA_TIMER}-(stopwatch, units, turn, reset)`
+  )
+}
 
 export default (container: Container = document): void => {
-  const timer = container.querySelector('*[data-timer]') as HTMLDivElement
+  const timer: Timer = container.querySelector(`*[${DATA_TIMER}]`)
 
   if (!timer) return
 
-  const stopwatch = timer.querySelector('*[data-timer-stopwatch]') as HTMLDivElement
-  const units = timer.querySelector('*[data-timer-units]') as HTMLTimeElement
-  const turn = timer.querySelector('*[data-timer-turn]') as HTMLButtonElement
-  const icon = turn.querySelector('use') as SVGUseElement
-  const reset = timer.querySelector('*[data-timer-reset]') as HTMLButtonElement
+  const stopwatch: Stopwatch = timer.querySelector(`*[${DATA_TIMER}-stopwatch]`)
+  const units: Units = timer.querySelector(`*[${DATA_TIMER}-units]`)
+  const turn: Button = timer.querySelector(`*[${DATA_TIMER}-turn]`)
+  const reset: Button = timer.querySelector(`*[${DATA_TIMER}-reset]`)
+
+  if (!stopwatch || !units || !turn || !reset) {
+    handleElementsError()
+    return
+  }
+
+  const icon: Icon = turn.querySelector('use')
   let active: boolean
   let seconds: number
   let minutes: number
@@ -23,7 +45,7 @@ export default (container: Container = document): void => {
     hours = 0
     steps = 0
     units.innerText = '00:00:00'
-    icon.setAttribute('href', `${source}/img/icons.svg#play`)
+    icon?.setAttribute('href', `${source}/img/icons.svg#play`)
     stopwatch.style.transform = 'rotate(0deg)'
   }
 
@@ -52,10 +74,10 @@ export default (container: Container = document): void => {
   const setActive = (): void => {
     if (active) {
       active = false
-      icon.setAttribute('href', `${source}/img/icons.svg#play`)
+      icon?.setAttribute('href', `${source}/img/icons.svg#play`)
     } else {
       active = true
-      icon.setAttribute('href', `${source}/img/icons.svg#pause`)
+      icon?.setAttribute('href', `${source}/img/icons.svg#pause`)
       setTime()
     }
   }

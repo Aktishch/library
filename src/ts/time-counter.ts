@@ -75,8 +75,6 @@ export default (container: Container = document): void => {
   setTimeCounter()
 
   if (date - Date.now() > 0) {
-    interval = setInterval((): void => {
-      setTimeCounter()
-    }, 1000)
+    interval = setInterval(setTimeCounter, 1000)
   }
 }
