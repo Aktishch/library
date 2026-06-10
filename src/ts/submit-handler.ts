@@ -62,7 +62,7 @@ const submitHandler = async (event: Event): Promise<void> => {
       switch (form.dataset.form) {
         case 'submit': {
           submitBtn.disabled = true
-          dialog.notClosing('/dialogs/dialog-preloader.html')
+          dialog.notClosing('/dialogs/preloader.html')
 
           await fetch(REQUEST_URL, {
             method: 'POST',
@@ -73,7 +73,7 @@ const submitHandler = async (event: Event): Promise<void> => {
             })
             .then(({ status }): void => {
               dialog.close()
-              dialog.open(status ? '/dialogs/dialog-success.html' : '/dialogs/dialog-error.html')
+              dialog.open(status ? '/dialogs/success.html' : '/dialogs/error.html')
               form.reset()
               submitBtn.disabled = false
             })
@@ -85,7 +85,7 @@ const submitHandler = async (event: Event): Promise<void> => {
         }
 
         case 'avatar': {
-          dialog.notClosing('/dialogs/dialog-preloader.html')
+          dialog.notClosing('/dialogs/preloader.html')
 
           await fetch(REQUEST_URL, {
             method: 'POST',
@@ -112,7 +112,7 @@ const submitHandler = async (event: Event): Promise<void> => {
           }
 
           dialog.close()
-          dialog.open(`/dialogs/dialog-authorization.html?${searchParams.toString()}`)
+          dialog.open(`/dialogs/authorization.html?${searchParams.toString()}`)
           break
         }
       }

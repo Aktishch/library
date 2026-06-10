@@ -45,9 +45,9 @@ export default (container: Container = document): void => {
 
     let isActive: boolean = false
 
-    const updatePosition = (pageX: number): void => {
+    const updatePosition = (clientX: number): void => {
       const rect: DOMRect = compare.getBoundingClientRect()
-      const value: number = Math.max(0, Math.min(pageX - rect.left, rect.width))
+      const value: number = Math.max(0, Math.min(clientX - rect.left, rect.width))
 
       before.style.width = `${value}px`
       change.style.left = `${value}px`
@@ -67,7 +67,7 @@ export default (container: Container = document): void => {
         event.preventDefault()
       }
 
-      updatePosition('touches' in event ? event.touches[0].pageX : event.pageX)
+      updatePosition('touches' in event ? event.touches[0].clientX : event.clientX)
     }
 
     const onEnd = (): void => {

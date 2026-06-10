@@ -1,4 +1,4 @@
-import { Container, getData, getValidate, handleFile, isEn, logError, uploadFile } from '@utils'
+import { Container, FileType, getData, getValidate, handleFile, isEn, logError, uploadFile } from '@utils'
 
 type Form = HTMLFormElement | null
 type Drag = HTMLDivElement | null
@@ -44,6 +44,8 @@ export default (container: Container = document): void => {
       return
     }
 
+    const type: FileType = 'img'
+    const size: number = Number(preview.dataset.size) || 2
     const requestUrl: RequestUrl = image.dataset.previewImage
     let data: DataTransfer = new DataTransfer()
 
@@ -68,7 +70,7 @@ export default (container: Container = document): void => {
         try {
           const { file, url } = await uploadFile(files[0])
 
-          if (!handleFile({ error, file })) {
+          if (!handleFile({ error, file, type, size })) {
             throw isEn ? 'File validation failed' : 'Файл не прошёл валидацию'
           }
 

@@ -1,4 +1,4 @@
-import { Container, getData, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
+import { Container, FileType, getData, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
 
 type Form = HTMLFormElement | null
 type Label = HTMLLabelElement | null
@@ -45,6 +45,8 @@ export default (container: Container = document): void => {
       return
     }
 
+    const type: FileType = (filelist.dataset.type as FileType | undefined) || 'img'
+    const size: number = Number(filelist.dataset.size) || 2
     const maxLength: number = Number(listing.dataset.filelistListing) || 3
     const message: Message = {
       default: isEn ? 'Upload files' : 'Загрузить файлы',
@@ -65,7 +67,7 @@ export default (container: Container = document): void => {
           try {
             const { file } = await uploadFile(files[i])
 
-            if (!handleFile({ error, file })) {
+            if (!handleFile({ error, file, type, size })) {
               throw isEn ? 'File validation failed' : 'Файл не прошёл валидацию'
             }
 

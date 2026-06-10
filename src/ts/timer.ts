@@ -4,7 +4,7 @@ type Timer = HTMLDivElement | null
 type Stopwatch = HTMLDivElement | null
 type Units = HTMLTimeElement | null
 type Button = HTMLButtonElement | null
-type Icon = SVGUseElement | null
+type Use = SVGUseElement | null
 
 const DATA_TIMER: string = getData('timer')
 
@@ -31,7 +31,7 @@ export default (container: Container = document): void => {
     return
   }
 
-  const icon: Icon = turn.querySelector('use')
+  const use: Use = turn.querySelector('use')
   let active: boolean
   let seconds: number
   let minutes: number
@@ -45,7 +45,7 @@ export default (container: Container = document): void => {
     hours = 0
     steps = 0
     units.innerText = '00:00:00'
-    icon?.setAttribute('href', `${source}/img/icons.svg#play`)
+    use?.setAttribute('href', `${source}/img/icons.svg#play`)
     stopwatch.style.transform = 'rotate(0deg)'
   }
 
@@ -74,10 +74,10 @@ export default (container: Container = document): void => {
   const setActive = (): void => {
     if (active) {
       active = false
-      icon?.setAttribute('href', `${source}/img/icons.svg#play`)
+      use?.setAttribute('href', `${source}/img/icons.svg#play`)
     } else {
       active = true
-      icon?.setAttribute('href', `${source}/img/icons.svg#pause`)
+      use?.setAttribute('href', `${source}/img/icons.svg#pause`)
       setTime()
     }
   }

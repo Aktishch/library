@@ -1,4 +1,15 @@
-import { getTimeFormat, hideScrollbar, isEn, logError, showScrollbar, source } from '@utils'
+import { Container, getData, getTimeFormat, hideScrollbar, isEn, logError, showScrollbar, source } from '@utils'
+
+type Player = HTMLElement | null
+type Value = string | undefined
+type Listing = HTMLUListElement | null
+type Poster = HTMLImageElement | null
+type Loader = HTMLDivElement | null
+type PlayerItem = HTMLElement | null
+type Audio = HTMLAudioElement | null
+type Button = HTMLButtonElement | null
+type Icon = SVGElement | null
+type Use = SVGUseElement | null
 
 interface Composition {
   artist: string
@@ -7,8 +18,8 @@ interface Composition {
   poster: string
 }
 
-interface Player {
-  id: string
+interface PlayerOptions {
+  container: Container
   playlist: Composition[]
 }
 
@@ -22,8 +33,13 @@ interface Condition {
 
 interface Timing {
   type: string
-  time: HTMLSpanElement
+  time: HTMLElement | null
 }
+
+const DATA_PLAYER: string = getData('player')
+const HIDDEN_CLASSNAME: string = 'hidden'
+const POINTER_CLASSNAME: string = 'pointer-events-none'
+const OPACITY_CLASSNAME: string = 'opacity-50'
 
 const playlist: Composition[] = [
   {
@@ -48,25 +64,43 @@ const playlist: Composition[] = [
 ]
 
 const playOnlyOne = (event: Event): void => {
-  const audios = document.querySelectorAll('audio') as NodeListOf<HTMLAudioElement>
+  const audios: NodeListOf<HTMLAudioElement> = document.querySelectorAll('audio')
 
-  for (let i: number = 0; i < audios.length; i++) {
-    const audio = audios[i] as HTMLAudioElement
+  if (!audios.length) return
 
-    if (audio !== event.target) audio.pause()
-  }
+  audios.forEach((audio: HTMLAudioElement): void => {
+    if (audio !== event.target) {
+      audio.pause()
+    }
+  })
+}
+
+const handleErrorLoad = (): void => {
+  logError(isEn ? 'Failed to load audio' : 'Не удалось загрузить аудио')
+}
+
+const handleValueError = (): void => {
+  logError(isEn ? `${DATA_PLAYER} is missing a value` : `У ${DATA_PLAYER} отсутствует значение`)
+}
+
+const handleElementsError = (): void => {
+  logError(
+    isEn
+      ? `The ${DATA_PLAYER} does not have a ${DATA_PLAYER}-(audio, progress, range, play) child element`
+      : `У ${DATA_PLAYER} отсутствует дочерний элемент ${DATA_PLAYER}-(audio, progress, range, play)`
+  )
 }
 
 const createComposition = (composition: Composition): HTMLLIElement => {
-  const item = document.createElement('li') as HTMLLIElement
+  const li: HTMLLIElement = document.createElement('li')
 
-  item.classList.add('flex', 'items-center', 'gap-2')
-  item.innerHTML = `
-    <button class="btn btn-primary btn-fade text-4xl rounded-full shrink-0 size-10" data-player-composition data-waved="dark">
-      <svg class="loading icon hidden" data-player-loading>
+  li.classList.add('flex', 'items-center', 'gap-2')
+  li.innerHTML = `
+    <button class="btn btn-primary btn-fade text-4xl rounded-full shrink-0 size-10" ${DATA_PLAYER}-composition data-waved="dark">
+      <svg class="loading icon hidden" ${DATA_PLAYER}-loading>
         <use href="${source}/img/icons.svg#loading"></use>
       </svg>
-      <svg class="icon" data-player-status>
+      <svg class="icon" ${DATA_PLAYER}-status>
         <use href="${source}/img/icons.svg#play"></use>
       </svg>
     </button>
@@ -76,45 +110,60 @@ const createComposition = (composition: Composition): HTMLLIElement => {
     </div>
   `
 
-  return item
+  return li
 }
 
-const initPlayer = ({ id, playlist }: Player): void => {
-  const player = document.getElementById(id) as HTMLElement
+const initPlayer = ({ container, playlist }: PlayerOptions): void => {
+  const player: Player = container.querySelector(`*[${DATA_PLAYER}]`)
 
   if (!player) return
 
-  const createPlaylist = async (): Promise<void> => {
-    const listing = player.querySelector('*[data-player-listing]') as HTMLUListElement
+  const value: Value = player.dataset.player
+
+  if (!value) {
+    handleValueError()
+    return
+  }
+
+  const checkPlaylist = async (): Promise<void> => {
+    const listing: Listing = player.querySelector(`*[${DATA_PLAYER}-listing]`)
 
     if (!listing) return
 
-    playlist.forEach((composition: Composition): void => {
-      if (composition) listing.appendChild(createComposition(composition))
-    })
+    if (playlist.length) {
+      playlist.forEach((composition: Composition): void => {
+        listing.appendChild(createComposition(composition))
+      })
+    }
   }
 
-  createPlaylist()
+  checkPlaylist()
     .finally((): void => {
-      const compositions = player.querySelectorAll('*[data-player-composition]') as NodeListOf<HTMLButtonElement>
-      const poster = player.querySelector('*[data-player-poster]') as HTMLImageElement
-      const loader = player.querySelector('*[data-loader]') as HTMLDivElement
-      const artist = player.querySelector('*[data-player-artist]') as HTMLElement
-      const song = player.querySelector('*[data-player-song]') as HTMLElement
-      const audio = player.querySelector('*[data-player-audio]') as HTMLAudioElement
-      const progress = player.querySelector('*[data-player-progress]') as HTMLDivElement
-      const range = player.querySelector('*[data-player-range]') as HTMLDivElement
-      const play = player.querySelector('*[data-player-play]') as HTMLButtonElement
-      const loading = play.querySelector('*[data-player-loading]') as SVGElement
-      const status = play.querySelector('*[data-player-status]') as SVGElement
-      const use = status.querySelector('use') as SVGUseElement
-      const prev = player.querySelector('*[data-player-prev]') as HTMLButtonElement
-      const next = player.querySelector('*[data-player-next]') as HTMLButtonElement
-      const start = player.querySelector('*[data-player-start]') as HTMLSpanElement
-      const end = player.querySelector('*[data-player-end]') as HTMLSpanElement
-      const volume = player.querySelector('*[data-player-volume]') as HTMLButtonElement
+      const compositions: NodeListOf<HTMLButtonElement> = player.querySelectorAll(`*[${DATA_PLAYER}-composition]`)
+      const poster: Poster = player.querySelector(`*[${DATA_PLAYER}-poster]`)
+      const loader: Loader = player.querySelector('*[data-loader]')
+      const artist: PlayerItem = player.querySelector(`*[${DATA_PLAYER}-artist]`)
+      const song: PlayerItem = player.querySelector(`*[${DATA_PLAYER}-song]`)
+      const audio: Audio = player.querySelector(`*[${DATA_PLAYER}-audio]`)
+      const progress: PlayerItem = player.querySelector(`*[${DATA_PLAYER}-progress]`)
+      const range: PlayerItem = player.querySelector(`*[${DATA_PLAYER}-range]`)
+      const play: Button = player.querySelector(`*[${DATA_PLAYER}-play]`)
+      const prev: Button = player.querySelector(`*[${DATA_PLAYER}-prev]`)
+      const next: Button = player.querySelector(`*[${DATA_PLAYER}-next]`)
+      const start: PlayerItem = player.querySelector(`*[${DATA_PLAYER}-start]`)
+      const end: PlayerItem = player.querySelector(`*[${DATA_PLAYER}-end]`)
+      const volume: Button = player.querySelector(`*[${DATA_PLAYER}-volume]`)
+
+      if (!audio || !progress || !range || !play) {
+        handleElementsError()
+        return
+      }
+
+      const loading: Icon = play.querySelector(`*[${DATA_PLAYER}-loading]`)
+      const status: Icon = play.querySelector(`*[${DATA_PLAYER}-status]`)
+      const use: Use = status ? status.querySelector('use') : null
       const condition: Condition = JSON.parse(
-        sessionStorage.getItem(id) ||
+        sessionStorage.getItem(value) ||
           JSON.stringify({
             index: 0,
             time: 0,
@@ -124,78 +173,100 @@ const initPlayer = ({ id, playlist }: Player): void => {
           })
       )
 
-      const saveStorage = (): void => sessionStorage.setItem(id, JSON.stringify(condition))
+      const saveStorage = (): void => {
+        sessionStorage.setItem(value, JSON.stringify(condition))
+      }
 
       const handlePoster = async (requestUrl: string): Promise<void> => {
-        await fetch(requestUrl)
-          .then((response: Response): boolean => {
-            return response.ok
-          })
-          .then((response: boolean): void => {
-            if (response) {
-              loader.classList.add('hidden')
-            } else {
-              loader.classList.remove('hidden')
-              logError(isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно')
+        try {
+          const response: Response = await fetch(requestUrl, { method: 'HEAD' })
+
+          if (loader) {
+            if (!response.ok) {
+              loader.classList.remove(HIDDEN_CLASSNAME)
+              throw isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно'
             }
-          })
-          .catch((error: string): void => logError(error))
+
+            loader.classList.add(HIDDEN_CLASSNAME)
+          }
+        } catch (error: unknown) {
+          logError(error as string)
+        }
       }
 
       const setComposition = (index: number): void => {
         const composition: Composition = playlist[index]
 
-        if (artist) artist.innerText = composition.artist
-        if (song) song.innerText = composition.song
-        if (audio) audio.src = composition.audio
+        if (artist) {
+          artist.innerText = composition.artist
+        }
+
+        if (song) {
+          song.innerText = composition.song
+        }
+
+        if (audio) {
+          audio.src = composition.audio
+        }
 
         if (poster) {
-          handlePoster(composition.poster)
-            .finally((): void => {
-              poster.src = composition.poster
-            })
-            .catch((error: string): void => logError(error))
+          handlePoster(composition.poster).finally((): void => {
+            poster.src = composition.poster
+          })
         }
       }
 
       const setCurrentComposition = (): void => {
+        if (!compositions.length) return
+
         compositions.forEach((composition: HTMLButtonElement, key: number): void => {
-          if (!composition) return
+          const status: Icon = composition.querySelector(`*[${DATA_PLAYER}-status]`)
+          const use: Use = status ? status.querySelector('use') : null
 
-          const status = composition.querySelector('*[data-player-status]') as SVGElement
-          const use = status.querySelector('use') as SVGUseElement
+          if (!use) return
 
-          if (audio.played)
+          if (audio.played) {
             use.setAttribute(
               'href',
               key === condition.index ? `${source}/img/icons.svg#pause` : `${source}/img/icons.svg#play`
             )
-          if (audio.paused) use.setAttribute('href', `${source}/img/icons.svg#play`)
+          }
+
+          if (audio.paused) {
+            use.setAttribute('href', `${source}/img/icons.svg#play`)
+          }
         })
       }
 
       const setStatusComposition = (): void => {
         if (audio.paused) {
-          audio.play()
-          use.setAttribute('href', `${source}/img/icons.svg#pause`)
+          audio.play().catch((error: string): void => {
+            logError(error)
+          })
+
+          use?.setAttribute('href', `${source}/img/icons.svg#pause`)
           setCurrentComposition()
           condition.status = true
         } else {
           audio.pause()
-          use.setAttribute('href', `${source}/img/icons.svg#play`)
+          use?.setAttribute('href', `${source}/img/icons.svg#play`)
           setCurrentComposition()
           condition.status = false
         }
       }
 
       const setRandom = (): void => {
-        if (player.dataset.player === 'random') condition.index = Math.floor(Math.random() * playlist.length)
+        if (player.hasAttribute('data-random')) {
+          condition.index = Math.floor(Math.random() * playlist.length)
+        }
       }
 
       const setNextComposition = (): void => {
         condition.index++
 
-        if (condition.index > playlist.length - 1) condition.index = 0
+        if (condition.index > playlist.length - 1) {
+          condition.index = 0
+        }
 
         setRandom()
         setComposition(condition.index)
@@ -205,7 +276,9 @@ const initPlayer = ({ id, playlist }: Player): void => {
       const setPrevComposition = (): void => {
         condition.index--
 
-        if (condition.index < 0) condition.index = playlist.length - 1
+        if (condition.index < 0) {
+          condition.index = playlist.length - 1
+        }
 
         setRandom()
         setComposition(condition.index)
@@ -213,23 +286,16 @@ const initPlayer = ({ id, playlist }: Player): void => {
       }
 
       const setProgress = (event: Event): void => {
-        const width: number = progress.clientWidth
+        const { width, left } = progress.getBoundingClientRect()
         const duration: number = audio.duration
-        let offsetX: number = 0
+        const offsetX: number =
+          'touches' in event ? (event as TouchEvent).touches[0].clientX : (event as MouseEvent).clientX
 
-        if (event.type === 'click' || event.type === 'mousemove') {
-          offsetX = (event as MouseEvent).offsetX
-        } else if (event.type === 'touchmove') {
-          for (let i: number = 0; i < (event as TouchEvent).changedTouches.length; i++) {
-            offsetX = (event as TouchEvent).changedTouches[i].pageX - progress.getBoundingClientRect().left
-          }
-        }
-
-        audio.currentTime = (offsetX / width) * duration
+        audio.currentTime = ((offsetX - left) / width) * duration
       }
 
       const onStart = (event: Event): void => {
-        if ((event.target as HTMLDivElement).closest('[data-player-progress]')) {
+        if ((event.target as HTMLElement).closest(`[${DATA_PLAYER}-progress]`)) {
           hideScrollbar()
           condition.active = true
         }
@@ -244,24 +310,27 @@ const initPlayer = ({ id, playlist }: Player): void => {
         event.stopPropagation()
 
         if (!condition.active) return
-        if ((event.target as HTMLDivElement).closest('[data-player-controls]')) setProgress(event)
+
+        if ((event.target as HTMLElement).closest(`[${DATA_PLAYER}-controls]`)) {
+          setProgress(event)
+        }
       }
 
       const setComplete = (complete: boolean): void => {
-        compositions.forEach((composition: HTMLButtonElement, key: number): void => {
-          if (!composition) return
+        if (!compositions.length) return
 
-          const loading = composition.querySelector('*[data-player-loading]') as SVGElement
-          const status = composition.querySelector('*[data-player-status]') as SVGElement
+        compositions.forEach((composition: HTMLButtonElement, key: number): void => {
+          const loading: Icon = composition.querySelector(`*[${DATA_PLAYER}-loading]`)
+          const status: Icon = composition.querySelector(`*[${DATA_PLAYER}-status]`)
 
           if (!complete && key === condition.index) {
-            composition.classList.add('pointer-events-none')
-            loading.classList.remove('hidden')
-            status.classList.add('hidden')
+            composition.classList.add(POINTER_CLASSNAME)
+            loading?.classList.remove(HIDDEN_CLASSNAME)
+            status?.classList.add(HIDDEN_CLASSNAME)
           } else {
-            composition.classList.remove('pointer-events-none')
-            loading.classList.add('hidden')
-            status.classList.remove('hidden')
+            composition.classList.remove(POINTER_CLASSNAME)
+            loading?.classList.add(HIDDEN_CLASSNAME)
+            status?.classList.remove(HIDDEN_CLASSNAME)
           }
         })
       }
@@ -269,19 +338,19 @@ const initPlayer = ({ id, playlist }: Player): void => {
       const loadAudio = (event: Event): void => {
         switch (event.type) {
           case 'loadstart': {
-            progress.classList.add('pointer-events-none', 'opacity-50')
-            play.classList.add('pointer-events-none')
-            loading.classList.remove('hidden')
-            status.classList.add('hidden')
+            progress.classList.add(POINTER_CLASSNAME, OPACITY_CLASSNAME)
+            play.classList.add(POINTER_CLASSNAME)
+            loading?.classList.remove(HIDDEN_CLASSNAME)
+            status?.classList.add(HIDDEN_CLASSNAME)
             setComplete(false)
             break
           }
 
           case 'loadeddata': {
-            progress.classList.remove('pointer-events-none', 'opacity-50')
-            play.classList.remove('pointer-events-none')
-            loading.classList.add('hidden')
-            status.classList.remove('hidden')
+            progress.classList.remove(POINTER_CLASSNAME, OPACITY_CLASSNAME)
+            play.classList.remove(POINTER_CLASSNAME)
+            loading?.classList.add(HIDDEN_CLASSNAME)
+            status?.classList.remove(HIDDEN_CLASSNAME)
             setComplete(true)
             break
           }
@@ -316,30 +385,30 @@ const initPlayer = ({ id, playlist }: Player): void => {
       }
 
       const endAudio = (): void => {
-        audio.addEventListener('loadedmetadata', ((event: Event): void => {
+        const onLoadedMetaData = (event: Event): void => {
           setTiming({ type: event.type, time: end })
-        }) as EventListener)
+        }
+
+        audio.addEventListener('loadedmetadata', onLoadedMetaData as EventListener)
       }
 
       const pauseAudio = (): void => {
-        use.setAttribute('href', `${source}/img/icons.svg#play`)
+        use?.setAttribute('href', `${source}/img/icons.svg#play`)
         setCurrentComposition()
       }
 
-      const setError = (): void => {
-        logError(isEn ? 'Failed to load audio' : 'Не удалось загрузить аудио')
-      }
-
       const setVolume = (): void => {
-        const status = volume.querySelector('svg') as SVGSVGElement
-        const use = status.querySelector('use') as SVGUseElement
+        if (!volume) return
+
+        const status: Icon = volume.querySelector('svg')
+        const use: Use = status ? status.querySelector('use') : null
 
         if (condition.muted) {
-          status.classList.add('opacity-50')
-          use.setAttribute('href', `${source}/img/icons.svg#volume-off`)
+          status?.classList.add(OPACITY_CLASSNAME)
+          use?.setAttribute('href', `${source}/img/icons.svg#volume-off`)
         } else {
-          status.classList.remove('opacity-50')
-          use.setAttribute('href', `${source}/img/icons.svg#volume-on`)
+          status?.classList.remove(OPACITY_CLASSNAME)
+          use?.setAttribute('href', `${source}/img/icons.svg#volume-on`)
         }
 
         audio.muted = condition.muted
@@ -359,30 +428,39 @@ const initPlayer = ({ id, playlist }: Player): void => {
         if (condition.status) {
           setStatusComposition()
 
-          if (audio.paused) pauseAudio()
+          if (audio.paused) {
+            pauseAudio()
+          }
         }
 
-        if (start) start.innerText = '00:00'
-        if (end) end.innerText = '00:00'
+        if (start) {
+          start.innerText = '00:00'
+        }
 
-        compositions.forEach((composition: HTMLButtonElement, key: number): void => {
-          if (!composition) return
+        if (end) {
+          end.innerText = '00:00'
+        }
 
-          composition.addEventListener('click', ((): void => {
-            if (key !== condition.index) {
-              condition.index = key
-              setComposition(condition.index)
+        if (compositions.length) {
+          compositions.forEach((composition: HTMLButtonElement, key: number): void => {
+            const onClickComposition = (): void => {
+              if (key !== condition.index) {
+                condition.index = key
+                setComposition(condition.index)
+              }
+
+              setStatusComposition()
             }
 
-            setStatusComposition()
-          }) as EventListener)
-        })
+            composition.addEventListener('click', onClickComposition as EventListener)
+          })
+        }
       }
 
       activatePlayer()
       play.addEventListener('click', setStatusComposition as EventListener)
-      next.addEventListener('click', setNextComposition as EventListener)
-      prev.addEventListener('click', setPrevComposition as EventListener)
+      next?.addEventListener('click', setNextComposition as EventListener)
+      prev?.addEventListener('click', setPrevComposition as EventListener)
       progress.addEventListener('click', setProgress as EventListener)
       player.addEventListener('mousedown', onStart as EventListener)
       player.addEventListener('mouseup', onEnd as EventListener)
@@ -398,13 +476,15 @@ const initPlayer = ({ id, playlist }: Player): void => {
       audio.addEventListener('timeupdate', endAudio as EventListener)
       audio.addEventListener('ended', setNextComposition as EventListener)
       audio.addEventListener('pause', pauseAudio as EventListener)
-      audio.addEventListener('error', setError as EventListener)
-      volume.addEventListener('click', setMuted as EventListener)
+      audio.addEventListener('error', handleErrorLoad as EventListener)
+      volume?.addEventListener('click', setMuted as EventListener)
     })
-    .catch((error: string): void => logError(error))
+    .catch((error: string): void => {
+      logError(error)
+    })
 }
 
-export default (): void => {
-  initPlayer({ id: 'player', playlist })
-  document.addEventListener('play', playOnlyOne as EventListener, true)
+export default (container: Container = document): void => {
+  initPlayer({ container, playlist })
+  container.addEventListener('play', playOnlyOne as EventListener, true)
 }

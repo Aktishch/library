@@ -250,7 +250,7 @@ const initDescriptionSlider = (container: Container): void => {
 
   if (!description) return
 
-  const slider: SliderItem = description.querySelector(`*[${DATA_SLIDER}="bg"]`)
+  const slider: SliderItem = description.querySelector(`*[${DATA_SLIDER}="description"]`)
 
   if (!slider) return
 

@@ -1,33 +1,52 @@
 import { isEn } from '@utils/is-en'
+import { FileType } from '@utils/types'
+
+interface FileHandler {
+  file: File
+  error: HTMLSpanElement
+  type: FileType
+  size: number
+}
 
 interface ErrorMessage {
   type: string
   size: string
 }
 
-interface FileHandler {
-  error: HTMLSpanElement
-  file: File
-}
-
 const ERROR_VISIBLE_CLASSNAMES: string[] = ['invisible', 'opacity-0']
-const ALLOWED_TYPES: string[] = ['image/jpeg', 'image/png']
-const MAX_FILE_SIZE: number = 2 * Math.pow(1024, 2)
-const ERROR_MESSAGE: ErrorMessage = {
-  type: isEn ? 'Only jpg or png' : 'Только jpg или png',
-  size: isEn ? 'The size is not more than 2 MB' : 'Размер не более 2 мб'
-}
 
-export const handleFile = ({ error, file }: FileHandler): boolean => {
-  if (!ALLOWED_TYPES.includes(file.type)) {
+export const handleFile = ({ file, error, type, size }: FileHandler): boolean => {
+  const maxSize: number = size * Math.pow(1024, 2)
+  const errorMessage: ErrorMessage = {
+    type: '',
+    size: isEn ? `The size is not more than ${size} MB` : `Размер не более ${size} мб`
+  }
+  let allowedTypes: string[] = []
+
+  if (type === 'img') {
+    errorMessage.type = isEn ? 'Only jpg or png' : 'Только jpg или png'
+    allowedTypes = ['image/jpeg', 'image/png']
+  }
+
+  if (type === 'doc') {
+    errorMessage.type = isEn ? 'Only pdf, docx, jpg or png' : 'Только pdf, docx, jpg или png'
+    allowedTypes = [
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'image/jpeg',
+      'image/png'
+    ]
+  }
+
+  if (!allowedTypes.includes(file.type)) {
     error.classList.remove(...ERROR_VISIBLE_CLASSNAMES)
-    error.innerText = ERROR_MESSAGE.type
+    error.innerText = errorMessage.type
     return false
   }
 
-  if (file.size > MAX_FILE_SIZE) {
+  if (file.size > maxSize) {
     error.classList.remove(...ERROR_VISIBLE_CLASSNAMES)
-    error.innerText = ERROR_MESSAGE.size
+    error.innerText = errorMessage.size
     return false
   }
 

@@ -25,7 +25,7 @@ const checkWarning = (event: Event): void => {
 export default (container: Container = document): void => {
   if (sessionStorage.getItem(WARNING_VALUE) !== POSITIVE_VALUE) {
     setTimeout((): void => {
-      dialog.notClosing('/dialogs/dialog-warning.html')
+      dialog.notClosing('/dialogs/warning.html')
     }, 2000)
   }
 
