@@ -64,7 +64,7 @@ export default (container: Container = document) => {
           }
 
           input.value = value
-          html.style.removeProperty(`--hex-${name}`)
+          html.style.removeProperty(`--color-${name}`)
           savePaletteCookie(false)
         })
       }
@@ -73,7 +73,7 @@ export default (container: Container = document) => {
 
   if (Object.keys(PALETTE_COLORS).length) {
     for (const key in PALETTE_COLORS) {
-      html.style.setProperty(`--hex-${key}`, PALETTE_COLORS[key])
+      html.style.setProperty(`--color-${key}`, PALETTE_COLORS[key])
     }
   }
 
@@ -96,7 +96,7 @@ export default (container: Container = document) => {
         const hex = input.value
 
         PALETTE_COLORS[name] = hex
-        html.style.setProperty(`--hex-${name}`, hex)
+        html.style.setProperty(`--color-${name}`, hex)
         savePaletteCookie()
       }
 
@@ -106,7 +106,7 @@ export default (container: Container = document) => {
         }
 
         input.value = value
-        html.style.removeProperty(`--hex-${name}`)
+        html.style.removeProperty(`--color-${name}`)
         savePaletteCookie()
       }
 

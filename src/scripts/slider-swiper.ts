@@ -3,19 +3,14 @@ import { Container, getData, isEn, logError, media } from '@utils'
 import Swiper from 'swiper'
 import { Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules'
 
-type SliderItem = HTMLDivElement | null
-type SliderBuilt = Swiper | undefined
-type Button = HTMLButtonElement | null
-type Value = string | undefined
-
 Swiper.use([Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs])
 Swiper.defaults.touchStartPreventDefault = false
 
-const DATA_SLIDER: string = getData('slider')
-const DATA_QUIZ: string = getData('quiz')
+const DATA_SLIDER = getData('slider')
+const DATA_QUIZ = getData('quiz')
 const { sm, md, lg, xl } = media
 
-const handleValueError = (value: string): void => {
+const handleValueError = (value: string) => {
   logError(
     isEn
       ? `The ${DATA_SLIDER}="${value}" does not have a ${DATA_SLIDER}-swiper="${value}" child element`
@@ -23,25 +18,25 @@ const handleValueError = (value: string): void => {
   )
 }
 
-const initGallerySlider = (container: Container): void => {
-  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="gallery"]`)
+const initGallerySlider = (container: Container) => {
+  const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="gallery"]`)
 
   if (!slider) return
 
-  const value: Value = slider.dataset.slider
+  const value = slider.dataset.slider
 
   if (!value) return
 
-  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+  const swiper: HTMLDivElement | null = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
 
   if (!swiper) {
     handleValueError(value)
     return
   }
 
-  const pagination: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-pagination="${value}"]`)
-  const prev: Button = slider.querySelector(`*[${DATA_SLIDER}-prev="${value}"]`)
-  const next: Button = slider.querySelector(`*[${DATA_SLIDER}-next="${value}"]`)
+  const pagination: HTMLDivElement | null = slider.querySelector(`*[${DATA_SLIDER}-pagination="${value}"]`)
+  const prev: HTMLButtonElement | null = slider.querySelector(`*[${DATA_SLIDER}-prev="${value}"]`)
+  const next: HTMLButtonElement | null = slider.querySelector(`*[${DATA_SLIDER}-next="${value}"]`)
 
   new Swiper(swiper, {
     pagination: {
@@ -75,25 +70,25 @@ const initGallerySlider = (container: Container): void => {
   })
 }
 
-const initProductsSlider = (container: Container): void => {
-  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="products"]`)
+const initProductsSlider = (container: Container) => {
+  const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="products"]`)
 
   if (!slider) return
 
-  const value: Value = slider.dataset.slider
+  const value = slider.dataset.slider
 
   if (!value) return
 
-  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+  const swiper: HTMLDivElement | null = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
 
   if (!swiper) {
     handleValueError(value)
     return
   }
 
-  const pagination: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-pagination="${value}"]`)
-  const prev: Button = slider.querySelector(`*[${DATA_SLIDER}-prev="${value}"]`)
-  const next: Button = slider.querySelector(`*[${DATA_SLIDER}-next="${value}"]`)
+  const pagination: HTMLDivElement | null = slider.querySelector(`*[${DATA_SLIDER}-pagination="${value}"]`)
+  const prev: HTMLButtonElement | null = slider.querySelector(`*[${DATA_SLIDER}-prev="${value}"]`)
+  const next: HTMLButtonElement | null = slider.querySelector(`*[${DATA_SLIDER}-next="${value}"]`)
 
   new Swiper(swiper, {
     pagination: {
@@ -123,32 +118,32 @@ const initProductsSlider = (container: Container): void => {
   })
 }
 
-const initQuizSlider = (container: Container): void => {
-  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="quiz"]`)
+const initQuizSlider = (container: Container) => {
+  const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="quiz"]`)
 
   if (!slider) return
 
-  const value: Value = slider.dataset.slider
+  const value = slider.dataset.slider
 
   if (!value) return
 
-  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+  const swiper: HTMLDivElement | null = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
 
   if (!swiper) {
     handleValueError(value)
     return
   }
 
-  const pagination: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-pagination="${value}"]`)
-  const prev: Button = slider.querySelector(`*[${DATA_SLIDER}-prev="${value}"]`)
-  const next: Button = slider.querySelector(`*[${DATA_SLIDER}-next="${value}"]`)
+  const pagination: HTMLDivElement | null = slider.querySelector(`*[${DATA_SLIDER}-pagination="${value}"]`)
+  const prev: HTMLButtonElement | null = slider.querySelector(`*[${DATA_SLIDER}-prev="${value}"]`)
+  const next: HTMLButtonElement | null = slider.querySelector(`*[${DATA_SLIDER}-next="${value}"]`)
 
-  const checkSwiperSlide = (swiper: Swiper): void => {
-    const quiz: SliderItem = swiper.el.closest(`[${DATA_QUIZ}]`)
+  const checkSwiperSlide = (swiper: Swiper) => {
+    const quiz: HTMLDivElement | null = swiper.el.closest(`[${DATA_QUIZ}]`)
 
     if (!quiz) return
 
-    const visibleSlide: SliderItem = quiz.querySelector('.swiper-slide-visible')
+    const visibleSlide: HTMLDivElement | null = quiz.querySelector('.swiper-slide-visible')
 
     if (visibleSlide) {
       checkQuizSlide(visibleSlide)
@@ -165,7 +160,7 @@ const initQuizSlider = (container: Container): void => {
     pagination: {
       el: pagination,
       type: 'custom',
-      renderCustom: (...[, current, total]: [Swiper, number, number]): string => {
+      renderCustom: (...[, current, total]) => {
         return String(total - current)
       }
     },
@@ -179,26 +174,26 @@ const initQuizSlider = (container: Container): void => {
     allowTouchMove: false,
     watchSlidesProgress: true,
     on: {
-      init: (swiper: Swiper): void => {
+      init: (swiper) => {
         checkSwiperSlide(swiper)
       },
-      slideChange: (swiper: Swiper): void => {
+      slideChange: (swiper) => {
         checkSwiperSlide(swiper)
       }
     }
   })
 }
 
-const initThumbsSlider = (container: Container): SliderBuilt => {
-  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="thumbs"]`)
+const initThumbsSlider = (container: Container) => {
+  const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="thumbs"]`)
 
   if (!slider) return
 
-  const value: Value = slider.dataset.slider
+  const value = slider.dataset.slider
 
   if (!value) return
 
-  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+  const swiper: HTMLDivElement | null = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
 
   if (!swiper) {
     handleValueError(value)
@@ -219,16 +214,16 @@ const initThumbsSlider = (container: Container): SliderBuilt => {
   })
 }
 
-const initBgSlider = (container: Container): SliderBuilt => {
-  const slider: SliderItem = container.querySelector(`*[${DATA_SLIDER}="bg"]`)
+const initBgSlider = (container: Container) => {
+  const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="bg"]`)
 
   if (!slider) return
 
-  const value: Value = slider.dataset.slider
+  const value = slider.dataset.slider
 
   if (!value) return
 
-  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+  const swiper: HTMLDivElement | null = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
 
   if (!swiper) {
     handleValueError(value)
@@ -244,28 +239,28 @@ const initBgSlider = (container: Container): SliderBuilt => {
   })
 }
 
-const initDescriptionSlider = (container: Container): void => {
-  const description = container.querySelector('*[data-description]') as HTMLElement
+const initDescriptionSlider = (container: Container) => {
+  const description: HTMLDivElement | null = container.querySelector('*[data-description]')
 
   if (!description) return
 
-  const slider: SliderItem = description.querySelector(`*[${DATA_SLIDER}="description"]`)
+  const slider: HTMLDivElement | null = description.querySelector(`*[${DATA_SLIDER}="description"]`)
 
   if (!slider) return
 
-  const value: Value = slider.dataset.slider
+  const value = slider.dataset.slider
 
   if (!value) return
 
-  const swiper: SliderItem = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
+  const swiper: HTMLDivElement | null = slider.querySelector(`*[${DATA_SLIDER}-swiper="${value}"]`)
 
   if (!swiper) {
     handleValueError(value)
     return
   }
 
-  const thumbs: SliderBuilt = initThumbsSlider(description)
-  const bg: SliderBuilt = initBgSlider(description)
+  const thumbs = initThumbsSlider(description)
+  const bg = initBgSlider(description)
 
   new Swiper(swiper, {
     slidesPerView: 1,
@@ -277,7 +272,7 @@ const initDescriptionSlider = (container: Container): void => {
       swiper: thumbs
     },
     on: {
-      slideChange: (swiper: Swiper): void => {
+      slideChange: (swiper) => {
         if (!bg) return
 
         bg.slideTo(swiper.activeIndex)
@@ -286,7 +281,7 @@ const initDescriptionSlider = (container: Container): void => {
   })
 }
 
-export default (container: Container = document): void => {
+export default (container: Container = document) => {
   initGallerySlider(container)
   initProductsSlider(container)
   initQuizSlider(container)

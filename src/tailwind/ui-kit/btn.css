@@ -1,134 +1,119 @@
-@layer components {
-  .btn {
-    * {
-      @apply pointer-events-none;
-    }
-
-    --btn-color: var(--color-black);
-    --btn-accent: var(--color-white);
-    --btn-hovered: var(--color-black);
-    --btn-fade: color-mix(in srgb, var(--btn-color) 30%, transparent);
-    --btn-focus: color-mix(in srgb, var(--btn-color) 40%, transparent);
-    --btn-fill: color-mix(in srgb, var(--btn-color) 80%, var(--btn-hovered));
-
-    color: var(--btn-color);
-
-    @apply relative flex cursor-pointer items-center justify-center text-center text-base font-semibold transition duration-200 select-none;
-
-    &:disabled {
-      @apply pointer-events-none opacity-50;
-    }
-
-    &:focus-visible {
-      background-color: var(--btn-fade);
-      box-shadow: 0 0 0 4px var(--btn-focus);
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--btn-fade);
-      }
-
-      &:active {
-        box-shadow: inset 0 4px 4px color-mix(in srgb, var(--color-black) 30%, transparent);
-
-        @apply translate-y-1;
-      }
-    }
+.btn {
+  * {
+    @apply pointer-events-none;
   }
 
-  .btn-fill {
-    color: var(--btn-accent);
-    background-color: var(--btn-color);
+  --btn-color: var(--color-black);
+  --btn-accent: var(--color-white);
+  --btn-hovered: var(--color-black);
+  --btn-fade: color-mix(in srgb, var(--btn-color) 30%, transparent);
+  --btn-focus: color-mix(in srgb, var(--btn-color) 40%, transparent);
+  --btn-fill: color-mix(in srgb, var(--btn-color) 80%, var(--btn-hovered));
 
-    &:focus-visible {
+  color: var(--btn-color);
+
+  @apply relative flex cursor-pointer items-center justify-center text-center text-base font-semibold transition duration-200 select-none;
+
+  &:disabled {
+    @apply pointer-events-none opacity-50;
+  }
+
+  &:focus-visible {
+    background-color: var(--btn-fade);
+    box-shadow: 0 0 0 4px var(--btn-focus);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--btn-fade);
+    }
+
+    &:active {
+      box-shadow: inset 0 4px 4px color-mix(in srgb, var(--color-black) 30%, transparent);
+
+      @apply translate-y-1;
+    }
+  }
+}
+
+.btn-fill {
+  color: var(--btn-accent);
+  background-color: var(--btn-color);
+
+  &:focus-visible {
+    background-color: var(--btn-fill);
+  }
+
+  @media (hover: hover) {
+    &:hover {
       background-color: var(--btn-fill);
     }
+  }
+}
 
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--btn-fill);
-      }
-    }
+.btn-fade {
+  background-color: var(--btn-fade);
+
+  &:focus-visible {
+    color: var(--btn-accent);
+    background-color: var(--btn-color);
   }
 
-  .btn-fade {
-    background-color: var(--btn-fade);
-
-    &:focus-visible {
+  @media (hover: hover) {
+    &:hover {
       color: var(--btn-accent);
       background-color: var(--btn-color);
     }
+  }
+}
 
-    @media (hover: hover) {
-      &:hover {
-        color: var(--btn-accent);
-        background-color: var(--btn-color);
-      }
-    }
+.btn-text {
+  background-color: var(--btn-accent);
+  border-color: var(--btn-accent);
+
+  @apply border border-solid;
+
+  &:focus-visible {
+    background-color: var(--btn-accent);
+    border-color: var(--btn-color);
   }
 
-  .btn-text {
-    background-color: var(--btn-accent);
-    border-color: var(--btn-accent);
-
-    @apply border border-solid;
-
-    &:focus-visible {
+  @media (hover: hover) {
+    &:hover {
       background-color: var(--btn-accent);
       border-color: var(--btn-color);
     }
-
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--btn-accent);
-        border-color: var(--btn-color);
-      }
-    }
-  }
-
-  .btn-contur {
-    border-color: var(--btn-color);
-
-    @apply border border-solid;
-  }
-
-  .btn-light {
-    --btn-hovered: var(--color-white);
-  }
-
-  .btn-swipe {
-    @apply z-1 overflow-hidden;
-
-    &::before {
-      background-color: var(--btn-color);
-      transition-property: width;
-
-      @apply content-auto absolute top-0 right-0 bottom-0 left-auto -z-1 w-0 duration-200 ease-in-out;
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        color: var(--btn-accent);
-        background-color: transparent;
-
-        &::before {
-          @apply left-0 w-full;
-        }
-      }
-    }
   }
 }
 
-@utility btn-* {
-  --btn-color: --value(--color-*);
+.btn-contur {
+  border-color: var(--btn-color);
+
+  @apply border border-solid;
 }
 
-@utility btn-* {
-  --btn-size: calc(--value(--ui-*) / 16 * 1rem);
+.btn-light {
+  --btn-hovered: var(--color-white);
+}
 
-  height: var(--btn-size);
-  padding-inline: calc(var(--btn-size) / 2);
+.btn-swipe {
+  @apply z-1 overflow-hidden;
 
-  @apply rounded-lg;
+  &::before {
+    background-color: var(--btn-color);
+    transition-property: width;
+
+    @apply content-auto absolute top-0 right-0 bottom-0 left-auto -z-1 w-0 duration-200 ease-in-out;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--btn-accent);
+      background-color: transparent;
+
+      &::before {
+        @apply left-0 w-full;
+      }
+    }
+  }
 }

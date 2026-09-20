@@ -1,50 +1,34 @@
-@layer components {
-  .input {
-    --input-color: var(--color-black);
-    --input-text: var(--color-black);
+.input {
+  --input-color: var(--color-black);
+  --input-text: var(--color-black);
 
-    height: var(--input-size);
-    padding: calc(var(--input-size) / 4) calc(var(--input-size) / 3);
-    color: var(--input-text);
-    border-color: var(--input-color);
-    transition-property: border-color, box-shadow, opacity;
+  height: var(--input-size);
+  padding: calc(var(--input-size) / 4) calc(var(--input-size) / 3);
+  color: var(--input-text);
+  border-color: var(--input-color);
+  transition-property: border-color, box-shadow, opacity;
 
-    @apply block w-full rounded-lg border border-solid bg-white text-base font-normal duration-200;
+  @apply block w-full rounded-lg border border-solid bg-white text-base font-normal duration-200;
 
-    &:focus {
-      box-shadow: 0 0 0 1px var(--input-color);
-    }
-
-    &:disabled {
-      @apply pointer-events-none opacity-50;
-    }
-
-    &.input-error {
-      --input-color: var(--color-red);
-    }
-
-    &:-webkit-autofill {
-      color: var(--input-text) !important;
-      border-color: var(--input-color);
-      transition: background-color 1000000ms ease-in-out 0ms;
-      -webkit-text-fill-color: var(--input-text) !important;
-      -webkit-text-stroke-color: var(--input-text) !important;
-
-      @apply appearance-none;
-    }
+  &:focus {
+    box-shadow: 0 0 0 1px var(--input-color);
   }
-}
 
-@utility input-fade {
-  --input-text: var(--color-white);
+  &:disabled {
+    @apply pointer-events-none opacity-50;
+  }
 
-  @apply bg-transparent;
-}
+  &.input-error {
+    --input-color: var(--color-red);
+  }
 
-@utility input-* {
-  --input-color: --value(--color-*);
-}
+  &:-webkit-autofill {
+    color: var(--input-text) !important;
+    border-color: var(--input-color);
+    transition: background-color 1000000ms ease-in-out 0ms;
+    -webkit-text-fill-color: var(--input-text) !important;
+    -webkit-text-stroke-color: var(--input-text) !important;
 
-@utility input-* {
-  --input-size: calc(--value(--ui-*) / 16 * 1rem);
+    @apply appearance-none;
+  }
 }

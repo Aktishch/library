@@ -1,4 +1,4 @@
-import { Breakpoint, Container, getData, hideScrollbar, html, isEn, logError, media, showScrollbar } from '@utils'
+import { breakpoints, Container, getData, hideScrollbar, html, isEn, logError, media, showScrollbar } from '@utils'
 
 const DATA_SIDEBAR = getData('sidebar')
 const DATA_OPEN = getData('open')
@@ -22,17 +22,19 @@ const resizeObserver = new ResizeObserver((entries) => {
 
   entries.forEach((entry) => {
     const sidebar = entry.target as HTMLDivElement
-    const value: Breakpoint | string | undefined = sidebar.dataset.breakpoint
+    const value = sidebar.dataset.breakpoint
 
     if (!value) return
 
-    const breakpoint: number = media[value]
+    const breakpoint: number | null = breakpoints.includes(value) ? media[value] : null
 
-    window.requestAnimationFrame(() => {
-      if (html.clientWidth >= breakpoint) {
-        closeSidebar(sidebar)
-      }
-    })
+    if (breakpoint) {
+      window.requestAnimationFrame(() => {
+        if (html.clientWidth >= breakpoint) {
+          closeSidebar(sidebar)
+        }
+      })
+    }
   })
 })
 

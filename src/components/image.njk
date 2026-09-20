@@ -15,5 +15,5 @@
 {% set source = src ~ '.' ~ format %}
 {% endif %}
 
-<img {{ (('class="' ~ className ~ '"') if className != none else '') | safe }} {{ (data if data != none else '') | safe }} draggable="false" {{ (('loading="' ~ loading ~ '"') if loading != none else '') | safe }} {{ (('src="' ~ source ~ '"') if source != none else '') | safe }} alt="" />
+<img {{ (('class="' ~ className ~ '"') if className != none else '') | safe }} {{ (data if data != none else '') | safe }} draggable="false" {{ (('loading="' ~ loading ~ '"') if loading != none else '') | safe }} {{ (('src="' ~ source ~ '"') if source != none else '') | safe }} alt="">
 {% endmacro %}

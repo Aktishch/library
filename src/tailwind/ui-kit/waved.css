@@ -5,33 +5,29 @@
   }
 }
 
-@layer components {
-  .waved {
-    @apply rounded-inherit pointer-events-none absolute inset-0 z-1 overflow-hidden;
+.waved {
+  @apply rounded-inherit pointer-events-none absolute inset-0 z-1 overflow-hidden;
 
-    [data-waved='light'] & {
-      --waved-color: color-mix(in srgb, var(--color-white) 40%, transparent);
-    }
-
-    [data-waved='dark'] & {
-      --waved-color: color-mix(in srgb, var(--color-black) 40%, transparent);
-    }
-
-    [data-theme='dark'] [data-waved='light'][data-waved-reverse] & {
-      --waved-color: color-mix(in srgb, var(--color-black) 40%, transparent);
-    }
-
-    [data-theme='dark'] [data-waved='dark'][data-waved-reverse] & {
-      --waved-color: color-mix(in srgb, var(--color-white) 40%, transparent);
-    }
+  [data-waved='light'] & {
+    --waved-color: var(--color-white);
   }
 
-  .waved-circle {
-    background-color: var(--waved-color);
-    scale: 0;
-    translate: -50% -50%;
-    animation: waved 1000ms ease forwards;
-
-    @apply absolute block size-10 rounded-full;
+  [data-waved='dark'] & {
+    --waved-color: var(--color-black);
   }
+
+  [data-theme='dark'] [data-waved='light'][data-waved-reverse] & {
+    --waved-color: var(--color-black);
+  }
+
+  [data-theme='dark'] [data-waved='dark'][data-waved-reverse] & {
+    --waved-color: var(--color-white);
+  }
+}
+
+.waved-circle {
+  background-color: color-mix(in srgb, var(--waved-color) 40%, transparent);
+  animation: waved 1000ms ease forwards;
+
+  @apply absolute block size-10 -translate-1/2 scale-0 rounded-full;
 }

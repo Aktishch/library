@@ -1,37 +1,27 @@
-@layer components {
-  .wrapper {
-    --wrapper-padding: 40px;
-    --wrapper-value: calc(100vw - 32px);
-    --wrapper-content: var(--wrapper-value);
+.wrapper {
+  --wrapper-padding: 40px;
+  --wrapper-value: calc(100vw - 32px);
+  --wrapper-content: var(--wrapper-value);
 
-    padding: var(--wrapper-padding) calc(50% - ((var(--wrapper-content)) / 2));
+  padding: var(--wrapper-padding) calc(50% - ((var(--wrapper-content)) / 2));
 
-    @media (width >= theme(--breakpoint-sm)) {
-      --wrapper-padding: 48px;
-      --wrapper-value: calc(var(--breakpoint-sm) - 36px);
-    }
-
-    @media (width >= theme(--breakpoint-md)) {
-      --wrapper-padding: 56px;
-      --wrapper-value: calc(var(--breakpoint-md) - 48px);
-    }
-
-    @media (width >= theme(--breakpoint-lg)) {
-      --wrapper-padding: 64px;
-      --wrapper-value: calc(var(--breakpoint-lg) - 52px);
-    }
-
-    @media (width >= theme(--breakpoint-xl)) {
-      --wrapper-padding: 80px;
-      --wrapper-value: calc(var(--breakpoint-xl) - 136px);
-    }
+  @media (width >= theme(--breakpoint-sm)) {
+    --wrapper-padding: 48px;
+    --wrapper-value: calc(var(--breakpoint-sm) - 36px);
   }
-}
 
-@utility wrapper-distance {
-  --wrapper-distance: 1.25rem;
-  --wrapper-content: calc(var(--wrapper-value) + (var(--wrapper-distance) * 2));
+  @media (width >= theme(--breakpoint-md)) {
+    --wrapper-padding: 56px;
+    --wrapper-value: calc(var(--breakpoint-md) - 48px);
+  }
 
-  margin: var(--wrapper-distance);
-  border-radius: var(--wrapper-distance);
+  @media (width >= theme(--breakpoint-lg)) {
+    --wrapper-padding: 64px;
+    --wrapper-value: calc(var(--breakpoint-lg) - 52px);
+  }
+
+  @media (width >= theme(--breakpoint-xl)) {
+    --wrapper-padding: 80px;
+    --wrapper-value: calc(var(--breakpoint-xl) - 136px);
+  }
 }

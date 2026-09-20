@@ -1,0 +1,33 @@
+{% import 'src/components/icon.njk' as icon %}
+{% import 'src/components/error.njk' as error %}
+
+<div class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-96 max-w-full px-5 py-10">
+  <form class="flex flex-col gap-5" data-form action="/primary.html">
+    <input type="hidden" value="Тема" name="theme">
+    <label data-label>
+      <h5 class="font-medium text-xl mb-2">
+        Login
+      </h5>
+      <div class="relative">
+        <input class="input input-gray dark:input-fade input-md" data-input="login" type="text" name="login">
+        {{ error.render() }}
+      </div>
+    </label>
+    <label data-label>
+      <h5 class="font-medium text-xl mb-2">
+        Password
+      </h5>
+      <div class="relative">
+        <input class="input input-gray dark:input-fade input-md pr-10" data-input="password" type="password" placeholder="********" autocomplete="new-password" name="password">
+        {{ error.render() }}
+        <button class="flex items-center justify-center absolute top-0 bottom-0 right-0 cursor-pointer w-10 h-full" data-password type="button">
+          {{ icon.render(id = 'eye-visible', className = 'icon text-black text-xl pointer-events-none') }}
+        </button>
+      </div>
+    </label>
+    <button class="btn btn-second btn-fill btn-lg" data-waved="dark" type="submit">Enter</button>
+  </form>
+  <div class="flex justify-center mt-5">
+    <a class="text-second text-lg underline-offset-4 hover:underline" data-fancybox-dialog data-type="ajax" draggable="false" href="/dialogs/politics.html">Privacy policy</a>
+  </div>
+</div>

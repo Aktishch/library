@@ -5,3 +5,38 @@
 @utility media {
   @apply absolute inset-0 size-full max-w-none object-cover;
 }
+
+@utility btn-* {
+  --btn-color: --value(--color-*);
+}
+
+@utility btn-* {
+  --btn-size: calc(--value(--ui-*) / 16 * 1rem);
+
+  height: var(--btn-size);
+  padding-inline: calc(var(--btn-size) / 2);
+
+  @apply rounded-lg;
+}
+
+@utility input-fade {
+  --input-text: var(--color-white);
+
+  @apply bg-transparent;
+}
+
+@utility input-* {
+  --input-color: --value(--color-*);
+}
+
+@utility input-* {
+  --input-size: calc(--value(--ui-*) / 16 * 1rem);
+}
+
+@utility wrapper-distance {
+  --wrapper-distance: 1.25rem;
+  --wrapper-content: calc(var(--wrapper-value) + (var(--wrapper-distance) * 2));
+
+  margin: var(--wrapper-distance);
+  border-radius: var(--wrapper-distance);
+}

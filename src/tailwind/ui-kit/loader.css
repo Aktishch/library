@@ -21,16 +21,14 @@
   }
 }
 
-@layer components {
-  .loader {
-    @apply text-primary pointer-events-none absolute inset-0 flex items-center justify-center text-4xl;
-  }
+.loader {
+  @apply text-primary pointer-events-none absolute inset-0 flex items-center justify-center text-4xl;
+}
 
-  .loader-progress {
-    animation: progress 1800ms linear infinite;
-  }
+.loader-progress {
+  animation: progress 1800ms linear infinite;
+}
 
-  .loader-icon {
-    animation: loader 1500ms ease-in-out infinite;
-  }
+.loader-icon {
+  animation: loader 1500ms ease-in-out infinite;
 }

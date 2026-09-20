@@ -6,6 +6,10 @@
 {% extends 'src/layouts/base.njk' %}
 
 {% import 'src/components/subtitle.njk' as subtitle %}
+{% import 'src/components/error.njk' as error %}
+{% import 'src/components/swiper-button-prev.njk' as swiperButtonPrev %}
+{% import 'src/components/swiper-button-next.njk' as swiperButtonNext %}
+{% import 'src/components/swiper-pagination.njk' as swiperPagination %}
 {% import 'src/includes/top.njk' as top %}
 
 {% block content %}
@@ -33,13 +37,244 @@
           {% endfor %}
         </div>
       </div>
-      <button class="swiper-button-prev btn btn-primary btn-fill hidden md:flex absolute -left-6 rounded-full size-12" data-slider-prev="gallery" data-waved="light">
-        {{ icon.render(id = 'arrow-left') }}
-      </button>
-      <button class="swiper-button-next btn btn-primary btn-fill hidden md:flex absolute -right-6 rounded-full size-12" data-slider-next="gallery" data-waved="light">
-        {{ icon.render(id = 'arrow-right') }}
-      </button>
-      <div class="swiper-pagination md:hidden text-primary mt-10" data-slider-pagination="gallery"></div>
+      {{ swiperButtonPrev.render(value = 'gallery') }}
+      {{ swiperButtonNext.render(value = 'gallery') }}
+      {{ swiperPagination.render(value = 'gallery') }}
+    </div>
+  </div>
+</section>
+
+{# Продукция #}
+
+<section class="wrapper xl:wrapper-distance flex flex-col items-center justify-center bg-grey dark:bg-dark overflow-hidden">
+  {{ subtitle.render(text = 'Products', className = 'mb-8', data = 'data-anim data-movement="blend"') }}
+  <div class="group/inverted relative perspective-midrange w-full mb-7" data-inverted="before">
+    <div class="rotate-x-0 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[inverted=after]/inverted:-rotate-x-180">
+      <button class="btn btn-primary btn-fill btn-lg" data-inverted-toggle="after" data-waved="light">Search</button>
+    </div>
+    <div class="absolute inset-0 rotate-x-180 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[inverted=after]/inverted:rotate-x-0">
+      <div class="flex items-center justify-between gap-4">
+        <form class="grow" data-form action="primary.html">
+          <div class="relative" data-label>
+            <input class="input input-gray input-lg dark:input-fade pl-11" data-input type="search" placeholder="Поиск..." list="search" name="search">
+            {{ error.render() }}
+            <datalist id="search">
+              <option>Milk</option>
+              <option>Tomato</option>
+              <option>Meat</option>
+              <option>Potatoes</option>
+            </datalist>
+            <button class="flex items-center justify-center absolute top-0 bottom-0 left-0 cursor-pointer w-12 h-full" type="submit">
+              {{ icon.render(id = 'search', className = 'icon text-xl opacity-30') }}
+            </button>
+          </div>
+        </form>
+        <button class="btn btn-primary btn-fill btn-lg shrink-0" data-inverted-toggle="before" data-waved="light">Close</button>
+      </div>
+    </div>
+  </div>
+  <div class="relative w-full" data-slider="products">
+    <div class="swiper p-4 -m-4" data-slider-swiper="products">
+      <div class="swiper-wrapper">
+        {% for i in range(0, 6) %}
+        <div class="swiper-slide h-auto">
+          <div class="group/product card dark:bg-black shadow-md hover:shadow-xl transition-shadow cursor-pointer p-1" data-product>
+            <div class="aspect-4/3 relative bg-grey dark:bg-dark rounded-inherit overflow-hidden" data-media>
+              {{ loader.render() }}
+              {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-product-image="/img/pictures/test-gray.jpg" data-src="/img/pictures/test-gray.jpg"') }}
+              <label class="block absolute top-2 right-2 rounded-full opacity-0 invisible overflow-hidden cursor-pointer transition-[opacity,visibility] pointer-coarse:visible pointer-coarse:opacity-100 group group-hover/product:opacity-100 group-hover/product:visible has-checked:visible has-checked:opacity-100" data-waved="light">
+                <input class="peer" hidden type="checkbox">
+                <div class="flex items-center justify-center bg-white/40 text-2xl text-red/50 stroke-red rounded-full transition-colors ease-linear size-10 group-has-checked:text-red">
+                  {{ icon.render(id = 'like', className = 'icon') }}
+                </div>
+              </label>
+            </div>
+            <div class="card-content items-start p-2 sm:p-4">
+              <h4 class="font-alt font-bold text-lg sm:text-xl mb-2" data-product-name>Name</h4>
+              <a class="underline-offset-4 hover:underline mb-3" draggable="false" href="">
+                <p class="opacity-70">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit
+                </p>
+              </a>
+              <div class="flex items-end justify-between gap-4 w-full mt-auto mb-5">
+                <div class="flex flex-col w-full sm:w-auto">
+                  {% if i % 2 == 0 %}
+                  <s class="text-sm sm:text-base opacity-60 mb-2" data-product-oldprice>8 000$</s>
+                  {% endif %}
+                  <span class="font-semibold text-xl sm:text-2xl" data-product-price>7 000$</span>
+                </div>
+                <div class="swiper-no-swiping flex items-center justify-between rounded-full border border-solid border-gray w-max p-1" data-quantity>
+                  <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-decrease data-waved="light">-</button>
+                  <input class="bg-transparent text-center shrink-0 w-10 h-auto" data-product-quantity data-quantity-input="1" data-input="number" type="text" value="1" maxlength="3" name="quantity">
+                  <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-increase data-waved="light">+</button>
+                </div>
+              </div>
+              <button class="swiper-no-swiping btn btn-primary btn-fade btn-lg w-full" data-product-button data-waved="light">
+                {{ icon.render(id = 'basket', className = 'icon mr-2') }}
+                Basket
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {{ swiperButtonPrev.render(value = 'products') }}
+    {{ swiperButtonNext.render(value = 'products') }}
+    {{ swiperPagination.render(value = 'products') }}
+  </div>
+</section>
+
+{# Горизорнтальный скролл #}
+
+<section class="bg-white dark:bg-black" data-scrolling data-breakpoint="md">
+  <div class="wrapper flex flex-col items-start pb-0 mb-5 sm:md-10">
+    {{ subtitle.render(text = 'Horizontal scroll', data = 'data-anim data-movement="blend"') }}
+  </div>
+  <div class="wrapper flex gap-5 md:gap-10 md:sticky md:top-40 overflow-x-auto md:overflow-x-hidden pt-0" data-scrolling-horizontal>
+    {% for i in range(0, 6) %}
+    <a class="aspect-video relative bg-grey dark:bg-dark rounded-3xl overflow-hidden shadow-md shrink-0 w-80 md:w-200" data-media data-movement="light" data-fancybox="horizontal" draggable="false" href="/img/pictures/test.jpg">
+      {{ loader.render() }}
+      {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+{# Квиз #}
+
+<section class="wrapper xl:wrapper-distance relative bg-grey dark:bg-dark">
+  <div class="flex justify-between relative bg-white dark:bg-black rounded-2xl shadow-md p-5 sm:p-10" data-anim>
+    <form class="w-full md:max-w-72 lg:max-w-md" data-form="params">
+      <div class="group/quiz flex flex-col h-full" data-slider="quiz" data-quiz>
+        <div class="swiper mx-0" data-slider-swiper="quiz">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide h-auto" data-quiz-slide>
+              <div class="flex flex-col h-full">
+                <h4 class="font-semibold text-2xl mb-5">
+                  Radio:
+                </h4>
+                <div class="flex items-center gap-5">
+                  <input class="switch switch-radio" type="radio" value="radio-1" tabindex="-1" name="radio">
+                  <input class="switch switch-radio" type="radio" value="radio-2" tabindex="-1" name="radio">
+                  <input class="switch switch-radio" type="radio" value="radio-3" tabindex="-1" name="radio">
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto" data-quiz-slide="empty">
+              <div class="flex flex-col h-full">
+                <h4 class="font-semibold text-2xl mb-5">
+                  Checkbox:
+                </h4>
+                <div class="flex items-center gap-5">
+                  <input class="switch switch-checkbox" type="checkbox" value="checkbox-1" tabindex="-1" name="checkbox[]">
+                  <input class="switch switch-checkbox" type="checkbox" value="checkbox-2" tabindex="-1" name="checkbox[]">
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto" data-quiz-slide>
+              <div class="flex flex-col gap-5 h-full">
+                <label data-label>
+                  <h5 class="font-medium text-xl mb-2">
+                    Name
+                  </h5>
+                  <div class="relative">
+                    <input class="input input-gray dark:input-fade input-lg" data-input="text" type="text" placeholder="Name" tabindex="-1" name="name">
+                    {{ error.render() }}
+                  </div>
+                </label>
+                <label data-label>
+                  <h5 class="font-medium text-xl mb-2">
+                    Telephone
+                  </h5>
+                  <div class="relative">
+                    <input class="input input-gray dark:input-fade input-lg" data-input="tel" type="tel" placeholder="+7 (___) ___-__-__" tabindex="-1" name="tel">
+                    {{ error.render() }}
+                  </div>
+                </label>
+                <button class="btn btn-primary btn-fill btn-lg" data-waved="light" type="submit" tabindex="-1">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="transition-[opacity,visibility] mt-auto group-data-quiz-end/quiz:opacity-0 group-data-quiz-end/quiz:invisible">
+          <div class="flex items-center mb-5">
+            Оставшиеся слайды:
+            <div class="swiper-pagination w-auto ml-1" data-slider-pagination="quiz"></div>
+          </div>
+          <div class="flex items-center gap-5">
+            <button class="swiper-button-prev btn btn-primary btn-fill btn-lg w-auto mt-0" data-slider-prev="quiz" data-waved="light">
+              {{ icon.render(id = 'arrow-left', className = 'text-xs mr-2') }}
+              Prev
+            </button>
+            <button class="swiper-button-next btn btn-primary btn-fill btn-lg inset-0 w-auto mt-0 group-data-[quiz=stop]/quiz:opacity-50 group-data-[quiz=stop]/quiz:pointer-events-none" data-slider-next="quiz" data-waved="light">
+              Next
+              {{ icon.render(id = 'arrow-right', className = 'text-xs ml-2') }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="hidden md:block w-full max-w-80 lg:max-w-sm">
+      <div class="aspect-square relative bg-grey dark:bg-dark rounded-xl overflow-hidden h-full" data-media data-movement="light">
+        {{ loader.render() }}
+        {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Описание #}
+
+<section class="wrapper relative bg-white dark:bg-black" data-description>
+  <div class="absolute inset-0" data-slider="bg">
+    <div class="swiper h-full" data-slider-swiper="bg">
+      <div class="swiper-wrapper">
+        {% for i in range(0, 6) %}
+        <div class="swiper-slide relative bg-grey dark:bg-dark h-full" data-media>
+          {{ loader.render() }}
+          {{ image.render(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-wrap xl:flex-nowrap justify-between gap-5 relative z-10 bg-white dark:bg-black rounded-2xl shadow-md p-5 md:p-10">
+    <div class="w-full lg:max-w-96 xl:max-w-md">
+      <div class="relative bg-grey dark:bg-dark rounded-2xl overflow-hidden mb-5 md:mb-3" data-slider="description">
+        <div class="swiper h-full" data-slider-swiper="description">
+          <div class="swiper-wrapper h-full">
+            {% for i in range(0, 6) %}
+            <a class="swiper-slide aspect-square relative h-full" data-media data-movement="light" data-fancybox="catalog" draggable="false" href="/img/pictures/test.jpg">
+              {{ loader.render() }}
+              {{ image.render(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div data-slider="thumbs">
+        <div class="swiper" data-slider-swiper="thumbs">
+          <div class="swiper-wrapper">
+            {% for i in range(0, 6) %}
+            <button class="swiper-slide aspect-square relative bg-grey dark:bg-dark rounded-2xl overflow-hidden" data-media>
+              {{ loader.render() }}
+              {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+            </button>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col lg:max-w-96 xl:max-w-xl p-2">
+      <h4 class="font-alt font-semibold text-3xl/tight md:text-5xl/tight mb-5">
+        Slider slide
+      </h4>
+      <p class="font-semibold text-base/normal md:text-lg/normal mb-5 md:md-10">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. In minus dolor magnam! Tenetur quam maiores vel vero iste aperiam dolores ipsa, quae autem sunt quo quia omnis commodi, impedit recusandae.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. In minus dolor magnam! Tenetur quam maiores vel vero iste aperiam dolores ipsa, quae autem sunt quo quia omnis commodi, impedit recusandae.
+      </p>
+      <button class="btn btn-primary btn-fill btn-lg w-full max-w-48 mt-auto" data-waved="light">Button</button>
     </div>
   </div>
 </section>
