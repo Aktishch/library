@@ -8,15 +8,16 @@
 {% import 'src/components/title.njk' as title %}
 {% import 'src/components/subtitle.njk' as subtitle %}
 {% import 'src/components/error.njk' as error %}
+{% import 'src/includes/player.njk' as player %}
 
 {% block content %}
 
 {# My library #}
 
 <section class="wrapper flex flex-col items-center justify-center bg-white dark:bg-black min-h-125 xl:min-h-150" id="header">
-  {{ image.render(src = '/img/pictures/logo', format = 'svg', className = 'w-full max-w-2xl mb-10', data = 'data-anim') }}
-  {{ title.render(text = 'Main block', className = 'mb-5 sm:mb-10', data = 'data-anim data-movement="blend"') }}
-  <div class="w-full max-w-48" data-anim>
+  {{ image.render(src = '/img/pictures/logo', format = 'svg', className = 'w-full max-w-2xl mb-10 transition-[opacity,translate] duration-1000 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim') }}
+  {{ title.render(text = 'Main block', className = 'mb-5 sm:mb-10 transition-[opacity,translate] duration-500 delay-100 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+  <div class="w-full max-w-48 transition-[opacity,translate] duration-500 delay-200 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
     <a class="btn btn-primary btn-fill btn-lg w-full" data-waved="light" data-scroll-to draggable="false" href="#content">Show more</a>
   </div>
 </section>
@@ -24,13 +25,13 @@
 {# Статьи #}
 
 <section class="wrapper xl:wrapper-distance flex flex-col items-center justify-center bg-grey dark:bg-dark" data-listing="1" id="content">
-  {{ subtitle.render(text = 'Cards', className = 'mb-3', data = 'data-anim data-movement="blend"') }}
+  {{ subtitle.render(text = 'Cards', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10" data-anim data-movement="blend">
     Construction and effect
   </h3>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full mb-5 sm:md-10">
     {% for i in range(1, 4) %}
-    <div data-anim>
+    <div class="transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
       <article class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
         <div class="aspect-4/3 relative bg-grey dark:bg-dark rounded-t-inherit overflow-hidden" data-media data-movement="light">
           {{ loader.render() }}
@@ -52,7 +53,7 @@
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full">
     {% for i in range(1, 4) %}
-    <div class="sm:block duration-500 anim anim-up" data-anim data-listing-item>
+    <div class="sm:block transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-listing-item>
       <article class="group/inverted relative perspective-midrange h-full">
         <div class="absolute inset-0 rotate-y-0 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out pointer-coarse:-rotate-y-180 group-hover/inverted:-rotate-y-180">
           <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
@@ -86,7 +87,7 @@
     </div>
     {% endfor %}
   </div>
-  <div class="w-full max-w-48" data-anim>
+  <div class="w-full max-w-48 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
     <button class="btn btn-second btn-fade btn-lg sm:hidden w-full mt-5" data-listing-show data-waved="dark">Show more</button>
   </div>
 </section>
@@ -94,8 +95,8 @@
 {# Кнопки #}
 
 <section class="wrapper flex flex-col items-center justify-center bg-white dark:bg-black">
-  {{ subtitle.render(text = 'Buttons', className = 'mb-3', data = 'data-anim data-movement="blend"') }}
-  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10" data-anim data-movement="blend">
+  {{ subtitle.render(text = 'Buttons', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
     Buttons standard
   </h3>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 sm:mb-10">
@@ -108,7 +109,7 @@
     <button class="btn btn-primary btn-text btn-lg">btn btn-text</button>
     <button class="btn btn-primary btn-contur btn-swipe btn-lg">btn btn-contur btn-swipe</button>
   </div>
-  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10" data-anim data-movement="blend">
+  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
     Buttons size
   </h3>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 sm:mb-10">
@@ -118,7 +119,7 @@
     <button class="btn btn-primary btn-fill btn-md">btn-md</button>
     <button class="btn btn-primary btn-fill btn-sm">btn-sm</button>
   </div>
-  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10" data-anim data-movement="blend">
+  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
     Buttons waved
   </h3>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 sm:mb-10">
@@ -130,13 +131,13 @@
 {# Документы #}
 
 <section class="wrapper xl:wrapper-distance flex flex-col items-center justify-center bg-grey dark:bg-dark">
-  {{ subtitle.render(text = 'Accordion', className = 'mb-3', data = 'data-anim data-movement="blend"') }}
-  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10" data-anim data-movement="blend">
+  {{ subtitle.render(text = 'Accordion', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
     Drop-down list
   </h3>
   <div class="flex flex-col gap-5 w-full">
     {% for i in range(0, 3) %}
-    <div class="group/accordion relative bg-second/10 rounded-2xl overflow-hidden shadow-md py-4 px-4 sm:py-6" data-anim data-accordion="{{ 'active' if loop.first else '' | safe }}" data-close-click>
+    <div class="group/accordion relative bg-second/10 rounded-2xl overflow-hidden shadow-md py-4 px-4 sm:py-6 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-accordion="{{ 'active' if loop.first else '' | safe }}" data-close-click>
       <div class="flex items-center justify-between gap-4">
         <h4 class="font-alt font-semibold text-xl">
           Documents -
@@ -204,15 +205,15 @@
     {{ image.render(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
   </div>
   <div class="flex flex-col items-center relative">
-    {{ subtitle.render(text = 'Filter', className = 'mb-3', data = 'data-anim data-movement="blend"') }}
-    <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10" data-anim data-movement="blend">
+    {{ subtitle.render(text = 'Filter', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+    <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
       paralax, form and other...
     </h3>
     <div class="relative w-full max-w-xl" data-filtering="filtering">
       {{ image.render(src = '/img/pictures/circle-grey', format = 'svg', className = 'absolute top-20 -left-8 z-10 drop-shadow-md pointer-events-none w-16', data = 'data-parallax-layer data-parallax-speed="4" data-parallax-depth="2"') }}
       {{ image.render(src = '/img/pictures/circle-white', format = 'svg', className = 'absolute -bottom-8 -right-8 z-10 drop-shadow-md pointer-events-none w-16', data = 'data-parallax-layer="reverse" data-parallax-speed="4" data-parallax-depth="2"') }}
       {{ image.render(src = '/img/pictures/circle-red', format = 'svg', className = 'absolute bottom-0 -right-7 z-10 drop-shadow-md pointer-events-none w-16', data = 'data-scroll data-scroll-speed="-0.1"') }}
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-4 relative bg-grey md:bg-transparent text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white overflow-hidden md:pb-4 mb-5 md:mb-10" data-anim>
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-4 relative bg-grey md:bg-transparent text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white overflow-hidden md:pb-4 mb-5 md:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
         {% for item in ['text-style', 'form-validate', 'switches', 'file'] %}
         <button class="text-xl grow p-4 md:p-0 data-active:bg-second md:data-active:bg-transparent data-active:text-white md:data-active:text-primary data-active:pointer-events-none" data-filtering-category="filtering" data-filtering-value="{{ loop.index0 }}" {{ 'data-active' if loop.first else '' | safe }}>
           {{ item }}
@@ -236,7 +237,7 @@
           </p>
         </div>
         <div data-filtering-card="filtering" data-filtering-value="1">
-          <form class="flex flex-col gap-5 w-full max-w-sm mx-auto" data-form="submit" data-save="save" data-datepicker>
+          <form class="flex flex-col gap-5 w-full max-w-sm mx-auto" data-form="submt" data-save="save" data-datepicker>
             <input type="hidden" value="Тема" name="theme">
             <label data-label>
               <h5 class="font-medium text-xl mb-2">
@@ -493,7 +494,7 @@
 ] %}
 
 <section class="wrapper flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden" data-parallax>
-  {{ subtitle.render(text = 'Parallax hovered', className = 'mb-8', data = 'data-anim data-movement="blend"') }}
+  {{ subtitle.render(text = 'Parallax hovered', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   <div class="flex flex-col lg:flex-row items-center lg:justify-between gap-5 sm:gap-10">
     {% for item in parallax %}
     <div class="w-72" data-parallax-hovered="600">
@@ -520,8 +521,12 @@
 {# Игра #}
 
 <section class="wrapper flex flex-col items-center justify-center bg-grey dark:bg-dark">
-  {{ subtitle.render(text = 'Game', className = 'mb-8', data = 'data-anim data-movement="blend"') }}
+  {{ subtitle.render(text = 'Game', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   <div class="grid grid-cols-3 border border-solid border-black w-full max-w-md mx-auto" data-game></div>
 </section>
+
+{# Плейер #}
+
+{{ player.render() }}
 
 {% endblock %}

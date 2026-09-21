@@ -115,3 +115,13 @@
 .in-shop {
   animation: in-shop 2000ms ease both;
 }
+
+@keyframes loading {
+  100% {
+    rotate: z 360deg;
+  }
+}
+
+.loading {
+  animation: loading 1000ms steps(8) infinite;
+}

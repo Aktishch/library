@@ -11,6 +11,7 @@
 {% import 'src/components/swiper-button-next.njk' as swiperButtonNext %}
 {% import 'src/components/swiper-pagination.njk' as swiperPagination %}
 {% import 'src/includes/top.njk' as top %}
+{% import 'src/includes/player.njk' as player %}
 
 {% block content %}
 
@@ -21,8 +22,8 @@
 {# Галерея #}
 
 <section class="wrapper flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden" id="content">
-  {{ subtitle.render(text = 'Slider-swiper', className = 'mb-3', data = 'data-anim data-movement="blend"') }}
-  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10" data-anim data-movement="blend">
+  {{ subtitle.render(text = 'Slider-swiper', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
     Class template for slider
   </h3>
   <div class="w-full" data-slider="gallery">
@@ -47,7 +48,7 @@
 {# Продукция #}
 
 <section class="wrapper xl:wrapper-distance flex flex-col items-center justify-center bg-grey dark:bg-dark overflow-hidden">
-  {{ subtitle.render(text = 'Products', className = 'mb-8', data = 'data-anim data-movement="blend"') }}
+  {{ subtitle.render(text = 'Products', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   <div class="group/inverted relative perspective-midrange w-full mb-7" data-inverted="before">
     <div class="rotate-x-0 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[inverted=after]/inverted:-rotate-x-180">
       <button class="btn btn-primary btn-fill btn-lg" data-inverted-toggle="after" data-waved="light">Search</button>
@@ -129,7 +130,7 @@
 
 <section class="bg-white dark:bg-black" data-scrolling data-breakpoint="md">
   <div class="wrapper flex flex-col items-start pb-0 mb-5 sm:md-10">
-    {{ subtitle.render(text = 'Horizontal scroll', data = 'data-anim data-movement="blend"') }}
+    {{ subtitle.render(text = 'Horizontal scroll', className = 'transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   </div>
   <div class="wrapper flex gap-5 md:gap-10 md:sticky md:top-40 overflow-x-auto md:overflow-x-hidden pt-0" data-scrolling-horizontal>
     {% for i in range(0, 6) %}
@@ -144,7 +145,7 @@
 {# Квиз #}
 
 <section class="wrapper xl:wrapper-distance relative bg-grey dark:bg-dark">
-  <div class="flex justify-between relative bg-white dark:bg-black rounded-2xl shadow-md p-5 sm:p-10" data-anim>
+  <div class="flex justify-between relative bg-white dark:bg-black rounded-2xl shadow-md p-5 sm:p-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
     <form class="w-full md:max-w-72 lg:max-w-md" data-form="params">
       <div class="group/quiz flex flex-col h-full" data-slider="quiz" data-quiz>
         <div class="swiper mx-0" data-slider-swiper="quiz">
@@ -278,5 +279,9 @@
     </div>
   </div>
 </section>
+
+{# Плейер #}
+
+{{ player.render() }}
 
 {% endblock %}

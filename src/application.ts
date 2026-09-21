@@ -1,5 +1,7 @@
 import accordion from '@scripts/accordion'
 import airDatepicker from '@scripts/air-datepicker'
+import animation from '@scripts/animation'
+import author from '@scripts/author'
 import canvasRendering from '@scripts/canvas-rendering'
 import combination from '@scripts/combination'
 import compare from '@scripts/compare'
@@ -27,6 +29,7 @@ import palette from '@scripts/palette'
 import parallax from '@scripts/parallax'
 import password from '@scripts/password'
 import phoneMask from '@scripts/phone-mask'
+import player from '@scripts/player'
 import preloader from '@scripts/preloader'
 import quantity from '@scripts/quantity'
 import quiz from '@scripts/quiz'
@@ -55,6 +58,7 @@ import './tailwind/style.css'
 const initApplication = () => {
   accordion()
   airDatepicker()
+  author()
   canvasRendering()
   combination()
   compare()
@@ -81,6 +85,7 @@ const initApplication = () => {
   parallax()
   password()
   phoneMask()
+  player()
   quantity()
   quiz()
   range()
@@ -102,6 +107,7 @@ const initApplication = () => {
   world()
   yandexMap()
   preloader().finally(() => {
+    animation()
     outNumbers()
     writeText()
   })

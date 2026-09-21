@@ -57,7 +57,14 @@ export default (container: Container = document) => {
 
               li.classList.add('flex', 'items-center', 'justify-between', 'gap-5')
               li.setAttribute(`${DATA_FILELIST}-item`, '')
-              li.innerHTML = `<span class="truncate">${file.name}</span><button class="btn btn-gray text-sm p-1" ${DATA_FILELIST}-remove="${file.name}-${file.size}" data-waved="dark" type="button"><svg class="icon"><use href="${source}/img/icons.svg#close"></use></svg></button>`
+              li.innerHTML = `
+                <span class="truncate">${file.name}</span>
+                <button class="btn btn-gray text-sm p-1" ${DATA_FILELIST}-remove="${file.name}-${file.size}" data-waved="dark" type="button">
+                  <svg class="icon">
+                    <use href="${source}/img/icons.svg#close"></use>
+                  </svg>
+                </button>
+              `
               listing.appendChild(li)
               text.textContent = message.more
               data.items.add(file)
