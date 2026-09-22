@@ -49,11 +49,11 @@
 
 <section class="wrapper xl:wrapper-distance flex flex-col items-center justify-center bg-grey dark:bg-dark overflow-hidden">
   {{ subtitle.render(text = 'Products', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
-  <div class="group/inverted relative perspective-midrange w-full mb-7" data-inverted="before">
-    <div class="rotate-x-0 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[inverted=after]/inverted:-rotate-x-180">
-      <button class="btn btn-primary btn-fill btn-lg" data-inverted-toggle="after" data-waved="light">Search</button>
+  <div class="group/accordion relative perspective-midrange w-full mb-7" data-accordion data-auto>
+    <div class="rotate-x-0 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[accordion=active]/accordion:-rotate-x-180">
+      <button class="btn btn-primary btn-fill btn-lg" data-accordion-toggle data-waved="light">Search</button>
     </div>
-    <div class="absolute inset-0 rotate-x-180 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[inverted=after]/inverted:rotate-x-0">
+    <div class="absolute inset-0 rotate-x-180 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[accordion=active]/accordion:rotate-x-0" data-accordion-content>
       <div class="flex items-center justify-between gap-4">
         <form class="grow" data-form action="primary.html">
           <div class="relative" data-label>
@@ -70,7 +70,7 @@
             </button>
           </div>
         </form>
-        <button class="btn btn-primary btn-fill btn-lg shrink-0" data-inverted-toggle="before" data-waved="light">Close</button>
+        <button class="btn btn-primary btn-fill btn-lg shrink-0" data-accordion-item data-waved="light">Close</button>
       </div>
     </div>
   </div>

@@ -23,18 +23,13 @@ const resizeObserver = new ResizeObserver((entries) => {
   entries.forEach((entry) => {
     const sidebar = entry.target as HTMLDivElement
     const value = sidebar.dataset.breakpoint
+    const breakpoint: number = value && breakpoints.includes(value) ? media[value] : media.lg
 
-    if (!value) return
-
-    const breakpoint: number | null = breakpoints.includes(value) ? media[value] : null
-
-    if (breakpoint) {
-      window.requestAnimationFrame(() => {
-        if (html.clientWidth >= breakpoint) {
-          closeSidebar(sidebar)
-        }
-      })
-    }
+    window.requestAnimationFrame(() => {
+      if (html.clientWidth >= breakpoint) {
+        closeSidebar(sidebar)
+      }
+    })
   })
 })
 

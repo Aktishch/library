@@ -1,6 +1,7 @@
 import { Container, getData, isEn, logError } from '@utils'
 
 const DATA_COUNTER = getData('counter')
+const HIDDEN_CLASSNAME = 'hidden'
 
 export default (container: Container = document) => {
   const counter: HTMLDivElement | null = container.querySelector(`*[${DATA_COUNTER}]`)
@@ -36,7 +37,7 @@ export default (container: Container = document) => {
     }
 
     timer.remove()
-    subtitle.classList.remove('hidden')
+    subtitle.classList.remove(HIDDEN_CLASSNAME)
   }
 
   const setTimeCounter = () => {

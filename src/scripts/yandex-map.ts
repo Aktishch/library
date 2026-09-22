@@ -8,6 +8,7 @@ interface YandexOptions extends ymaps {
 }
 
 const DATA_YANDEX = getData('yandex')
+const DATA_LOADER = getData('loader')
 const YANDEX_LANGUARE = isEn ? 'en_US' : 'ru_RU'
 
 export default (container: Container = document) => {
@@ -32,7 +33,7 @@ export default (container: Container = document) => {
             return
           }
 
-          const loader: HTMLDivElement | null = yandex.querySelector('*[data-loader]')
+          const loader: HTMLDivElement | null = yandex.querySelector(`*[${DATA_LOADER}]`)
           const coordinates = value.split(',')
           const pointSize = [62, 62]
           const mark: number[] = []

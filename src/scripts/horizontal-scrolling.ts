@@ -12,10 +12,9 @@ const handleHorizontalError = () => {
 
 const getBreakpoint = (scrolling: HTMLElement) => {
   const value = scrolling.dataset.breakpoint
-  const breakpoint: number =
-    value && breakpoints.includes(value) && scrolling.hasAttribute('data-breakpoint') ? media[value] : media.md
+  const breakpoint: number = value && breakpoints.includes(value) ? media[value] : media.md
 
-  return html.clientWidth <= breakpoint
+  return html.clientWidth >= breakpoint
 }
 
 const resizeObserver = new ResizeObserver((entries) => {
@@ -32,9 +31,9 @@ const resizeObserver = new ResizeObserver((entries) => {
 
     window.requestAnimationFrame(() => {
       if (getBreakpoint(scrolling)) {
-        scrolling.style.removeProperty('height')
-      } else {
         scrolling.style.height = `${horizontal.scrollWidth - horizontal.clientWidth + window.innerHeight}px`
+      } else {
+        scrolling.style.removeProperty('height')
       }
     })
   })
@@ -57,7 +56,7 @@ export default (container: Container = document) => {
     let isIntersecting = false
 
     const handleScroll = () => {
-      if (!isIntersecting || getBreakpoint(scrolling)) return
+      if (!isIntersecting || !getBreakpoint(scrolling)) return
 
       const maxScroll = horizontal.scrollWidth - horizontal.clientWidth
 

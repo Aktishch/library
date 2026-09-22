@@ -1,9 +1,12 @@
-import { Container, getTouchDevice, source } from '@utils'
+import { Container, getData, getTouchDevice, source } from '@utils'
+
+const DATA_SNOW = getData('snow')
+const SNOWFLAKE_CLASSNAME = 'snowflake'
 
 export default (container: Container = document) => {
   if (getTouchDevice()) return
 
-  const snow: HTMLDivElement | null = container.querySelector('*[data-snow]')
+  const snow: HTMLDivElement | null = container.querySelector(`*[${DATA_SNOW}]`)
 
   if (!snow) return
 
@@ -12,15 +15,15 @@ export default (container: Container = document) => {
   const createSnowflake = (event: MouseEvent) => {
     if (!flag) return
 
+    const { clientY, clientX } = event
     const snowflake = document.createElement('img')
     const size = Math.random() * 60
-    const { clientY, clientX } = event
 
     const removeSnowflake = () => {
       snowflake.remove()
     }
 
-    snowflake.classList.add('snowflake')
+    snowflake.classList.add(SNOWFLAKE_CLASSNAME)
     snowflake.src = `${source}/img/pictures/snow.png`
     snowflake.style.width = `${20 + size}px`
     snowflake.style.top = `${clientY}px`

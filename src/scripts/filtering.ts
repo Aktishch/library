@@ -22,9 +22,10 @@ const DATA_ACTIVE = getData('active')
 const HIDDEN_CLASSNAME = 'hidden'
 const OPACITY_CLASSNAME = 'opacity-0'
 const TRANSLATE_CLASSNAME = 'translate-y-10'
+const TRANSITION_CLASSNAMES = ['transition', 'ease-linear']
 
 const addTransition = (item: HTMLDivElement) => {
-  item.classList.add('transition', 'ease-linear')
+  item.classList.add(...TRANSITION_CLASSNAMES)
 }
 
 const checkItem = ({ condition, item }: ItemOptions) => {

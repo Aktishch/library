@@ -28,7 +28,7 @@ export default (container: Container = document) => {
     let initialX: number
 
     const setPosition = () => {
-      const item = (draggable.closest(`[${DATA_DRAGGABLE}-parent=${value}]`) as HTMLElement) || draggable
+      const item = (draggable.closest(`[${DATA_DRAGGABLE}-parent=${value}]`) as HTMLElement | null) || draggable
 
       item.style.transform = `translate(${coordinates.left}px, ${coordinates.top}px)`
     }

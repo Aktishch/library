@@ -7,6 +7,7 @@ Swiper.use([Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, 
 Swiper.defaults.touchStartPreventDefault = false
 
 const DATA_SLIDER = getData('slider')
+const DATA_DESCRIPTION = getData('description')
 const DATA_QUIZ = getData('quiz')
 const { sm, md, lg, xl } = media
 
@@ -240,7 +241,7 @@ const initBgSlider = (container: Container) => {
 }
 
 const initDescriptionSlider = (container: Container) => {
-  const description: HTMLDivElement | null = container.querySelector('*[data-description]')
+  const description: HTMLDivElement | null = container.querySelector(`*[${DATA_DESCRIPTION}]`)
 
   if (!description) return
 

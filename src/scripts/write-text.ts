@@ -1,7 +1,9 @@
-import { Container } from '@utils'
+import { Container, getData } from '@utils'
+
+const DATA_TEXT = getData('text')
 
 export default (container: Container = document) => {
-  const texts = container.querySelectorAll<HTMLElement>('*[data-text]')
+  const texts = container.querySelectorAll<HTMLElement>(`*[${DATA_TEXT}]`)
 
   if (!texts.length) return
 

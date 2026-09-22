@@ -1,6 +1,7 @@
 import { Container, getData, getTouchDevice } from '@utils'
 
 const DATA_MOVEMENT = getData('movement')
+const MOVEMENT_CLASSNAME = 'movement'
 
 const setMovement = (event: MouseEvent) => {
   const movement: HTMLElement | null = (event.target as HTMLElement).closest(`[${DATA_MOVEMENT}]`)
@@ -22,7 +23,7 @@ export default (container: Container = document) => {
   if (!movements.length) return
 
   movements.forEach((movement) => {
-    movement.classList.add('movement')
+    movement.classList.add(MOVEMENT_CLASSNAME)
     movement.addEventListener('mouseover', setMovement as EventListener)
     movement.addEventListener('mousemove', setMovement as EventListener)
   })

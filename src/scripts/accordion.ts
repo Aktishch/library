@@ -2,8 +2,10 @@ import { Container, getData, isEn, logError } from '@utils'
 
 const DATA_ACCORDION = getData('accordion')
 const DATA_CLOSE = getData('close')
-const OVERFLOW_CLASSNAME = 'overflow-hidden'
+const DATA_AUTO = getData('auto')
 const ACTIVE_VALUE = 'active'
+const OVERFLOW_CLASSNAME = 'overflow-hidden'
+const CURSOR_CLASSNAME = 'cursor-pointer'
 
 export default (container: Container = document) => {
   const accordions = container.querySelectorAll<HTMLDivElement>(`*[${DATA_ACCORDION}]`)
@@ -25,16 +27,16 @@ export default (container: Container = document) => {
         return
       }
 
-      const duration = transition ? Math.max(content.scrollHeight / 2, 150) : 0
+      if (!accordion.hasAttribute(DATA_AUTO)) {
+        const duration = transition ? Math.max(content.scrollHeight / 2, 150) : 0
 
-      content.style.transitionDuration = `${duration}ms`
+        content.style.transitionDuration = `${duration}ms`
 
-      if (accordion.dataset.accordion === ACTIVE_VALUE) {
-        content.style.removeProperty('height')
-        content.classList.remove(OVERFLOW_CLASSNAME)
-      } else {
-        content.classList.add(OVERFLOW_CLASSNAME)
-        content.style.height = '0'
+        if (accordion.dataset.accordion === ACTIVE_VALUE) {
+          content.style.removeProperty('height')
+        } else {
+          content.style.height = '0'
+        }
       }
     }
 
@@ -64,7 +66,11 @@ export default (container: Container = document) => {
       }
     }
 
-    toggle?.classList.add('cursor-pointer')
+    if (!accordion.hasAttribute(DATA_AUTO) && content) {
+      content.classList.add(OVERFLOW_CLASSNAME)
+    }
+
+    toggle?.classList.add(CURSOR_CLASSNAME)
     setHeightContent(false)
 
     if (items.length) {

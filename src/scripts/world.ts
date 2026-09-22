@@ -4,6 +4,9 @@ const DATA_WORLD = getData('world')
 const ICON_SIZE = 24
 const PADDING = 4
 const VISIBLE_CLASSNAMES = ['invisible', 'opacity-0']
+const IMAGE_CLASSNAME = 'pointer-events-none'
+const RECT_CLASSNAMES = ['pointer-events-none', 'fill-white', 'invisible', 'opacity-0', 'transition-opacity']
+const TEXT_CLASSNAMES = ['pointer-events-none', 'invisible', 'opacity-0', 'transition-opacity', 'fill-black', 'text-sm']
 
 export default (container: Container = document) => {
   const world: HTMLElement | null = container.querySelector(`*[${DATA_WORLD}]`)
@@ -54,9 +57,9 @@ export default (container: Container = document) => {
       }
     }
 
-    image.classList.add('pointer-events-none')
-    rect.classList.add('pointer-events-none', 'fill-white', 'invisible', 'opacity-0', 'transition-opacity')
-    text.classList.add('pointer-events-none', 'invisible', 'opacity-0', 'transition-opacity', 'fill-black', 'text-sm')
+    image.classList.add(IMAGE_CLASSNAME)
+    rect.classList.add(...RECT_CLASSNAMES)
+    text.classList.add(...TEXT_CLASSNAMES)
     image.setAttribute('href', `${source}/img/pictures/flag.svg`)
     image.setAttribute('width', String(ICON_SIZE))
     image.setAttribute('height', String(ICON_SIZE))

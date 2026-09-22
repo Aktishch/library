@@ -1,5 +1,9 @@
+import { getData } from '@utils/get-data'
 import { isEn } from '@utils/is-en'
 
+const DATA_LABEL = getData('label')
+const DATA_INPUT = getData('input')
+const DATA_ERROR = getData('error')
 const INPUT_ERROR_CLASSNAME = 'input-error'
 const ERROR_VISIBLE_CLASSNAMES = ['invisible', 'opacity-0']
 const ERROR_MESSAGE = {
@@ -14,15 +18,15 @@ const ERROR_MESSAGE = {
 }
 
 export const getValidate = (form: HTMLFormElement) => {
-  const labels = form.querySelectorAll<HTMLLabelElement | HTMLDivElement>('*[data-label]')
+  const labels = form.querySelectorAll<HTMLLabelElement | HTMLDivElement>(`*[${DATA_LABEL}]`)
   let isValid = true
   let firstInvalidInput: HTMLInputElement | null = null
 
   if (!labels.length) return isValid
 
   labels.forEach((label) => {
-    const input: HTMLInputElement | null = label.querySelector('*[data-input]')
-    const error: HTMLSpanElement | null = label.querySelector('*[data-error]')
+    const input: HTMLInputElement | null = label.querySelector(`*[${DATA_INPUT}]`)
+    const error: HTMLSpanElement | null = label.querySelector(`*[${DATA_ERROR}]`)
 
     if (!input || !error) return
 

@@ -1,9 +1,11 @@
-import { Container } from '@utils'
+import { Container, getData } from '@utils'
+
+const DATA_INPUT = getData('input')
 
 const onInput = (event: Event) => {
   const input = event.target as HTMLInputElement
 
-  switch (input.getAttribute('data-input')) {
+  switch (input.getAttribute(DATA_INPUT)) {
     case 'text': {
       const regExp = /[0-9.,!@№#$%^&*()\-=_+`~{}[\]\\/?<>|'"]/g
 

@@ -1,11 +1,12 @@
 import { dialog, getDialogSrc } from '@scripts/fancybox'
-import { Container, html } from '@utils'
+import { Container, getData, html } from '@utils'
 
 const WARNING_VALUE = 'warning'
+const DATA_WARNING = getData(WARNING_VALUE)
 const POSITIVE_VALUE = 'positive'
 
 const checkWarning = (event: Event) => {
-  const button: HTMLButtonElement | null = (event.target as HTMLElement).closest('[data-warning]')
+  const button: HTMLButtonElement | null = (event.target as HTMLElement).closest(`[${DATA_WARNING}]`)
 
   if (!button) return
 

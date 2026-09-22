@@ -1,10 +1,12 @@
-import { Container, getScrollPosition } from '@utils'
+import { Container, getData, getScrollPosition } from '@utils'
 
 interface ScrollOptions {
   block: HTMLElement | null
   behavior: 'smooth' | 'auto'
 }
 
+const DATA_SCROLL_TO = getData('scroll-to')
+const DATA_HEADER = getData('header')
 const HASH = window.location.hash
 
 export const TARGET_ID = HASH ? HASH.replace('#', '') : null
@@ -17,14 +19,14 @@ export default (container: Container = document) => {
   const scrollTo = ({ block, behavior }: ScrollOptions) => {
     if (!block) return
 
-    const header: HTMLElement | null = container.querySelector('*[data-header]')
+    const header: HTMLElement | null = container.querySelector(`*[${DATA_HEADER}]`)
     const top = block.getBoundingClientRect().top + getScrollPosition().top - (header ? header.offsetHeight : 0)
 
     window.scrollTo({ top, behavior })
   }
 
   const scrollToElement = (event: Event) => {
-    const link: HTMLAnchorElement | null = (event.target as HTMLElement).closest('[data-scroll-to]')
+    const link: HTMLAnchorElement | null = (event.target as HTMLElement).closest(`[${DATA_SCROLL_TO}]`)
 
     if (!link) return
 

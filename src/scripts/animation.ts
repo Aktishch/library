@@ -1,10 +1,11 @@
-import { Container } from '@utils'
+import { Container, getData } from '@utils'
 
+const DATA_ANIM = getData('anim')
 const REPEAT_ANIMATION = true
 const SHOW_VALUE = 'show'
 
 export default (container: Container = document) => {
-  const items = container.querySelectorAll<HTMLElement>('*[data-anim]')
+  const items = container.querySelectorAll<HTMLElement>(`*[${DATA_ANIM}]`)
 
   if (!items.length) return
 

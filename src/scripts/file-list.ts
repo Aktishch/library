@@ -1,7 +1,10 @@
 import { Container, getData, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
 
 const DATA_FILELIST = getData('filelist')
+const DATA_FORM = getData('form')
+const DATA_ERROR = getData('error')
 const LABEL_DISABLED_CLASSNAMES = ['pointer-events-none', 'opacity-50']
+const LI_CLASSNAMES = ['flex', 'items-center', 'justify-between', 'gap-5']
 
 export default (container: Container = document) => {
   const filelists = container.querySelectorAll<HTMLDivElement>(`*[${DATA_FILELIST}]`)
@@ -9,10 +12,10 @@ export default (container: Container = document) => {
   if (!filelists.length) return
 
   filelists.forEach((filelist) => {
-    const form: HTMLFormElement | null = filelist.closest('[data-form]')
+    const form: HTMLFormElement | null = filelist.closest(`[${DATA_FORM}`)
     const label: HTMLLabelElement | null = filelist.querySelector(`*[${DATA_FILELIST}-label]`)
     const input: HTMLInputElement | null = filelist.querySelector(`*[${DATA_FILELIST}-input]`)
-    const error: HTMLSpanElement | null = filelist.querySelector('*[data-error]')
+    const error: HTMLSpanElement | null = filelist.querySelector(`*[${DATA_ERROR}]`)
     const text: HTMLSpanElement | null = filelist.querySelector(`*[${DATA_FILELIST}-text]`)
     const listing: HTMLUListElement | null = filelist.querySelector(`*[${DATA_FILELIST}-listing]`)
 
@@ -55,7 +58,7 @@ export default (container: Container = document) => {
             if (data.files.length < maxLength) {
               const li = document.createElement('li')
 
-              li.classList.add('flex', 'items-center', 'justify-between', 'gap-5')
+              li.classList.add(...LI_CLASSNAMES)
               li.setAttribute(`${DATA_FILELIST}-item`, '')
               li.innerHTML = `
                 <span class="truncate">${file.name}</span>

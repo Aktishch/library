@@ -1,6 +1,7 @@
 import { Container, getData, isEn, logError } from '@utils'
 
 const DATA_LISTING = getData('listing')
+const DATA_ANIM = getData('anim')
 const ITEM_HIDDEN_CLASSNAME = 'hidden'
 
 export default (container: Container = document) => {
@@ -30,7 +31,7 @@ export default (container: Container = document) => {
         const item = items[i]
 
         if (item) {
-          if (item.hasAttribute('data-anim')) {
+          if (item.hasAttribute(DATA_ANIM)) {
             item.dataset.anim = 'show'
           }
 

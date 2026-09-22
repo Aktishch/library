@@ -1,11 +1,12 @@
-import { Container, COOKIE_EXPIRES_DAYS, getCookie, html, setCookies } from '@utils'
+import { Container, COOKIE_EXPIRES_DAYS, getCookie, getData, html, setCookies } from '@utils'
 
+const DATA_THEME = getData('theme')
 const THEME_NAME = 'current_theme'
 const THEME_VALUE = 'dark'
 const THEME_COOKIE = getCookie(THEME_NAME) === THEME_VALUE
 
 export default (container: Container = document) => {
-  const toggles = container.querySelectorAll<HTMLInputElement>('*[data-theme-toggle]')
+  const toggles = container.querySelectorAll<HTMLInputElement>(`*[${DATA_THEME}-toggle]`)
   const length = toggles.length
 
   const checkToggles = (isChecked: boolean) => {

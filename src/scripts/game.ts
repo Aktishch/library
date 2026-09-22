@@ -1,7 +1,10 @@
-import { Container } from '@utils'
+import { Container, getData } from '@utils'
+
+const DATA_GAME = getData('game')
+const CELL_CLASSNAMES = ['aspect-square', 'btn', 'btn-contur', 'active:translate-0']
 
 export default (container: Container = document) => {
-  const game: HTMLDivElement | null = container.querySelector('*[data-game]')
+  const game: HTMLDivElement | null = container.querySelector(`*[${DATA_GAME}]`)
 
   if (!game) return
 
@@ -91,7 +94,7 @@ export default (container: Container = document) => {
       }
     }
 
-    cell.classList.add('aspect-square', 'btn', 'btn-contur', 'active:transform-none')
+    cell.classList.add(...CELL_CLASSNAMES)
     cells.push(cell)
     game.appendChild(cell)
     cell.addEventListener('click', onClickCell)

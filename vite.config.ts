@@ -22,6 +22,24 @@ export default defineConfig({
       '@utils': resolvePath('./src/scripts/utils')
     }
   },
+  css: {
+    postcss: {
+      plugins: [
+        {
+          postcssPlugin: 'postcss-fix-public-fonts',
+          Once(root) {
+            root.walkAtRules('font-face', (atRule) => {
+              atRule.walkDecls('src', (decl) => {
+                if (decl.value.includes('/fonts/')) {
+                  decl.value = decl.value.replace(/\/fonts\//g, '../fonts/')
+                }
+              })
+            })
+          }
+        }
+      ]
+    }
+  },
   plugins: [
     vituum({
       imports: {

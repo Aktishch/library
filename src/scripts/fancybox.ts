@@ -7,6 +7,17 @@ import { getData, getTouchDevice, hostname } from '@utils'
 
 type Callback = ((container: HTMLElement | undefined) => void) | undefined
 
+const DATA_FANCYBOX = getData('fancybox')
+const DATA_LENIS_PREVENT = getData('lenis-prevent')
+
+const updateLoad = () => {
+  lazyLoad().update()
+}
+
+export const getDialogSrc = (name: string) => {
+  return hostname === 'localhost' ? `/dialogs/${name}.html` : `/dialogs/${name}.php`
+}
+
 Fancybox.getDefaults().placeFocusBack = false
 
 if (!getTouchDevice()) {
@@ -16,16 +27,10 @@ if (!getTouchDevice()) {
       const container = fancyboxRef.getContainer()
 
       if (container) {
-        container.setAttribute('data-lenis-prevent', '')
+        container.setAttribute(DATA_LENIS_PREVENT, '')
       }
     }
   }
-}
-
-const DATA_FANCYBOX = getData('fancybox')
-
-const updateLoad = () => {
-  lazyLoad().update()
 }
 
 export const dialog = {
@@ -80,10 +85,6 @@ export const dialog = {
   close: () => {
     Fancybox.close()
   }
-}
-
-export const getDialogSrc = (name: string) => {
-  return hostname === 'localhost' ? `/dialogs/${name}.html` : `/dialogs/${name}.php`
 }
 
 export default () => {

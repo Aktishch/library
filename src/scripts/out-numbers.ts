@@ -1,7 +1,9 @@
-import { Container } from '@utils'
+import { Container, getData } from '@utils'
+
+const DATA_NUMBER = getData('number')
 
 export default (container: Container = document) => {
-  const items = container.querySelectorAll<HTMLSpanElement>('*[data-number]')
+  const items = container.querySelectorAll<HTMLSpanElement>(`*[${DATA_NUMBER}]`)
 
   if (!items.length) return
 

@@ -1,6 +1,7 @@
 import accordion from '@scripts/accordion'
 import airDatepicker from '@scripts/air-datepicker'
 import animation from '@scripts/animation'
+import annum from '@scripts/annum'
 import author from '@scripts/author'
 import canvasRendering from '@scripts/canvas-rendering'
 import combination from '@scripts/combination'
@@ -8,7 +9,6 @@ import compare from '@scripts/compare'
 import cookie from '@scripts/cookie'
 import copy from '@scripts/copy'
 import currentTab from '@scripts/current-tab'
-import currentYear from '@scripts/current-year'
 import dataSave from '@scripts/data-save'
 import draggable from '@scripts/draggable'
 import fancybox from '@scripts/fancybox'
@@ -18,7 +18,6 @@ import game from '@scripts/game'
 import horizontalScrolling from '@scripts/horizontal-scrolling'
 import imagePreview from '@scripts/image-preview'
 import input from '@scripts/input'
-import inverted from '@scripts/inverted'
 import lazyLoad from '@scripts/lazy-load'
 import listing from '@scripts/listing'
 import locomotiveScroll from '@scripts/locomotive-scroll'
@@ -58,6 +57,7 @@ import './tailwind/style.css'
 const initApplication = () => {
   accordion()
   airDatepicker()
+  annum()
   author()
   canvasRendering()
   combination()
@@ -65,7 +65,6 @@ const initApplication = () => {
   cookie()
   copy()
   currentTab()
-  currentYear()
   dataSave()
   draggable()
   fancybox()
@@ -75,7 +74,6 @@ const initApplication = () => {
   horizontalScrolling()
   imagePreview()
   input()
-  inverted()
   lazyLoad()
   listing()
   locomotiveScroll()

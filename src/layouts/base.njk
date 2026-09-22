@@ -77,12 +77,12 @@
         {{ item.text }}
       </a>
       {% endfor %}
-      <div class="group/accordion relative" data-accordion data-close-scroll>
+      <div class="group/accordion relative" data-accordion data-auto data-close-scroll>
         <button class="btn btn-second font-normal uppercase text-sm underline-offset-4 hover:underline p-1" data-accordion-toggle data-waved="light">
           Navigation
           {{ icon.render(id = 'arrow-right', className = 'icon text-xs transition-transform ml-2 group-data-[accordion=active]/accordion:rotate-90') }}
         </button>
-        <div class="absolute top-10 right-0 bg-white rounded-lg shadow-md w-full" data-accordion-content>
+        <div class="absolute top-10 right-0 bg-white rounded-lg shadow-md opacity-0 invisible scale-90 transition-[opacity,visibility,scale] w-full group-data-[accordion=active]/accordion:opacity-100 group-data-[accordion=active]/accordion:visible group-data-[accordion=active]/accordion:scale-100" data-accordion-content>
           <div class="flex flex-col gap-4 p-4">
             {% for item in nav.blocks %}
             <a class="btn btn-gray text-sm underline-offset-4 hover:underline" data-waved="dark" data-scroll-to draggable="false" href="{{ item.href }}">
@@ -317,7 +317,7 @@
     </address>
     <a class="btn btn-second text-lg w-max p-1" data-waved="light" data-fancybox-dialog data-type="ajax" draggable="false" href="/dialogs/politics.html">Privacy policy</a>
     <div>
-      © <span data-current-year></span>
+      © <span data-annum></span>
     </div>
     <span class="text-lg">
       Разработка: <a class="underline w-max" draggable="false" href="https://stdkit.ru/" target="_blank">Студия К.И.Т.</a>

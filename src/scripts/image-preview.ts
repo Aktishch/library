@@ -1,7 +1,10 @@
 import { Container, getData, getValidate, handleFile, isEn, logError, uploadFile } from '@utils'
 
-const DATA_PREVIEW = getData('preview')
 const AVATAR_VALUE = 'avatar'
+const DATA_PREVIEW = getData('preview')
+const DATA_FORM = getData('form')
+const DATA_ERROR = getData('error')
+const DATA_AVATAR = getData(AVATAR_VALUE)
 const DRAG_OPACITY_CLASSNAME = 'opacity-50'
 const DRAG_POINTER_CLASSNAME = 'pointer-events-none'
 const LABEL_DISABLED_CLASSNAMES = ['pointer-events-none', 'opacity-50']
@@ -12,13 +15,13 @@ export default (container: Container = document) => {
   if (!previews.length) return
 
   previews.forEach((preview) => {
-    const form: HTMLFormElement | null = preview.closest('[data-form]')
+    const form: HTMLFormElement | null = preview.closest(`[${DATA_FORM}]`)
     const drag: HTMLDivElement | null = preview.querySelector(`*[${DATA_PREVIEW}-drag]`)
     const image: HTMLImageElement | null = preview.querySelector(`*[${DATA_PREVIEW}-image]`)
     const remove: HTMLButtonElement | null = preview.querySelector(`*[${DATA_PREVIEW}-remove]`)
     const label: HTMLLabelElement | null = preview.querySelector(`*[${DATA_PREVIEW}-label]`)
     const input: HTMLInputElement | null = preview.querySelector(`*[${DATA_PREVIEW}-input]`)
-    const error: HTMLSpanElement | null = preview.querySelector('*[data-error]')
+    const error: HTMLSpanElement | null = preview.querySelector(`*[${DATA_ERROR}]`)
 
     if (!drag || !image || !remove || !label || !input || !error) {
       logError(
@@ -70,7 +73,7 @@ export default (container: Container = document) => {
             const submitBtn: HTMLButtonElement | null = form.querySelector('button[type="submit"]')
 
             if (previewValue && submitBtn) {
-              const avatar: HTMLImageElement | null = document.querySelector(`*[data-avatar="${previewValue}"]`)
+              const avatar: HTMLImageElement | null = document.querySelector(`*[${DATA_AVATAR}="${previewValue}"]`)
 
               submitBtn.click()
 

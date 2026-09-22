@@ -1,12 +1,16 @@
-import { Container, getTouchDevice } from '@utils'
+import { Container, getData, getTouchDevice } from '@utils'
 
 interface WavedOptions {
   clientY: number
   clientX: number
 }
 
+const DATA_WAVED = getData('waved')
+const WAVED_CLASSNAME = 'waved'
+const WAVED_CIRCLE_CLASSNAME = 'waved-circle'
+
 const setWaved = (event: Event) => {
-  const item: HTMLElement | null = (event.target as HTMLElement).closest('[data-waved]')
+  const item: HTMLElement | null = (event.target as HTMLElement).closest(`[${DATA_WAVED}]`)
 
   if (!item) return
 
@@ -20,10 +24,10 @@ const setWaved = (event: Event) => {
       waved.remove()
     }
 
-    circle.classList.add('waved-circle')
+    circle.classList.add(WAVED_CIRCLE_CLASSNAME)
     circle.style.top = `${clientY - top}px`
     circle.style.left = `${clientX - left}px`
-    waved.classList.add('waved')
+    waved.classList.add(WAVED_CLASSNAME)
     waved.appendChild(circle)
     item.appendChild(waved)
     circle.addEventListener('animationend', removeWaved, { once: true })

@@ -26,9 +26,12 @@ interface TimingOptions {
 }
 
 const DATA_PLAYER = getData('player')
+const DATA_LOADER = getData('loader')
+const DATA_RANDOM = getData('random')
 const HIDDEN_CLASSNAME = 'hidden'
 const POINTER_CLASSNAME = 'pointer-events-none'
 const OPACITY_CLASSNAME = 'opacity-50'
+const LI_CLASSNAMES = ['flex', 'items-center', 'gap-2']
 
 const playlist: CompositionOptions[] = [
   {
@@ -71,7 +74,7 @@ const handleErrorLoad = () => {
 const createComposition = (composition: CompositionOptions) => {
   const li = document.createElement('li')
 
-  li.classList.add('flex', 'items-center', 'gap-2')
+  li.classList.add(...LI_CLASSNAMES)
   li.innerHTML = `
     <button class="btn btn-primary btn-fade text-4xl rounded-full shrink-0 size-10" ${DATA_PLAYER}-composition data-waved="dark">
       <svg class="loading icon hidden" ${DATA_PLAYER}-loading>
@@ -118,7 +121,7 @@ const initPlayer = ({ container, playlist }: PlayerOptions) => {
     .finally(() => {
       const compositions = player.querySelectorAll<HTMLButtonElement>(`*[${DATA_PLAYER}-composition]`)
       const poster: HTMLImageElement | null = player.querySelector(`*[${DATA_PLAYER}-poster]`)
-      const loader: HTMLDivElement | null = player.querySelector('*[data-loader]')
+      const loader: HTMLDivElement | null = player.querySelector(`*[${DATA_LOADER}]`)
       const artist: HTMLHeadingElement | null = player.querySelector(`*[${DATA_PLAYER}-artist]`)
       const song: HTMLHeadingElement | null = player.querySelector(`*[${DATA_PLAYER}-song]`)
       const audio: HTMLAudioElement | null = player.querySelector(`*[${DATA_PLAYER}-audio]`)
@@ -237,7 +240,7 @@ const initPlayer = ({ container, playlist }: PlayerOptions) => {
       }
 
       const setRandom = () => {
-        if (player.hasAttribute('data-random')) {
+        if (player.hasAttribute(DATA_RANDOM)) {
           condition.index = Math.floor(Math.random() * playlist.length)
         }
       }
