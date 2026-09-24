@@ -38,7 +38,7 @@ export const initCalendar = (container: Container = document) => {
       const attrs = {
         'data-filtering-category': 'calendar',
         'data-filtering-value': `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`,
-        'data-waved': 'light'
+        'data-waved': ''
       }
 
       if (condition) {

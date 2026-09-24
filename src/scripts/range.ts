@@ -58,7 +58,7 @@ export default (container: Container = document) => {
     const wrappers = range.querySelectorAll<HTMLDivElement>(`*[${DATA_RANGE}-wrapper]`)
     const size = Number(range.dataset.range) || 28
 
-    range.style.setProperty('--bubble-size', `${size / 16}rem`)
+    range.style.setProperty('--range-size', `${size / 16}rem`)
 
     switch (wrappers.length) {
       case 1: {

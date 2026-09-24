@@ -4,7 +4,7 @@ import { isEn } from '@utils/is-en'
 const DATA_LABEL = getData('label')
 const DATA_INPUT = getData('input')
 const DATA_ERROR = getData('error')
-const INPUT_ERROR_CLASSNAME = 'input-error'
+const INPUT_ERROR_CLASSNAME = 'input-red!'
 const ERROR_VISIBLE_CLASSNAMES = ['invisible', 'opacity-0']
 const ERROR_MESSAGE = {
   default: isEn ? 'Fill in this field' : 'Заполните это поле',

@@ -1,32 +1,11 @@
-.range {
-  --bubble-size: 1.75rem;
-}
+@layer components {
+  .range {
+    &::-webkit-slider-thumb {
+      @apply pointer-events-auto size-(--range-size) cursor-ew-resize appearance-none border-none bg-transparent opacity-0;
+    }
 
-.range-input {
-  @apply rounded-inherit block size-full appearance-none;
-
-  &::-webkit-slider-thumb {
-    width: var(--bubble-size);
-    height: var(--bubble-size);
-
-    @apply pointer-events-auto cursor-ew-resize appearance-none border-none bg-transparent opacity-0;
+    &::-moz-range-thumb {
+      @apply pointer-events-auto size-(--range-size) cursor-ew-resize appearance-none border-none bg-transparent opacity-0;
+    }
   }
-
-  &::-moz-range-thumb {
-    width: var(--bubble-size);
-    height: var(--bubble-size);
-
-    @apply pointer-events-auto cursor-ew-resize appearance-none border-none bg-transparent opacity-0;
-  }
-}
-
-.range-progress {
-  @apply rounded-inherit pointer-events-none absolute top-0 bottom-0 z-1 h-full;
-}
-
-.range-bubble {
-  width: var(--bubble-size);
-  height: var(--bubble-size);
-
-  @apply border-grey pointer-events-none absolute top-0 bottom-0 z-2 my-auto flex items-center justify-center rounded-full border-2 border-solid text-xs shadow;
 }

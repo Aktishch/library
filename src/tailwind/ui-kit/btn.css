@@ -1,118 +1,107 @@
-.btn {
-  * {
-    @apply pointer-events-none;
-  }
-
-  --btn-color: var(--color-black);
-  --btn-accent: var(--color-white);
-  --btn-hovered: var(--color-black);
-  --btn-fade: color-mix(in srgb, var(--btn-color) 30%, transparent);
-  --btn-focus: color-mix(in srgb, var(--btn-color) 40%, transparent);
-  --btn-fill: color-mix(in srgb, var(--btn-color) 80%, var(--btn-hovered));
-
-  color: var(--btn-color);
-
-  @apply relative flex cursor-pointer items-center justify-center text-center text-base font-semibold transition duration-200 select-none;
-
-  &:disabled {
-    @apply pointer-events-none opacity-50;
-  }
-
-  &:focus-visible {
-    background-color: var(--btn-fade);
-    box-shadow: 0 0 0 4px var(--btn-focus);
-  }
-
-  @media (hover: hover) {
-    &:hover {
-      background-color: var(--btn-fade);
+@layer components {
+  .btn {
+    * {
+      @apply pointer-events-none;
     }
 
-    &:active {
-      box-shadow: inset 0 4px 4px color-mix(in srgb, var(--color-black) 30%, transparent);
+    --btn-color: var(--color-black);
+    --btn-accent: var(--color-white);
+    --btn-hovered: var(--color-black);
+    --btn-fade: color-mix(in srgb, var(--btn-color) 30%, transparent);
+    --btn-focus: color-mix(in srgb, var(--btn-color) 40%, transparent);
+    --btn-fill: color-mix(in srgb, var(--btn-color) 80%, var(--btn-hovered));
 
-      @apply translate-y-1;
+    @apply relative flex cursor-pointer items-center justify-center text-center text-base font-semibold text-(--btn-color) transition duration-200 select-none;
+
+    &:disabled {
+      @apply pointer-events-none opacity-50;
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 4px var(--btn-focus);
+
+      @apply bg-(--btn-fade);
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        @apply bg-(--btn-fade);
+      }
+
+      &:active {
+        box-shadow: inset 0 4px 4px color-mix(in srgb, var(--color-black) 30%, transparent);
+
+        @apply translate-y-1;
+      }
     }
   }
-}
 
-.btn-fill {
-  color: var(--btn-accent);
-  background-color: var(--btn-color);
+  .btn-fill {
+    @apply bg-(--btn-color) text-(--btn-accent);
 
-  &:focus-visible {
-    background-color: var(--btn-fill);
-  }
+    &:focus-visible {
+      @apply bg-(--btn-fill);
+    }
 
-  @media (hover: hover) {
-    &:hover {
-      background-color: var(--btn-fill);
+    @media (hover: hover) {
+      &:hover {
+        @apply bg-(--btn-fill);
+      }
     }
   }
-}
 
-.btn-fade {
-  background-color: var(--btn-fade);
+  .btn-fade {
+    @apply bg-(--btn-fade);
 
-  &:focus-visible {
-    color: var(--btn-accent);
-    background-color: var(--btn-color);
-  }
+    &:focus-visible {
+      @apply bg-(--btn-color) text-(--btn-accent);
+    }
 
-  @media (hover: hover) {
-    &:hover {
-      color: var(--btn-accent);
-      background-color: var(--btn-color);
+    @media (hover: hover) {
+      &:hover {
+        @apply bg-(--btn-color) text-(--btn-accent);
+      }
     }
   }
-}
 
-.btn-text {
-  background-color: var(--btn-accent);
-  border-color: var(--btn-accent);
+  .btn-text {
+    @apply border border-solid border-(--btn-accent) bg-(--btn-accent);
 
-  @apply border border-solid;
+    &:focus-visible {
+      @apply border-(--btn-color) bg-(--btn-accent);
+    }
 
-  &:focus-visible {
-    background-color: var(--btn-accent);
-    border-color: var(--btn-color);
-  }
-
-  @media (hover: hover) {
-    &:hover {
-      background-color: var(--btn-accent);
-      border-color: var(--btn-color);
+    @media (hover: hover) {
+      &:hover {
+        @apply border-(--btn-color) bg-(--btn-accent);
+      }
     }
   }
-}
 
-.btn-contur {
-  border-color: var(--btn-color);
-
-  @apply border border-solid;
-}
-
-.btn-light {
-  --btn-hovered: var(--color-white);
-}
-
-.btn-swipe {
-  @apply z-1 overflow-hidden;
-
-  &::before {
-    background-color: var(--btn-color);
-    transition-property: width;
-
-    @apply content-auto absolute top-0 right-0 bottom-0 left-auto -z-1 w-0 duration-200 ease-in-out;
+  .btn-contur {
+    @apply border border-solid border-(--btn-color);
   }
 
-  @media (hover: hover) {
-    &:hover {
-      color: var(--btn-accent);
-      background-color: transparent;
+  .btn-light {
+    --btn-hovered: var(--color-white);
+  }
 
-      &::before {
-        @apply left-0 w-full;
+  .btn-swipe {
+    @apply z-1 overflow-hidden;
+
+    &::before {
+      transition-property: width;
+
+      @apply content-auto absolute top-0 right-0 bottom-0 left-auto -z-1 w-0 bg-(--btn-color) duration-200 ease-in-out;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        @apply bg-transparent text-(--btn-accent);
+
+        &::before {
+          @apply left-0 w-full;
+        }
       }
     }
   }

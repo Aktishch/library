@@ -1,0 +1,6 @@
+@layer libraries {
+  @import '@fancyapps/ui/dist/fancybox/fancybox.css';
+  @import 'air-datepicker/air-datepicker.css';
+  @import 'locomotive-scroll/dist/locomotive-scroll.css';
+  @import 'swiper/css/bundle';
+}

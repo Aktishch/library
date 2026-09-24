@@ -68,17 +68,17 @@
   {# Заголовок #}
 
   <header class="wrapper flex items-center justify-between gap-5 sticky top-0 z-30 bg-black transition-transform duration-300 py-4" data-header>
-    <a class="btn btn-white shrink-0 w-36" data-waved="light" draggable="false" href="/">
+    <a class="btn btn-white shrink-0 w-36" data-waved draggable="false" href="/">
       {{ image.render(src = '/img/pictures/logo', format = 'png', className = 'w-full') }}
     </a>
     <nav class="lg:flex hidden items-center justify-between gap-4 w-full max-w-4xl ml-auto">
       {% for item in nav.pages %}
-      <a class="btn btn-second font-normal uppercase text-sm underline-offset-4 hover:underline p-1" data-waved="light" draggable="false" href="{{ item.href }}">
+      <a class="btn btn-second font-normal uppercase text-sm underline-offset-4 hover:underline p-1" data-waved draggable="false" href="{{ item.href }}">
         {{ item.text }}
       </a>
       {% endfor %}
       <div class="group/accordion relative" data-accordion data-auto data-close-scroll>
-        <button class="btn btn-second font-normal uppercase text-sm underline-offset-4 hover:underline p-1" data-accordion-toggle data-waved="light">
+        <button class="btn btn-second font-normal uppercase text-sm underline-offset-4 hover:underline p-1" data-accordion-toggle data-waved>
           Navigation
           {{ icon.render(id = 'arrow-right', className = 'icon text-xs transition-transform ml-2 group-data-[accordion=active]/accordion:rotate-90') }}
         </button>
@@ -93,7 +93,7 @@
         </div>
       </div>
     </nav>
-    <button class="btn btn-second lg:hidden" data-sidebar-open="menu" data-waved="light">
+    <button class="btn btn-second lg:hidden" data-sidebar-open="menu" data-waved>
       {{ icon.render(id = 'burger', className = 'icon text-4xl') }}
     </button>
   </header>
@@ -149,17 +149,17 @@
   ] %}
 
   <div class="group/menu fixed inset-0 z-40 bg-black/50 transition-[opacity,visibility] duration-100 not-data-open:invisible not-data-open:opacity-0" data-menu data-sidebar="menu" data-breakpoint="lg" data-lenis-prevent>
-    <div class="flex flex-col bg-black/70 backdrop-blur-sm overflow-auto transition-[opacity,visibility,transform] duration-300 size-full max-w-93.75 group-not-data-open/menu:invisible group-not-data-open/menu:opacity-0 group-not-data-open/menu:-translate-x-full">
+    <div class="flex flex-col bg-black/70 backdrop-blur-sm overflow-auto transition-[opacity,visibility,translate] duration-300 size-full max-w-93.75 group-not-data-open/menu:invisible group-not-data-open/menu:opacity-0 group-not-data-open/menu:-translate-x-full">
       <div class="flex items-center justify-between gap-2 bg-black transition-transform duration-500 delay-300 p-4 group-not-data-open/menu:-translate-y-full">
-        <a class="btn btn-white shrink-0 w-36" data-waved="light" draggable="false" href="/">
+        <a class="btn btn-white shrink-0 w-36" data-waved draggable="false" href="/">
           {{ image.render(src = '/img/pictures/logo', format = 'png', className = 'w-full') }}
         </a>
         <input class="switch switch-toggle" data-theme-toggle type="checkbox">
-        <button class="btn btn-second p-1" data-sidebar-close="menu" data-waved="light">
+        <button class="btn btn-second p-1" data-sidebar-close="menu" data-waved>
           {{ icon.render(id = 'close', className = 'icon text-white text-2xl') }}
         </button>
       </div>
-      <nav class="flex flex-col items-start gap-4 text-white transition-[opacity,visibility,transform] duration-700 delay-500 px-4 pt-4 pb-10 group-not-data-open/menu:invisible group-not-data-open/menu:opacity-0 group-not-data-open/menu:-translate-x-full">
+      <nav class="flex flex-col items-start gap-4 text-white transition-[opacity,visibility,translate] duration-700 delay-500 px-4 pt-4 pb-10 group-not-data-open/menu:invisible group-not-data-open/menu:opacity-0 group-not-data-open/menu:-translate-x-full">
         {% for item in nav.pages %}
         <a class="text-xl underline-offset-4 hover:underline" draggable="false" href="{{ item.href }}">
           {{ item.text }}
@@ -181,7 +181,7 @@
           </div>
         </div>
       </nav>
-      <div class="px-4 pt-4 pb-10 mt-auto transition-[opacity,visibility,transform] duration-500 delay-1000 group-not-data-open/menu:invisible group-not-data-open/menu:opacity-0 group-not-data-open/menu:translate-y-1/4">
+      <div class="px-4 pt-4 pb-10 mt-auto transition-[opacity,visibility,translate] duration-500 delay-1000 group-not-data-open/menu:invisible group-not-data-open/menu:opacity-0 group-not-data-open/menu:translate-y-1/4">
         <div class="text-white mb-7" data-palette>
           <ul class="flex flex-col gap-4 mb-8">
             {% for item in palette %}
@@ -217,7 +217,7 @@
       </a>
       {% endfor %}
     </div>
-    <button class="btn btn-primary btn-contur rounded-full shadow-md pointer-events-auto size-10 p-1 before:content-auto before:block before:bg-current before:rounded-inherit before:size-full" data-social-button data-waved="light" data-draggable="draggable"></button>
+    <button class="btn btn-primary btn-contur rounded-full shadow-md pointer-events-auto size-10 p-1 before:content-auto before:block before:bg-current before:rounded-inherit before:size-full" data-social-button data-waved data-draggable="draggable"></button>
   </nav>
 
   {# Переключатель темы #}
@@ -234,7 +234,7 @@
   {# Бегующая кнопка #}
 
   <div class="fixed left-1/2 top-1/2 z-30 transition-[top,left] pointer-coarse:hidden" data-running>
-    <button class="btn btn-primary btn-fill btn-lg min-w-max" data-running-button data-waved="light">Поймай меня</button>
+    <button class="btn btn-primary btn-fill btn-lg min-w-max" data-running-button data-waved>Поймай меня</button>
   </div>
 
   {# В покупки #}
@@ -244,7 +244,7 @@
       <h4 class="font-alt font-semibold text-2xl mr-3">
         Product in shop
       </h4>
-      <button class="btn btn-primary rounded p-1" data-shop-close data-waved="light">
+      <button class="btn btn-primary rounded p-1" data-shop-close data-waved>
         {{ icon.render(id = 'close', className = 'icon text-lg') }}
       </button>
     </div>
@@ -309,13 +309,13 @@
   {# Подвал #}
 
   <footer class="wrapper flex flex-wrap flex-col md:flex-row items-center justify-between gap-4 bg-black text-second pt-4 pb-10 md:pb-4" id="footer">
-    <a class="btn btn-white w-36" data-waved="light" draggable="false" href="/">
+    <a class="btn btn-white w-36" data-waved draggable="false" href="/">
       {{ image.render(src = '/img/pictures/logo', format = 'png', className = 'w-full') }}
     </a>
     <address class="text-center">
       ​Рождественская набережная, <br> 45/1​5 офис; 3 этаж
     </address>
-    <a class="btn btn-second text-lg w-max p-1" data-waved="light" data-fancybox-dialog data-type="ajax" draggable="false" href="/dialogs/politics.html">Privacy policy</a>
+    <a class="btn btn-second text-lg w-max p-1" data-waved data-fancybox-dialog data-type="ajax" draggable="false" href="/dialogs/politics.html">Privacy policy</a>
     <div>
       © <span data-annum></span>
     </div>

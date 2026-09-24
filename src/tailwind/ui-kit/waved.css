@@ -1,33 +1,33 @@
-@keyframes waved {
-  to {
-    opacity: 0;
-    scale: 25;
+@layer components {
+  @keyframes waved {
+    to {
+      opacity: 0;
+      scale: 25;
+    }
   }
-}
 
-.waved {
-  @apply rounded-inherit pointer-events-none absolute inset-0 z-1 overflow-hidden;
-
-  [data-waved='light'] & {
+  .waved {
     --waved-color: var(--color-white);
+
+    @apply rounded-inherit pointer-events-none absolute inset-0 z-1 overflow-hidden;
+
+    [data-waved='dark'] & {
+      --waved-color: var(--color-black);
+    }
+
+    [data-theme='dark'] [data-waved-reverse] & {
+      --waved-color: var(--color-black);
+    }
+
+    [data-theme='dark'] [data-waved='dark'][data-waved-reverse] & {
+      --waved-color: var(--color-white);
+    }
   }
 
-  [data-waved='dark'] & {
-    --waved-color: var(--color-black);
+  .waved-circle {
+    background-color: color-mix(in srgb, var(--waved-color) 40%, transparent);
+    animation: waved 1000ms ease forwards;
+
+    @apply absolute block size-10 -translate-1/2 scale-0 rounded-full;
   }
-
-  [data-theme='dark'] [data-waved='light'][data-waved-reverse] & {
-    --waved-color: var(--color-black);
-  }
-
-  [data-theme='dark'] [data-waved='dark'][data-waved-reverse] & {
-    --waved-color: var(--color-white);
-  }
-}
-
-.waved-circle {
-  background-color: color-mix(in srgb, var(--waved-color) 40%, transparent);
-  animation: waved 1000ms ease forwards;
-
-  @apply absolute block size-10 -translate-1/2 scale-0 rounded-full;
 }

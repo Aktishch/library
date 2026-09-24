@@ -1,0 +1,36 @@
+@layer custom {
+  [data-scroll] {
+    @apply will-change-transform;
+  }
+
+  .fancybox__dialog {
+    .fancybox__slide {
+      .f-html {
+        @apply max-w-full bg-transparent p-0;
+      }
+
+      .f-button.is-close-button {
+        @apply top-2 right-2 rounded-full bg-white text-black shadow-md;
+      }
+    }
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    .swiper-navigation-icon {
+      @apply hidden;
+    }
+
+    svg {
+      @apply icon object-none;
+    }
+  }
+
+  .swiper-pagination {
+    @apply static flex items-center justify-center gap-4;
+  }
+
+  .swiper-pagination-bullet {
+    @apply m-0 size-3 rounded-full bg-current transition;
+  }
+}

@@ -2,6 +2,12 @@
   border-radius: inherit;
 }
 
+@utility icon {
+  width: 1em;
+  min-width: 1em;
+  height: 1em;
+}
+
 @utility media {
   @apply absolute inset-0 size-full max-w-none object-cover;
 }
@@ -13,10 +19,9 @@
 @utility btn-* {
   --btn-size: calc(--value(--ui-*) / 16 * 1rem);
 
-  height: var(--btn-size);
   padding-inline: calc(var(--btn-size) / 2);
 
-  @apply rounded-lg;
+  @apply h-(--btn-size) rounded-lg;
 }
 
 @utility input-fade {
@@ -37,6 +42,5 @@
   --wrapper-distance: 1.25rem;
   --wrapper-content: calc(var(--wrapper-value) + (var(--wrapper-distance) * 2));
 
-  margin: var(--wrapper-distance);
-  border-radius: var(--wrapper-distance);
+  @apply m-(--wrapper-distance) rounded-(--wrapper-distance);
 }

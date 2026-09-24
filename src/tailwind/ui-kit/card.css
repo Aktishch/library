@@ -1,7 +1,9 @@
-.card {
-  @apply relative flex h-full flex-col overflow-hidden rounded-2xl bg-white;
-}
+@layer components {
+  .card {
+    @apply relative flex h-full flex-col overflow-hidden rounded-2xl bg-white;
+  }
 
-.card-content {
-  @apply flex grow flex-col;
+  .card-content {
+    @apply flex grow flex-col;
+  }
 }

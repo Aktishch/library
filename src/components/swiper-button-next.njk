@@ -1,7 +1,7 @@
 {% import 'src/components/icon.njk' as icon %}
 
 {% macro render(value) %}
-<button class="swiper-button-next btn btn-primary btn-fill hidden md:flex absolute -right-6 rounded-full size-12" data-slider-next="{{ value }}" data-waved="light">
+<button class="swiper-button-next btn btn-primary btn-fill hidden md:flex absolute -right-6 rounded-full size-12" data-slider-next="{{ value }}" data-waved>
   {{ icon.render(id = 'arrow-right') }}
 </button>
 {% endmacro %}

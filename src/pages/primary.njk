@@ -51,7 +51,7 @@
   {{ subtitle.render(text = 'Products', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   <div class="group/accordion relative perspective-midrange w-full mb-7" data-accordion data-auto>
     <div class="rotate-x-0 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[accordion=active]/accordion:-rotate-x-180">
-      <button class="btn btn-primary btn-fill btn-lg" data-accordion-toggle data-waved="light">Search</button>
+      <button class="btn btn-primary btn-fill btn-lg" data-accordion-toggle data-waved>Search</button>
     </div>
     <div class="absolute inset-0 rotate-x-180 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[accordion=active]/accordion:rotate-x-0" data-accordion-content>
       <div class="flex items-center justify-between gap-4">
@@ -70,7 +70,7 @@
             </button>
           </div>
         </form>
-        <button class="btn btn-primary btn-fill btn-lg shrink-0" data-accordion-item data-waved="light">Close</button>
+        <button class="btn btn-primary btn-fill btn-lg shrink-0" data-accordion-item data-waved>Close</button>
       </div>
     </div>
   </div>
@@ -83,7 +83,7 @@
             <div class="aspect-4/3 relative bg-grey dark:bg-dark rounded-inherit overflow-hidden" data-media>
               {{ loader.render() }}
               {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-product-image="/img/pictures/test-gray.jpg" data-src="/img/pictures/test-gray.jpg"') }}
-              <label class="block absolute top-2 right-2 rounded-full opacity-0 invisible overflow-hidden cursor-pointer transition-[opacity,visibility] pointer-coarse:visible pointer-coarse:opacity-100 group group-hover/product:opacity-100 group-hover/product:visible has-checked:visible has-checked:opacity-100" data-waved="light">
+              <label class="block absolute top-2 right-2 rounded-full opacity-0 invisible overflow-hidden cursor-pointer transition-[opacity,visibility] pointer-coarse:visible pointer-coarse:opacity-100 group group-hover/product:opacity-100 group-hover/product:visible has-checked:visible has-checked:opacity-100" data-waved>
                 <input class="peer" hidden type="checkbox">
                 <div class="flex items-center justify-center bg-white/40 text-2xl text-red/50 stroke-red rounded-full transition-colors ease-linear size-10 group-has-checked:text-red">
                   {{ icon.render(id = 'like', className = 'icon') }}
@@ -105,12 +105,12 @@
                   <span class="font-semibold text-xl sm:text-2xl" data-product-price>7 000$</span>
                 </div>
                 <div class="swiper-no-swiping flex items-center justify-between rounded-full border border-solid border-gray w-max p-1" data-quantity>
-                  <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-decrease data-waved="light">-</button>
+                  <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-decrease data-waved>-</button>
                   <input class="bg-transparent text-center shrink-0 w-10 h-auto" data-product-quantity data-quantity-input="1" data-input="number" type="text" value="1" maxlength="3" name="quantity">
-                  <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-increase data-waved="light">+</button>
+                  <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-increase data-waved>+</button>
                 </div>
               </div>
-              <button class="swiper-no-swiping btn btn-primary btn-fade btn-lg w-full" data-product-button data-waved="light">
+              <button class="swiper-no-swiping btn btn-primary btn-fade btn-lg w-full" data-product-button data-waved>
                 {{ icon.render(id = 'basket', className = 'icon mr-2') }}
                 Basket
               </button>
@@ -193,7 +193,7 @@
                     {{ error.render() }}
                   </div>
                 </label>
-                <button class="btn btn-primary btn-fill btn-lg" data-waved="light" type="submit" tabindex="-1">Submit</button>
+                <button class="btn btn-primary btn-fill btn-lg" data-waved type="submit" tabindex="-1">Submit</button>
               </div>
             </div>
           </div>
@@ -204,11 +204,11 @@
             <div class="swiper-pagination w-auto ml-1" data-slider-pagination="quiz"></div>
           </div>
           <div class="flex items-center gap-5">
-            <button class="swiper-button-prev btn btn-primary btn-fill btn-lg w-auto mt-0" data-slider-prev="quiz" data-waved="light">
+            <button class="swiper-button-prev btn btn-primary btn-fill btn-lg w-auto mt-0" data-slider-prev="quiz" data-waved>
               {{ icon.render(id = 'arrow-left', className = 'text-xs mr-2') }}
               Prev
             </button>
-            <button class="swiper-button-next btn btn-primary btn-fill btn-lg inset-0 w-auto mt-0 group-data-[quiz=stop]/quiz:opacity-50 group-data-[quiz=stop]/quiz:pointer-events-none" data-slider-next="quiz" data-waved="light">
+            <button class="swiper-button-next btn btn-primary btn-fill btn-lg inset-0 w-auto mt-0 group-data-[quiz=stop]/quiz:opacity-50 group-data-[quiz=stop]/quiz:pointer-events-none" data-slider-next="quiz" data-waved>
               Next
               {{ icon.render(id = 'arrow-right', className = 'text-xs ml-2') }}
             </button>
@@ -275,7 +275,7 @@
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. In minus dolor magnam! Tenetur quam maiores vel vero iste aperiam dolores ipsa, quae autem sunt quo quia omnis commodi, impedit recusandae.
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. In minus dolor magnam! Tenetur quam maiores vel vero iste aperiam dolores ipsa, quae autem sunt quo quia omnis commodi, impedit recusandae.
       </p>
-      <button class="btn btn-primary btn-fill btn-lg w-full max-w-48 mt-auto" data-waved="light">Button</button>
+      <button class="btn btn-primary btn-fill btn-lg w-full max-w-48 mt-auto" data-waved>Button</button>
     </div>
   </div>
 </section>

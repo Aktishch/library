@@ -1,89 +1,90 @@
-.switch {
-  @apply text-primary border-gray relative flex cursor-pointer appearance-none items-center justify-center border border-solid transition duration-200 ease-linear select-none;
+@layer components {
+  .switch {
+    @apply text-primary border-gray relative flex cursor-pointer appearance-none items-center justify-center border border-solid transition duration-200 ease-linear select-none;
 
-  &:disabled {
-    @apply pointer-events-none opacity-50;
-  }
+    &:disabled {
+      @apply pointer-events-none opacity-50;
+    }
 
-  @media (hover: hover) {
-    &:hover {
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-gray) 40%, transparent);
+    @media (hover: hover) {
+      &:hover {
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-gray) 40%, transparent);
+      }
     }
   }
-}
 
-.switch-checkbox {
-  @apply size-6 min-w-6 rounded-sm;
-
-  &::after {
-    mask: url('data:image/svg+xml,%3Csvg viewBox="0 0 12 8" xmlns="http://www.w3.org/2000/svg"%3E %3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M11.7489 0.234315C12.0837 0.546734 12.0837 1.05327 11.7489 1.36569L4.89181 7.76569C4.55707 8.0781 4.01436 8.0781 3.67962 7.76569L0.251051 4.56569C-0.0836838 4.25327 -0.0836838 3.74673 0.251051 3.43431C0.585786 3.1219 1.1285 3.1219 1.46323 3.43431L4.28571 6.06863L10.5368 0.234315C10.8715 -0.0781049 11.4142 -0.0781049 11.7489 0.234315Z"/%3E %3C/svg%3E')
-      no-repeat center / 1rem;
-    transition: opacity 100ms linear;
-
-    @apply content-auto rounded-inherit block size-full bg-white opacity-0;
-  }
-
-  &:checked {
-    @apply border-current bg-current;
+  .switch-checkbox {
+    @apply size-6 min-w-6 rounded-sm;
 
     &::after {
-      @apply opacity-100;
+      mask: url('data:image/svg+xml,%3Csvg viewBox="0 0 12 8" xmlns="http://www.w3.org/2000/svg"%3E %3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M11.7489 0.234315C12.0837 0.546734 12.0837 1.05327 11.7489 1.36569L4.89181 7.76569C4.55707 8.0781 4.01436 8.0781 3.67962 7.76569L0.251051 4.56569C-0.0836838 4.25327 -0.0836838 3.74673 0.251051 3.43431C0.585786 3.1219 1.1285 3.1219 1.46323 3.43431L4.28571 6.06863L10.5368 0.234315C10.8715 -0.0781049 11.4142 -0.0781049 11.7489 0.234315Z"/%3E %3C/svg%3E')
+        no-repeat center / 1rem;
+
+      @apply content-auto rounded-inherit block size-full bg-white opacity-0 transition-opacity duration-100 ease-linear;
+    }
+
+    &:checked {
+      @apply border-current bg-current;
+
+      &::after {
+        @apply opacity-100;
+      }
     }
   }
-}
 
-.switch-radio {
-  @apply size-5 min-w-5 rounded-full;
+  .switch-radio {
+    @apply size-5 min-w-5 rounded-full;
 
-  &::after {
-    transition-property: opacity, transform;
+    &::after {
+      transition-property: opacity, transform;
 
-    @apply content-auto rounded-inherit block size-3 scale-0 bg-current opacity-0 duration-100 ease-linear;
+      @apply content-auto rounded-inherit block size-3 scale-0 bg-current opacity-0 duration-100 ease-linear;
+    }
+
+    &:checked::after {
+      @apply scale-100 opacity-100;
+    }
   }
 
-  &:checked::after {
-    @apply scale-100 opacity-100;
-  }
-}
+  .switch-toggle {
+    @apply h-9 w-20 min-w-20 rounded-full;
 
-.switch-toggle {
-  @apply h-9 w-20 min-w-20 rounded-full;
+    &::after {
+      @apply content-auto absolute top-0 bottom-0 my-auto h-6 rounded-full;
+    }
 
-  &::after {
-    @apply content-auto absolute top-0 bottom-0 my-auto h-6 rounded-full;
-  }
+    &:not(:checked)::after {
+      transition:
+        left 500ms ease,
+        right 400ms ease 200ms;
 
-  &:not(:checked)::after {
-    transition:
-      left 500ms ease,
-      right 400ms ease 200ms;
+      @apply bg-gray right-12 left-1.5;
+    }
 
-    @apply bg-gray right-12 left-1.5;
-  }
+    &:checked::after {
+      transition:
+        left 400ms ease 200ms,
+        right 500ms ease,
+        background-color 350ms ease -100ms;
 
-  &:checked::after {
-    transition:
-      left 400ms ease 200ms,
-      right 500ms ease,
-      background-color 350ms ease -100ms;
-
-    @apply right-1.5 left-12 bg-current;
-  }
-}
-
-.switch-checkbox,
-.switch-radio {
-  &::before {
-    transition:
-      opacity 300ms linear,
-      scale 400ms linear;
-
-    @apply content-auto rounded-inherit pointer-events-none invisible absolute top-1/2 left-1/2 size-full -translate-1/2 scale-0 bg-current;
+      @apply right-1.5 left-12 bg-current;
+    }
   }
 
-  &:checked {
+  .switch-checkbox,
+  .switch-radio {
     &::before {
-      @apply visible scale-300 opacity-0;
+      transition:
+        opacity 300ms linear,
+        scale 400ms linear;
+
+      @apply content-auto rounded-inherit pointer-events-none invisible absolute top-1/2 left-1/2 size-full -translate-1/2 scale-0 bg-current;
+    }
+
+    &:checked {
+      &::before {
+        @apply visible scale-300 opacity-0;
+      }
     }
   }
 }

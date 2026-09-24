@@ -1,34 +1,36 @@
-@keyframes progress {
-  to {
-    rotate: 360deg;
-  }
-}
-
-@keyframes loader {
-  0% {
-    stroke-dasharray: 1px, 200px;
-    stroke-dashoffset: 0;
+@layer components {
+  @keyframes progress {
+    to {
+      rotate: 360deg;
+    }
   }
 
-  50% {
-    stroke-dasharray: 100px, 200px;
-    stroke-dashoffset: -15px;
+  @keyframes loader {
+    0% {
+      stroke-dasharray: 1px, 200px;
+      stroke-dashoffset: 0;
+    }
+
+    50% {
+      stroke-dasharray: 100px, 200px;
+      stroke-dashoffset: -15px;
+    }
+
+    100% {
+      stroke-dasharray: 100px, 200px;
+      stroke-dashoffset: -125px;
+    }
   }
 
-  100% {
-    stroke-dasharray: 100px, 200px;
-    stroke-dashoffset: -125px;
+  .loader {
+    @apply text-primary pointer-events-none absolute inset-0 flex items-center justify-center text-4xl;
   }
-}
 
-.loader {
-  @apply text-primary pointer-events-none absolute inset-0 flex items-center justify-center text-4xl;
-}
+  .loader-progress {
+    animation: progress 1800ms linear infinite;
+  }
 
-.loader-progress {
-  animation: progress 1800ms linear infinite;
-}
-
-.loader-icon {
-  animation: loader 1500ms ease-in-out infinite;
+  .loader-icon {
+    animation: loader 1500ms ease-in-out infinite;
+  }
 }

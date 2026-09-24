@@ -1,74 +1,22 @@
-@layer theme, base, libraries, components, utilities;
+@layer theme, base, libraries, components, custom, utilities;
 
 @import 'tailwindcss';
 @import './ui-kit/theme.css';
-
-@layer base {
-  @import './ui-kit/fonts.css';
-  @import './ui-kit/base.css';
-}
-
-@layer libraries {
-  @import '@fancyapps/ui/dist/fancybox/fancybox.css';
-  @import 'air-datepicker/air-datepicker.css';
-  @import 'locomotive-scroll/dist/locomotive-scroll.css';
-  @import 'swiper/css/bundle';
-}
-
-@layer components {
-  @import './ui-kit/waved.css';
-  @import './ui-kit/movement.css';
-  @import './ui-kit/range.css';
-  @import './ui-kit/preloader.css';
-  @import './ui-kit/loader.css';
-  @import './ui-kit/card.css';
-  @import './ui-kit/icon.css';
-  @import './ui-kit/switch.css';
-  @import './ui-kit/btn.css';
-  @import './ui-kit/input.css';
-  @import './ui-kit/wrapper.css';
-}
-
+@import './ui-kit/fonts.css';
+@import './ui-kit/base.css';
+@import './ui-kit/libraries.css';
+@import './ui-kit/waved.css';
+@import './ui-kit/movement.css';
+@import './ui-kit/range.css';
+@import './ui-kit/preloader.css';
+@import './ui-kit/loader.css';
+@import './ui-kit/card.css';
+@import './ui-kit/switch.css';
+@import './ui-kit/btn.css';
+@import './ui-kit/input.css';
+@import './ui-kit/wrapper.css';
+@import './ui-kit/custom.css';
 @import './ui-kit/utilities.css';
-
-[data-scroll] {
-  @apply will-change-transform;
-}
-
-.fancybox__dialog {
-  .fancybox__slide {
-    .f-html {
-      @apply max-w-full bg-transparent p-0;
-    }
-
-    .f-button.is-close-button {
-      @apply top-2 right-2 rounded-full bg-white text-black shadow-md;
-    }
-  }
-}
-
-.swiper-button-prev,
-.swiper-button-next {
-  .swiper-navigation-icon {
-    @apply hidden;
-  }
-
-  svg {
-    width: 1em;
-    min-width: 1em;
-    height: 1em;
-
-    @apply block object-none;
-  }
-}
-
-.swiper-pagination {
-  @apply static flex items-center justify-center gap-4;
-}
-
-.swiper-pagination-bullet {
-  @apply m-0! size-3 rounded-full bg-current transition;
-}
 
 @keyframes progress-bar {
   from {

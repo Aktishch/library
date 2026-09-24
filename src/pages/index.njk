@@ -18,7 +18,7 @@
   {{ image.render(src = '/img/pictures/logo', format = 'svg', className = 'w-full max-w-2xl mb-10 transition-[opacity,translate] duration-1000 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim') }}
   {{ title.render(text = 'Main block', className = 'mb-5 sm:mb-10 transition-[opacity,translate] duration-500 delay-100 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   <div class="w-full max-w-48 transition-[opacity,translate] duration-500 delay-200 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
-    <a class="btn btn-primary btn-fill btn-lg w-full" data-waved="light" data-scroll-to draggable="false" href="#content">Show more</a>
+    <a class="btn btn-primary btn-fill btn-lg w-full" data-waved data-scroll-to draggable="false" href="#content">Show more</a>
   </div>
 </section>
 
@@ -45,7 +45,7 @@
           <p class="text-justify text-sm sm:text-base mb-5">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam repudiandae maxime quia culpa, est voluptatum hic at ipsa error officiis magni dolores molestiae inventore ipsum perferendis reiciendis sunt nesciunt possimus?
           </p>
-          <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved="light">Button</button>
+          <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved>Button</button>
         </div>
       </article>
     </div>
@@ -79,7 +79,7 @@
               <p class="text-justify text-sm sm:text-base mb-5">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam repudiandae maxime quia culpa, est voluptatum hic at ipsa error officiis magni dolores molestiae inventore ipsum perferendis reiciendis sunt nesciunt possimus? Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </p>
-              <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved="light">Button</button>
+              <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved>Button</button>
             </div>
           </div>
         </div>
@@ -123,7 +123,7 @@
     Buttons waved
   </h3>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 sm:mb-10">
-    <button class="btn btn-primary btn-fill btn-lg" data-waved="light" data-waved-reverse>data-waved="light"</button>
+    <button class="btn btn-primary btn-fill btn-lg" data-waved data-waved-reverse>data-waved</button>
     <button class="btn btn-primary btn-fill btn-lg" data-waved="dark" data-waved-reverse>data-waved="dark"</button>
   </div>
 </section>
@@ -143,7 +143,7 @@
           Documents -
           {{ i }}
         </h4>
-        <button class="btn btn-primary btn-fill rounded-full shrink-0 size-9" data-accordion-toggle data-waved="light">
+        <button class="btn btn-primary btn-fill rounded-full shrink-0 size-9" data-accordion-toggle data-waved>
           {{ icon.render(id = 'arrow-right', className = 'icon text-sm transition-transform group-data-[accordion=active]/accordion:rotate-90') }}
         </button>
       </div>
@@ -218,8 +218,8 @@
         <button class="text-xl grow p-4 md:p-0 data-active:bg-second md:data-active:bg-transparent data-active:text-white md:data-active:text-primary data-active:pointer-events-none" data-filtering-category="filtering" data-filtering-value="{{ loop.index0 }}" {{ 'data-active' if loop.first else '' | safe }}>
           {{ item }}
         </button>
-        <span class="hidden md:block absolute bottom-0 left-0 bg-primary rounded-t-lg transition-[left,width] ease-linear h-1" data-filtering-line="filtering"></span>
         {% endfor %}
+        <span class="hidden md:block absolute bottom-0 left-0 bg-primary rounded-t-lg transition-[left,width] ease-linear h-1" data-filtering-line="filtering"></span>
       </div>
       <div class="bg-white text-black rounded-3xl shadow-md p-7 md:p-10">
         <div data-filtering-card="filtering" data-filtering-value="0">
@@ -368,9 +368,9 @@
               Quantity:
             </h4>
             <div class="flex items-center justify-between rounded-full border border-solid border-gray w-max p-1" data-quantity>
-              <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-decrease data-waved="light">-</button>
+              <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-decrease data-waved>-</button>
               <input class="bg-transparent text-center shrink-0 w-10 h-auto" data-quantity-input data-input="number" type="text" value="0" maxlength="3" name="quantity">
-              <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-increase data-waved="light">+</button>
+              <button class="btn btn-gray btn-fill rounded-full shrink-0 size-8 active:translate-y-0" data-quantity-increase data-waved>+</button>
             </div>
             <h4 class="font-semibold text-2xl">
               Rating:
@@ -386,34 +386,32 @@
             <h4 class="font-semibold text-2xl">
               Range:
             </h4>
-            <div class="range w-full max-w-xs" data-range="28">
+            <div class="w-full max-w-xs" data-range="28">
               <div class="flex items-center justify-between mb-4">
                 <span>Value</span>
                 <output class="opacity-60" data-range-output></output>
               </div>
-              <div class="relative text-white pointer-events-none">
-                <div class="relative rounded h-2" data-range-wrapper>
-                  <input class="range-input bg-gray" data-range-input type="range" step="1" max="10" value="5">
-                  <div class="range-progress bg-green" data-range-progress></div>
-                  <output class="range-bubble bg-green shadow-green" data-range-bubble></output>
-                </div>
+              <div class="relative rounded h-2" data-range-wrapper>
+                <input class="range block bg-gray rounded-inherit appearance-none size-full" data-range-input type="range" step="1" max="10" value="5">
+                <div class="absolute top-0 bottom-0 z-1 bg-green rounded-inherit pointer-events-none" data-range-progress></div>
+                <output class="flex items-center justify-center absolute top-1/2 z-2 bg-green text-white text-xs rounded-full border-2 border-solid border-grey -translate-y-1/2 shadow shadow-green pointer-events-none size-(--range-size)" data-range-bubble></output>
               </div>
             </div>
-            <div class="range w-full max-w-xs" data-range>
+            <div class="w-full max-w-xs" data-range>
               <div class="flex items-center justify-between mb-4">
                 <input class="input input-gray input-lg text-center w-16" data-range-output data-input="number" type="text" maxlength="3">
                 <input class="input input-gray input-lg text-center w-16" data-range-output data-input="number" type="text" maxlength="3">
               </div>
-              <div class="relative text-white pointer-events-none">
+              <div class="text-white pointer-events-none">
                 <div class="relative rounded h-2 last:-mt-2" data-range-wrapper>
-                  <input class="range-input bg-green" data-range-input type="range" step="1" max="100" value="30">
-                  <div class="range-progress bg-gray" data-range-progress></div>
-                  <output class="range-bubble bg-green shadow-green" data-range-bubble></output>
+                  <input class="range block bg-green rounded-inherit appearance-none size-full" data-range-input type="range" step="1" max="100" value="30">
+                  <div class="absolute top-0 bottom-0 z-1 bg-gray rounded-inherit" data-range-progress></div>
+                  <output class="flex items-center justify-center absolute top-1/2 z-2 bg-green text-xs rounded-full border-2 border-solid border-grey -translate-y-1/2 shadow shadow-green pointer-events-none size-(--range-size)" data-range-bubble></output>
                 </div>
                 <div class="relative rounded h-2 last:-mt-2" data-range-wrapper>
-                  <input class="range-input bg-green" data-range-input type="range" step="1" max="100" value="70">
-                  <div class="range-progress bg-gray" data-range-progress></div>
-                  <output class="range-bubble bg-green shadow-green" data-range-bubble></output>
+                  <input class="range block bg-green rounded-inherit appearance-none size-full" data-range-input type="range" step="1" max="100" value="70">
+                  <div class="absolute top-0 bottom-0 z-1 bg-gray rounded-inherit" data-range-progress></div>
+                  <output class="flex items-center justify-center absolute top-1/2 z-2 bg-green text-xs rounded-full border-2 border-solid border-grey -translate-y-1/2 shadow shadow-green pointer-events-none size-(--range-size)" data-range-bubble></output>
                 </div>
               </div>
             </div>
@@ -446,7 +444,7 @@
                     {{ error.render() }}
                   </div>
                   <div class="flex flex-wrap items-center justify-between gap-4">
-                    <label class="btn btn-primary btn-fill btn-lg grow" data-preview-label data-waved="light">
+                    <label class="btn btn-primary btn-fill btn-lg grow" data-preview-label data-waved>
                       <input hidden data-preview-input data-input="file" type="file" name="files[]">
                       Загрузить
                     </label>

@@ -1,34 +1,25 @@
-.input {
-  --input-color: var(--color-black);
-  --input-text: var(--color-black);
+@layer components {
+  .input {
+    --input-color: var(--color-black);
+    --input-text: var(--color-black);
 
-  height: var(--input-size);
-  padding: calc(var(--input-size) / 4) calc(var(--input-size) / 3);
-  color: var(--input-text);
-  border-color: var(--input-color);
-  transition-property: border-color, box-shadow, opacity;
+    padding: calc(var(--input-size) / 4) calc(var(--input-size) / 3);
 
-  @apply block w-full rounded-lg border border-solid bg-white text-base font-normal duration-200;
+    @apply block h-(--input-size) w-full rounded-lg border border-solid border-(--input-color) bg-white text-base font-normal text-(--input-text) transition duration-200;
 
-  &:focus {
-    box-shadow: 0 0 0 1px var(--input-color);
-  }
+    &:focus {
+      box-shadow: 0 0 0 1px var(--input-color);
+    }
 
-  &:disabled {
-    @apply pointer-events-none opacity-50;
-  }
+    &:disabled {
+      @apply pointer-events-none opacity-50;
+    }
 
-  &.input-error {
-    --input-color: var(--color-red);
-  }
+    &:-webkit-autofill {
+      -webkit-text-fill-color: var(--input-text) !important;
+      -webkit-text-stroke-color: var(--input-text) !important;
 
-  &:-webkit-autofill {
-    color: var(--input-text) !important;
-    border-color: var(--input-color);
-    transition: background-color 1000000ms ease-in-out 0ms;
-    -webkit-text-fill-color: var(--input-text) !important;
-    -webkit-text-stroke-color: var(--input-text) !important;
-
-    @apply appearance-none;
+      @apply appearance-none border-(--input-color) transition-colors duration-1000000 ease-in-out;
+    }
   }
 }
