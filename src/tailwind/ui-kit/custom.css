@@ -22,7 +22,7 @@
     }
 
     svg {
-      @apply icon object-none;
+      @apply object-none;
     }
   }
 

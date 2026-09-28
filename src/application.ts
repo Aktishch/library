@@ -38,11 +38,11 @@ import scrollHeader from '@scripts/scroll-header'
 import scrollTo from '@scripts/scroll-to'
 import shop from '@scripts/shop'
 import sidebar from '@scripts/sidebar'
-import sliderSwiper from '@scripts/slider-swiper'
 import smartMenu from '@scripts/smart-menu'
 import snowflakes from '@scripts/snowflakes'
 import social from '@scripts/social'
 import submitHandler from '@scripts/submit-handler'
+import swiper from '@scripts/swiper'
 import theme from '@scripts/theme'
 import timeCounter from '@scripts/time-counter'
 import timer from '@scripts/timer'
@@ -92,11 +92,11 @@ const initApplication = () => {
   scrollTo()
   shop()
   sidebar()
-  sliderSwiper()
   smartMenu()
   snowflakes()
   social()
   submitHandler()
+  swiper()
   theme()
   timeCounter()
   timer()

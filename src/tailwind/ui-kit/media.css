@@ -1,0 +1,5 @@
+@layer components {
+  .media {
+    @apply absolute inset-0 size-full max-w-none object-cover;
+  }
+}

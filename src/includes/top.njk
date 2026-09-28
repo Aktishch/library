@@ -1,17 +1,19 @@
 {% import 'src/components/title.njk' as title %}
 
 {% macro render(text) %}
-<section class="wrapper xl:wrapper-distance flex flex-col items-center justify-center bg-grey dark:bg-dark min-h-64 py-0" id="header">
-  <div class="flex flex-col items-center justify-center relative grow size-full py-5">
-    <div class="flex items-center gap-1 absolute top-5 left-0 text-sm">
-      <a class="underline-offset-4 hover:underline" draggable="false" href="/">Main</a>
-      >
-      <span class="opacity-60 pointer-events-none">
-        {{ text }}
-      </span>
+<section class="xl:pt-4 xl:px-4">
+  <div class="wrapper flex flex-col items-center justify-center bg-grey dark:bg-dark xl:rounded-3xl min-h-64 py-0" id="header">
+    <div class="flex flex-col items-center justify-center relative grow size-full py-5">
+      <div class="flex items-center gap-1 absolute top-5 left-0 text-sm">
+        <a class="underline-offset-4 hover:underline" draggable="false" href="/">Main</a>
+        >
+        <span class="opacity-60 pointer-events-none">
+          {{ text }}
+        </span>
+      </div>
+      {{ title.render(text, className = 'mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+      <a class="btn btn-primary btn-fill btn-lg w-full max-w-48" data-waved data-scroll-to draggable="false" href="#content">Show more</a>
     </div>
-    {{ title.render(text, className = 'mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
-    <a class="btn btn-primary btn-fill btn-lg w-full max-w-48" data-waved data-scroll-to draggable="false" href="#content">Show more</a>
   </div>
 </section>
 {% endmacro %}

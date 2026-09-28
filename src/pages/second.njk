@@ -37,21 +37,23 @@
 
 {# Сравнение #}
 
-<section class="wrapper xl:wrapper-distance flex flex-col items-center justify-between bg-grey dark:bg-dark">
-  {{ subtitle.render(text = 'Comparison', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
-  <div class="relative bg-grey dark:bg-dark rounded-2xl overflow-hidden w-full transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-compare>
-    <div class="relative bg-grey dark:bg-dark rounded-inherit overflow-hidden" data-media>
-      {{ loader.render() }}
-      {{ image.render(src = '#', className = 'relative rounded-inherit w-full', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
-    </div>
-    <div class="absolute top-0 left-0 bottom-0 bg-grey dark:bg-dark overflow-hidden w-1/2" data-compare-before data-media>
-      {{ loader.render() }}
-      {{ image.render(src = '#', className = 'media', data = 'data-compare-image data-lazy data-src="/img/pictures/test-gray.jpg"') }}
-    </div>
-    <div class="flex items-center justify-center absolute top-0 bottom-0 left-1/2 bg-white dark:bg-black -translate-x-1/2 w-1 h-[95%] my-auto" data-compare-change>
-      <button class="btn btn-primary btn-fill rounded-full shrink-0 cursor-col-resize size-12">
-        {{ icon.render(id = 'arrows', className = 'icon text-xl') }}
-      </button>
+<section class="xl:px-4">
+  <div class="wrapper flex flex-col items-center justify-between bg-grey dark:bg-dark xl:rounded-3xl">
+    {{ subtitle.render(text = 'Comparison', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+    <div class="relative bg-grey dark:bg-dark rounded-2xl overflow-hidden w-full transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-compare>
+      <div class="relative bg-grey dark:bg-dark rounded-inherit overflow-hidden" data-media>
+        {{ loader.render() }}
+        {{ image.render(src = '#', className = 'relative rounded-inherit w-full', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+      </div>
+      <div class="absolute top-0 left-0 bottom-0 bg-grey dark:bg-dark overflow-hidden w-1/2" data-compare-before data-media>
+        {{ loader.render() }}
+        {{ image.render(src = '#', className = 'media', data = 'data-compare-image data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+      </div>
+      <div class="flex items-center justify-center absolute top-0 bottom-0 left-1/2 bg-white dark:bg-black -translate-x-1/2 w-1 h-[95%] my-auto" data-compare-change>
+        <button class="btn btn-primary btn-fill rounded-full shrink-0 cursor-col-resize size-12">
+          {{ icon.render(id = 'arrows', className = 'icon text-xl') }}
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -82,29 +84,31 @@
 
 {# Счетчик #}
 
-<section class="wrapper xl:wrapper-distance flex flex-col items-center justify-center bg-grey dark:bg-dark">
-  {{ subtitle.render(text = 'Counter of time', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
-  <div class="flex items-center justify-center bg-white dark:bg-black text-primary rounded-3xl shadow-md w-full py-7 sm:py-10 px-4 sm:px-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-counter data-year="2027" data-month="1" data-day="1">
-    <h3 class="hidden font-alt font-semibold text-center text-xl sm:text-3xl w-full" data-counter-subtitle>
-      Times up
-    </h3>
-    <div class="flex justify-between gap-4 text-center w-full" data-counter-timer>
-      <time class="flex flex-col items-center justify-center">
-        <span class="font-semibold text-2xl sm:text-3xl" data-counter-unit>0</span>
-        <span class="text-base sm:text-2xl">Days</span>
-      </time>
-      <time class="flex flex-col items-center justify-center">
-        <span class="font-semibold text-2xl sm:text-3xl" data-counter-unit>0</span>
-        <span class="text-base sm:text-2xl">Hours</span>
-      </time>
-      <time class="flex flex-col items-center justify-center">
-        <span class="font-semibold text-2xl sm:text-3xl" data-counter-unit>0</span>
-        <span class="text-base sm:text-2xl">Minutes</span>
-      </time>
-      <time class="flex flex-col items-center justify-center">
-        <span class="font-semibold text-2xl sm:text-3xl" data-counter-unit>0</span>
-        <span class="text-base sm:text-2xl">Seconds</span>
-      </time>
+<section class="xl:px-4">
+  <div class="wrapper flex flex-col items-center justify-center bg-grey dark:bg-dark xl:rounded-3xl">
+    {{ subtitle.render(text = 'Counter of time', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+    <div class="flex items-center justify-center bg-white dark:bg-black text-primary rounded-3xl shadow-md w-full py-7 sm:py-10 px-4 sm:px-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-counter data-year="2027" data-month="1" data-day="1">
+      <h3 class="hidden font-alt font-semibold text-center text-xl sm:text-3xl w-full" data-counter-subtitle>
+        Times up
+      </h3>
+      <div class="flex justify-between gap-4 text-center w-full" data-counter-timer>
+        <time class="flex flex-col items-center justify-center">
+          <span class="font-semibold text-2xl sm:text-3xl" data-counter-unit>0</span>
+          <span class="text-base sm:text-2xl">Days</span>
+        </time>
+        <time class="flex flex-col items-center justify-center">
+          <span class="font-semibold text-2xl sm:text-3xl" data-counter-unit>0</span>
+          <span class="text-base sm:text-2xl">Hours</span>
+        </time>
+        <time class="flex flex-col items-center justify-center">
+          <span class="font-semibold text-2xl sm:text-3xl" data-counter-unit>0</span>
+          <span class="text-base sm:text-2xl">Minutes</span>
+        </time>
+        <time class="flex flex-col items-center justify-center">
+          <span class="font-semibold text-2xl sm:text-3xl" data-counter-unit>0</span>
+          <span class="text-base sm:text-2xl">Seconds</span>
+        </time>
+      </div>
     </div>
   </div>
 </section>

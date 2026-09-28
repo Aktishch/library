@@ -24,71 +24,73 @@
 
 {# Статьи #}
 
-<section class="wrapper xl:wrapper-distance flex flex-col items-center justify-center bg-grey dark:bg-dark" data-listing="1" id="content">
-  {{ subtitle.render(text = 'Cards', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
-  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10" data-anim data-movement="blend">
-    Construction and effect
-  </h3>
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full mb-5 sm:md-10">
-    {% for i in range(1, 4) %}
-    <div class="transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
-      <article class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
-        <div class="aspect-4/3 relative bg-grey dark:bg-dark rounded-t-inherit overflow-hidden" data-media data-movement="light">
-          {{ loader.render() }}
-          {{ image.render(src = '#', className = 'media rounded-t-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
-        </div>
-        <div class="card-content py-6 px-4 md:px-6">
-          <h4 class="font-alt font-semibold text-2xl/tight mb-4">
-            Article
-            {{ i }}
-          </h4>
-          <p class="text-justify text-sm sm:text-base mb-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam repudiandae maxime quia culpa, est voluptatum hic at ipsa error officiis magni dolores molestiae inventore ipsum perferendis reiciendis sunt nesciunt possimus?
-          </p>
-          <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved>Button</button>
-        </div>
-      </article>
+<section class="xl:px-4">
+  <div class="wrapper flex flex-col items-center justify-center bg-grey dark:bg-dark xl:rounded-3xl" data-listing="1" id="content">
+    {{ subtitle.render(text = 'Cards', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+    <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10" data-anim data-movement="blend">
+      Construction and effect
+    </h3>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full mb-5 sm:md-10">
+      {% for i in range(1, 4) %}
+      <div class="transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
+        <article class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
+          <div class="aspect-4/3 relative bg-grey dark:bg-dark rounded-t-inherit overflow-hidden" data-media data-movement="light">
+            {{ loader.render() }}
+            {{ image.render(src = '#', className = 'media rounded-t-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+          </div>
+          <div class="card-content py-6 px-4 md:px-6">
+            <h4 class="font-alt font-semibold text-2xl mb-4">
+              Article
+              {{ i }}
+            </h4>
+            <p class="text-justify text-sm sm:text-base mb-5">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam repudiandae maxime quia culpa, est voluptatum hic at ipsa error officiis magni dolores molestiae inventore ipsum perferendis reiciendis sunt nesciunt possimus?
+            </p>
+            <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved>Button</button>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full">
-    {% for i in range(1, 4) %}
-    <div class="sm:block transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-listing-item>
-      <article class="group/inverted relative perspective-midrange h-full">
-        <div class="absolute inset-0 rotate-y-0 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out pointer-coarse:-rotate-y-180 group-hover/inverted:-rotate-y-180">
-          <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
-            <div class="aspect-4/2 relative bg-grey dark:bg-dark rounded-t-inherit overflow-hidden" data-media>
-              {{ loader.render() }}
-              {{ image.render(src = '#', className = 'media rounded-t-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
-            </div>
-            <div class="card-content py-6 px-4 sm:px-6">
-              <h4 class="font-alt font-semibold text-2xl">
-                Article
-                {{ i }}
-              </h4>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-8 w-full">
+      {% for i in range(1, 4) %}
+      <div class="sm:block transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-listing-item>
+        <article class="group/inverted relative perspective-midrange h-full">
+          <div class="absolute inset-0 rotate-y-0 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out pointer-coarse:-rotate-y-180 group-hover/inverted:-rotate-y-180">
+            <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
+              <div class="aspect-4/2 relative bg-grey dark:bg-dark rounded-t-inherit overflow-hidden" data-media>
+                {{ loader.render() }}
+                {{ image.render(src = '#', className = 'media rounded-t-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+              </div>
+              <div class="card-content py-6 px-4 sm:px-6">
+                <h4 class="font-alt font-semibold text-2xl">
+                  Article
+                  {{ i }}
+                </h4>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="rotate-y-180 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out pointer-coarse:rotate-y-0 group-hover/inverted:rotate-y-0">
-          <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
-            <div class="card-content py-6 px-4 sm:px-6">
-              <h4 class="font-alt font-semibold text-2xl mb-4">
-                Article
-                {{ i }}
-              </h4>
-              <p class="text-justify text-sm sm:text-base mb-5">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam repudiandae maxime quia culpa, est voluptatum hic at ipsa error officiis magni dolores molestiae inventore ipsum perferendis reiciendis sunt nesciunt possimus? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </p>
-              <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved>Button</button>
+          <div class="rotate-y-180 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out pointer-coarse:rotate-y-0 group-hover/inverted:rotate-y-0">
+            <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
+              <div class="card-content py-6 px-4 sm:px-6">
+                <h4 class="font-alt font-semibold text-2xl mb-4">
+                  Article
+                  {{ i }}
+                </h4>
+                <p class="text-justify text-sm sm:text-base mb-5">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam repudiandae maxime quia culpa, est voluptatum hic at ipsa error officiis magni dolores molestiae inventore ipsum perferendis reiciendis sunt nesciunt possimus? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+                <button class="btn btn-primary btn-fill btn-lg mt-auto" data-waved>Button</button>
+              </div>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
-  <div class="w-full max-w-48 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
-    <button class="btn btn-second btn-fade btn-lg sm:hidden w-full mt-5" data-listing-show data-waved="dark">Show more</button>
+    <div class="w-full max-w-48 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
+      <button class="btn btn-second btn-fade btn-lg sm:hidden w-full mt-5" data-listing-show data-waved="dark">Show more</button>
+    </div>
   </div>
 </section>
 
@@ -122,7 +124,7 @@
   <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
     Buttons waved
   </h3>
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full mb-5 sm:mb-10">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
     <button class="btn btn-primary btn-fill btn-lg" data-waved data-waved-reverse>data-waved</button>
     <button class="btn btn-primary btn-fill btn-lg" data-waved="dark" data-waved-reverse>data-waved="dark"</button>
   </div>
@@ -130,39 +132,41 @@
 
 {# Документы #}
 
-<section class="wrapper xl:wrapper-distance flex flex-col items-center justify-center bg-grey dark:bg-dark">
-  {{ subtitle.render(text = 'Accordion', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
-  <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
-    Drop-down list
-  </h3>
-  <div class="flex flex-col gap-5 w-full">
-    {% for i in range(0, 3) %}
-    <div class="group/accordion relative bg-second/10 rounded-2xl overflow-hidden shadow-md py-4 px-4 sm:py-6 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-accordion="{{ 'active' if loop.first else '' | safe }}" data-close-click>
-      <div class="flex items-center justify-between gap-4">
-        <h4 class="font-alt font-semibold text-xl">
-          Documents -
-          {{ i }}
-        </h4>
-        <button class="btn btn-primary btn-fill rounded-full shrink-0 size-9" data-accordion-toggle data-waved>
-          {{ icon.render(id = 'arrow-right', className = 'icon text-sm transition-transform group-data-[accordion=active]/accordion:rotate-90') }}
-        </button>
-      </div>
-      <div data-accordion-content>
-        <div class="flex flex-col gap-3 pt-4">
-          {% for j in range(0, 4) %}
-          <a class="flex items-center gap-4 relative bg-white dark:bg-black rounded-lg underline-offset-4 hover:underline p-3" data-waved="dark" draggable="false" href="">
-            <div class="flex items-center justify-center bg-primary/10 rounded-lg shrink-0 size-12">
-              {{ icon.render(id = 'file', className = 'icon text-primary text-2xl') }}
-            </div>
-            <p class="text-sm sm:text-base">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            </p>
-          </a>
-          {% endfor %}
+<section class="xl:pb-4 xl:px-4">
+  <div class="wrapper flex flex-col items-center justify-center bg-grey dark:bg-dark xl:rounded-3xl">
+    {{ subtitle.render(text = 'Accordion', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+    <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
+      Drop-down list
+    </h3>
+    <div class="flex flex-col gap-5 w-full">
+      {% for i in range(0, 3) %}
+      <div class="group/accordion relative bg-second/10 rounded-2xl overflow-hidden shadow-md py-4 px-4 sm:py-6 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-accordion="{{ 'active' if loop.first else '' | safe }}" data-close-click>
+        <div class="flex items-center justify-between gap-4">
+          <h4 class="font-alt font-semibold text-xl">
+            Documents -
+            {{ i }}
+          </h4>
+          <button class="btn btn-primary btn-fill rounded-full shrink-0 size-9" data-accordion-toggle data-waved>
+            {{ icon.render(id = 'arrow-right', className = 'icon text-sm transition-transform group-data-[accordion=active]/accordion:rotate-90') }}
+          </button>
+        </div>
+        <div data-accordion-content>
+          <div class="flex flex-col gap-3 pt-4">
+            {% for j in range(0, 4) %}
+            <a class="flex items-center gap-4 relative bg-white dark:bg-black rounded-lg underline-offset-4 hover:underline p-3" data-waved="dark" draggable="false" href="">
+              <div class="flex items-center justify-center bg-primary/10 rounded-lg shrink-0 size-12">
+                {{ icon.render(id = 'file', className = 'icon text-primary text-2xl') }}
+              </div>
+              <p class="text-sm sm:text-base">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              </p>
+            </a>
+            {% endfor %}
+          </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
 </section>
 
@@ -502,7 +506,7 @@
         <div class="absolute inset-5 border-8 border-solid border-second transition-transform ease-linear" data-parallax-item="100">
           {{ image.render(src = '#', className = 'media transition-transform ease-linear', data = 'data-parallax-item="80" data-lazy data-src="' ~ item.img ~ '"') }}
           <div class="absolute top-auto bottom-0 left-0 right-0 text-white transition-transform ease-linear pointer-events-none p-10" data-parallax-item="160">
-            <h2 class="font-medium text-xl/tight mb-3">
+            <h2 class="font-medium text-xl mb-3">
               Hover me!
             </h2>
             <p>
@@ -514,13 +518,6 @@
     </div>
     {% endfor %}
   </div>
-</section>
-
-{# Игра #}
-
-<section class="wrapper flex flex-col items-center justify-center bg-grey dark:bg-dark">
-  {{ subtitle.render(text = 'Game', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
-  <div class="grid grid-cols-3 border border-solid border-black w-full max-w-md mx-auto" data-game></div>
 </section>
 
 {# Плейер #}

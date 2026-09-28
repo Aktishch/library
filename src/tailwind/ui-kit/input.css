@@ -1,11 +1,10 @@
 @layer components {
   .input {
     --input-color: var(--color-black);
-    --input-text: var(--color-black);
 
     padding: calc(var(--input-size) / 4) calc(var(--input-size) / 3);
 
-    @apply block h-(--input-size) w-full rounded-lg border border-solid border-(--input-color) bg-white text-base font-normal text-(--input-text) transition duration-200;
+    @apply block h-(--input-size) w-full rounded-lg border border-solid border-(--input-color) bg-white text-base font-normal text-black transition duration-200;
 
     &:focus {
       box-shadow: 0 0 0 1px var(--input-color);
@@ -16,8 +15,8 @@
     }
 
     &:-webkit-autofill {
-      -webkit-text-fill-color: var(--input-text) !important;
-      -webkit-text-stroke-color: var(--input-text) !important;
+      -webkit-text-fill-color: inherit !important;
+      -webkit-text-stroke-color: inherit !important;
 
       @apply appearance-none border-(--input-color) transition-colors duration-1000000 ease-in-out;
     }

@@ -301,9 +301,11 @@
 
   {# Карта #}
 
-  <section class="wrapper xl:wrapper-distance relative bg-grey dark:bg-dark overflow-hidden h-96" data-yandex>
-    {{ loader.render() }}
-    <div class="absolute inset-0" data-yandex-map="45.03191007458623,38.921171499999936"></div>
+  <section class="xl:p-4">
+    <div class="wrapper relative bg-grey dark:bg-dark xl:rounded-3xl overflow-hidden h-96" data-yandex>
+      {{ loader.render() }}
+      <div class="absolute inset-0" data-yandex-map="45.03191007458623,38.921171499999936"></div>
+    </div>
   </section>
 
   {# Подвал #}

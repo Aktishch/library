@@ -2,6 +2,6 @@
 
 {% macro render(value) %}
 <button class="swiper-button-prev btn btn-primary btn-fill hidden md:flex absolute -left-6 rounded-full size-12" data-slider-prev="{{ value }}" data-waved>
-  {{ icon.render(id = 'arrow-left') }}
+  {{ icon.render(id = 'arrow-left', className = 'icon') }}
 </button>
 {% endmacro %}

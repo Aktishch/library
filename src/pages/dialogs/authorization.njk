@@ -9,7 +9,7 @@
         Login
       </h5>
       <div class="relative">
-        <input class="input input-gray dark:input-fade input-md" data-input="login" type="text" name="login">
+        <input class="input input-gray input-md dark:bg-transparent dark:text-white" data-input="login" type="text" name="login">
         {{ error.render() }}
       </div>
     </label>
@@ -18,7 +18,7 @@
         Password
       </h5>
       <div class="relative">
-        <input class="input input-gray dark:input-fade input-md pr-10" data-input="password" type="password" placeholder="********" autocomplete="new-password" name="password">
+        <input class="input input-gray input-md dark:bg-transparent dark:text-white pr-10" data-input="password" type="password" placeholder="********" autocomplete="new-password" name="password">
         {{ error.render() }}
         <button class="flex items-center justify-center absolute top-0 bottom-0 right-0 cursor-pointer w-10 h-full" data-password type="button">
           {{ icon.render(id = 'eye-visible', className = 'icon text-black text-xl pointer-events-none') }}
