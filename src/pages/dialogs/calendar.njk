@@ -9,7 +9,7 @@
       {% for item in ['5-9-2026', '7-9-2026', '10-10-2026'] %}
       <div class="aspect-4/3 relative bg-gray rounded-2xl overflow-hidden w-full" data-filtering-card="calendar" data-filtering-value="{{ item }}" data-media>
         {{ loader.render() }}
-        {{ image.render(src = '#', className = 'media rounded-t-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+        {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
       </div>
       {% endfor %}
     </div>

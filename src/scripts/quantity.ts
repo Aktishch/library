@@ -1,4 +1,4 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 const DATA_QUANTITY = getData('quantity')
 
@@ -57,6 +57,6 @@ const changeQuantity = (event: Event) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   container.addEventListener('click', changeQuantity)
 }

@@ -1,10 +1,10 @@
 import { closeSidebar, openSidebar } from '@scripts/sidebar'
-import { Container, getData, getTouchDevice } from '@utils'
+import { getData, getTouchDevice } from '@utils'
 
 const DATA_MENU = getData('menu')
 const THRESHOLD = 70
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   if (!getTouchDevice()) return
 
   const menu: HTMLDivElement | null = container.querySelector(`*[${DATA_MENU}]`)

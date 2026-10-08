@@ -1,8 +1,8 @@
-import { Container, getData, getTimeFormat, isEn, logError, source } from '@utils'
+import { getData, getTimeFormat, isEn, logError, source } from '@utils'
 
 const DATA_TIMER = getData('timer')
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const timer: HTMLDivElement | null = container.querySelector(`*[${DATA_TIMER}]`)
 
   if (!timer) return

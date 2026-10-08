@@ -1,4 +1,4 @@
-import { Container, getData, getScrollPosition } from '@utils'
+import { getData, getScrollPosition } from '@utils'
 
 interface ScrollOptions {
   block: HTMLElement | null
@@ -15,7 +15,7 @@ if (HASH) {
   window.history.replaceState(null, document.title, window.location.pathname + window.location.search)
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const scrollTo = ({ block, behavior }: ScrollOptions) => {
     if (!block) return
 

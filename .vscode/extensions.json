@@ -1,15 +1,27 @@
 {
   "recommendations": [
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "ginfuru.better-nunjucks",
+    "jacobcassidy.css-nesting-syntax-highlighting",
+    "j69.ejs-beautify",
+    "leonzalion.vscode-ejs",
+    "usernamehw.errorlens",
+    "dsznajder.es7-react-js-snippets",
     "dbaeumer.vscode-eslint",
+    "MikeBovenlander.formate",
+    "heybourn.headwind",
+    "ecmel.vscode-html-css",
+    "oderwat.indent-rainbow",
+    "ritwickdey.LiveServer",
+    "ZaferAYAN.lorem-picsum",
+    "ryuta46.multi-command",
+    "mrmlnc.vscode-postcss-sorting",
     "esbenp.prettier-vscode",
+    "rvest.vs-code-prettier-eslint",
+    "MS-CEINTL.vscode-language-pack-ru",
     "stylelint.vscode-stylelint",
     "bradlc.vscode-tailwindcss",
-    "heybourn.headwind",
-    "mrmlnc.vscode-postcss-sorting",
-    "usernamehw.errorlens",
-    "ryuta46.multi-command",
-    "j69.ejs-beautify",
-    "ginfuru.better-nunjucks",
-    "jacobcassidy.css-nesting"
+    "macieklad.tailwind-sass-syntax"
   ]
 }

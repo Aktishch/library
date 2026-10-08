@@ -1,4 +1,4 @@
-import { Container, getData, getTouchDevice } from '@utils'
+import { getData, getTouchDevice } from '@utils'
 
 interface ButtonOptions {
   min: number
@@ -11,7 +11,7 @@ const getRandomPosition = ({ min, max }: ButtonOptions) => {
   return Math.floor(min + Math.random() * (max - min + 1))
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   if (getTouchDevice()) return
 
   const running: HTMLDivElement | null = container.querySelector(`*[${DATA_RUNNING}]`)

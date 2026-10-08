@@ -1,4 +1,4 @@
-import { Container, getData } from '@utils'
+import { getData } from '@utils'
 
 const DATA_QUIZ = getData('quiz')
 
@@ -37,6 +37,6 @@ const checkQuizInputs = (event: Event) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   container.addEventListener('input', checkQuizInputs)
 }

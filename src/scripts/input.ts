@@ -1,4 +1,4 @@
-import { Container, getData } from '@utils'
+import { getData } from '@utils'
 
 const DATA_INPUT = getData('input')
 
@@ -40,6 +40,6 @@ const onInput = (event: Event) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   container.addEventListener('input', onInput)
 }

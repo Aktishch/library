@@ -1,5 +1,5 @@
 import { TARGET_ID } from '@scripts/scroll-to'
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 interface ItemOptions {
   condition: boolean
@@ -70,7 +70,7 @@ const updateLinePosition = ({ line, category }: LineOptions) => {
   line.style.left = `${category.offsetLeft}px`
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const filters = container.querySelectorAll<HTMLDivElement>(`*[${DATA_FILTER}]`)
 
   if (!filters.length) return

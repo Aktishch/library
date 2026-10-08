@@ -1,5 +1,43 @@
+@source not inline('container');
+
 @utility rounded-inherit {
   border-radius: inherit;
+}
+
+@utility rounded-tl-inherit {
+  border-top-left-radius: inherit;
+}
+
+@utility rounded-tr-inherit {
+  border-top-right-radius: inherit;
+}
+
+@utility rounded-bl-inherit {
+  border-bottom-left-radius: inherit;
+}
+
+@utility rounded-br-inherit {
+  border-bottom-right-radius: inherit;
+}
+
+@utility rounded-t-inherit {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+@utility rounded-b-inherit {
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+
+@utility rounded-l-inherit {
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+
+@utility rounded-r-inherit {
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
 }
 
 @utility btn-* {

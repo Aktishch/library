@@ -1,9 +1,9 @@
-import { Container, getData, getScrollPosition } from '@utils'
+import { getData, getScrollPosition } from '@utils'
 
 const DATA_HEADER = getData('header')
 const HEADER_CLASSNAME = 'sm:-translate-y-full'
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const header: HTMLElement | null = container.querySelector(`*[${DATA_HEADER}]`)
 
   if (!header) return

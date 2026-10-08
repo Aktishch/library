@@ -1,4 +1,4 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 interface BubbleOptions {
   size: number
@@ -49,7 +49,7 @@ const setBubblePosition = ({ size, number, input, progress, bubble }: BubbleOpti
   bubble.innerHTML = String(value)
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const ranges = container.querySelectorAll<HTMLDivElement>(`*[${DATA_RANGE}]`)
 
   if (!ranges.length) return

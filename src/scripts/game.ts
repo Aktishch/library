@@ -1,9 +1,9 @@
-import { Container, getData } from '@utils'
+import { getData } from '@utils'
 
 const DATA_GAME = getData('game')
 const CELL_CLASSNAMES = ['aspect-square', 'btn', 'btn-contur', 'active:translate-0']
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const game: HTMLDivElement | null = container.querySelector(`*[${DATA_GAME}]`)
 
   if (!game) return

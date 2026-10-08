@@ -1,4 +1,4 @@
-import { Container, getData, getTouchDevice } from '@utils'
+import { getData, getTouchDevice } from '@utils'
 
 interface WavedOptions {
   clientY: number
@@ -54,7 +54,7 @@ const setWaved = (event: Event) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   container.addEventListener('touchstart', setWaved, { passive: true })
   container.addEventListener('mousedown', setWaved)
 }

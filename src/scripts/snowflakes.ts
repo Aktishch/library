@@ -1,9 +1,9 @@
-import { Container, getData, getTouchDevice, source } from '@utils'
+import { getData, getTouchDevice, source } from '@utils'
 
 const DATA_SNOW = getData('snow')
 const SNOWFLAKE_CLASSNAME = 'snowflake'
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   if (getTouchDevice()) return
 
   const snow: HTMLDivElement | null = container.querySelector(`*[${DATA_SNOW}]`)

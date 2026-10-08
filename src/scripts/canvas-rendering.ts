@@ -1,4 +1,4 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 const DATA_RENDERING = getData('rendering')
 
@@ -6,7 +6,7 @@ const handleImageError = () => {
   logError(isEn ? `Couldn't upload image` : 'Не удалось загрузить изображение')
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const renderings = container.querySelectorAll<HTMLDivElement>(`*[${DATA_RENDERING}]`)
 
   if (!renderings.length) return

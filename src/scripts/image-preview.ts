@@ -1,4 +1,4 @@
-import { Container, getData, getValidate, handleFile, isEn, logError, uploadFile } from '@utils'
+import { getData, getValidate, handleFile, isEn, logError, uploadFile } from '@utils'
 
 const AVATAR_VALUE = 'avatar'
 const DATA_PREVIEW = getData('preview')
@@ -9,7 +9,7 @@ const DRAG_OPACITY_CLASSNAME = 'opacity-50'
 const DRAG_POINTER_CLASSNAME = 'pointer-events-none'
 const LABEL_DISABLED_CLASSNAMES = ['pointer-events-none', 'opacity-50']
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const previews = container.querySelectorAll<HTMLDivElement>(`*[${DATA_PREVIEW}]`)
 
   if (!previews.length) return

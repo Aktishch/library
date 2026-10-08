@@ -1,4 +1,4 @@
-import { Container, getData, getTimeFormat, hideScrollbar, isEn, logError, showScrollbar, source } from '@utils'
+import { getData, getTimeFormat, hideScrollbar, isEn, logError, showScrollbar, source } from '@utils'
 
 interface CompositionOptions {
   artist: string
@@ -8,7 +8,7 @@ interface CompositionOptions {
 }
 
 interface PlayerOptions {
-  container: Container
+  container: Document | HTMLElement
   playlist: CompositionOptions[]
 }
 
@@ -466,7 +466,7 @@ const initPlayer = ({ container, playlist }: PlayerOptions) => {
     })
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   initPlayer({ container, playlist })
   container.addEventListener('play', playOnlyOne)
 }

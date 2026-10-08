@@ -1,4 +1,4 @@
-import { Container, getData, getTouchDevice } from '@utils'
+import { getData, getTouchDevice } from '@utils'
 
 const DATA_MOVEMENT = getData('movement')
 const MOVEMENT_CLASSNAME = 'movement'
@@ -15,7 +15,7 @@ const setMovement = (event: MouseEvent) => {
   movement.style.setProperty('--x', `${clientX - left}px`)
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   if (getTouchDevice()) return
 
   const movements = container.querySelectorAll<HTMLElement>(`*[${DATA_MOVEMENT}]`)

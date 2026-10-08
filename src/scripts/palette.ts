@@ -1,14 +1,4 @@
-import {
-  Container,
-  COOKIE_EXPIRES_DAYS,
-  getCookie,
-  getData,
-  getTouchDevice,
-  html,
-  isEn,
-  logError,
-  setCookies
-} from '@utils'
+import { COOKIE_EXPIRES_DAYS, getCookie, getData, getTouchDevice, html, isEn, logError, setCookies } from '@utils'
 
 const PALETTE_NAME = 'palette'
 const DATA_PALETTE = getData(PALETTE_NAME)
@@ -32,7 +22,7 @@ const savePaletteCookie = (add = true) => {
   })
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   if (getTouchDevice()) return
 
   const palette: HTMLDivElement | null = container.querySelector(`*[${DATA_PALETTE}]`)

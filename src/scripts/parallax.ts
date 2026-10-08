@@ -1,8 +1,8 @@
-import { Container, getData, getTouchDevice } from '@utils'
+import { getData, getTouchDevice } from '@utils'
 
 const DATA_PARALLAX = getData('parallax')
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   if (getTouchDevice()) return
 
   const parallaxes = container.querySelectorAll<HTMLElement>(`*[${DATA_PARALLAX}]`)

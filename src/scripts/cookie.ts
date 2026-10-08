@@ -1,9 +1,9 @@
-import { Container, COOKIE_EXPIRES_DAYS, getCookie, getData, isEn, logError, setCookies } from '@utils'
+import { COOKIE_EXPIRES_DAYS, getCookie, getData, isEn, logError, setCookies } from '@utils'
 
 const DATA_COOKIE = getData('cookie')
 const COOKIE_VALUE = 'active'
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const cookies = container.querySelectorAll<HTMLElement>(`*[${DATA_COOKIE}]`)
 
   if (!cookies.length) return

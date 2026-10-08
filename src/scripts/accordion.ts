@@ -1,4 +1,4 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 const DATA_ACCORDION = getData('accordion')
 const DATA_CLOSE = getData('close')
@@ -7,7 +7,7 @@ const ACTIVE_VALUE = 'active'
 const OVERFLOW_CLASSNAME = 'overflow-hidden'
 const CURSOR_CLASSNAME = 'cursor-pointer'
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const accordions = container.querySelectorAll<HTMLDivElement>(`*[${DATA_ACCORDION}]`)
 
   if (!accordions.length) return

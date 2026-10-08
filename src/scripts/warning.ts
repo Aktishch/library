@@ -1,5 +1,5 @@
 import { dialog, getDialogSrc } from '@scripts/fancybox'
-import { Container, getData, html } from '@utils'
+import { getData, html } from '@utils'
 
 const WARNING_VALUE = 'warning'
 const DATA_WARNING = getData(WARNING_VALUE)
@@ -20,7 +20,7 @@ const checkWarning = (event: Event) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   if (sessionStorage.getItem(WARNING_VALUE) !== POSITIVE_VALUE) {
     setTimeout(() => {
       dialog.notClosing(getDialogSrc(WARNING_VALUE))

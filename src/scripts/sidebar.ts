@@ -1,4 +1,4 @@
-import { breakpoints, Container, getData, hideScrollbar, html, isEn, logError, media, showScrollbar } from '@utils'
+import { getData, hideScrollbar, html, isEn, logError, media, showScrollbar } from '@utils'
 
 const DATA_SIDEBAR = getData('sidebar')
 const DATA_OPEN = getData('open')
@@ -23,7 +23,7 @@ const resizeObserver = new ResizeObserver((entries) => {
   entries.forEach((entry) => {
     const sidebar = entry.target as HTMLDivElement
     const value = sidebar.dataset.breakpoint
-    const breakpoint: number = value && breakpoints.includes(value) ? media[value] : media.lg
+    const breakpoint: number = value && value in media ? media[value] : media.lg
 
     window.requestAnimationFrame(() => {
       if (html.clientWidth >= breakpoint) {
@@ -33,7 +33,7 @@ const resizeObserver = new ResizeObserver((entries) => {
   })
 })
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const sidebars = container.querySelectorAll<HTMLDivElement>(`*[${DATA_SIDEBAR}]`)
 
   if (!sidebars.length) return

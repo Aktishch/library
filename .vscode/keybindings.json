@@ -8,7 +8,7 @@
         "workbench.action.files.save"
       ]
     },
-    "when": "editorLangId == css || editorLangId == scss"
+    "when": "editorLangId == css"
   },
   {
     "key": "ctrl+meta+s",

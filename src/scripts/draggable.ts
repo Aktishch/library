@@ -1,4 +1,4 @@
-import { Container, getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
+import { getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
 
 interface Coordinates {
   top: number
@@ -7,7 +7,7 @@ interface Coordinates {
 
 const DATA_DRAGGABLE = getData('draggable')
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const draggables = container.querySelectorAll<HTMLElement>(`*[${DATA_DRAGGABLE}]`)
 
   if (!draggables.length) return

@@ -1,5 +1,5 @@
 import filtering from '@scripts/filtering'
-import { Container, getData, getTouchDevice, isEn, logError } from '@utils'
+import { getData, getTouchDevice, isEn, logError } from '@utils'
 import AirDatepicker, { AirDatepickerPosition, AirDatepickerViewsSingle } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
 
@@ -11,13 +11,13 @@ interface CalendarOptions {
 const DATA_DATEPICKER = getData('datepicker')
 const EXCLUDE_DATES = [+new Date(2026, 8, 5), +new Date(2026, 8, 7), +new Date(2026, 9, 10)]
 
-const getFancybox = (container: Container) => {
+const getFancybox = (container: Document | HTMLElement) => {
   const dialog: HTMLDivElement | null = container.querySelector('.f-html')
 
   return container !== document && dialog ? dialog : ''
 }
 
-export const initCalendar = (container: Container = document) => {
+export const initCalendar = (container: Document | HTMLElement = document) => {
   const calendar: HTMLDivElement | null = container.querySelector(`*[${DATA_DATEPICKER}-calendar]`)
 
   if (!calendar) return
@@ -67,7 +67,7 @@ export const initCalendar = (container: Container = document) => {
   filtering(container)
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const datepickers = container.querySelectorAll<HTMLFormElement>(`*[${DATA_DATEPICKER}]`)
 
   if (!datepickers.length) return

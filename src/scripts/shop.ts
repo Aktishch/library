@@ -1,4 +1,4 @@
-import { Container, getData, source } from '@utils'
+import { getData, source } from '@utils'
 
 const DATA_SHOP = getData('shop')
 const DATA_PRODUCT = getData('product')
@@ -18,7 +18,7 @@ const SHOP_CLASSNAMES = [
   'size-10'
 ]
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const shop: HTMLDivElement | null = container.querySelector(`*[${DATA_SHOP}]`)
 
   if (!shop) return

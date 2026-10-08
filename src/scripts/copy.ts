@@ -1,4 +1,4 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 const DATA_COPY = getData('copy')
 const HIDDEN_CLASSNAMES = ['invisible', 'opacity-0']
@@ -39,6 +39,6 @@ const setCopy = async (event: Event) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   container.addEventListener('click', setCopy)
 }

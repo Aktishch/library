@@ -1,4 +1,4 @@
-import { Container, getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
+import { getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
 
 const DATA_COMPARE = getData('compare')
 
@@ -17,7 +17,7 @@ const resizeObserver = new ResizeObserver((entries) => {
   })
 })
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const compares = container.querySelectorAll<HTMLDivElement>(`*[${DATA_COMPARE}]`)
 
   if (!compares.length) return

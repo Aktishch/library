@@ -1,9 +1,9 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 const DATA_SOCIAL = getData('social')
 const SHOW_VALUE = 'show'
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const social: HTMLDivElement | null = container.querySelector(`*[${DATA_SOCIAL}]`)
 
   if (!social) return

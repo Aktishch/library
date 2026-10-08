@@ -1,4 +1,4 @@
-import { Container, getData, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
+import { getData, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
 
 const DATA_FILELIST = getData('filelist')
 const DATA_FORM = getData('form')
@@ -6,7 +6,7 @@ const DATA_ERROR = getData('error')
 const LABEL_DISABLED_CLASSNAMES = ['pointer-events-none', 'opacity-50']
 const LI_CLASSNAMES = ['flex', 'items-center', 'justify-between', 'gap-5']
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const filelists = container.querySelectorAll<HTMLDivElement>(`*[${DATA_FILELIST}]`)
 
   if (!filelists.length) return

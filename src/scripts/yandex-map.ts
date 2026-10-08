@@ -1,4 +1,4 @@
-import { Container, getData, isEn, logError, source } from '@utils'
+import { getData, isEn, logError, source } from '@utils'
 import ymaps from 'ymaps'
 
 type ymaps = typeof ymaps
@@ -11,7 +11,7 @@ const DATA_YANDEX = getData('yandex')
 const DATA_LOADER = getData('loader')
 const YANDEX_LANGUARE = isEn ? 'en_US' : 'ru_RU'
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const yandex: HTMLElement | null = container.querySelector(`*[${DATA_YANDEX}]`)
 
   if (!yandex) return

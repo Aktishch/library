@@ -1,4 +1,4 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 const DATA_SAVE = getData('save')
 
@@ -6,7 +6,7 @@ const handleInput = (input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaE
   return !input || input.hasAttribute('hidden') || input.type === 'hidden' || input.type === 'file'
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const forms = container.querySelectorAll<HTMLFormElement>(`*[${DATA_SAVE}]`)
 
   if (!forms.length) return

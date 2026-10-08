@@ -1,4 +1,4 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 interface SmartOptions {
   condition: boolean
@@ -16,7 +16,7 @@ const checkItem = ({ condition, item }: SmartOptions) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const smartMenu: HTMLDivElement | null = container.querySelector(`*[${DATA_SMART}]`)
 
   if (!smartMenu) return

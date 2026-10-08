@@ -2,7 +2,6 @@ import accordion from '@scripts/accordion'
 import airDatepicker from '@scripts/air-datepicker'
 import animation from '@scripts/animation'
 import annum from '@scripts/annum'
-import author from '@scripts/author'
 import canvasRendering from '@scripts/canvas-rendering'
 import combination from '@scripts/combination'
 import compare from '@scripts/compare'
@@ -55,10 +54,10 @@ import yandexMap from '@scripts/yandex-map'
 import './tailwind/style.css'
 
 const initApplication = () => {
+  console.info('Frontend-developer: Aktishch')
   accordion()
   airDatepicker()
   annum()
-  author()
   canvasRendering()
   combination()
   compare()

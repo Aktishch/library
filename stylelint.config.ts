@@ -22,12 +22,6 @@ export default {
         ignore: ['after-declaration', 'after-comment', 'inside-single-line-block']
       }
     ],
-    'selector-pseudo-class-no-unknown': [
-      true,
-      {
-        ignorePseudoClasses: ['vertical', 'horizontal', 'decrement', 'increment', 'start', 'end', 'theme']
-      }
-    ],
     'plugin/declaration-block-no-ignored-properties': true,
     'import-notation': 'string',
     'at-rule-no-unknown': [

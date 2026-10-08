@@ -1,11 +1,11 @@
 import { dialog, getDialogSrc } from '@scripts/fancybox'
-import { Container, getData, getValidate, logError } from '@utils'
+import { getData, getValidate, logError } from '@utils'
 
 const DATA_FORM = getData('form')
 const SUBMIT_BUTTON = 'button[type="submit"]'
 const REQUEST_URL = '/ajax/submit-handler.php'
 
-export const setStateSubmitBtn = (container: Container) => {
+export const setStateSubmitBtn = (container: Document | HTMLElement) => {
   const forms = container.querySelectorAll<HTMLFormElement>(`*[${DATA_FORM}]`)
 
   if (!forms.length) return
@@ -134,7 +134,7 @@ const prohibitSubmit = (event: KeyboardEvent) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   setStateSubmitBtn(container)
   container.addEventListener('submit', onSubmit)
   container.addEventListener('keypress', prohibitSubmit as EventListener)

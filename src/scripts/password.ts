@@ -1,4 +1,4 @@
-import { Container, getData, isEn, logError, source } from '@utils'
+import { getData, isEn, logError, source } from '@utils'
 
 const PARSSWORD_VALUE = 'password'
 const DATA_PARSSWORD = getData(PARSSWORD_VALUE)
@@ -32,6 +32,6 @@ const changeTypeInput = (event: Event) => {
   use.setAttribute('href', status ? `${source}/img/icons.svg#eye-hidden` : `${source}/img/icons.svg#eye-visible`)
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   container.addEventListener('click', changeTypeInput)
 }

@@ -1,4 +1,4 @@
-import { breakpoints, Container, getData, html, isEn, logError, media } from '@utils'
+import { getData, html, isEn, logError, media } from '@utils'
 
 const DATA_SCROLLING = getData('scrolling')
 
@@ -12,7 +12,7 @@ const handleHorizontalError = () => {
 
 const getBreakpoint = (scrolling: HTMLElement) => {
   const value = scrolling.dataset.breakpoint
-  const breakpoint: number = value && breakpoints.includes(value) ? media[value] : media.md
+  const breakpoint: number = value && value in media ? media[value] : media.md
 
   return html.clientWidth >= breakpoint
 }
@@ -39,7 +39,7 @@ const resizeObserver = new ResizeObserver((entries) => {
   })
 })
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const scrollings = container.querySelectorAll<HTMLElement>(`*[${DATA_SCROLLING}]`)
 
   if (!scrollings.length) return

@@ -1,7 +1,7 @@
 {% import 'src/components/icon.njk' as icon %}
 
-{% macro render(className = none) %}
-<div class="loader {{ (className if className != none else '') | safe }}" data-loader>
+{% macro render(className = none, data = 'data-loader') %}
+<div class="loader {{ (className if className != none else '') | safe }}" {{ (data if data != none else '') | safe }}>
   <span class="loader-progress">
     {{ icon.render(id = 'loader', className = 'loader-icon icon') }}
   </span>

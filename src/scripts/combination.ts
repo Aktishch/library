@@ -1,5 +1,3 @@
-import { Container } from '@utils'
-
 const COMBINATION_OPTIONS = {
   keys: ['s', 't', 'a', 'r', 't'],
   status: true,
@@ -22,6 +20,6 @@ const setCombination = (event: KeyboardEvent) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   container.addEventListener('keyup', setCombination as EventListener)
 }

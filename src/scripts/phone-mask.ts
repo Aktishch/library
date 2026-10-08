@@ -1,5 +1,3 @@
-import { Container } from '@utils'
-
 const getPhoneValue = (input: HTMLInputElement) => {
   return input.value.replace(/\D/g, '')
 }
@@ -76,7 +74,7 @@ const onKeyDown = (event: KeyboardEvent) => {
   }
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   container.addEventListener('input', onInput as EventListener)
   container.addEventListener('keyup', onKeyUp as EventListener)
   container.addEventListener('keydown', onKeyDown as EventListener)

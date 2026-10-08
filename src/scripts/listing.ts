@@ -1,10 +1,10 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 const DATA_LISTING = getData('listing')
 const DATA_ANIM = getData('anim')
 const ITEM_HIDDEN_CLASSNAME = 'hidden'
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const listings = container.querySelectorAll<HTMLElement>(`*[${DATA_LISTING}]`)
 
   if (!listings.length) return

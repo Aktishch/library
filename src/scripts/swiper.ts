@@ -1,5 +1,5 @@
 import { checkQuizSlide } from '@scripts/quiz'
-import { Container, getData, isEn, logError, media } from '@utils'
+import { getData, isEn, logError, media } from '@utils'
 import Swiper from 'swiper'
 import { Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules'
 
@@ -19,7 +19,7 @@ const handleValueError = (value: string) => {
   )
 }
 
-const initGallerySlider = (container: Container) => {
+const initGallerySlider = (container: Document | HTMLElement) => {
   const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="gallery"]`)
 
   if (!slider) return
@@ -71,7 +71,7 @@ const initGallerySlider = (container: Container) => {
   })
 }
 
-const initProductsSlider = (container: Container) => {
+const initProductsSlider = (container: Document | HTMLElement) => {
   const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="products"]`)
 
   if (!slider) return
@@ -119,7 +119,7 @@ const initProductsSlider = (container: Container) => {
   })
 }
 
-const initQuizSlider = (container: Container) => {
+const initQuizSlider = (container: Document | HTMLElement) => {
   const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="quiz"]`)
 
   if (!slider) return
@@ -185,7 +185,7 @@ const initQuizSlider = (container: Container) => {
   })
 }
 
-const initThumbsSlider = (container: Container) => {
+const initThumbsSlider = (container: Document | HTMLElement) => {
   const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="thumbs"]`)
 
   if (!slider) return
@@ -215,7 +215,7 @@ const initThumbsSlider = (container: Container) => {
   })
 }
 
-const initBgSlider = (container: Container) => {
+const initBgSlider = (container: Document | HTMLElement) => {
   const slider: HTMLDivElement | null = container.querySelector(`*[${DATA_SLIDER}="bg"]`)
 
   if (!slider) return
@@ -240,7 +240,7 @@ const initBgSlider = (container: Container) => {
   })
 }
 
-const initDescriptionSlider = (container: Container) => {
+const initDescriptionSlider = (container: Document | HTMLElement) => {
   const description: HTMLDivElement | null = container.querySelector(`*[${DATA_DESCRIPTION}]`)
 
   if (!description) return
@@ -282,7 +282,7 @@ const initDescriptionSlider = (container: Container) => {
   })
 }
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   initGallerySlider(container)
   initProductsSlider(container)
   initQuizSlider(container)

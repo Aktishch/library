@@ -1,4 +1,4 @@
-import { Container, getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
+import { getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
 
 const DATA_PRELOADER = getData('preloader')
 const INVISIBLE_CLASSNAMES = ['invisible', 'opacity-0']
@@ -20,7 +20,7 @@ const loadTimePreloader = (preloader: HTMLElement | null) => {
   })
 }
 
-export default async (container: Container = document) => {
+export default async (container: Document | HTMLElement = document) => {
   await loadTimePreloader(container.querySelector(`*[${DATA_PRELOADER}]`))
     .then((preloader) => {
       showScrollbar()

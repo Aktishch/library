@@ -1,9 +1,9 @@
-import { Container, getData, isEn, logError } from '@utils'
+import { getData, isEn, logError } from '@utils'
 
 const DATA_COUNTER = getData('counter')
 const HIDDEN_CLASSNAME = 'hidden'
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const counter: HTMLDivElement | null = container.querySelector(`*[${DATA_COUNTER}]`)
 
   if (!counter) return

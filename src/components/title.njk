@@ -1,5 +1,5 @@
 {% macro render(text, className = none, data = none) %}
 <h1 class="font-alt font-bold text-center text-5xl lg:text-6xl {{ (className if className != none else '') | safe }}" {{ (data if data != none else '') | safe }}>
-  {{ text }}
+  {{ text | safe }}
 </h1>
 {% endmacro %}

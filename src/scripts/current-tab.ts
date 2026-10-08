@@ -1,6 +1,6 @@
-import { Container, isEn } from '@utils'
+import { isEn } from '@utils'
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const title = container.querySelector('title')
 
   if (!title) return

@@ -1,4 +1,4 @@
-import { Container, getData, source } from '@utils'
+import { getData, source } from '@utils'
 
 const DATA_WORLD = getData('world')
 const ICON_SIZE = 24
@@ -8,7 +8,7 @@ const IMAGE_CLASSNAME = 'pointer-events-none'
 const RECT_CLASSNAMES = ['pointer-events-none', 'fill-white', 'invisible', 'opacity-0', 'transition-opacity']
 const TEXT_CLASSNAMES = ['pointer-events-none', 'invisible', 'opacity-0', 'transition-opacity', 'fill-black', 'text-sm']
 
-export default (container: Container = document) => {
+export default (container: Document | HTMLElement = document) => {
   const world: HTMLElement | null = container.querySelector(`*[${DATA_WORLD}]`)
 
   if (!world) return
