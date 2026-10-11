@@ -9,7 +9,7 @@ export default defineConfig([
     ignores: ['node_modules/', 'dist/']
   },
   {
-    files: ['**/*.js', '**/*.ts'],
+    files: ['**/*.ts'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {

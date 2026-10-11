@@ -2,7 +2,7 @@
   "css.validate": true,
   "stylelint.enable": true,
   "stylelint.validate": ["css"],
-  "[html][njk]": {
+  "[njk]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
@@ -13,7 +13,7 @@
     },
     "editor.formatOnSave": true
   },
-  "[javascript][typescript]": {
+  "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit",

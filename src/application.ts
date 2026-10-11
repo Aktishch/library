@@ -54,7 +54,6 @@ import yandexMap from '@scripts/yandex-map'
 import './tailwind/style.css'
 
 const initApplication = () => {
-  console.info('Frontend-developer: Aktishch')
   accordion()
   airDatepicker()
   annum()
@@ -110,4 +109,5 @@ const initApplication = () => {
   })
 }
 
+console.info('Frontend-developer: Aktishch')
 window.addEventListener('DOMContentLoaded', initApplication)

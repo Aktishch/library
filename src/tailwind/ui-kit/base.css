@@ -18,7 +18,7 @@
   }
 
   main {
-    @apply grow;
+    @apply flex grow flex-col;
   }
 
   footer {
