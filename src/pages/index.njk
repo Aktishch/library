@@ -18,7 +18,7 @@
   {{ image.render(src = '/img/pictures/logo', format = 'svg', className = 'w-full max-w-2xl mb-10 transition-[opacity,translate] duration-1000 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim') }}
   {{ title.render(text = 'Main block', className = 'mb-5 sm:mb-10 transition-[opacity,translate] duration-500 delay-100 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   <div class="w-full max-w-48 transition-[opacity,translate] duration-500 delay-200 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
-    <a class="btn btn-primary btn-fill btn-lg w-full" data-waved data-scroll-to draggable="false" href="#content">Show more</a>
+    <a class="btn btn-primary btn-fill btn-lg w-full" data-waved data-scroll-to href="#content" draggable="false">Show more</a>
   </div>
 </section>
 
@@ -140,7 +140,7 @@
     </h3>
     <div class="flex flex-col gap-5 w-full">
       {% for i in range(0, 3) %}
-      <div class="group/accordion relative bg-second/10 rounded-2xl overflow-hidden shadow-md py-4 px-4 sm:py-6 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-accordion="{{ 'active' if loop.first else '' | safe }}" data-close-click>
+      <div class="group/accordion relative bg-second/10 rounded-2xl overflow-hidden shadow-md py-4 px-4 sm:py-6 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-accordion="{{ ('active' if loop.first) | safe }}" data-close-click>
         <div class="flex items-center justify-between gap-4">
           <h4 class="font-alt font-semibold text-xl">
             Documents -
@@ -153,7 +153,7 @@
         <div data-accordion-content>
           <div class="flex flex-col gap-3 pt-4">
             {% for j in range(0, 4) %}
-            <a class="flex items-center gap-4 relative bg-white dark:bg-black rounded-lg underline-offset-4 hover:underline p-3" data-waved="dark" draggable="false" href="">
+            <a class="flex items-center gap-4 relative bg-white dark:bg-black rounded-lg underline-offset-4 hover:underline p-3" data-waved="dark" href="" draggable="false">
               <div class="flex items-center justify-center bg-primary/10 rounded-lg shrink-0 size-12">
                 {{ icon.render(id = 'file', className = 'icon text-primary text-2xl') }}
               </div>
@@ -219,7 +219,7 @@
       {{ image.render(src = '/img/pictures/circle-red', format = 'svg', className = 'absolute bottom-0 -right-7 z-10 drop-shadow-md pointer-events-none w-16', data = 'data-scroll data-scroll-speed="-0.1"') }}
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-4 relative bg-grey md:bg-transparent text-second md:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-white overflow-hidden md:pb-4 mb-5 md:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
         {% for item in ['text-style', 'form-validate', 'switches', 'file'] %}
-        <button class="text-xl grow p-4 md:p-0 data-active:bg-second md:data-active:bg-transparent data-active:text-white md:data-active:text-primary data-active:pointer-events-none" data-filtering-category="filtering" data-filtering-value="{{ loop.index0 }}" {{ 'data-active' if loop.first else '' | safe }}>
+        <button class="text-xl grow p-4 md:p-0 data-active:bg-second md:data-active:bg-transparent data-active:text-white md:data-active:text-primary data-active:pointer-events-none" data-filtering-category="filtering" data-filtering-value="{{ loop.index0 }}" {{ ('data-active' if loop.first) | safe }}>
           {{ item }}
         </button>
         {% endfor %}
@@ -343,7 +343,7 @@
             <button class="btn btn-second btn-fill btn-lg" data-waved="dark" type="submit">Submit</button>
           </form>
           <div class="flex items-center justify-center mt-5">
-            <a class="text-second text-lg underline-offset-4 hover:underline cursor-pointer w-max" data-fancybox-dialog data-type="ajax" draggable="false" href="/dialogs/politics.html">Privacy policy</a>
+            <a class="text-second text-lg underline-offset-4 hover:underline cursor-pointer w-max" data-fancybox-dialog data-type="ajax" href="/dialogs/politics.html" draggable="false">Privacy policy</a>
           </div>
         </div>
         <div data-filtering-card="filtering" data-filtering-value="2">
@@ -424,7 +424,7 @@
         <div data-filtering-card="filtering" data-filtering-value="3">
           <div class="w-full max-w-xs mx-auto" id="copy">
             <div class="flex items-center gap-3 w-full mb-5">
-              <a class="aspect-square relative bg-primary/40 rounded-full overflow-hidden shrink-0 w-10" data-fancybox-avatar data-type="ajax" draggable="false" href="/dialogs/avatar.html">
+              <a class="aspect-square relative bg-primary/40 rounded-full overflow-hidden shrink-0 w-10" data-fancybox-avatar data-type="ajax" href="/dialogs/avatar.html" draggable="false">
                 <div class="flex items-center justify-center absolute inset-0 rounded-inherit">
                   {{ icon.render(id = 'user', className = 'icon text-white text-sm') }}
                 </div>
@@ -462,10 +462,10 @@
                 <button class="btn btn-gray btn-fill btn-lg w-full" data-copy-button data-waved="dark">Copy</button>
                 <span class="absolute top-full left-0 right-0 text-primary text-sm opacity-0 invisible transition-[opacity,visibility]" data-copy-result>Скопировано</span>
               </div>
-              <a class="btn btn-gray btn-fill btn-lg" data-waved="dark" data-fancybox-calendar data-type="ajax" draggable="false" href="/dialogs/calendar.html">Calendar</a>
+              <a class="btn btn-gray btn-fill btn-lg" data-waved="dark" data-fancybox-calendar data-type="ajax" href="/dialogs/calendar.html" draggable="false">Calendar</a>
               <div class="relative" data-rendering="SL-QGLZC-KHQDJ2H">
                 <canvas hidden data-rendering-canvas="/img/pictures/certificate.jpg" width="540" height="750"></canvas>
-                <a class="btn btn-gray btn-fill btn-lg" data-rendering-link data-waved="dark" draggable="false" href="" download="certificate">Download canvas</a>
+                <a class="btn btn-gray btn-fill btn-lg" data-rendering-link data-waved="dark" href="" download="certificate" draggable="false">Download canvas</a>
               </div>
               <div data-cookie="/" data-expires="7" id="cookie">
                 <button class="btn btn-gray btn-fill btn-lg w-full" data-cookie-button data-waved="dark">Cookie</button>

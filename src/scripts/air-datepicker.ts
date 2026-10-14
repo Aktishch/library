@@ -1,11 +1,19 @@
 import filtering from '@scripts/filtering'
 import { getData, getTouchDevice, isEn, logError } from '@utils'
-import AirDatepicker, { AirDatepickerPosition, AirDatepickerViewsSingle } from 'air-datepicker'
-import localeRu from 'air-datepicker/locale/ru'
+import AirDatepicker, { AirDatepickerLocale, AirDatepickerPosition, AirDatepickerViewsSingle } from 'air-datepicker'
+import localeEn from 'air-datepicker/locale/en'
+
+interface Locale extends AirDatepickerLocale {
+  default?: AirDatepickerLocale
+}
 
 interface CalendarOptions {
   date: Date
   cellType: AirDatepickerViewsSingle
+}
+
+if (isEn) {
+  AirDatepicker.defaults.locale = (localeEn as Locale).default || localeEn
 }
 
 const DATA_DATEPICKER = getData('datepicker')
@@ -59,7 +67,6 @@ export const initCalendar = (container: Document | HTMLElement = document) => {
   }
 
   new AirDatepicker(calendar, {
-    locale: localeRu,
     onRenderCell: renderCalendarCell,
     selectedDates: [new Date()]
   })
@@ -94,7 +101,6 @@ export default (container: Document | HTMLElement = document) => {
           minDate: String(date)
         })
       },
-      locale: localeRu,
       container: wrapper,
       isMobile,
       autoClose: true,

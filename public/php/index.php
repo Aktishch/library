@@ -5,6 +5,7 @@
   ];
 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/components/icon.php';
+
   ob_start();
 ?>
 
@@ -29,7 +30,7 @@
 
 <a href="/dialogs/feedback.php?<?= http_build_query(['theme' => $data['title']]) ?>">link</a>
 
-<?php renderIcon(id: 'loader', className: 'loader-icon icon'); ?>
+<?php render_icon(id: 'icon', className: 'icon'); ?>
 
 <form action="/ajax/submit-handler.php" method="POST">
   <input type="hidden" value="Тема" name="theme">

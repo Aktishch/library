@@ -26,7 +26,7 @@
   <div class="grid grid-cols-2 lg:grid-cols-3 grid-flow-row-dense lg:auto-rows-12 gap-3 md:gap-5 lg:gap-8 w-full">
     {% for item in ['lg:row-span-5', 'lg:row-span-4', 'lg:row-span-5', 'lg:row-span-5', 'lg:row-span-4', 'lg:row-span-4'] %}
     <div class="transition-[opacity,rotate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:rotate-180 {{ item }}" data-anim>
-      <a class="aspect-square lg:aspect-auto block relative bg-grey dark:bg-dark rounded-xl overflow-hidden shadow-md h-full" data-media data-movement="light" data-fancybox="grid" draggable="false" href="/img/pictures/test-gray.jpg">
+      <a class="aspect-square lg:aspect-auto block relative bg-grey dark:bg-dark rounded-xl overflow-hidden shadow-md h-full" data-media data-movement="light" data-fancybox="grid" href="/img/pictures/test-gray.jpg" draggable="false">
         {{ loader.render() }}
         {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
       </a>
@@ -65,7 +65,7 @@
   <div class="w-full max-w-xl mx-auto" data-filtering="sorting">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-4 relative bg-grey md:bg-transparent text-second md:text-black md:dark:text-white rounded-2xl md:rounded-none md:border-b md:border-solid md:border-gray overflow-hidden md:pb-4 mb-5 md:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim>
       {% for item in ['all', 'primary', 'second', 'green', 'mix', 'none'] %}
-      <button class="text-xl grow p-4 md:p-0 data-active:bg-second md:data-active:bg-transparent data-active:text-white md:data-active:text-primary data-active:pointer-events-none" data-filtering-category="sorting" data-filtering-value="{{ item }}" {{ 'data-active' if loop.first else '' | safe }}>
+      <button class="text-xl grow p-4 md:p-0 data-active:bg-second md:data-active:bg-transparent data-active:text-white md:data-active:text-primary data-active:pointer-events-none" data-filtering-category="sorting" data-filtering-value="{{ item }}" {{ ('data-active' if loop.first) | safe }}>
         {{ item }}
       </button>
       {% endfor %}

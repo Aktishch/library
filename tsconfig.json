@@ -19,6 +19,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
+      "@scripts": ["./src/scripts"],
       "@scripts/*": ["./src/scripts/*"],
       "@utils": ["./src/scripts/utils"],
       "@utils/*": ["./src/scripts/utils/*"],

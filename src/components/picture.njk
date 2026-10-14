@@ -1,0 +1,6 @@
+{% macro render(name, className = none, data = none, media = 576) %}
+<picture>
+  <source data-srcset="/img/pictures/{{ name }}-bg-desktop.jpg" media="(min-width: {{ media }}px)">
+  <img {{ ('class="' ~ className ~ '"' if className) | safe }} {{ (data if data) | safe }} data-lazy data-src="/img/pictures/{{ name }}-bg-mobile.jpg" src="#" draggable="false" alt="">
+</picture>
+{% endmacro %}
