@@ -1,9 +1,9 @@
-import { getData, getValidate, handleFile, isEn, logError, source, uploadFile } from '@utils'
+import { getData, getValidate, handleFile, isRu, logError, source, uploadFile } from '@utils'
 
 const DATA_FILELIST = getData('filelist')
 const DATA_FORM = getData('form')
 const DATA_ERROR = getData('error')
-const LABEL_DISABLED_CLASSNAMES = ['pointer-events-none', 'opacity-50']
+const DISABLED_CLASSNAMES = ['pointer-events-none', 'opacity-50']
 const LI_CLASSNAMES = ['flex', 'items-center', 'justify-between', 'gap-5']
 
 export default (container: Document | HTMLElement = document) => {
@@ -21,9 +21,9 @@ export default (container: Document | HTMLElement = document) => {
 
     if (!label || !input || !error || !text || !listing) {
       logError(
-        isEn
-          ? `The ${DATA_FILELIST} does not have a ${DATA_FILELIST}-(label, input, error, text, listing) child element`
-          : `У ${DATA_FILELIST} отсутствует дочерний элемент ${DATA_FILELIST}-(label, input, error, text, listing)`
+        isRu
+          ? `У ${DATA_FILELIST} отсутствует дочерний элемент ${DATA_FILELIST}-(label, input, error, text, listing)`
+          : `The ${DATA_FILELIST} does not have a ${DATA_FILELIST}-(label, input, error, text, listing) child element`
       )
       return
     }
@@ -33,9 +33,9 @@ export default (container: Document | HTMLElement = document) => {
     const size = Number(filelist.dataset.size) || 2
     const maxLength = Number(listing.dataset.filelistListing) || 3
     const message = {
-      default: isEn ? 'Upload files' : 'Загрузить файлы',
-      more: isEn ? 'Upload more' : 'Загрузить ещё',
-      limit: isEn ? `No more than ${maxLength} files` : `Не больше ${maxLength} файлов`
+      default: isRu ? 'Загрузить файлы' : 'Upload files',
+      more: isRu ? 'Загрузить ещё' : 'Upload more',
+      limit: isRu ? `Не больше ${maxLength} файлов` : `No more than ${maxLength} files`
     }
     let data = new DataTransfer()
 
@@ -52,7 +52,7 @@ export default (container: Document | HTMLElement = document) => {
             const { file } = await uploadFile(files[i])
 
             if (!handleFile({ error, file, type, size })) {
-              throw isEn ? 'File validation failed' : 'Файл не прошёл валидацию'
+              throw isRu ? 'Файл не прошёл валидацию' : 'File validation failed'
             }
 
             if (data.files.length < maxLength) {
@@ -74,7 +74,7 @@ export default (container: Document | HTMLElement = document) => {
             }
 
             if (data.files.length === maxLength) {
-              label.classList.add(...LABEL_DISABLED_CLASSNAMES)
+              label.classList.add(...DISABLED_CLASSNAMES)
               text.textContent = message.limit
               break
             }
@@ -110,14 +110,14 @@ export default (container: Document | HTMLElement = document) => {
 
       text.textContent = !data.files.length ? message.default : message.more
       assignFileList()
-      label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
+      label.classList.remove(...DISABLED_CLASSNAMES)
     }
 
     const resetFileList = (event: Event) => {
       event.preventDefault()
 
       if (getValidate(event.target as HTMLFormElement)) {
-        label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
+        label.classList.remove(...DISABLED_CLASSNAMES)
         text.textContent = message.default
         listing.innerHTML = ''
         data = new DataTransfer()

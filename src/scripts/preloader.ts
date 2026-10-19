@@ -1,7 +1,7 @@
-import { getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
+import { getData, hideScrollbar, isRu, logError, showScrollbar } from '@utils'
 
 const DATA_PRELOADER = getData('preloader')
-const INVISIBLE_CLASSNAMES = ['invisible', 'opacity-0']
+const VISIBLE_CLASSNAMES = ['invisible', 'opacity-0']
 const DURATION = 500
 
 const loadTimePreloader = (preloader: HTMLElement | null) => {
@@ -9,13 +9,13 @@ const loadTimePreloader = (preloader: HTMLElement | null) => {
     if (preloader) {
       hideScrollbar()
       preloader.style.transitionDuration = `${DURATION}ms`
-      preloader.classList.add(...INVISIBLE_CLASSNAMES)
+      preloader.classList.add(...VISIBLE_CLASSNAMES)
 
       setTimeout(() => {
         resolve(preloader)
       }, DURATION)
     } else {
-      reject(isEn ? `${DATA_PRELOADER} was not found` : `${DATA_PRELOADER} не был найден`)
+      reject(isRu ? `${DATA_PRELOADER} не был найден` : `${DATA_PRELOADER} was not found`)
     }
   })
 }

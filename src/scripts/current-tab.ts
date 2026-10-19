@@ -1,4 +1,4 @@
-import { isEn } from '@utils'
+import { isRu } from '@utils'
 
 export default (container: Document | HTMLElement = document) => {
   const title = container.querySelector('title')
@@ -18,7 +18,7 @@ export default (container: Document | HTMLElement = document) => {
     clearTimer()
 
     timeOut = setTimeout(() => {
-      title.innerText = isEn ? 'You have left the page' : 'Вы покинули страницу'
+      title.innerText = isRu ? 'Вы покинули страницу' : 'You have left the page'
     }, 5000)
   }
 

@@ -1,7 +1,7 @@
 import { getData, getScrollPosition } from '@utils'
 
 const DATA_HEADER = getData('header')
-const HEADER_CLASSNAME = 'sm:-translate-y-full'
+const TRANSLATE_CLASSNAME = 'sm:-translate-y-full'
 
 export default (container: Document | HTMLElement = document) => {
   const header: HTMLElement | null = container.querySelector(`*[${DATA_HEADER}]`)
@@ -17,12 +17,12 @@ export default (container: Document | HTMLElement = document) => {
 
     if (header.offsetHeight < currentOffsetTop) {
       if (prevOffsetTop > currentOffsetTop) {
-        header.classList.remove(HEADER_CLASSNAME)
+        header.classList.remove(TRANSLATE_CLASSNAME)
       } else {
-        header.classList.add(HEADER_CLASSNAME)
+        header.classList.add(TRANSLATE_CLASSNAME)
       }
     } else {
-      header.classList.remove(HEADER_CLASSNAME)
+      header.classList.remove(TRANSLATE_CLASSNAME)
     }
 
     prevOffsetTop = currentOffsetTop

@@ -1,5 +1,11 @@
-import { getData, isEn, logError, source } from '@utils'
+import { getData, isRu, logError, source } from '@utils'
 import ymaps from 'ymaps'
+
+declare global {
+  interface Window {
+    marks: number[][]
+  }
+}
 
 type ymaps = typeof ymaps
 
@@ -9,12 +15,31 @@ interface YandexOptions extends ymaps {
 
 const DATA_YANDEX = getData('yandex')
 const DATA_LOADER = getData('loader')
-const YANDEX_LANGUARE = isEn ? 'en_US' : 'ru_RU'
+const LANGUARE = isRu ? 'ru_RU' : 'en_US'
+const POINT_SIZE = [62, 62]
+const { marks } = window
+const MARKS_LENGTH = marks.length
+
+const getCenter = (marks: number[][]) => {
+  const coordinates = [0, 0]
+
+  marks.forEach((mark) => {
+    coordinates[0] += mark[0]
+    coordinates[1] += mark[1]
+  })
+
+  return [coordinates[0] / MARKS_LENGTH, coordinates[1] / MARKS_LENGTH]
+}
 
 export default (container: Document | HTMLElement = document) => {
   const yandex: HTMLElement | null = container.querySelector(`*[${DATA_YANDEX}]`)
 
   if (!yandex) return
+
+  if (!MARKS_LENGTH) {
+    logError(isRu ? 'Отсутствуют элементы в window.marks' : 'There are no elements in window.marks')
+    return
+  }
 
   const observer = new IntersectionObserver(
     (entries, observer) => {
@@ -26,39 +51,15 @@ export default (container: Document | HTMLElement = document) => {
 
           if (!yandexMap) return
 
-          const value = yandexMap.dataset.yandexMap
-
-          if (!value) {
-            logError(isEn ? `${DATA_YANDEX}-map is missing a value` : `У ${DATA_YANDEX}-map отсутствует значение`)
-            return
-          }
-
           const loader: HTMLDivElement | null = yandex.querySelector(`*[${DATA_LOADER}]`)
-          const coordinates = value.split(',')
-          const pointSize = [62, 62]
-          const mark: number[] = []
-
-          for (let i = 0; i < coordinates.length; i++) {
-            mark.push(Number(coordinates[i]))
-          }
 
           ;(ymaps as YandexOptions)
-            .load(`https://api-maps.yandex.ru/2.1/?lang=${YANDEX_LANGUARE}`)
+            .load(`https://api-maps.yandex.ru/2.1/?lang=${LANGUARE}`)
             .then((maps) => {
               const map = new maps.Map(yandexMap, {
-                center: mark,
+                center: getCenter(marks),
                 zoom: 16
               })
-              const placemark = new maps.Placemark(
-                mark,
-                {},
-                {
-                  iconLayout: 'default#image',
-                  iconImageHref: `${source}/img/pictures/point.svg`,
-                  iconImageSize: pointSize,
-                  iconImageOffset: [pointSize[0] / -2, pointSize[1] / -2]
-                }
-              )
 
               map.controls.remove('geolocationControl')
               map.controls.remove('searchControl')
@@ -68,7 +69,22 @@ export default (container: Document | HTMLElement = document) => {
               map.controls.remove('zoomControl')
               map.controls.remove('rulerControl')
               map.behaviors.disable(['scrollZoom'])
-              map.geoObjects.add(placemark)
+
+              marks.forEach((mark) => {
+                map.geoObjects.add(
+                  new maps.Placemark(
+                    mark,
+                    {},
+                    {
+                      iconLayout: 'default#image',
+                      iconImageHref: `${source}/img/pictures/point.svg`,
+                      iconImageSize: POINT_SIZE,
+                      iconImageOffset: [POINT_SIZE[0] / -2, POINT_SIZE[1] / -2]
+                    }
+                  )
+                )
+              })
+
               loader?.remove()
             })
             .catch((error: string) => {

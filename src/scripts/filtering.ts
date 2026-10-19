@@ -1,5 +1,5 @@
 import { TARGET_ID } from '@scripts/scroll-to'
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 interface ItemOptions {
   condition: boolean
@@ -109,9 +109,9 @@ export default (container: Document | HTMLElement = document) => {
 
     if (!categories.length) {
       logError(
-        isEn
-          ? `The ${DATA_FILTER} does not have a ${DATA_FILTER}-category child element`
-          : `У ${DATA_FILTER} отсутствует дочерний элемент ${DATA_FILTER}-category`
+        isRu
+          ? `У ${DATA_FILTER} отсутствует дочерний элемент ${DATA_FILTER}-category`
+          : `The ${DATA_FILTER} does not have a ${DATA_FILTER}-category child element`
       )
       return
     }

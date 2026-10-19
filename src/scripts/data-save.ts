@@ -1,4 +1,4 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 const DATA_SAVE = getData('save')
 
@@ -15,7 +15,7 @@ export default (container: Document | HTMLElement = document) => {
     const value = form.dataset.save
 
     if (!value) {
-      logError(isEn ? `${DATA_SAVE} is missing a value` : `У ${DATA_SAVE} отсутствует значение`)
+      logError(isRu ? `У ${DATA_SAVE} отсутствует значение` : `${DATA_SAVE} is missing a value`)
       return
     }
 

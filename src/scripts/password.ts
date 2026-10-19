@@ -1,4 +1,4 @@
-import { getData, isEn, logError, source } from '@utils'
+import { getData, isRu, logError, source } from '@utils'
 
 const PARSSWORD_VALUE = 'password'
 const DATA_PARSSWORD = getData(PARSSWORD_VALUE)
@@ -19,9 +19,9 @@ const changeTypeInput = (event: Event) => {
 
   if (!input || !use) {
     logError(
-      isEn
-        ? `The ${DATA_LABEL} does not have a ${DATA_INPUT} or use child element`
-        : `У ${DATA_LABEL} отсутствует дочерний элемент ${DATA_INPUT} или use`
+      isRu
+        ? `У ${DATA_LABEL} отсутствует дочерний элемент ${DATA_INPUT} или use`
+        : `The ${DATA_LABEL} does not have a ${DATA_INPUT} or use child element`
     )
     return
   }

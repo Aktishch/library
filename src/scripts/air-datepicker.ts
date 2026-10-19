@@ -1,5 +1,5 @@
 import filtering from '@scripts/filtering'
-import { getData, getTouchDevice, isEn, logError } from '@utils'
+import { getData, getTouchDevice, isRu, logError } from '@utils'
 import AirDatepicker, { AirDatepickerLocale, AirDatepickerPosition, AirDatepickerViewsSingle } from 'air-datepicker'
 import localeEn from 'air-datepicker/locale/en'
 
@@ -12,7 +12,7 @@ interface CalendarOptions {
   cellType: AirDatepickerViewsSingle
 }
 
-if (isEn) {
+if (!isRu) {
   AirDatepicker.defaults.locale = (localeEn as Locale).default || localeEn
 }
 
@@ -88,9 +88,9 @@ export default (container: Document | HTMLElement = document) => {
 
     if (!inputMin || !inputMax) {
       logError(
-        isEn
-          ? `The ${DATA_DATEPICKER} does not have a ${DATA_DATEPICKER}-(min, max) child element`
-          : `У ${DATA_DATEPICKER} отсутствует дочерний элемент ${DATA_DATEPICKER}-(min, max)`
+        isRu
+          ? `У ${DATA_DATEPICKER} отсутствует дочерний элемент ${DATA_DATEPICKER}-(min, max)`
+          : `The ${DATA_DATEPICKER} does not have a ${DATA_DATEPICKER}-(min, max) child element`
       )
       return
     }

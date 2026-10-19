@@ -23,7 +23,9 @@ const checkWarning = (event: Event) => {
 export default (container: Document | HTMLElement = document) => {
   if (sessionStorage.getItem(WARNING_VALUE) !== POSITIVE_VALUE) {
     setTimeout(() => {
-      dialog.notClosing(getDialogSrc(WARNING_VALUE))
+      dialog.notClosing(getDialogSrc(WARNING_VALUE), (container) => {
+        console.log(container)
+      })
     }, 2000)
 
     container.addEventListener('click', checkWarning)

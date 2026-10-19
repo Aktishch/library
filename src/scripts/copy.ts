@@ -1,7 +1,7 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 const DATA_COPY = getData('copy')
-const HIDDEN_CLASSNAMES = ['invisible', 'opacity-0']
+const VISIBLE_CLASSNAMES = ['invisible', 'opacity-0']
 
 const setCopy = async (event: Event) => {
   const button: HTMLButtonElement | null = (event.target as HTMLElement).closest(`[${DATA_COPY}-button]`)
@@ -21,20 +21,20 @@ const setCopy = async (event: Event) => {
 
   try {
     if (!clipboard) {
-      throw isEn
-        ? 'Clipboard API not supported or secure context (HTTPS) is missing'
-        : 'API буфера обмена не поддерживается или отсутствует защищенный контекст (HTTPS)'
+      throw isRu
+        ? 'API буфера обмена не поддерживается или отсутствует защищенный контекст (HTTPS)'
+        : 'Clipboard API not supported or secure context (HTTPS) is missing'
     }
 
     await clipboard.writeText(text)
     button.disabled = true
-    result?.classList.remove(...HIDDEN_CLASSNAMES)
+    result?.classList.remove(...VISIBLE_CLASSNAMES)
   } catch (error) {
     logError(error as string)
   } finally {
     setTimeout(() => {
       button.disabled = false
-      result?.classList.add(...HIDDEN_CLASSNAMES)
+      result?.classList.add(...VISIBLE_CLASSNAMES)
     }, 1000)
   }
 }

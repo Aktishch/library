@@ -1,13 +1,13 @@
-import { getData, getValidate, handleFile, isEn, logError, uploadFile } from '@utils'
+import { getData, getValidate, handleFile, isRu, logError, uploadFile } from '@utils'
 
 const AVATAR_VALUE = 'avatar'
 const DATA_PREVIEW = getData('preview')
 const DATA_FORM = getData('form')
 const DATA_ERROR = getData('error')
 const DATA_AVATAR = getData(AVATAR_VALUE)
-const DRAG_OPACITY_CLASSNAME = 'opacity-50'
-const DRAG_POINTER_CLASSNAME = 'pointer-events-none'
-const LABEL_DISABLED_CLASSNAMES = ['pointer-events-none', 'opacity-50']
+const OPACITY_CLASSNAME = 'opacity-50'
+const POINTER_CLASSNAME = 'pointer-events-none'
+const DISABLED_CLASSNAMES = ['pointer-events-none', 'opacity-50']
 
 export default (container: Document | HTMLElement = document) => {
   const previews = container.querySelectorAll<HTMLDivElement>(`*[${DATA_PREVIEW}]`)
@@ -25,9 +25,9 @@ export default (container: Document | HTMLElement = document) => {
 
     if (!drag || !image || !remove || !label || !input || !error) {
       logError(
-        isEn
-          ? `The ${DATA_PREVIEW} does not have a ${DATA_PREVIEW}-(drag, image, remove, label, input, error) child element`
-          : `У ${DATA_PREVIEW} отсутствует дочерний элемент ${DATA_PREVIEW}-(drag, image, remove, label, input, error)`
+        isRu
+          ? `У ${DATA_PREVIEW} отсутствует дочерний элемент ${DATA_PREVIEW}-(drag, image, remove, label, input, error)`
+          : `The ${DATA_PREVIEW} does not have a ${DATA_PREVIEW}-(drag, image, remove, label, input, error) child element`
       )
       return
     }
@@ -42,10 +42,10 @@ export default (container: Document | HTMLElement = document) => {
     }
 
     const setDefaultState = (reset = true) => {
-      drag.classList.remove(DRAG_POINTER_CLASSNAME)
+      drag.classList.remove(POINTER_CLASSNAME)
       image.src = ''
       remove.disabled = true
-      label.classList.remove(...LABEL_DISABLED_CLASSNAMES)
+      label.classList.remove(...DISABLED_CLASSNAMES)
       data = new DataTransfer()
 
       if (reset) {
@@ -59,13 +59,13 @@ export default (container: Document | HTMLElement = document) => {
           const { file, url } = await uploadFile(files[0])
 
           if (!handleFile({ error, file, type, size })) {
-            throw isEn ? 'File validation failed' : 'Файл не прошёл валидацию'
+            throw isRu ? 'Файл не прошёл валидацию' : 'File validation failed'
           }
 
-          drag.classList.add(DRAG_POINTER_CLASSNAME)
+          drag.classList.add(POINTER_CLASSNAME)
           image.src = url
           remove.disabled = false
-          label.classList.add(...LABEL_DISABLED_CLASSNAMES)
+          label.classList.add(...DISABLED_CLASSNAMES)
           data.items.add(file)
 
           if (form && form.dataset.form === AVATAR_VALUE) {
@@ -100,7 +100,7 @@ export default (container: Document | HTMLElement = document) => {
         const response = await fetch(requestUrl)
 
         if (!response.ok) {
-          throw isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно'
+          throw isRu ? 'Путь к изображению указан неверно' : 'The path to the image is incorrect'
         }
 
         const blob = await response.blob()
@@ -139,12 +139,12 @@ export default (container: Document | HTMLElement = document) => {
 
     const onEnter = (event: DragEvent) => {
       event.preventDefault()
-      drag.classList.add(DRAG_OPACITY_CLASSNAME)
+      drag.classList.add(OPACITY_CLASSNAME)
     }
 
     const onLeave = (event: DragEvent) => {
       event.preventDefault()
-      drag.classList.remove(DRAG_OPACITY_CLASSNAME)
+      drag.classList.remove(OPACITY_CLASSNAME)
     }
 
     const onDrop = (event: DragEvent) => {
@@ -154,7 +154,7 @@ export default (container: Document | HTMLElement = document) => {
 
       if (!dataTransfer) return
 
-      drag.classList.remove(DRAG_OPACITY_CLASSNAME)
+      drag.classList.remove(OPACITY_CLASSNAME)
       uploadFileList(dataTransfer.files)
     }
 

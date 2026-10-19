@@ -1,5 +1,5 @@
 import { checkQuizSlide } from '@scripts/quiz'
-import { getData, isEn, logError, media } from '@utils'
+import { getData, isRu, logError, media } from '@utils'
 import Swiper from 'swiper'
 import { Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules'
 
@@ -7,15 +7,15 @@ Swiper.use([Autoplay, EffectCoverflow, Grid, Navigation, Pagination, Scrollbar, 
 Swiper.defaults.touchStartPreventDefault = false
 
 const DATA_SLIDER = getData('slider')
-const DATA_DESCRIPTION = getData('description')
 const DATA_QUIZ = getData('quiz')
+const DATA_DESCRIPTION = getData('description')
 const { sm, md, lg, xl } = media
 
 const handleValueError = (value: string) => {
   logError(
-    isEn
-      ? `The ${DATA_SLIDER}="${value}" does not have a ${DATA_SLIDER}-swiper="${value}" child element`
-      : `У ${DATA_SLIDER}="${value}" отсутствует дочерний элемент ${DATA_SLIDER}-swiper="${value}"`
+    isRu
+      ? `У ${DATA_SLIDER}="${value}" отсутствует дочерний элемент ${DATA_SLIDER}-swiper="${value}"`
+      : `The ${DATA_SLIDER}="${value}" does not have a ${DATA_SLIDER}-swiper="${value}" child element`
   )
 }
 

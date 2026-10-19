@@ -1,4 +1,4 @@
-import { COOKIE_EXPIRES_DAYS, getCookie, getData, isEn, logError, setCookies } from '@utils'
+import { COOKIE_EXPIRES_DAYS, getCookie, getData, isRu, logError, setCookies } from '@utils'
 
 const DATA_COOKIE = getData('cookie')
 const COOKIE_VALUE = 'active'
@@ -12,7 +12,7 @@ export default (container: Document | HTMLElement = document) => {
     const id = cookie.id
 
     if (cookie.id === '') {
-      logError(isEn ? `The ${DATA_COOKIE} has no id` : `У ${DATA_COOKIE} отсутствует id`)
+      logError(isRu ? `У ${DATA_COOKIE} отсутствует id` : `The ${DATA_COOKIE} has no id`)
       return
     }
 

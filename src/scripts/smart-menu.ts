@@ -1,4 +1,4 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 interface SmartOptions {
   condition: boolean
@@ -29,9 +29,9 @@ export default (container: Document | HTMLElement = document) => {
 
   if (!title || !length || !nav || !count || !list) {
     logError(
-      isEn
-        ? `The ${DATA_SMART} does not have a ${DATA_SMART}-(title, length, nav, count, list) child element`
-        : `У ${DATA_SMART} отсутствует дочерний элемент ${DATA_SMART}-(title, length, nav, count, list)`
+      isRu
+        ? `У ${DATA_SMART} отсутствует дочерний элемент ${DATA_SMART}-(title, length, nav, count, list)`
+        : `The ${DATA_SMART} does not have a ${DATA_SMART}-(title, length, nav, count, list) child element`
     )
     return
   }

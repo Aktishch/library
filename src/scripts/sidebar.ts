@@ -1,4 +1,4 @@
-import { getData, hideScrollbar, html, isEn, logError, media, showScrollbar } from '@utils'
+import { getData, hideScrollbar, html, isRu, logError, media, showScrollbar } from '@utils'
 
 const DATA_SIDEBAR = getData('sidebar')
 const DATA_OPEN = getData('open')
@@ -14,7 +14,7 @@ export const closeSidebar = (sidebar: HTMLElement) => {
 }
 
 const handleValueError = (value: string) => {
-  logError(isEn ? `${DATA_SIDEBAR}-${value} is missing a value` : `У ${DATA_SIDEBAR}-${value} отсутствует значение`)
+  logError(isRu ? `У ${DATA_SIDEBAR}-${value} отсутствует значение` : `${DATA_SIDEBAR}-${value} is missing a value`)
 }
 
 const resizeObserver = new ResizeObserver((entries) => {

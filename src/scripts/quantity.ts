@@ -1,12 +1,12 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 const DATA_QUANTITY = getData('quantity')
 
 const handleInputError = () => {
   logError(
-    isEn
-      ? `The ${DATA_QUANTITY} does not have a ${DATA_QUANTITY}-input child element`
-      : `У ${DATA_QUANTITY} отсутствует дочерний элемент ${DATA_QUANTITY}-input`
+    isRu
+      ? `У ${DATA_QUANTITY} отсутствует дочерний элемент ${DATA_QUANTITY}-input`
+      : `The ${DATA_QUANTITY} does not have a ${DATA_QUANTITY}-input child element`
   )
 }
 

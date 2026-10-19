@@ -1,4 +1,4 @@
-import { isEn } from '@utils/is-en'
+import { isRu } from '@utils/is-ru'
 
 interface HandlerOptions {
   file: File
@@ -13,17 +13,17 @@ export const handleFile = ({ file, error, type, size }: HandlerOptions) => {
   const maxSize = size * Math.pow(1024, 2)
   const errorMessage = {
     type: '',
-    size: isEn ? `The size is not more than ${size} MB` : `Размер не более ${size} мб`
+    size: isRu ? `Размер не более ${size} мб` : `The size is not more than ${size} MB`
   }
   let allowedTypes: string[] = []
 
   if (type === 'img') {
-    errorMessage.type = isEn ? 'Only jpg or png' : 'Только jpg или png'
+    errorMessage.type = isRu ? 'Только jpg или png' : 'Only jpg or png'
     allowedTypes = ['image/jpeg', 'image/png']
   }
 
   if (type === 'doc') {
-    errorMessage.type = isEn ? 'Only pdf, docx, jpg or png' : 'Только pdf, docx, jpg или png'
+    errorMessage.type = isRu ? 'Только pdf, docx, jpg или png' : 'Only pdf, docx, jpg or png'
     allowedTypes = [
       'application/pdf',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',

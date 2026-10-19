@@ -1,4 +1,4 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 interface BubbleOptions {
   size: number
@@ -14,9 +14,9 @@ const LAST = 1
 
 const handleElementsError = () => {
   logError(
-    isEn
-      ? `The ${DATA_RANGE} does not have a ${DATA_RANGE}-(output, input, progress, bubble) child element`
-      : `У ${DATA_RANGE} отсутствует дочерний элемент ${DATA_RANGE}-(output, input, progress, bubble)`
+    isRu
+      ? `У ${DATA_RANGE} отсутствует дочерний элемент ${DATA_RANGE}-(output, input, progress, bubble)`
+      : `The ${DATA_RANGE} does not have a ${DATA_RANGE}-(output, input, progress, bubble) child element`
   )
 }
 

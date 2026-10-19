@@ -52,6 +52,7 @@ import writeText from '@scripts/write-text'
 import yandexMap from '@scripts/yandex-map'
 
 const AUTHOR = 'Frontend-developer: Aktishch'
+const META_NAME = 'author'
 
 export const Scripts = () => {
   accordion()
@@ -111,10 +112,14 @@ export const Scripts = () => {
 
 export default async () => {
   const head = document.head
-  const meta = document.createElement('meta')
 
-  meta.name = 'author'
-  meta.content = AUTHOR
+  if (!head.querySelector(`meta[name="${META_NAME}"]`)) {
+    const meta = document.createElement('meta')
+
+    meta.name = META_NAME
+    meta.content = AUTHOR
+    head.appendChild(meta)
+  }
+
   console.info(AUTHOR)
-  head.appendChild(meta)
 }

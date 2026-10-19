@@ -1,4 +1,4 @@
-import { getData, getTimeFormat, isEn, logError, source } from '@utils'
+import { getData, getTimeFormat, isRu, logError, source } from '@utils'
 
 const DATA_TIMER = getData('timer')
 
@@ -14,9 +14,9 @@ export default (container: Document | HTMLElement = document) => {
 
   if (!stopwatch || !units || !turn || !reset) {
     logError(
-      isEn
-        ? `The ${DATA_TIMER} does not have a ${DATA_TIMER}-(stopwatch, units, turn, reset) child element`
-        : `У ${DATA_TIMER} отсутствует дочерний элемент ${DATA_TIMER}-(stopwatch, units, turn, reset)`
+      isRu
+        ? `У ${DATA_TIMER} отсутствует дочерний элемент ${DATA_TIMER}-(stopwatch, units, turn, reset)`
+        : `The ${DATA_TIMER} does not have a ${DATA_TIMER}-(stopwatch, units, turn, reset) child element`
     )
     return
   }

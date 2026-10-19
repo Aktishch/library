@@ -1,4 +1,4 @@
-import { getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
+import { getData, hideScrollbar, isRu, logError, showScrollbar } from '@utils'
 
 const DATA_COMPARE = getData('compare')
 
@@ -28,9 +28,9 @@ export default (container: Document | HTMLElement = document) => {
 
     if (!before || !change) {
       logError(
-        isEn
-          ? `The ${DATA_COMPARE} does not have a ${DATA_COMPARE}-(before, change) child element`
-          : `У ${DATA_COMPARE} отсутствует дочерний элемент ${DATA_COMPARE}-(before, change)`
+        isRu
+          ? `У ${DATA_COMPARE} отсутствует дочерний элемент ${DATA_COMPARE}-(before, change)`
+          : `The ${DATA_COMPARE} does not have a ${DATA_COMPARE}-(before, change) child element`
       )
       return
     }

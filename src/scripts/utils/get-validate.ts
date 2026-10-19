@@ -1,5 +1,5 @@
 import { getData } from '@utils/get-data'
-import { isEn } from '@utils/is-en'
+import { isRu } from '@utils/is-ru'
 
 const DATA_LABEL = getData('label')
 const DATA_INPUT = getData('input')
@@ -7,14 +7,14 @@ const DATA_ERROR = getData('error')
 const INPUT_ERROR_CLASSNAME = 'input-red!'
 const ERROR_VISIBLE_CLASSNAMES = ['invisible', 'opacity-0']
 const ERROR_MESSAGE = {
-  default: isEn ? 'Fill in this field' : 'Заполните это поле',
-  tel: isEn ? 'Enter the correct number' : 'Введите корректный номер',
-  email: isEn ? 'Enter the correct address' : 'Введите корректный адрес',
-  login: isEn ? 'Invalid username' : 'Неверный логин',
-  password: isEn ? 'Invalid password' : 'Неверный пароль',
-  select: isEn ? 'Choose an option' : 'Выберите вариант',
-  description: isEn ? 'Enter at least 10 characters' : 'Введите не менее 10 символов',
-  file: isEn ? 'Upload the file' : 'Загрузите файл'
+  default: isRu ? 'Заполните это поле' : 'Fill in this field',
+  tel: isRu ? 'Введите корректный номер' : 'Enter the correct number',
+  email: isRu ? 'Введите корректный адрес' : 'Enter the correct address',
+  login: isRu ? 'Неверный логин' : 'Invalid username',
+  password: isRu ? 'Неверный пароль' : 'Invalid password',
+  select: isRu ? 'Выберите вариант' : 'Choose an option',
+  description: isRu ? 'Введите не менее 10 символов' : 'Enter at least 10 characters',
+  file: isRu ? 'Загрузите файл' : 'Upload the file'
 }
 
 export const getValidate = (form: HTMLFormElement) => {

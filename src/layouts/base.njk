@@ -49,6 +49,11 @@
   <title>
     {{ data.title }}
   </title>
+  <script>
+    window.marks = [
+      [45.03191007458623, 38.921171499999936]
+    ]
+  </script>
   <script type="module" src="/src/application.ts"></script>
 </head>
 
@@ -303,7 +308,7 @@
   <section class="xl:p-4">
     <div class="wrapper relative bg-grey dark:bg-dark xl:rounded-3xl overflow-hidden h-96" data-yandex>
       {{ loader.render() }}
-      <div class="absolute inset-0" data-yandex-map="45.03191007458623,38.921171499999936"></div>
+      <div class="absolute inset-0" data-yandex-map></div>
     </div>
   </section>
 

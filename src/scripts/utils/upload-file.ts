@@ -1,4 +1,4 @@
-import { isEn } from '@utils/is-en'
+import { isRu } from '@utils/is-ru'
 
 interface FileOptions {
   file: File
@@ -10,7 +10,7 @@ export const uploadFile = (file: File) => {
     const reader = new FileReader()
 
     const setError = () => {
-      reject(isEn ? 'File upload error' : 'Ошибка при загрузке файла')
+      reject(isRu ? 'Ошибка при загрузке файла' : 'File upload error')
     }
 
     const readFile = () => {

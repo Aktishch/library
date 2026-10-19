@@ -1,4 +1,4 @@
-import { getData, hideScrollbar, isEn, logError, showScrollbar } from '@utils'
+import { getData, hideScrollbar, isRu, logError, showScrollbar } from '@utils'
 
 interface Coordinates {
   top: number
@@ -16,7 +16,7 @@ export default (container: Document | HTMLElement = document) => {
     const value = draggable.dataset.draggable
 
     if (!value) {
-      logError(isEn ? `${DATA_DRAGGABLE} is missing a value` : `У ${DATA_DRAGGABLE} отсутствует значение`)
+      logError(isRu ? `У ${DATA_DRAGGABLE} отсутствует значение` : `${DATA_DRAGGABLE} is missing a value`)
       return
     }
 

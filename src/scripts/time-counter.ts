@@ -1,4 +1,4 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 const DATA_COUNTER = getData('counter')
 const HIDDEN_CLASSNAME = 'hidden'
@@ -13,9 +13,9 @@ export default (container: Document | HTMLElement = document) => {
 
   if (!subtitle || !timer) {
     logError(
-      isEn
-        ? `The ${DATA_COUNTER} does not have a ${DATA_COUNTER}-(subtitle, timer) child element`
-        : `У ${DATA_COUNTER} отсутствует дочерний элемент ${DATA_COUNTER}-(subtitle, timer)`
+      isRu
+        ? `У ${DATA_COUNTER} отсутствует дочерний элемент ${DATA_COUNTER}-(subtitle, timer)`
+        : `The ${DATA_COUNTER} does not have a ${DATA_COUNTER}-(subtitle, timer) child element`
     )
     return
   }

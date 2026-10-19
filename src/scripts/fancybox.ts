@@ -23,6 +23,7 @@ if (!getTouchDevice()) {
 }
 
 const DATA_FANCYBOX = getData('fancybox')
+const CAROUSEL_READY = 'Carousel.contentReady'
 
 const updateLoad = () => {
   lazyLoad().update()
@@ -44,12 +45,12 @@ export const dialog = {
       {
         dragToClose: false,
         on: {
-          'Carousel.contentReady': (...[, , slide]) => {
-            const container = slide.el
+          [CAROUSEL_READY]: (...[, , slide]) => {
+            const { el } = slide
 
-            if (container) {
+            if (el) {
               updateLoad()
-              callback?.(container)
+              callback?.(el)
             }
           }
         }
@@ -69,12 +70,12 @@ export const dialog = {
         closeButton: false,
         backdropClick: false,
         on: {
-          'Carousel.contentReady': (...[, , slide]) => {
-            const container = slide.el
+          [CAROUSEL_READY]: (...[, , slide]) => {
+            const { el } = slide
 
-            if (container) {
+            if (el) {
               updateLoad()
-              callback?.(container)
+              callback?.(el)
             }
           }
         }
@@ -92,10 +93,10 @@ export default () => {
   Fancybox.bind(`[${DATA_FANCYBOX}-dialog]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (...[, , slide]) => {
-        const container = slide.el
+      [CAROUSEL_READY]: (...[, , slide]) => {
+        const { el } = slide
 
-        if (container) {
+        if (el) {
           updateLoad()
         }
       }
@@ -105,12 +106,12 @@ export default () => {
   Fancybox.bind(`[${DATA_FANCYBOX}-form]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (...[, , slide]) => {
-        const container = slide.el
+      [CAROUSEL_READY]: (...[, , slide]) => {
+        const { el } = slide
 
-        if (container) {
+        if (el) {
           updateLoad()
-          setStateSubmitBtn(container)
+          setStateSubmitBtn(el)
         }
       }
     }
@@ -119,12 +120,12 @@ export default () => {
   Fancybox.bind(`[${DATA_FANCYBOX}-avatar]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (...[, , slide]) => {
-        const container = slide.el
+      [CAROUSEL_READY]: (...[, , slide]) => {
+        const { el } = slide
 
-        if (container) {
+        if (el) {
           updateLoad()
-          imagePreview(container)
+          imagePreview(el)
         }
       }
     }
@@ -133,12 +134,12 @@ export default () => {
   Fancybox.bind(`[${DATA_FANCYBOX}-calendar]`, {
     dragToClose: false,
     on: {
-      'Carousel.contentReady': (...[, , slide]) => {
-        const container = slide.el
+      [CAROUSEL_READY]: (...[, , slide]) => {
+        const { el } = slide
 
-        if (container) {
+        if (el) {
           updateLoad()
-          initCalendar(container)
+          initCalendar(el)
         }
       }
     }

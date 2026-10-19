@@ -1,8 +1,8 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 const DATA_LISTING = getData('listing')
 const DATA_ANIM = getData('anim')
-const ITEM_HIDDEN_CLASSNAME = 'hidden'
+const HIDDEN_CLASSNAME = 'hidden'
 
 export default (container: Document | HTMLElement = document) => {
   const listings = container.querySelectorAll<HTMLElement>(`*[${DATA_LISTING}]`)
@@ -14,9 +14,9 @@ export default (container: Document | HTMLElement = document) => {
 
     if (!show) {
       logError(
-        isEn
-          ? `The ${DATA_LISTING} does not have a ${DATA_LISTING}-show child element`
-          : `У ${DATA_LISTING} отсутствует дочерний элемент ${DATA_LISTING}-show`
+        isRu
+          ? `У ${DATA_LISTING} отсутствует дочерний элемент ${DATA_LISTING}-show`
+          : `The ${DATA_LISTING} does not have a ${DATA_LISTING}-show child element`
       )
       return
     }
@@ -36,7 +36,7 @@ export default (container: Document | HTMLElement = document) => {
           }
 
           item.removeAttribute(`${DATA_LISTING}-item`)
-          item.classList.remove(ITEM_HIDDEN_CLASSNAME)
+          item.classList.remove(HIDDEN_CLASSNAME)
         }
 
         if (!item || items.length === count) {
@@ -47,7 +47,7 @@ export default (container: Document | HTMLElement = document) => {
 
     if (items.length) {
       items.forEach((item) => {
-        item.classList.add(ITEM_HIDDEN_CLASSNAME)
+        item.classList.add(HIDDEN_CLASSNAME)
       })
     }
 

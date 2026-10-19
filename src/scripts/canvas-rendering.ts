@@ -1,9 +1,9 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 const DATA_RENDERING = getData('rendering')
 
 const handleImageError = () => {
-  logError(isEn ? `Couldn't upload image` : 'Не удалось загрузить изображение')
+  logError(isRu ? 'Не удалось загрузить изображение' : `Couldn't upload image`)
 }
 
 export default (container: Document | HTMLElement = document) => {
@@ -21,9 +21,9 @@ export default (container: Document | HTMLElement = document) => {
 
     if (!context || !src) {
       logError(
-        isEn
-          ? 'Failed to provide a rendering context for the element'
-          : 'Не удалось представить контекст рендеринга для элемента'
+        isRu
+          ? 'Не удалось представить контекст рендеринга для элемента'
+          : 'Failed to provide a rendering context for the element'
       )
       return
     }

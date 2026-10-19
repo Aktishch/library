@@ -1,4 +1,4 @@
-import { COOKIE_EXPIRES_DAYS, getCookie, getData, getTouchDevice, html, isEn, logError, setCookies } from '@utils'
+import { COOKIE_EXPIRES_DAYS, getCookie, getData, getTouchDevice, html, isRu, logError, setCookies } from '@utils'
 
 const PALETTE_NAME = 'palette'
 const DATA_PALETTE = getData(PALETTE_NAME)
@@ -7,9 +7,9 @@ const PALETTE_COLORS: Record<string, string> = JSON.parse(COOKIE_VALUE || '{}')
 
 const handleElementsError = () => {
   logError(
-    isEn
-      ? `The ${DATA_PALETTE} does not have a ${DATA_PALETTE}-(input, button) child element`
-      : `У ${DATA_PALETTE} отсутствует дочерний элемент ${DATA_PALETTE}-(input, button)`
+    isRu
+      ? `У ${DATA_PALETTE} отсутствует дочерний элемент ${DATA_PALETTE}-(input, button)`
+      : `The ${DATA_PALETTE} does not have a ${DATA_PALETTE}-(input, button) child element`
   )
 }
 

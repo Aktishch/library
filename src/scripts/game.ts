@@ -1,7 +1,7 @@
 import { getData } from '@utils'
 
 const DATA_GAME = getData('game')
-const CELL_CLASSNAMES = ['aspect-square', 'btn', 'btn-contur', 'active:translate-0']
+const CELL_CLASSNAMES = ['aspect-square', 'btn', 'btn-contur', 'active:translate-y-0']
 
 export default (container: Document | HTMLElement = document) => {
   const game: HTMLDivElement | null = container.querySelector(`*[${DATA_GAME}]`)

@@ -1,12 +1,12 @@
-import { getData, html, isEn, logError, media } from '@utils'
+import { getData, html, isRu, logError, media } from '@utils'
 
 const DATA_SCROLLING = getData('scrolling')
 
 const handleHorizontalError = () => {
   logError(
-    isEn
-      ? `The ${DATA_SCROLLING} does not have a ${DATA_SCROLLING}-horizontal child element`
-      : `У ${DATA_SCROLLING} отсутствует дочерний элемент ${DATA_SCROLLING}-horizontal`
+    isRu
+      ? `У ${DATA_SCROLLING} отсутствует дочерний элемент ${DATA_SCROLLING}-horizontal`
+      : `The ${DATA_SCROLLING} does not have a ${DATA_SCROLLING}-horizontal child element`
   )
 }
 

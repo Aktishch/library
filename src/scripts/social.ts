@@ -1,4 +1,4 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 const DATA_SOCIAL = getData('social')
 const SHOW_VALUE = 'show'
@@ -13,9 +13,9 @@ export default (container: Document | HTMLElement = document) => {
 
   if (!round || !button) {
     logError(
-      isEn
-        ? `The ${DATA_SOCIAL} does not have a ${DATA_SOCIAL}-(round, button) child element`
-        : `У ${DATA_SOCIAL} отсутствует дочерний элемент ${DATA_SOCIAL}-(round, button)`
+      isRu
+        ? `У ${DATA_SOCIAL} отсутствует дочерний элемент ${DATA_SOCIAL}-(round, button)`
+        : `The ${DATA_SOCIAL} does not have a ${DATA_SOCIAL}-(round, button) child element`
     )
     return
   }

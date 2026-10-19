@@ -13,8 +13,7 @@ const SHOP_CLASSNAMES = [
   'bg-primary',
   'rounded-lg',
   'pointer-events-none',
-  '-translate-y-1/2',
-  '-translate-x-1/2',
+  '-translate-1/2',
   'size-10'
 ]
 

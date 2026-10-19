@@ -1,4 +1,4 @@
-import { getData, getTimeFormat, hideScrollbar, isEn, logError, showScrollbar, source } from '@utils'
+import { getData, getTimeFormat, hideScrollbar, isRu, logError, showScrollbar, source } from '@utils'
 
 interface CompositionOptions {
   artist: string
@@ -68,7 +68,7 @@ const playOnlyOne = (event: Event) => {
 }
 
 const handleErrorLoad = () => {
-  logError(isEn ? 'Failed to load audio' : 'Не удалось загрузить аудио')
+  logError(isRu ? 'Не удалось загрузить аудио' : 'Failed to load audio')
 }
 
 const createComposition = (composition: CompositionOptions) => {
@@ -101,7 +101,7 @@ const initPlayer = ({ container, playlist }: PlayerOptions) => {
   const value = player.dataset.player
 
   if (!value) {
-    logError(isEn ? `${DATA_PLAYER} is missing a value` : `У ${DATA_PLAYER} отсутствует значение`)
+    logError(isRu ? `У ${DATA_PLAYER} отсутствует значение` : `${DATA_PLAYER} is missing a value`)
     return
   }
 
@@ -136,9 +136,9 @@ const initPlayer = ({ container, playlist }: PlayerOptions) => {
 
       if (!audio || !progress || !range || !play) {
         logError(
-          isEn
-            ? `The ${DATA_PLAYER} does not have a ${DATA_PLAYER}-(audio, progress, range, play) child element`
-            : `У ${DATA_PLAYER} отсутствует дочерний элемент ${DATA_PLAYER}-(audio, progress, range, play)`
+          isRu
+            ? `У ${DATA_PLAYER} отсутствует дочерний элемент ${DATA_PLAYER}-(audio, progress, range, play)`
+            : `The ${DATA_PLAYER} does not have a ${DATA_PLAYER}-(audio, progress, range, play) child element`
         )
         return
       }
@@ -168,7 +168,7 @@ const initPlayer = ({ container, playlist }: PlayerOptions) => {
           if (loader) {
             if (!response.ok) {
               loader.classList.remove(HIDDEN_CLASSNAME)
-              throw isEn ? 'The path to the image is incorrect' : 'Путь к изображению указан неверно'
+              throw isRu ? 'Путь к изображению указан неверно' : 'The path to the image is incorrect'
             }
 
             loader.classList.add(HIDDEN_CLASSNAME)

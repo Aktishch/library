@@ -1,11 +1,11 @@
-import { getData, isEn, logError } from '@utils'
+import { getData, isRu, logError } from '@utils'
 
 const DATA_ACCORDION = getData('accordion')
 const DATA_CLOSE = getData('close')
 const DATA_AUTO = getData('auto')
 const ACTIVE_VALUE = 'active'
-const OVERFLOW_CLASSNAME = 'overflow-hidden'
-const CURSOR_CLASSNAME = 'cursor-pointer'
+const SCROLLBAR_HIDDEN_CLASSNAME = 'overflow-hidden'
+const CURSOR_POINTER_CLASSNAME = 'cursor-pointer'
 
 export default (container: Document | HTMLElement = document) => {
   const accordions = container.querySelectorAll<HTMLDivElement>(`*[${DATA_ACCORDION}]`)
@@ -20,9 +20,9 @@ export default (container: Document | HTMLElement = document) => {
     const setHeightContent = (transition = true) => {
       if (!content) {
         logError(
-          isEn
-            ? `The ${DATA_ACCORDION} does not have a ${DATA_ACCORDION}-content child element`
-            : `У ${DATA_ACCORDION} отсутствует дочерний элемент ${DATA_ACCORDION}-content`
+          isRu
+            ? `У ${DATA_ACCORDION} отсутствует дочерний элемент ${DATA_ACCORDION}-content`
+            : `The ${DATA_ACCORDION} does not have a ${DATA_ACCORDION}-content child element`
         )
         return
       }
@@ -67,10 +67,10 @@ export default (container: Document | HTMLElement = document) => {
     }
 
     if (!accordion.hasAttribute(DATA_AUTO) && content) {
-      content.classList.add(OVERFLOW_CLASSNAME)
+      content.classList.add(SCROLLBAR_HIDDEN_CLASSNAME)
     }
 
-    toggle?.classList.add(CURSOR_CLASSNAME)
+    toggle?.classList.add(CURSOR_POINTER_CLASSNAME)
     setHeightContent(false)
 
     if (items.length) {
