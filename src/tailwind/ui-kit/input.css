@@ -15,10 +15,7 @@
     }
 
     &:-webkit-autofill {
-      -webkit-text-fill-color: inherit !important;
-      -webkit-text-stroke-color: inherit !important;
-
-      @apply appearance-none border-(--input-color) transition-colors duration-1000000 ease-in-out;
+      @apply text-stroke-inherit! text-fill-inherit! appearance-none border-(--input-color) transition-colors duration-1000000 ease-in-out;
     }
   }
 }

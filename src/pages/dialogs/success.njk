@@ -1,8 +1,8 @@
-{% import 'src/components/icon.njk' as icon %}
+{% from 'src/components/icon.njk' import icon %}
 
 <div class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-80 max-w-full px-5 py-10">
   <div class="flex flex-col items-center justify-center">
-    {{ icon.render(id = 'success', className = 'icon text-green text-9xl mb-5') }}
+    {{ icon(id = 'success', className = 'icon text-green text-9xl mb-5') }}
     <h2 class="font-alt font-semibold text-center text-2xl">
       Ваша заявка успешно отправлена!
     </h2>

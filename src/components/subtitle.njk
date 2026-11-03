@@ -1,4 +1,4 @@
-{% macro render(text, className = none, data = none) %}
+{% macro subtitle(text, className = none, data = none) %}
 <h2 class="font-alt font-bold text-center text-4xl lg:text-5xl {{ (className if className) | safe }}" {{ (data if data) | safe }}>
   {{ text | safe }}
 </h2>

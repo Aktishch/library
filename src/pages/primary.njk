@@ -1,28 +1,27 @@
+{% extends 'src/layouts/base.njk' %}
+{% from 'src/components/subtitle.njk' import subtitle %}
+{% from 'src/components/swiper-button-prev.njk' import swiperButtonPrev %}
+{% from 'src/components/swiper-button-next.njk' import swiperButtonNext %}
+{% from 'src/components/swiper-pagination.njk' import swiperPagination %}
+{% from 'src/components/error.njk' import error %}
+{% from 'src/includes/top.njk' import top %}
+{% from 'src/includes/player.njk' import player %}
+
 {% set data = {
   title: 'Primary page',
   status: false
 } %}
 
-{% extends 'src/layouts/base.njk' %}
-
-{% import 'src/components/subtitle.njk' as subtitle %}
-{% import 'src/components/error.njk' as error %}
-{% import 'src/components/swiper-button-prev.njk' as swiperButtonPrev %}
-{% import 'src/components/swiper-button-next.njk' as swiperButtonNext %}
-{% import 'src/components/swiper-pagination.njk' as swiperPagination %}
-{% import 'src/includes/top.njk' as top %}
-{% import 'src/includes/player.njk' as player %}
-
 {% block content %}
 
 {# Primary page #}
 
-{{ top.render(text = data.title) }}
+{{ top(text = data.title) }}
 
 {# Галерея #}
 
 <section class="wrapper flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden" id="content">
-  {{ subtitle.render(text = 'Slider-swiper', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+  {{ subtitle(text = 'Slider-swiper', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   <h3 class="font-semibold sm:text-lg mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-movement="blend">
     Class template for slider
   </h3>
@@ -32,15 +31,15 @@
         <div class="swiper-wrapper">
           {% for i in range(0, 6) %}
           <a class="swiper-slide aspect-4/3 relative bg-grey dark:bg-dark rounded-2xl overflow-hidden" data-media data-movement="light" data-fancybox="gallery" href="/img/pictures/test.jpg" draggable="false">
-            {{ loader.render() }}
-            {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+            {{ loader() }}
+            {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
           </a>
           {% endfor %}
         </div>
       </div>
-      {{ swiperButtonPrev.render(value = 'gallery') }}
-      {{ swiperButtonNext.render(value = 'gallery') }}
-      {{ swiperPagination.render(value = 'gallery') }}
+      {{ swiperButtonPrev(value = 'gallery') }}
+      {{ swiperButtonNext(value = 'gallery') }}
+      {{ swiperPagination(value = 'gallery') }}
     </div>
   </div>
 </section>
@@ -49,7 +48,7 @@
 
 <section class="xl:px-4">
   <div class="wrapper flex flex-col items-center justify-center bg-grey dark:bg-dark xl:rounded-3xl overflow-hidden">
-    {{ subtitle.render(text = 'Products', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+    {{ subtitle(text = 'Products', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
     <div class="group/accordion relative perspective-midrange w-full mb-7" data-accordion data-auto>
       <div class="rotate-x-0 backface-hidden transform-3d size-full transition-transform duration-500 ease-in-out group-data-[accordion=active]/accordion:-rotate-x-180">
         <button class="btn btn-primary btn-fill btn-lg" data-accordion-toggle data-waved>Search</button>
@@ -59,7 +58,7 @@
           <form class="grow" data-form action="primary.html">
             <div class="relative" data-label>
               <input class="input input-gray input-lg pl-11 dark:bg-transparent dark:text-white" data-input type="search" placeholder="Поиск..." list="search" name="search">
-              {{ error.render() }}
+              {{ error() }}
               <datalist id="search">
                 <option>Milk</option>
                 <option>Tomato</option>
@@ -67,7 +66,7 @@
                 <option>Potatoes</option>
               </datalist>
               <button class="flex items-center justify-center absolute top-0 bottom-0 left-0 cursor-pointer w-12 h-full" type="submit">
-                {{ icon.render(id = 'search', className = 'icon text-xl opacity-30') }}
+                {{ icon(id = 'search', className = 'icon text-xl opacity-30') }}
               </button>
             </div>
           </form>
@@ -82,12 +81,12 @@
           <div class="swiper-slide h-auto">
             <div class="group/product card dark:bg-black shadow-md hover:shadow-xl transition-shadow cursor-pointer p-1" data-product>
               <div class="aspect-4/3 relative bg-grey dark:bg-dark rounded-inherit overflow-hidden" data-media>
-                {{ loader.render() }}
-                {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-product-image="/img/pictures/test-gray.jpg" data-src="/img/pictures/test-gray.jpg"') }}
+                {{ loader() }}
+                {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-product-image="/img/pictures/test-gray.jpg" data-src="/img/pictures/test-gray.jpg"') }}
                 <label class="block absolute top-2 right-2 rounded-full opacity-0 invisible overflow-hidden cursor-pointer transition-[opacity,visibility] pointer-coarse:visible pointer-coarse:opacity-100 group group-hover/product:opacity-100 group-hover/product:visible has-checked:visible has-checked:opacity-100" data-waved>
                   <input class="peer" hidden type="checkbox">
                   <div class="flex items-center justify-center bg-white/40 text-2xl text-red/50 stroke-red rounded-full transition-colors ease-linear size-10 group-has-checked:text-red">
-                    {{ icon.render(id = 'like', className = 'icon') }}
+                    {{ icon(id = 'like', className = 'icon') }}
                   </div>
                 </label>
               </div>
@@ -112,7 +111,7 @@
                   </div>
                 </div>
                 <button class="swiper-no-swiping btn btn-primary btn-fade btn-lg w-full" data-product-button data-waved>
-                  {{ icon.render(id = 'basket', className = 'icon mr-2') }}
+                  {{ icon(id = 'basket', className = 'icon mr-2') }}
                   Basket
                 </button>
               </div>
@@ -121,9 +120,9 @@
           {% endfor %}
         </div>
       </div>
-      {{ swiperButtonPrev.render(value = 'products') }}
-      {{ swiperButtonNext.render(value = 'products') }}
-      {{ swiperPagination.render(value = 'products') }}
+      {{ swiperButtonPrev(value = 'products') }}
+      {{ swiperButtonNext(value = 'products') }}
+      {{ swiperPagination(value = 'products') }}
     </div>
   </div>
 </section>
@@ -132,13 +131,13 @@
 
 <section class="bg-white dark:bg-black" data-scrolling data-breakpoint="md">
   <div class="wrapper flex flex-col items-start pb-0 mb-5 sm:md-10">
-    {{ subtitle.render(text = 'Horizontal scroll', className = 'transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+    {{ subtitle(text = 'Horizontal scroll', className = 'transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   </div>
   <div class="wrapper flex gap-5 md:gap-10 md:sticky md:top-40 overflow-x-auto md:overflow-x-hidden pt-0" data-scrolling-horizontal>
     {% for i in range(0, 6) %}
     <a class="aspect-video relative bg-grey dark:bg-dark rounded-3xl overflow-hidden shadow-md shrink-0 w-80 md:w-200" data-media data-movement="light" data-fancybox="horizontal" href="/img/pictures/test.jpg" draggable="false">
-      {{ loader.render() }}
-      {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+      {{ loader() }}
+      {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
     </a>
     {% endfor %}
   </div>
@@ -184,7 +183,7 @@
                     </h5>
                     <div class="relative">
                       <input class="input input-gray input-lg dark:bg-transparent dark:text-white" data-input="text" type="text" placeholder="Name" tabindex="-1" name="name">
-                      {{ error.render() }}
+                      {{ error() }}
                     </div>
                   </label>
                   <label data-label>
@@ -193,7 +192,7 @@
                     </h5>
                     <div class="relative">
                       <input class="input input-gray input-lg dark:bg-transparent dark:text-white" data-input="tel" type="tel" placeholder="+7 (___) ___-__-__" tabindex="-1" name="tel">
-                      {{ error.render() }}
+                      {{ error() }}
                     </div>
                   </label>
                   <button class="btn btn-primary btn-fill btn-lg" data-waved type="submit" tabindex="-1">Submit</button>
@@ -208,12 +207,12 @@
             </div>
             <div class="flex items-center gap-5">
               <button class="swiper-button-prev btn btn-primary btn-fill btn-lg w-auto mt-0" data-slider-prev="quiz" data-waved>
-                {{ icon.render(id = 'arrow-left', className = 'icon text-xs mr-2') }}
+                {{ icon(id = 'arrow-left', className = 'icon text-xs mr-2') }}
                 Prev
               </button>
               <button class="swiper-button-next btn btn-primary btn-fill btn-lg inset-0 w-auto mt-0 group-data-[quiz=stop]/quiz:opacity-50 group-data-[quiz=stop]/quiz:pointer-events-none" data-slider-next="quiz" data-waved>
                 Next
-                {{ icon.render(id = 'arrow-right', className = 'icon text-xs ml-2') }}
+                {{ icon(id = 'arrow-right', className = 'icon text-xs ml-2') }}
               </button>
             </div>
           </div>
@@ -221,8 +220,8 @@
       </form>
       <div class="hidden md:block w-full max-w-80 lg:max-w-sm">
         <div class="aspect-square relative bg-grey dark:bg-dark rounded-xl overflow-hidden h-full" data-media data-movement="light">
-          {{ loader.render() }}
-          {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+          {{ loader() }}
+          {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
         </div>
       </div>
     </div>
@@ -237,8 +236,8 @@
       <div class="swiper-wrapper">
         {% for i in range(0, 6) %}
         <div class="swiper-slide relative bg-grey dark:bg-dark h-full" data-media>
-          {{ loader.render() }}
-          {{ image.render(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+          {{ loader() }}
+          {{ image(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
         </div>
         {% endfor %}
       </div>
@@ -251,8 +250,8 @@
           <div class="swiper-wrapper h-full">
             {% for i in range(0, 6) %}
             <a class="swiper-slide aspect-square relative h-full" data-media data-movement="light" data-fancybox="catalog" href="/img/pictures/test.jpg" draggable="false">
-              {{ loader.render() }}
-              {{ image.render(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+              {{ loader() }}
+              {{ image(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
             </a>
             {% endfor %}
           </div>
@@ -263,8 +262,8 @@
           <div class="swiper-wrapper">
             {% for i in range(0, 6) %}
             <button class="swiper-slide aspect-square relative bg-grey dark:bg-dark rounded-2xl overflow-hidden" data-media>
-              {{ loader.render() }}
-              {{ image.render(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+              {{ loader() }}
+              {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
             </button>
             {% endfor %}
           </div>
@@ -287,12 +286,12 @@
 {# Игра #}
 
 <section class="wrapper flex flex-col items-center justify-center">
-  {{ subtitle.render(text = 'Game', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+  {{ subtitle(text = 'Game', className = 'mb-8 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
   <div class="grid grid-cols-3 border border-solid border-black w-full max-w-md mx-auto" data-game></div>
 </section>
 
 {# Плейер #}
 
-{{ player.render() }}
+{{ player() }}
 
 {% endblock %}

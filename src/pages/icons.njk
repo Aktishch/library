@@ -1,9 +1,9 @@
+{% extends 'src/layouts/base.njk' %}
+
 {% set data = {
   title: 'Icons',
   status: false
 } %}
-
-{% extends 'src/layouts/base.njk' %}
 
 {% block content %}
 
@@ -15,7 +15,7 @@
   <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-6">
     {% for item in icons %}
     <li class="flex items-center">
-      {{ icon.render(id = item, className = 'icon mr-2') }}
+      {{ icon(id = item, className = 'icon mr-2') }}
       id:
       {{ item }}
     </li>

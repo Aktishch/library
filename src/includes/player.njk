@@ -1,8 +1,8 @@
-{% import 'src/components/icon.njk' as icon %}
-{% import 'src/components/image.njk' as image %}
-{% import 'src/components/loader.njk' as loader %}
+{% from 'src/components/loader.njk' import loader %}
+{% from 'src/components/image.njk' import image %}
+{% from 'src/components/icon.njk' import icon %}
 
-{% macro render() %}
+{% macro player() %}
 <section class="xl:px-4">
   <div class="wrapper bg-grey dark:bg-dark xl:rounded-3xl" data-player="player" data-random>
     <div id="playlist" style="display: none;">
@@ -15,8 +15,8 @@
     </div>
     <div class="flex flex-col items-center justify-center bg-white dark:bg-black rounded-3xl shadow-md w-full max-w-lg py-6 px-2 md:px-6 mx-auto transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10" data-anim data-player-controls>
       <div class="aspect-square relative bg-grey dark:bg-dark rounded-full overflow-hidden w-full max-w-64 mb-5 md:md-8">
-        {{ loader.render() }}
-        {{ image.render(src = '', className = 'media rounded-inherit', data = 'data-player-poster') }}
+        {{ loader() }}
+        {{ image(src = '', className = 'media rounded-inherit', data = 'data-player-poster') }}
       </div>
       <h3 class="font-alt font-bold text-center text-2xl sm:text-3xl" data-player-artist></h3>
       <h4 class="font-medium text-center text-base sm:text-2xl mb-6" data-player-song></h4>
@@ -27,22 +27,22 @@
         </div>
         <div class="flex items-center justify-between gap-4">
           <a class="btn btn-primary btn-fade rounded shrink-0 p-1" data-waved="dark" data-fancybox-dialog href="#playlist" draggable="false">
-            {{ icon.render(id = 'burger', className = 'icon text-2xl') }}
+            {{ icon(id = 'burger', className = 'icon text-2xl') }}
           </a>
           <span class="hidden md:block text-lg shrink-0 w-12" data-player-start></span>
           <button class="btn btn-primary btn-fade rounded-full shrink-0 size-10" data-player-prev data-waved="dark">
-            {{ icon.render(id = 'arrow-prev', className = 'icon text-xl') }}
+            {{ icon(id = 'arrow-prev', className = 'icon text-xl') }}
           </button>
           <button class="btn btn-primary btn-fade text-4xl rounded-full shrink-0 size-10" data-player-play data-waved="dark">
-            {{ icon.render(id = 'loading', className = 'loading icon hidden', data = 'data-player-loading') }}
-            {{ icon.render(id = 'play', className = 'icon', data = 'data-player-status') }}
+            {{ icon(id = 'loading', className = 'loading icon hidden', data = 'data-player-loading') }}
+            {{ icon(id = 'play', className = 'icon', data = 'data-player-status') }}
           </button>
           <button class="btn btn-primary btn-fade rounded-full shrink-0 size-10" data-player-next data-waved="dark">
-            {{ icon.render(id = 'arrow-next', className = 'icon text-xl') }}
+            {{ icon(id = 'arrow-next', className = 'icon text-xl') }}
           </button>
           <span class="hidden md:block text-lg shrink-0 w-12" data-player-end></span>
           <button class="btn btn-primary btn-fade rounded-full p-2" data-player-volume data-waved="dark">
-            {{ icon.render(id = 'volume-on', className = 'icon') }}
+            {{ icon(id = 'volume-on', className = 'icon') }}
           </button>
         </div>
       </div>

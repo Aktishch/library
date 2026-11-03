@@ -5,6 +5,10 @@
     @apply scheme-light-dark;
   }
 
+  ::selection {
+    @apply bg-primary text-white;
+  }
+
   * {
     @apply scrollbar-thumb-primary scrollbar-thin scrollbar-track-black;
   }
@@ -23,10 +27,6 @@
 
   footer {
     @apply mt-auto;
-  }
-
-  ::selection {
-    @apply bg-primary text-white;
   }
 
   h1,

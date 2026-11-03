@@ -1,6 +1,6 @@
-{% import 'src/components/icon.njk' as icon %}
-{% import 'src/components/image.njk' as image %}
-{% import 'src/components/error.njk' as error %}
+{% from 'src/components/icon.njk' import icon %}
+{% from 'src/components/image.njk' import image %}
+{% from 'src/components/error.njk' import error %}
 
 <div class="bg-white dark:bg-black text-black dark:text-white rounded-xl w-80 max-w-full px-5 py-10">
   <form data-form="avatar">
@@ -9,11 +9,11 @@
       <div class="relative mb-5">
         <div class="aspect-square relative bg-primary rounded-full overflow-hidden transition-opacity w-1/2 mx-auto" data-preview-drag>
           <div class="flex items-center justify-center absolute inset-0 rounded-inherit pointer-events-none">
-            {{ icon.render(id = 'user', className = 'icon text-white dark:text-black text-6xl') }}
+            {{ icon(id = 'user', className = 'icon text-white dark:text-black text-6xl') }}
           </div>
-          {{ image.render(src = '', className = 'media rounded-inherit', data = 'data-preview-image') }}
+          {{ image(src = '', className = 'media rounded-inherit', data = 'data-preview-image') }}
         </div>
-        {{ error.render() }}
+        {{ error() }}
       </div>
       <div class="flex flex-wrap items-center justify-between gap-4 w-full">
         <label class="btn btn-second btn-fill btn-lg grow" data-preview-label data-waved="dark">

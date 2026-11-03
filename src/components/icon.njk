@@ -1,4 +1,4 @@
-{% macro render(id, className = none, data = none) %}
+{% macro icon(id, className = none, data = none) %}
 <svg {{ ('class="' ~ className ~ '"' if className) | safe }} {{ (data if data) | safe }}>
   <use href="/img/icons.svg#{{ id }}"></use>
 </svg>

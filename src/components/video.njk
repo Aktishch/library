@@ -1,0 +1,3 @@
+{% macro video(src, className = none, data = none, attrs = 'autoplay loop muted playsinline') %}
+<video {{ ('class="' ~ className ~ '"' if className) | safe }} {{ (data if data) | safe }} data-lazy data-src="{{ src }}" data-poster="/img/pictures/test.jpg" src="#" {{ (attrs if attrs) | safe }}></video>
+{% endmacro %}

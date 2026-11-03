@@ -17,7 +17,7 @@ if (!isRu) {
 }
 
 const DATA_DATEPICKER = getData('datepicker')
-const EXCLUDE_DATES = [+new Date(2026, 8, 5), +new Date(2026, 8, 7), +new Date(2026, 9, 10)]
+const EXCLUDE_DATES = [+new Date(2026, 10, 5), +new Date(2026, 11, 7), +new Date(2026, 11, 10)]
 
 const getFancybox = (container: Document | HTMLElement) => {
   const dialog: HTMLDivElement | null = container.querySelector('.f-html')

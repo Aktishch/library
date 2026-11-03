@@ -1,6 +1,6 @@
-{% import 'src/components/title.njk' as title %}
+{% from 'src/components/title.njk' import title %}
 
-{% macro render(text) %}
+{% macro top(text) %}
 <section class="xl:pt-4 xl:px-4">
   <div class="wrapper flex flex-col items-center justify-center bg-grey dark:bg-dark xl:rounded-3xl min-h-64 py-0" id="header">
     <div class="flex flex-col items-center justify-center relative grow size-full py-5">
@@ -11,7 +11,7 @@
           {{ text }}
         </span>
       </div>
-      {{ title.render(text, className = 'mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
+      {{ title(text, className = 'mb-5 sm:mb-10 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
       <a class="btn btn-primary btn-fill btn-lg w-full max-w-48" data-waved data-scroll-to href="#content" draggable="false">Show more</a>
     </div>
   </div>

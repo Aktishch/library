@@ -25,9 +25,8 @@
   }
 
   .waved-circle {
-    background-color: color-mix(in srgb, var(--waved-color) 40%, transparent);
     animation: waved 1000ms ease forwards;
 
-    @apply absolute block size-10 -translate-1/2 scale-0 rounded-full;
+    @apply absolute block size-10 -translate-1/2 scale-0 rounded-full bg-(--waved-color)/40;
   }
 }
