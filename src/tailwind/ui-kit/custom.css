@@ -3,34 +3,38 @@
     @apply will-change-transform;
   }
 
-  .fancybox__dialog {
-    .fancybox__slide {
-      .f-html {
-        @apply max-w-full bg-transparent p-0;
-      }
-
-      .f-button.is-close-button {
-        @apply top-2 right-2 rounded-full bg-white text-black shadow-md;
-      }
-    }
+  .fancybox__dialog .fancybox__slide .f-html {
+    @apply max-w-full bg-transparent p-0;
   }
 
-  .swiper-button-prev,
-  .swiper-button-next {
-    .swiper-navigation-icon {
-      @apply hidden;
-    }
-
-    svg {
-      @apply object-none;
-    }
-  }
-
-  .swiper-pagination {
-    @apply static flex items-center justify-center gap-4;
+  .swiper-navigation-icon {
+    @apply hidden;
   }
 
   .swiper-pagination-bullet {
-    @apply m-0 size-3 rounded-full bg-current transition;
+    @apply m-0 size-3 bg-current transition;
+  }
+
+  .description {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply text-lg font-bold uppercase;
+
+      @media (width >= theme(--breakpoint-sm)) {
+        @apply text-xl;
+      }
+    }
+
+    ul {
+      @apply list-outside list-disc pl-4;
+    }
+
+    a {
+      @apply underline underline-offset-4;
+    }
   }
 }

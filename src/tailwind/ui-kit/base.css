@@ -55,10 +55,6 @@
     &[src=''] {
       @apply hidden;
     }
-
-    &[src='#'] {
-      @apply invisible;
-    }
   }
 
   address {

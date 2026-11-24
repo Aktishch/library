@@ -35,7 +35,7 @@
         <article class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
           <div class="aspect-4/3 relative bg-grey dark:bg-dark rounded-t-inherit overflow-hidden" data-media data-movement="light">
             {{ loader() }}
-            {{ image(src = '#', className = 'media rounded-t-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+            {{ image(src = '', className = 'media rounded-t-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
           </div>
           <div class="card-content py-6 px-4 md:px-6">
             <h4 class="font-alt font-semibold text-2xl mb-4">
@@ -59,7 +59,7 @@
             <div class="card dark:bg-black shadow-md transition-shadow hover:shadow-xl">
               <div class="aspect-4/2 relative bg-grey dark:bg-dark rounded-t-inherit overflow-hidden" data-media>
                 {{ loader() }}
-                {{ image(src = '#', className = 'media rounded-t-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+                {{ image(src = '', className = 'media rounded-t-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
               </div>
               <div class="card-content py-6 px-4 sm:px-6">
                 <h4 class="font-alt font-semibold text-2xl">
@@ -207,7 +207,7 @@
 <section class="wrapper relative text-white overflow-hidden min-h-screen" data-parallax>
   <div class="absolute inset-0 bg-grey dark:bg-dark" data-media>
     {{ loader() }}
-    {{ image(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+    {{ image(src = '', className = 'media', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
   </div>
   <div class="flex flex-col items-center relative">
     {{ subtitle(text = 'Filter', className = 'mb-3 transition-[opacity,translate] duration-500 not-data-[anim=show]:opacity-0 not-data-[anim=show]:translate-y-10', data = 'data-anim data-movement="blend"') }}
@@ -503,9 +503,9 @@
     <div class="w-72" data-parallax-hovered="600">
       <div class="aspect-2/3 relative bg-grey dark:bg-dark overflow-hidden transition-transform ease-linear" data-parallax-item="10" data-media>
         {{ loader() }}
-        {{ image(src = '#', className = 'media', data = 'data-lazy data-src="' ~ item.bg ~ '"') }}
+        {{ image(src = '', className = 'media', data = 'data-lazy data-src="' ~ item.bg ~ '"') }}
         <div class="absolute inset-5 border-8 border-solid border-second transition-transform ease-linear" data-parallax-item="100">
-          {{ image(src = '#', className = 'media transition-transform ease-linear', data = 'data-parallax-item="80" data-lazy data-src="' ~ item.img ~ '"') }}
+          {{ image(src = '', className = 'media transition-transform ease-linear', data = 'data-parallax-item="80" data-lazy data-src="' ~ item.img ~ '"') }}
           <div class="absolute top-auto bottom-0 left-0 right-0 text-white transition-transform ease-linear pointer-events-none p-10" data-parallax-item="160">
             <h2 class="font-medium text-xl mb-3">
               Hover me!

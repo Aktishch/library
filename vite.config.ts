@@ -87,7 +87,7 @@ export default defineConfig({
         if (fs.existsSync(distJs)) {
           fs.readdirSync(distJs)
             .filter((file) => {
-              return !file.startsWith('application.')
+              return file !== 'application.js' && file !== 'application.js.map'
             })
             .forEach((file) => {
               fs.unlinkSync(path.join(distJs, file))
@@ -101,12 +101,10 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        entryFileNames: 'js/[name].js',
-        chunkFileNames: 'js/application.js',
-        manualChunks(id) {
-          if (id.includes('src/scripts') || id.includes('node_modules') || id.endsWith('.ts') || id.endsWith('.js')) {
-            return 'application'
-          }
+        entryFileNames: 'js/[name].entry.js',
+        chunkFileNames: 'js/[name].js',
+        manualChunks() {
+          return 'application'
         },
         assetFileNames: (asset) => {
           return asset.names?.some((name) => {

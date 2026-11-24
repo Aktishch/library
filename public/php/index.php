@@ -31,6 +31,7 @@
 <a href="/dialogs/feedback.php?<?= http_build_query(['theme' => $data['title']]) ?>">link</a>
 
 <?php icon(id: 'icon', className: 'icon'); ?>
+<?= date('Y') ?>
 
 <form action="/ajax/submit-handler.php" method="POST">
   <input type="hidden" value="Тема" name="theme">

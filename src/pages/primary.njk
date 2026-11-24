@@ -32,7 +32,7 @@
           {% for i in range(0, 6) %}
           <a class="swiper-slide aspect-4/3 relative bg-grey dark:bg-dark rounded-2xl overflow-hidden" data-media data-movement="light" data-fancybox="gallery" href="/img/pictures/test.jpg" draggable="false">
             {{ loader() }}
-            {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+            {{ image(src = '', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
           </a>
           {% endfor %}
         </div>
@@ -82,7 +82,7 @@
             <div class="group/product card dark:bg-black shadow-md hover:shadow-xl transition-shadow cursor-pointer p-1" data-product>
               <div class="aspect-4/3 relative bg-grey dark:bg-dark rounded-inherit overflow-hidden" data-media>
                 {{ loader() }}
-                {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-product-image="/img/pictures/test-gray.jpg" data-src="/img/pictures/test-gray.jpg"') }}
+                {{ image(src = '', className = 'media rounded-inherit', data = 'data-lazy data-product-image="/img/pictures/test-gray.jpg" data-src="/img/pictures/test-gray.jpg"') }}
                 <label class="block absolute top-2 right-2 rounded-full opacity-0 invisible overflow-hidden cursor-pointer transition-[opacity,visibility] pointer-coarse:visible pointer-coarse:opacity-100 group group-hover/product:opacity-100 group-hover/product:visible has-checked:visible has-checked:opacity-100" data-waved>
                   <input class="peer" hidden type="checkbox">
                   <div class="flex items-center justify-center bg-white/40 text-2xl text-red/50 stroke-red rounded-full transition-colors ease-linear size-10 group-has-checked:text-red">
@@ -137,7 +137,7 @@
     {% for i in range(0, 6) %}
     <a class="aspect-video relative bg-grey dark:bg-dark rounded-3xl overflow-hidden shadow-md shrink-0 w-80 md:w-200" data-media data-movement="light" data-fancybox="horizontal" href="/img/pictures/test.jpg" draggable="false">
       {{ loader() }}
-      {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+      {{ image(src = '', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
     </a>
     {% endfor %}
   </div>
@@ -203,16 +203,16 @@
           <div class="transition-[opacity,visibility] mt-auto group-data-quiz-end/quiz:opacity-0 group-data-quiz-end/quiz:invisible">
             <div class="flex items-center mb-5">
               Оставшиеся слайды:
-              <div class="swiper-pagination w-auto ml-1" data-slider-pagination="quiz"></div>
+              <div class="swiper-pagination static w-auto ml-1" data-slider-pagination="quiz"></div>
             </div>
             <div class="flex items-center gap-5">
               <button class="swiper-button-prev btn btn-primary btn-fill btn-lg w-auto mt-0" data-slider-prev="quiz" data-waved>
-                {{ icon(id = 'arrow-left', className = 'icon text-xs mr-2') }}
+                {{ icon(id = 'arrow-left', className = 'icon text-xs object-none mr-2') }}
                 Prev
               </button>
               <button class="swiper-button-next btn btn-primary btn-fill btn-lg inset-0 w-auto mt-0 group-data-[quiz=stop]/quiz:opacity-50 group-data-[quiz=stop]/quiz:pointer-events-none" data-slider-next="quiz" data-waved>
                 Next
-                {{ icon(id = 'arrow-right', className = 'icon text-xs ml-2') }}
+                {{ icon(id = 'arrow-right', className = 'icon text-xs object-none ml-2') }}
               </button>
             </div>
           </div>
@@ -221,7 +221,7 @@
       <div class="hidden md:block w-full max-w-80 lg:max-w-sm">
         <div class="aspect-square relative bg-grey dark:bg-dark rounded-xl overflow-hidden h-full" data-media data-movement="light">
           {{ loader() }}
-          {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+          {{ image(src = '', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
         </div>
       </div>
     </div>
@@ -237,7 +237,7 @@
         {% for i in range(0, 6) %}
         <div class="swiper-slide relative bg-grey dark:bg-dark h-full" data-media>
           {{ loader() }}
-          {{ image(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+          {{ image(src = '', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
         </div>
         {% endfor %}
       </div>
@@ -251,7 +251,7 @@
             {% for i in range(0, 6) %}
             <a class="swiper-slide aspect-square relative h-full" data-media data-movement="light" data-fancybox="catalog" href="/img/pictures/test.jpg" draggable="false">
               {{ loader() }}
-              {{ image(src = '#', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
+              {{ image(src = '', className = 'media', data = 'data-lazy data-src="/img/pictures/test.jpg"') }}
             </a>
             {% endfor %}
           </div>
@@ -263,7 +263,7 @@
             {% for i in range(0, 6) %}
             <button class="swiper-slide aspect-square relative bg-grey dark:bg-dark rounded-2xl overflow-hidden" data-media>
               {{ loader() }}
-              {{ image(src = '#', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
+              {{ image(src = '', className = 'media rounded-inherit', data = 'data-lazy data-src="/img/pictures/test-gray.jpg"') }}
             </button>
             {% endfor %}
           </div>

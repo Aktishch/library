@@ -8,9 +8,7 @@
     $loading = 'eager';
   endif;
 
-  if ($src === '#'):
-    $source = '#';
-  elseif ($src !== ''):
+  if ($src !== ''):
     $source = $src . '.' . $format;
   endif;
 ?>

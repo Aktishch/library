@@ -3,11 +3,18 @@ import { initCalendar } from '@scripts/air-datepicker'
 import imagePreview from '@scripts/image-preview'
 import lazyLoad from '@scripts/lazy-load'
 import { setStateSubmitBtn } from '@scripts/submit-handler'
-import { getData, getTouchDevice, hostname } from '@utils'
+import { getData, getTouchDevice, hostname, source } from '@utils'
 
 type Callback = ((container: HTMLElement | undefined) => void) | undefined
 
 Fancybox.getDefaults().placeFocusBack = false
+Fancybox.getDefaults().closeButtonTpl = `
+  <button class="btn btn-white btn-fill absolute top-2 right-2 text-black rounded-full shadow-md size-8" data-fancybox-close data-waved="dark">
+    <svg class="icon">
+      <use href="${source}/img/icons.svg#close"></use>
+    </svg>
+  </button>
+`
 
 if (!getTouchDevice()) {
   Fancybox.getDefaults().on = {
@@ -44,6 +51,9 @@ export const dialog = {
       ],
       {
         dragToClose: false,
+        Carousel: {
+          gestures: false
+        },
         on: {
           [CAROUSEL_READY]: (...[, , slide]) => {
             const { el } = slide
@@ -69,6 +79,9 @@ export const dialog = {
         dragToClose: false,
         closeButton: false,
         backdropClick: false,
+        Carousel: {
+          gestures: false
+        },
         on: {
           [CAROUSEL_READY]: (...[, , slide]) => {
             const { el } = slide
@@ -92,6 +105,9 @@ export default () => {
 
   Fancybox.bind(`[${DATA_FANCYBOX}-dialog]`, {
     dragToClose: false,
+    Carousel: {
+      gestures: false
+    },
     on: {
       [CAROUSEL_READY]: (...[, , slide]) => {
         const { el } = slide
@@ -105,6 +121,9 @@ export default () => {
 
   Fancybox.bind(`[${DATA_FANCYBOX}-form]`, {
     dragToClose: false,
+    Carousel: {
+      gestures: false
+    },
     on: {
       [CAROUSEL_READY]: (...[, , slide]) => {
         const { el } = slide
@@ -119,6 +138,9 @@ export default () => {
 
   Fancybox.bind(`[${DATA_FANCYBOX}-avatar]`, {
     dragToClose: false,
+    Carousel: {
+      gestures: false
+    },
     on: {
       [CAROUSEL_READY]: (...[, , slide]) => {
         const { el } = slide
@@ -133,6 +155,9 @@ export default () => {
 
   Fancybox.bind(`[${DATA_FANCYBOX}-calendar]`, {
     dragToClose: false,
+    Carousel: {
+      gestures: false
+    },
     on: {
       [CAROUSEL_READY]: (...[, , slide]) => {
         const { el } = slide

@@ -1,7 +1,6 @@
 import accordion from '@scripts/accordion'
 import airDatepicker from '@scripts/air-datepicker'
 import animation from '@scripts/animation'
-import annum from '@scripts/annum'
 import canvasRendering from '@scripts/canvas-rendering'
 import combination from '@scripts/combination'
 import compare from '@scripts/compare'
@@ -57,7 +56,6 @@ const META_NAME = 'author'
 export const Scripts = () => {
   accordion()
   airDatepicker()
-  annum()
   canvasRendering()
   combination()
   compare()

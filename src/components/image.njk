@@ -8,9 +8,7 @@
 {% set loading = 'eager' %}
 {% endif %}
 
-{% if src == '#' %}
-{% set source = '#' %}
-{% elif src != '' %}
+{% if src != '' %}
 {% set source = src ~ '.' ~ format %}
 {% endif %}
 

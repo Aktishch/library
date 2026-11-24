@@ -2,7 +2,7 @@ import type { Config } from 'stylelint'
 
 export default {
   extends: ['stylelint-config-standard', 'stylelint-config-recess-order'],
-  plugins: ['stylelint-declaration-block-no-ignored-properties', 'stylelint-order', '@stylistic/stylelint-plugin'],
+  plugins: ['stylelint-declaration-block-no-ignored-properties', '@stylistic/stylelint-plugin'],
   rules: {
     'custom-property-pattern': null,
     'media-query-no-invalid': null,

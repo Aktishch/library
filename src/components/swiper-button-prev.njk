@@ -1,7 +1,7 @@
 {% from 'src/components/icon.njk' import icon %}
 
 {% macro swiperButtonPrev(value) %}
-<button class="swiper-button-prev btn btn-primary btn-fill hidden md:flex absolute -left-6 rounded-full size-12" data-slider-prev="{{ value }}" data-waved>
-  {{ icon(id = 'arrow-left', className = 'icon') }}
+<button class="swiper-button-prev btn btn-primary btn-fill hidden md:flex absolute -left-6 rounded-full size-12 -mt-6" data-slider-prev="{{ value }}" data-waved>
+  {{ icon(id = 'arrow-left', className = 'icon object-none') }}
 </button>
 {% endmacro %}
